@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URI Encoder/Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #copyBtn {
+            background-color: #28a745;
+        }
+        #copyBtn:hover {
+            background-color: #218838;
+        }
+        #output {
+            background-color: #f8f9fa;
+        }
+        #copyMessage {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        #copyMessage.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>URI Encoder/Decoder</h2>
+        <textarea id="input" placeholder="Enter text to encode/decode"></textarea>
+        <div class="button-group">
+            <button onclick="encodeText()">Encode</button>
+            <button onclick="decodeText()">Decode</button>
+            <button id="copyBtn" onclick="copyText()">Copy Output</button>
+        </div>
+        <textarea id="output" readonly placeholder="Output will appear here"></textarea>
+        <div id="copyMessage">Copied to clipboard!</div>
+    </div>
+
+    <script>
+        function encodeText() {
+            const input = document.getElementById('input').value;
+            const output = document.getElementById('output');
+            try {
+                output.value = encodeURIComponent(input);
+            } catch (e) {
+                output.value = 'Error: Invalid input';
+            }
+        }
+
+        function decodeText() {
+            const input = document.getElementById('input').value;
+            const output = document.getElementById('output');
+            try {
+                output.value = decodeURIComponent(input);
+            } catch (e) {
+                output.value = 'Error: Invalid encoded string';
+            }
+        }
+
+        function copyText() {
+            const output = document.getElementById('output');
+            const copyMessage = document.getElementById('copyMessage');
+            output.select();
+            try {
+                document.execCommand('copy');
+                copyMessage.classList.add('show');
+                setTimeout(() => {
+                    copyMessage.classList.remove('show');
+                }, 2000); // Fade out after 2 seconds
+            } catch (e) {
+                output.value = 'Error: Failed to copy text';
+            }
+        }
+    </script>
+</body>
+</html>

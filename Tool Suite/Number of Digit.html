@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* CSS styles here */
+    h2 {
+      color: blue;
+      text-align: left;
+    }
+    input[type="text"] {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+
+<body>
+
+<h2>Showing the number of digit</h2>
+
+<form id="my_form">
+  <label for="num">Please input a positive integer:</label>
+  <p></p>
+  <input type="text" id="user_input" value="123456789">
+  <input type="submit" id="submit_button" value="Submit">
+  <p><output id="result"></output></p>
+</form>
+</body>
+<script>
+// 2023-01-09: Use addEventListener to replace onclick
+// 2023-01-10: Use separate function to display output
+// 2023-01-10: Use 'form' and 'label' elements to replace 'input' element
+// 2023-01-11: Use arrow function to replace main()
+document.getElementById("my_form").addEventListener("submit", (e) => {
+  event.preventDefault();
+  let userInput = Number(document.getElementById("user_input").value);
+  
+// if input number pass validation, call display_output with the number of digit
+  if (validateInput(userInput)) {
+    displayOutput(countDigit(userInput));
+  }
+});
+
+// validate input number by checking type, empty, and positive
+function validateInput(userInput) {
+
+  if (isNaN(userInput)) {
+		displayOutput("Please input an integer.");
+    return false
+	} else if (userInput < 0) {
+        	displayOutput("Please input a positive integer.");
+        return false
+	} else if (userInput != Math.round(userInput)) {
+		displayOutput("Please input an integer.");
+    return false
+	} else if (!userInput) {
+		displayOutput("Please input something.");
+    return false
+    } else {
+		return true
+		}
+
+}
+
+function countDigit(userInput) {
+	userInput = userInput.toString();
+	let length = userInput.length
+	
+	if (userInput < 1) {return false}
+	else if (userInput != Math.round(userInput)) {return false}
+	else {
+		return length;
+		}
+}
+	
+function displayOutput(outputText) {
+	document.getElementById("result").innerHTML = outputText;
+}
+	
+</script>
+</html> 

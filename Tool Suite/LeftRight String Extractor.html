@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Extraction Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f7fa;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative; /* For positioning the dark mode button */
+        }
+
+        body.dark-mode .container {
+            background-color: #2c2c2c;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode h2 {
+            color: #e0e0e0;
+        }
+
+        p {
+            text-align: center;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode p {
+            color: #adb5bd;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            width: 120px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        body.dark-mode label {
+            color: #e0e0e0;
+        }
+
+        input, select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode input, body.dark-mode select {
+            background-color: #3a3a3a;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        input:invalid {
+            border-color: #dc3545;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #28a745; /* Green color from Copy Result */
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #218838; /* Hover color from Copy Result */
+        }
+
+        #dark-mode-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #6c757d;
+            padding: 8px;
+            font-size: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+            color: #fff;
+        }
+
+        #dark-mode-toggle:hover {
+            background-color: #5a6268;
+            transform: scale(1.1);
+        }
+
+        body.dark-mode #dark-mode-toggle {
+            background-color: #adb5bd;
+        }
+
+        body.dark-mode #dark-mode-toggle:hover {
+            background-color: #8f9ba6;
+        }
+
+        #result {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-align: center;
+            word-break: break-all;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode #result {
+            background-color: #3a3a3a;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .excel-section, .gas-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #eee;
+            transition: border-color 0.3s;
+        }
+
+        body.dark-mode .excel-section, body.dark-mode .gas-section {
+            border-color: #555;
+        }
+
+        .excel-section h3, .gas-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .excel-section h3, body.dark-mode .gas-section h3 {
+            color: #e0e0e0;
+        }
+
+        #excelFormula, #gasCode {
+            background-color: #f1f3f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            word-break: break-all;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode #excelFormula, body.dark-mode #gasCode {
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .excel-section button, .gas-section button {
+            background-color: #6c757d;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .excel-section button:hover, .gas-section button:hover {
+            background-color: #5a6268;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            min-height: 20px;
+        }
+
+        body.dark-mode .error {
+            color: #ff6b6b;
+        }
+
+        .copy-message {
+            text-align: center;
+            min-height: 20px;
+            font-size: 14px;
+            color: #28a745;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.dark-mode .copy-message {
+            color: #2ecc71;
+        }
+
+        .copy-message.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                margin: 20px auto;
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            #dark-mode-toggle {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Left/Right String Extractor</h2>
+        <button id="dark-mode-toggle">☾</button>
+        <p style="text-align: center; margin-bottom: 20px;">
+            This tool extracts a specified number of characters from the input text, either from the left or right, and generates an equivalent Excel formula.
+        </p>
+        <div class="input-group">
+            <label for="inputText">Input Text:</label>
+            <input type="text" id="inputText" value="abcdefg" required>
+        </div>
+        <div class="input-group">
+            <label for="charCount">Character(s):</label>
+            <input type="number" id="charCount" min="1" max="100" value="5" required>
+        </div>
+        <div class="error" id="charCountError">Number of characters must be between 1 and 100.</div>
+        <div class="input-group">
+            <label for="direction">Direction:</label>
+            <select id="direction">
+                <option value="Left">Left</option>
+                <option value="Right">Right</option>
+            </select>
+        </div>
+        <div class="button-group">
+            <button onclick="copyText()">Copy Result</button>
+        </div>
+        <div id="result"></div>
+        <div class="copy-message" id="copyTextMessage"></div>
+
+        <div class="excel-section">
+            <h3>Excel Formula Equivalent</h3>
+            <p id="excelFormula">=LET(input,A1,characters,A2,direction,"Left",SWITCH(direction,"Left",LEFT(input,characters),"Right",RIGHT(input,characters),""))</p>
+            <button onclick="copyFormula()">Copy Formula</button>
+            <div class="copy-message" id="copyFormulaMessage"></div>
+        </div>
+
+        <div class="gas-section">
+            <h3>Google Apps Script Equivalent</h3>
+            <p id="gasCode">/**
+        * Extracts a specified number of characters from the left or right of an input string.<br>
+        * @param {string} input - The input string to extract characters from.<br>
+        * @param {number} characters - The number of characters to extract (1 to 100).<br>
+        * @param {string} [direction="left"] - The direction to extract from ("left" or "right", case-insensitive).<br>
+        * @returns {string} The extracted substring or an empty string if inputs are invalid.<br>
+        * @customfunction<br>
+        */<br>
+        function extractText(input, characters, direction = "left") {<br>
+        // Validate input: ensure it's a string; convert to string if possible<br>
+        if (input === null || input === undefined || input === "") return "";<br>
+        if (typeof input !== "string") input = String(input);<br>
+        <br>
+        // Validate characters: must be a number between 1 and 100<br>
+        if (isNaN(characters) || characters < 1 || characters > 100) return "";<br>
+        <br>
+        // Normalize direction to lowercase and default to "left" if invalid<br>
+        direction = direction ? String(direction).toLowerCase() : "left";<br>
+        if (direction !== "left" && direction !== "right") direction = "left";<br>
+        <br>
+        // Extract characters based on direction<br>
+        if (direction === "left") {<br>
+            return input.substring(0, characters);<br>
+        } else {<br>
+            return input.substring(input.length - characters);<br>
+        }<br>
+        }</p>
+            <button onclick="copyGasCode()">Copy Script</button>
+            <div class="copy-message" id="copyGasMessage"></div>
+        </div>
+
+    <script>
+        function extractText() {
+            const inputText = document.getElementById('inputText').value;
+            const charCountInput = document.getElementById('charCount');
+            const charCount = parseInt(charCountInput.value);
+            const direction = document.getElementById('direction').value;
+            const charCountError = document.getElementById('charCountError');
+
+            // Validate charCount
+            if (isNaN(charCount) || charCount < 1 || charCount > 100) {
+                charCountError.style.display = 'block';
+                charCountInput.focus();
+                document.getElementById('result').textContent = ''; // Clear result
+                updateExcelFormula(); // Update formula with current direction
+                return;
+            } else {
+                charCountError.style.display = 'none';
+            }
+
+            // Validate input text
+            if (!inputText) {
+                document.getElementById('result').textContent = '';
+                updateExcelFormula();
+                return;
+            }
+
+            // Extract text based on direction
+            let result = '';
+            if (direction === 'Left') {
+                result = inputText.slice(0, charCount);
+            } else if (direction === 'Right') {
+                result = inputText.slice(-charCount);
+            }
+
+            document.getElementById('result').textContent = result;
+
+            // Update Excel formula
+            updateExcelFormula();
+        }
+
+        function updateExcelFormula() {
+            const inputCell = 'A1'; // Default cell references
+            const charCountCell = 'A2';
+            const direction = document.getElementById('direction').value; // Get selected direction
+            const excelFormula = `=LET(input,${inputCell},characters,${charCountCell},direction,"${direction}",SWITCH(direction,"Left",LEFT(input,characters),"Right",RIGHT(input,characters),""))`;
+            document.getElementById('excelFormula').textContent = excelFormula;
+        }
+
+        function copyText() {
+            const text = document.getElementById('result').textContent;
+            const messageElement = document.getElementById('copyTextMessage');
+            if (text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    messageElement.textContent = 'Text copied to clipboard!';
+                    messageElement.classList.add('show');
+                    setTimeout(() => {
+                        messageElement.classList.remove('show');
+                        setTimeout(() => {
+                            messageElement.textContent = '';
+                        }, 500); // Wait for fade-out transition
+                    }, 2000); // Show message for 2 seconds
+                });
+            } else {
+                messageElement.textContent = 'No text to copy!';
+                messageElement.classList.add('show');
+                setTimeout(() => {
+                    messageElement.classList.remove('show');
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 500); // Wait for fade-out transition
+                }, 2000); // Show message for 2 seconds
+            }
+        }
+
+        function copyFormula() {
+            const formula = document.getElementById('excelFormula').textContent;
+            const messageElement = document.getElementById('copyFormulaMessage');
+            navigator.clipboard.writeText(formula).then(() => {
+                messageElement.textContent = 'Formula copied to clipboard!';
+                messageElement.classList.add('show');
+                setTimeout(() => {
+                    messageElement.classList.remove('show');
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 500); // Wait for fade-out transition
+                }, 2000); // Show message for 2 seconds
+            });
+        }
+
+        function copyGasCode() {
+            const code = `/**
+        * Extracts a specified number of characters from the left or right of an input string.
+        * @param {string} input - The input string to extract characters from.
+        * @param {number} characters - The number of characters to extract (1 to 100).
+        * @param {string} [direction="left"] - The direction to extract from ("left" or "right", case-insensitive).
+        * @returns {string} The extracted substring or an empty string if inputs are invalid.
+        * @customfunction
+        */
+        function extractText(input, characters, direction = "left") {
+        // Validate input: ensure it's a string; convert to string if possible
+        if (input === null || input === undefined || input === "") return "";
+        if (typeof input !== "string") input = String(input);
+
+        // Validate characters: must be a number between 1 and 100
+        if (isNaN(characters) || characters < 1 || characters > 100) return "";
+
+        // Normalize direction to lowercase and default to "left" if invalid
+        direction = direction ? String(direction).toLowerCase() : "left";
+        if (direction !== "left" && direction !== "right") direction = "left";
+
+        // Extract characters based on direction
+        if (direction === "left") {
+            return input.substring(0, characters);
+        } else {
+            return input.substring(input.length - characters);
+        }
+        }`;
+            const messageElement = document.getElementById('copyGasMessage');
+            navigator.clipboard.writeText(code).then(() => {
+                messageElement.textContent = 'Script copied to clipboard!';
+                messageElement.classList.add('show');
+                setTimeout(() => {
+                    messageElement.classList.remove('show');
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 500); // Wait for fade-out transition
+                }, 2000); // Show message for 2 seconds
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const toggleButton = document.getElementById('dark-mode-toggle');
+            toggleButton.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+        }
+
+        // Validate charCount input
+        document.getElementById('charCount').addEventListener('input', function() {
+            const charCountError = document.getElementById('charCountError');
+            const charCount = parseInt(this.value);
+
+            // Show error message for invalid input without correcting the value
+            if (isNaN(charCount) || charCount < 1 || charCount > 100) {
+                charCountError.style.display = 'block';
+            } else {
+                charCountError.style.display = 'none';
+            }
+
+            extractText(); // Re-extract text when charCount changes
+        });
+
+        // Update result and formula when input text changes
+        document.getElementById('inputText').addEventListener('input', function() {
+            extractText();
+        });
+
+        // Update result and formula when direction changes
+        document.getElementById('direction').addEventListener('change', function() {
+            extractText();
+        });
+
+        // Add event listener for dark mode toggle
+        document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+
+        // Initialize result and formula on page load
+        extractText();
+    </script>
+</body>
+</html>

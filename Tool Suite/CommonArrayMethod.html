@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Array Method</title>
+</head>
+<body>
+<p><input type="button" id="sizeOfArray_Button" value=Size of Array" style="width:180px"></p>
+<p><input type="button" id="insertItem_Button" value="Insert item (before index)" style="width:180px"></p>
+<p><input type="button" id="deleteItem_Button" value="Delete item" style="width:180px"></p>
+<p><input type="button" id="swapItems_Button" value="Swap items" style="width:180px"></p>
+<p><input type="button" id="checkDuplicate_Button" value="Check Duplicate" style="width:180px"></p>
+<p><input type="button" id="sortArray_Button" value="Sort Array" style="width:180px"></p>
+<p><input type="button" id="reverseArray_Button" value="Reverse Array" style="width:180px"></p>
+<p><input type="button" id="someArray_Button" value="Some Array" style="width:180px"></p>
+</body>
+<script>
+const originalArray = [1,25,3,4,5];
+sizeOfArray_Button.addEventListener('click', sizeOfArray);
+insertItem_Button.addEventListener('click', insertItem);
+deleteItem_Button.addEventListener('click', deleteItem);
+swapItems_Button.addEventListener('click', swapItems);
+checkDuplicate_Button.addEventListener('click', checkDuplicate);
+sortArray_Button.addEventListener('click', sortArray);
+reverseArray_Button.addEventListener('click', reverseArray);
+someArray_Button.addEventListener('click', someArray);
+
+function sizeOfArray() {
+	//Display the length of an array
+	console.log("Size: " + originalArray.length);
+}
+function insertItem() {
+	//Insert one item from an array before a certain index (first item in array: 0)
+	let newArray = originalArray.slice();
+	const index = 5
+	const string = "NewText" 
+	newArray.splice(index, 0, string);
+	console.log("Original Array: " + originalArray);
+	console.log("New Array: " + newArray);
+}
+function deleteItem() {
+	//Delete one item from an array (first item in array: 0)
+	let newArray = originalArray.slice();
+	const index = 2
+	newArray.splice(index,1);
+	console.log("Original Array: " + originalArray);
+	console.log("New Array: " + newArray);
+}
+function swapItems() {
+	//Swap two items of an array
+	let newArray = originalArray.slice();
+	const firstNumber = 0
+	const secondNumber = 1
+	let temp = newArray[firstNumber];
+	newArray.splice(firstNumber,1,newArray[secondNumber]);
+	newArray.splice(secondNumber,1,temp); 
+	console.log("Original Array: " + originalArray);
+	console.log("New Array: " + newArray);
+}
+function checkDuplicate() {
+	//Check whether there are duplicate items in an array, true if there is duplicate items
+	const newSet = new Set(originalArray);
+	console.log(newSet);
+	console.log(originalArray.length !== newSet.size)
+	return (originalArray.length !== newSet.size)
+}
+function sortArray() {
+	//Sort the array
+	let newArray = originalArray.slice();
+	console.log("New Array: " + newArray.sort());
+}
+function reverseArray() {
+	//Reverse the array
+	let newArray = originalArray.slice();
+	console.log("New Array: " + newArray.reverse());
+}
+function someArray() {
+	//Reverse the array
+	//https://www.w3schools.com/jsref/jsref_some.asp
+	console.log(originalArray.some(n => n>3))
+}
+</script>
+</html>

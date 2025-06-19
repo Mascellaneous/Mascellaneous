@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark6 Number Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f7fa;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        body.dark-mode .container {
+            background-color: #2c2c2c;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode h2 {
+            color: #e0e0e0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #fff;
+        }
+
+        #start-button {
+            background-color: #28a745;
+        }
+
+        #start-button:hover {
+            background-color: #218838;
+        }
+
+        #copy-button {
+            background-color: #007bff;
+        }
+
+        #copy-button:hover {
+            background-color: #0056b3;
+        }
+
+        #clear-button {
+            background-color: #6c757d;
+        }
+
+        #clear-button:hover {
+            background-color: #5a6268;
+        }
+
+        #dark-mode-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #6c757d;
+            padding: 8px;
+            font-size: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #dark-mode-toggle:hover {
+            background-color: #5a6268;
+            transform: scale(1.1);
+        }
+
+        body.dark-mode #dark-mode-toggle {
+            background-color: #adb5bd;
+        }
+
+        body.dark-mode #dark-mode-toggle:hover {
+            background-color: #8f9ba6;
+        }
+
+        body.dark-mode button {
+            color: #fff;
+        }
+
+        #output {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-align: center;
+            word-break: break-all;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body.dark-mode #output {
+            background-color: #3a3a3a;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        #history {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            margin: 20px 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body.dark-mode #history {
+            background-color: #3a3a3a;
+            border-color: #555;
+        }
+
+        .history-item {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        body.dark-mode .history-item {
+            border-bottom: 1px solid #555;
+            color: #e0e0e0;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .copy-message {
+            text-align: center;
+            min-height: 20px;
+            font-size: 14px;
+            color: #28a745;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.dark-mode .copy-message {
+            color: #2ecc71;
+        }
+
+        .copy-message.show {
+            opacity: 1;
+        }
+
+        .excel-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #eee;
+            transition: border-color 0.3s;
+        }
+
+        body.dark-mode .excel-section {
+            border-color: #555;
+        }
+
+        .excel-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .excel-section h3 {
+            color: #e0e0e0;
+        }
+
+        #excelFormula {
+            background-color: #f1f3f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            word-break: break-all;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode #excelFormula {
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .excel-section button {
+            background-color: #6c757d;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .excel-section button:hover {
+            background-color: #5a6268;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                margin: 20px auto;
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            #dark-mode-toggle {
+                padding: 6px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mark6 Number Generator</h2>
+        <button id="dark-mode-toggle">☾</button>
+        <div class="button-group">
+            <button id="start-button">Generate Numbers</button>
+            <button id="copy-button" disabled>Copy Result</button>
+            <button id="clear-button">Clear History</button>
+        </div>
+        <div id="output"></div>
+        <div class="copy-message" id="copy-message"></div>
+        <div id="history"></div>
+
+        <div class="excel-section">
+            <h3>Excel Formula Equivalent</h3>
+            <p id="excelFormula">=TEXTJOIN(", ",TRUE,SORT(TAKE(UNIQUE(BYROW(RANDARRAY(1000,1,1,49,TRUE),LAMBDA(row,INT(RAND()*49)+1))),6)))</p>
+            <button onclick="copyFormula()">Copy Formula</button>
+            <div class="copy-message" id="copyFormulaMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to generate a random number between min and max
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Main function to generate the Mark6 numbers
+        function genMark() {
+            const result = new Set();
+            while (result.size < 6) {
+                result.add(getRndInteger(1, 49));
+            }
+            const sortedResult = [...result].sort((a, b) => a - b);
+            const resultString = sortedResult.join(', ');
+            const output = document.getElementById("output");
+            output.innerHTML = resultString;
+            output.dataset.numbers = resultString; // Store for copying
+
+            // Enable copy button
+            document.getElementById("copy-button").disabled = false;
+
+            // Add to history (without timestamp)
+            const history = document.getElementById("history");
+            const historyItem = document.createElement("div");
+            historyItem.className = "history-item";
+            historyItem.textContent = resultString;
+            history.prepend(historyItem);
+        }
+
+        // Copy to clipboard
+        function copyToClipboard() {
+            const output = document.getElementById("output");
+            const text = output.dataset.numbers || "";
+            const messageElement = document.getElementById("copy-message");
+            if (text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    messageElement.textContent = 'Numbers copied to clipboard!';
+                    messageElement.classList.add("show");
+                    setTimeout(() => {
+                        messageElement.classList.remove("show");
+                        setTimeout(() => {
+                            messageElement.textContent = '';
+                        }, 500); // Wait for fade-out transition
+                    }, 2000); // Show message for 2 seconds
+                });
+            } else {
+                messageElement.textContent = 'No numbers to copy!';
+                messageElement.classList.add("show");
+                setTimeout(() => {
+                    messageElement.classList.remove("show");
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 500); // Wait for fade-out transition
+                }, 2000); // Show message for 2 seconds
+            }
+        }
+
+        // Copy Excel formula to clipboard
+        function copyFormula() {
+            const formula = document.getElementById('excelFormula').textContent;
+            const messageElement = document.getElementById('copyFormulaMessage');
+            navigator.clipboard.writeText(formula).then(() => {
+                messageElement.textContent = 'Formula copied to clipboard!';
+                messageElement.classList.add('show');
+                setTimeout(() => {
+                    messageElement.classList.remove('show');
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 500); // Wait for fade-out transition
+                }, 2000); // Show message for 2 seconds
+            });
+        }
+
+        // Clear history
+        function clearHistory() {
+            document.getElementById("history").innerHTML = "";
+            document.getElementById("output").innerHTML = "";
+            document.getElementById("copy-button").disabled = true;
+            document.getElementById("copy-message").textContent = "";
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            const toggleButton = document.getElementById("dark-mode-toggle");
+            toggleButton.textContent = document.body.classList.contains("dark-mode") ? "☀" : "☾";
+        }
+
+        // Event listeners
+        document.getElementById("start-button").addEventListener("click", genMark);
+        document.getElementById("copy-button").addEventListener("click", copyToClipboard);
+        document.getElementById("clear-button").addEventListener("click", clearHistory);
+        document.getElementById("dark-mode-toggle").addEventListener("click", toggleDarkMode);
+    </script>
+</body>
+</html>

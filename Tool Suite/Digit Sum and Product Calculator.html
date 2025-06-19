@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digit Sum and Product Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f7fa;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        body.dark-mode .container {
+            background-color: #2c2c2c;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode h2 {
+            color: #e0e0e0;
+        }
+
+        p {
+            text-align: center;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode p {
+            color: #adb5bd;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            width: 120px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        body.dark-mode label {
+            color: #e0e0e0;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode input {
+            background-color: #3a3a3a;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        input:invalid {
+            border-color: #dc3545;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #dark-mode-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #6c757d;
+            padding: 8px;
+            font-size: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+            color: #fff;
+        }
+
+        #dark-mode-toggle:hover {
+            background-color: #5a6268;
+            transform: scale(1.1);
+        }
+
+        body.dark-mode #dark-mode-toggle {
+            background-color: #adb5bd;
+        }
+
+        body.dark-mode #dark-mode-toggle:hover {
+            background-color: #8f9ba6;
+        }
+
+        .result-label {
+            color: #333;
+            font-size: 16px;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+
+        body.dark-mode .result-label {
+            color: #e0e0e0;
+        }
+
+        .result {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            margin: 0 0 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-align: center;
+            word-break: break-all;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode .result {
+            background-color: #3a3a3a;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .excel-section, .gas-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #eee;
+            transition: border-color 0.3s;
+        }
+
+        body.dark-mode .excel-section, body.dark-mode .gas-section {
+            border-color: #555;
+        }
+
+        .excel-section h3, .gas-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .excel-section h3, body.dark-mode .gas-section h3 {
+            color: #e0e0e0;
+        }
+
+        .excel-formula, #gasCode {
+            background-color: #f1f3f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            word-break: break-all;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode .excel-formula, body.dark-mode #gasCode {
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .excel-section button, .gas-section button {
+            background-color: #6c757d;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .excel-section button:hover, .gas-section button:hover {
+            background-color: #5a6268;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            min-height: 20px;
+        }
+
+        body.dark-mode .error {
+            color: #ff6b6b;
+        }
+
+        .copy-message {
+            text-align: center;
+            min-height: 20px;
+            font-size: 14px;
+            color: #28a745;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body.dark-mode .copy-message {
+            color: #2ecc71;
+        }
+
+        .copy-message.show {
+            opacity: 1;
+        }
+
+        .formula-description {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        body.dark-mode .formula-description {
+            color: #adb5bd;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                margin: 20px auto;
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            #dark-mode-toggle {
+                padding: 6px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Digit Sum and Product Calculator</h2>
+        <button id="dark-mode-toggle">☾</button>
+        <p style="text-align: center; margin-bottom: 20px;">
+            This tool calculates the sum and product of digits in a positive integer and generates equivalent Excel formulas.
+        </p>
+        <div class="input-group">
+            <label for="numb">Positive Integer:</label>
+            <input type="number" id="numb" value="12345" min="0" step="1" required>
+        </div>
+        <div class="error" id="inputError"></div>
+        <div class="result-label" id="sumLabel"></div>
+        <div class="result" id="sumResult"></div>
+        <div class="button-group">
+            <button onclick="copySumResult()">Copy Sum Result</button>
+        </div>
+        <div class="copy-message" id="copySumMessage"></div>
+        <div class="result-label" id="productLabel"></div>
+        <div class="result" id="productResult"></div>
+        <div class="button-group">
+            <button onclick="copyProductResult()">Copy Product Result</button>
+        </div>
+        <div class="copy-message" id="copyProductMessage"></div>
+
+        <div class="excel-section">
+            <h3>Excel Formula Equivalents</h3>
+            <div class="formula-description">This formula calculates the sum of digits in the input number:</div>
+            <div class="excel-formula" id="sumFormula"></div>
+            <button onclick="copySumFormula()">Copy Sum Formula</button>
+            <div class="copy-message" id="copySumFormulaMessage"></div>
+            <div class="formula-description">This formula calculates the product of digits in the input number:</div>
+            <div class="excel-formula" id="productFormula"></div>
+            <button onclick="copyProductFormula()">Copy Product Formula</button>
+            <div class="copy-message" id="copyProductFormulaMessage"></div>
+        </div>
+
+        <div class="gas-section">
+            <h3>Google Apps Script Equivalent</h3>
+            <p id="gasCode" class="excel-formula">/**
+ * Calculates the sum of digits in a positive integer.
+ * @param {number} input - The input number.
+ * @returns {number} The sum of the digits, or an empty string if the input is invalid.
+ * @customfunction
+ */
+function sumOfDigits(input) {
+  // Validate input: ensure it's a number
+  if (input === null || input === undefined || isNaN(input)) return "";
+  // Convert to positive integer
+  const num = Math.abs(Math.round(input));
+  // Convert to string and calculate sum of digits
+  return num.toString().split('')
+           .reduce((acc, digit) => acc + Number(digit), 0);
+}
+
+/**
+ * Calculates the product of digits in a positive integer.
+ * @param {number} input - The input number.
+ * @returns {number} The product of the digits, or an empty string if the input is invalid.
+ * @customfunction
+ */
+function productOfDigits(input) {
+  // Validate input: ensure it's a number
+  if (input === null || input === undefined || isNaN(input)) return "";
+  // Convert to positive integer
+  const num = Math.abs(Math.round(input));
+  // Convert to string and calculate product of digits
+  return num.toString().split('')
+           .reduce((acc, digit) => acc * Number(digit), 1);
+}
+</p>
+            <button onclick="copyGasCode()">Copy Script</button>
+            <div class="copy-message" id="copyGasMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateResults() {
+            const input = document.getElementById('numb');
+            const value = input.value;
+            const errorElement = document.getElementById('inputError');
+            const sumLabelElement = document.getElementById('sumLabel');
+            const sumResultElement = document.getElementById('sumResult');
+            const productLabelElement = document.getElementById('productLabel');
+            const productResultElement = document.getElementById('productResult');
+
+            // Clear previous results
+            sumLabelElement.textContent = '';
+            sumResultElement.textContent = '';
+            productLabelElement.textContent = '';
+            productResultElement.textContent = '';
+            errorElement.textContent = '';
+            errorElement.style.display = 'none';
+
+            // Validate input
+            if (!value) {
+                errorElement.textContent = 'Please input a number.';
+                errorElement.style.display = 'block';
+                updateExcelFormulas();
+                return;
+            }
+
+            const num = Number(value);
+            if (isNaN(num)) {
+                errorElement.textContent = 'Please input a valid number.';
+                errorElement.style.display = 'block';
+                updateExcelFormulas();
+                return;
+            }
+            if (num < 0) {
+                errorElement.textContent = 'Please input a positive number.';
+                errorElement.style.display = 'block';
+                updateExcelFormulas();
+                return;
+            }
+            if (num !== Math.round(num)) {
+                errorElement.textContent = 'Please input an integer.';
+                errorElement.style.display = 'block';
+                updateExcelFormulas();
+                return;
+            }
+
+            // Calculate results
+            const sum = sumOfDigits(num);
+            const product = productOfDigits(num);
+
+            // Display results
+            sumLabelElement.textContent = `The sum of digits of ${num}:`;
+            sumResultElement.textContent = sum;
+            productLabelElement.textContent = `The product of digits of ${num}:`;
+            productResultElement.textContent = product;
+
+            // Update Excel formulas
+            updateExcelFormulas();
+        }
+
+        function sumOfDigits(num) {
+            return num
+                .toString()
+                .split('')
+                .reduce((acc, digit) => acc + Number(digit), 0);
+        }
+
+        function productOfDigits(num) {
+            return num
+                .toString()
+                .split('')
+                .reduce((acc, digit) => acc * Number(digit), 1);
+        }
+
+        function updateExcelFormulas() {
+            const inputCell = 'A1';
+            const sumFormula = `=SUMPRODUCT(--MID(${inputCell},ROW(INDIRECT("1:"&LEN(${inputCell}))),1))`;
+            const productFormula = `=PRODUCT(--MID(${inputCell},ROW(INDIRECT("1:"&LEN(${inputCell}))),1))`;
+            document.getElementById('sumFormula').textContent = sumFormula;
+            document.getElementById('productFormula').textContent = productFormula;
+        }
+
+        function copySumResult() {
+            copyText('sumResult', 'copySumMessage', 'Sum result');
+        }
+
+        function copyProductResult() {
+            copyText('productResult', 'copyProductMessage', 'Product result');
+        }
+
+        function copySumFormula() {
+            copyText('sumFormula', 'copySumFormulaMessage', 'Sum formula');
+        }
+
+        function copyProductFormula() {
+            copyText('productFormula', 'copyProductFormulaMessage', 'Product formula');
+        }
+
+        function copyGasCode() {
+            const code = `/**
+ * Calculates the sum of digits in a positive integer.
+ * @param {number} input - The input number.
+ * @returns {number} The sum of the digits, or an empty string if the input is invalid.
+ * @customfunction
+ */
+function sumOfDigits(input) {
+  // Validate input: ensure it's a number
+  if (input === null || input === undefined || isNaN(input)) return "";
+  // Convert to positive integer
+  const num = Math.abs(Math.round(input));
+  // Convert to string and calculate sum of digits
+  return num.toString().split('')
+           .reduce((acc, digit) => acc + Number(digit), 0);
+}
+
+/**
+ * Calculates the product of digits in a positive integer.
+ * @param {number} input - The input number.
+ * @returns {number} The product of the digits, or an empty string if the input is invalid.
+ * @customfunction
+ */
+function productOfDigits(input) {
+  // Validate input: ensure it's a number
+  if (input === null || input === undefined || isNaN(input)) return "";
+  // Convert to positive integer
+  const num = Math.abs(Math.round(input));
+  // Convert to string and calculate product of digits
+  return num.toString().split('')
+           .reduce((acc, digit) => acc * Number(digit), 1);
+}`;
+            const messageElement = document.getElementById('copyGasMessage');
+            navigator.clipboard.writeText(code).then(() => {
+                messageElement.textContent = 'Script copied to clipboard!';
+                messageElement.classList.add('show');
+                setTimeout(() => {
+                    messageElement.classList.remove('show');
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 500);
+                }, 2000);
+            });
+        }
+
+        function copyText(elementId, messageId, type) {
+            const text = document.getElementById(elementId).textContent;
+            const messageElement = document.getElementById(messageId);
+            if (text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    messageElement.textContent = `${type} copied to clipboard!`;
+                    messageElement.classList.add('show');
+                    setTimeout(() => {
+                        messageElement.classList.remove('show');
+                        setTimeout(() => {
+                            messageElement.textContent = '';
+                        }, 500);
+                    }, 2000);
+                });
+            } else {
+                messageElement.textContent = `No ${type.toLowerCase()} to copy!`;
+                messageElement.classList.add('show');
+                setTimeout(() => {
+                    messageElement.classList.remove('show');
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 500);
+                }, 2000);
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const toggleButton = document.getElementById('dark-mode-toggle');
+            toggleButton.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+        }
+
+        // Event listeners
+        document.getElementById('numb').addEventListener('input', calculateResults);
+        document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+
+        // Initialize on page load
+        calculateResults();
+    </script>
+</body>
+</html>

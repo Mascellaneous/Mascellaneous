@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABCD Letter Counter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f4f7fa;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, color 0.3s;
+      position: relative;
+    }
+
+    body.dark-mode .container {
+      background-color: #2c2c2c;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    body.dark-mode h2 {
+      color: #e0e0e0;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    body.dark-mode p {
+      color: #adb5bd;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      width: 120px;
+      font-weight: 500;
+      color: #444;
+    }
+
+    body.dark-mode label {
+      color: #e0e0e0;
+    }
+
+    input, select {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode input, body.dark-mode select {
+      background-color: #3a3a3a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    input:invalid {
+      border-color: #dc3545;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      color: #fff;
+    }
+
+    button:nth-child(1) {
+      background-color: #007bff;
+    }
+
+    button:nth-child(1):hover {
+      background-color: #0056b3;
+    }
+
+    button:nth-child(2) {
+      background-color: #28a745;
+    }
+
+    button:nth-child(2):hover {
+      background-color: #218838;
+    }
+
+    #dark-mode-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #6c757d;
+      padding: 8px;
+      font-size: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.2s;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    #dark-mode-toggle:hover {
+      background-color: #5a6268;
+      transform: scale(1.1);
+    }
+
+    body.dark-mode #dark-mode-toggle {
+      background-color: #adb5bd;
+    }
+
+    body.dark-mode #dark-mode-toggle:hover {
+      background-color: #8f9ba6;
+    }
+
+    #result {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      margin: 20px 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      text-align: center;
+      word-break: break-all;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      white-space: pre-line;
+    }
+
+    body.dark-mode #result {
+      background-color: #3a3a3a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    .excel-section, .google-apps-script-section {
+      margin-top: 30px;
+      padding: 20px;
+      border-top: 2px solid #eee;
+      transition: border-color 0.3s;
+    }
+
+    body.dark-mode .excel-section, body.dark-mode .google-apps-script-section {
+      border-color: #555;
+    }
+
+    .excel-section h3, .google-apps-script-section h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    body.dark-mode .excel-section h3, body.dark-mode .google-apps-script-section h3 {
+      color: #e0e0e0;
+    }
+
+    #excelFormula, #googleAppsScript {
+      background-color: #f1f3f5;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      word-break: break-all;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode #excelFormula, body.dark-mode #googleAppsScript {
+      background-color: #3a3a3a;
+      color: #e0e0e0;
+    }
+
+    .excel-section button, .google-apps-script-section button {
+      background-color: #6c757d;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    .excel-section button:hover, .google-apps-script-section button:hover {
+      background-color: #5a6268;
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    body.dark-mode .error {
+      color: #ff6b6b;
+    }
+
+    .copy-message {
+      text-align: center;
+      min-height: 20px;
+      font-size: 14px;
+      color: #28a745;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    body.dark-mode .copy-message {
+      color: #2ecc71;
+    }
+
+    .copy-message.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        margin: 20px auto;
+        padding: 10px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      button {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      #dark-mode-toggle {
+        padding: 6px;
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>ABCD Letter Counter</h2>
+    <button id="dark-mode-toggle">☾</button>
+    <p style="text-align: center; margin-bottom: 20px;">
+      This tool counts the occurrences of letters A, B, C, and D in the input text (ignoring other characters) and provides equivalent Excel and Google Apps Script code for use in spreadsheets.
+    </p>
+    <div class="input-group">
+      <label for="inputText">Input Text:</label>
+      <input type="text" id="inputText" placeholder="Enter text containing A, B, C, D" value="ABCDabcd123!@#">
+    </div>
+    <div class="error" id="inputError">Please enter some text to count A, B, C, D.</div>
+    <div class="button-group">
+      <button onclick="countABCD()">Count Letters</button>
+      <button onclick="copyText()">Copy Result</button>
+    </div>
+    <div id="result"></div>
+    <div class="copy-message" id="copyTextMessage"></div>
+
+    <div class="excel-section">
+      <h3>Excel Formula Equivalent</h3>
+      <p id="excelFormula"></p>
+      <button onclick="copyFormula()">Copy Formula</button>
+      <div class="copy-message" id="copyFormulaMessage"></div>
+    </div>
+
+    <div class="google-apps-script-section">
+      <h3>Google Apps Script Equivalent</h3>
+      <p id="googleAppsScript">
+/**
+ * Counts occurrences of letters A, B, C, and D in the input string, ignoring other characters.
+ * @param {string} input The input string to analyze (case-insensitive).
+ * @return {string} Count of A, B, C, D, and total.
+ */
+function countABCD(input) {
+  var inputArr = input.toUpperCase().split("");
+  var count = [0, 0, 0, 0];
+  for (let i = 0; i < inputArr.length; i++) {
+    var letter = inputArr[i];
+    if (letter === "A") count[0]++;
+    else if (letter === "B") count[1]++;
+    else if (letter === "C") count[2]++;
+    else if (letter === "D") count[3]++;
+  }
+  result = `A: ${count[0]}\nB: ${count[1]}\nC: ${count[2]}\nD: ${count[3]}\nTotal: ${count[0] + count[1] + count[2] + count[3]}`;
+  return result;
+}
+      </p>
+      <button onclick="copyGoogleAppsScript()">Copy Script</button>
+      <div class="copy-message" id="copyGoogleAppsScriptMessage"></div>
+    </div>
+  </div>
+
+  <script>
+    // Auto-count letters on page load
+    countABCD();
+
+    // Function to sanitize input to prevent XSS
+    function sanitizeInput(input) {
+      const div = document.createElement('div');
+      div.textContent = input;
+      return div.innerHTML
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function countABCD() {
+      let inputText = document.getElementById('inputText').value;
+      const inputError = document.getElementById('inputError');
+
+      // Sanitize input to prevent XSS
+      inputText = sanitizeInput(inputText);
+
+      // Validate input (non-empty)
+      if (!inputText.trim()) {
+        inputError.style.display = 'block';
+        document.getElementById('inputText').focus();
+        document.getElementById('result').textContent = '';
+        updateExcelFormula('');
+        return;
+      } else {
+        inputError.style.display = 'none';
+      }
+
+      const inputArr = inputText.toUpperCase().split("");
+      const count = [0, 0, 0, 0];
+      for (let i = 0; i < inputArr.length; i++) {
+        const letter = inputArr[i];
+        if (letter === "A") count[0]++;
+        else if (letter === "B") count[1]++;
+        else if (letter === "C") count[2]++;
+        else if (letter === "D") count[3]++;
+      }
+
+      const result = `A: ${count[0]}\nB: ${count[1]}\nC: ${count[2]}\nD: ${count[3]}\nTotal: ${count[0] + count[1] + count[2] + count[3]}`;
+      document.getElementById('result').textContent = result;
+
+      // Update Excel formula after counting
+      updateExcelFormula(inputText);
+    }
+
+    function updateExcelFormula(inputText) {
+      if (!inputText.trim()) {
+        document.getElementById('excelFormula').textContent = '';
+        return;
+      }
+      // Sanitize input for Excel formula (escape quotes)
+      const sanitizedInput = inputText.replace(/"/g, '""');
+      // Excel formula to count A, B, C, D, ignoring other characters
+      const excelFormula = `=LET(input,UPPER("${sanitizedInput}"),A_count,LEN(input)-LEN(SUBSTITUTE(input,"A","")),B_count,LEN(input)-LEN(SUBSTITUTE(input,"B","")),C_count,LEN(input)-LEN(SUBSTITUTE(input,"C","")),D_count,LEN(input)-LEN(SUBSTITUTE(input,"D","")),CONCATENATE("A: ",A_count,CHAR(10),"B: ",B_count,CHAR(10),"C: ",C_count,CHAR(10),"D: ",D_count,CHAR(10),"Total: ",A_count+B_count+C_count+D_count))`;
+      document.getElementById('excelFormula').textContent = excelFormula;
+    }
+
+    function copyText() {
+      const text = document.getElementById('result').textContent;
+      const messageElement = document.getElementById('copyTextMessage');
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          messageElement.textContent = 'Result copied to clipboard!';
+          messageElement.classList.add('show');
+          setTimeout(() => {
+            messageElement.classList.remove('show');
+            setTimeout(() => {
+              messageElement.textContent = '';
+            }, 500);
+          }, 2000);
+        });
+      } else {
+        messageElement.textContent = 'No result to copy!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      }
+    }
+
+    function copyFormula() {
+      const formula = document.getElementById('excelFormula').textContent;
+      const messageElement = document.getElementById('copyFormulaMessage');
+      if (formula) {
+        navigator.clipboard.writeText(formula).then(() => {
+          messageElement.textContent = 'Formula copied to clipboard!';
+          messageElement.classList.add('show');
+          setTimeout(() => {
+            messageElement.classList.remove('show');
+            setTimeout(() => {
+              messageElement.textContent = '';
+            }, 500);
+          }, 2000);
+        });
+      } else {
+        messageElement.textContent = 'No formula to copy!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      }
+    }
+
+    function copyGoogleAppsScript() {
+      const script = document.getElementById('googleAppsScript').textContent;
+      const messageElement = document.getElementById('copyGoogleAppsScriptMessage');
+      navigator.clipboard.writeText(script).then(() => {
+        messageElement.textContent = 'Script copied to clipboard!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      });
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const toggleButton = document.getElementById('dark-mode-toggle');
+      toggleButton.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+    }
+
+    // Auto-update counts when the input text changes
+    document.getElementById('inputText').addEventListener('input', function() {
+      countABCD();
+    });
+
+    // Add event listener for dark mode toggle
+    document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+  </script>
+</body>
+</html>

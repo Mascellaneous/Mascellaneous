@@ -1,0 +1,405 @@
+<html>
+<head>
+<title>Player Fight</title>
+<style>
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+}
+th {
+  text-align: center;
+  width: 180;
+}
+td {
+  text-align: center;
+  width: 60;
+}
+</style>
+</head>
+<body>
+<p><input type="button" id="checkPlayerTableSize_Button" value="PlayerTable Size" style="width:180px"></p>
+<p><input type="button" id="renderPlayerTable_Button" value="Render PlayerTable" style="width:180px"></p>
+<p><input type="button" id="swapPlayer_Button" value="Swap Player" style="width:180px"> Row 1: <input type="text" id="swapFirstPlayer" value='0' style="width:40px"> Row 2: <input type="text" id="swapSecondPlayer" value='1' style="width:40px"></p>
+<p><input type="button" id="addPlayer_Button" value="Add Player" style="width:180px"> ID: <input type="text" id="addPlayerID" value=3 style="width:50px"> HP: <input type="text" id="addPlayerHP" value=1200 style="width:50px">ATT: <input type="text" id="addPlayerATT" value=900 style="width:50px">DEF: <input type="text" id="addPlayerDEF" value=900 style="width:50px">SPD: <input type="text" id="addPlayerSPD" value=900 style="width:50px">WIN: <input type="text" id="addPlayerWIN" value=0 style="width:50px">LOSE: <input type="text" id="addPlayerLOSE" value=0 style="width:50px">ELO: <input type="text" id="addPlayerELO" value=0 style="width:50px">LEAGUE: <input type="text" id="addPlayerLEAGUE" value=0 style="width:50px">Times: <input type="text" id="addPlayerTimes" value=1 style="width:50px"></p>
+<p><input type="button" id="randomNewPlayer_Button" value="Random Player" style="width:180px"></p>
+<p><input type="button" id="deletePlayer_Button" value="Delete Player" style="width:180px">Times: <input type="text" id="delPlayerTimes" value=1 style="width:50px"></p>
+<p><input type="button" id="repeatTimes_Button" value="Repeat" style="width:88px">Times: <input type="text" id="repeatTimes" value=1 style="width:50px"></p>
+<p><input type="button" id="stat_Button" value="Stat" style="width:88px"></p>
+<p><input type="button" id="GitHub_Button" value="GitHub" style="width:88px"></p>
+PlayerTable:
+	<table id="PlayerTable">
+		<thead>
+		<tr>
+			<th>Row</th>
+			<th>ID<br><input type="button" id="sortID_Button" value="Sort" style="width:40px"><input type="hidden" id="sortID_status" value=0></br></th>
+			<th>HP<br><input type="button" id="sortHP_Button" value="Sort" style="width:40px"><input type="hidden" id="sortHP_status" value=0></br></th>
+			<th>Attack<br><input type="button" id="sortATT_Button" value="Sort" style="width:40px"><input type="hidden" id="sortATT_status" value=0></br></th>
+			<th>Defence<br><input type="button" id="sortDEF_Button" value="Sort" style="width:40px"><input type="hidden" id="sortDEF_status" value=0></br></th>
+			<th>Speed<br><input type="button" id="sortSPD_Button" value="Sort" style="width:40px"><input type="hidden" id="sortSPD_status" value=0></br></th>
+			<th>Average<br><input type="button" id="sortAVERAGE_Button" value="Sort" style="width:40px"><input type="hidden" id="sortAVERAGE_status" value=0></br></th>
+			<th>Win<br><input type="button" id="sortWIN_Button" value="Sort" style="width:40px"><input type="hidden" id="sortWIN_status" value=0></br></th>
+			<th>Lose<br><input type="button" id="sortLOSE_Button" value="Sort" style="width:40px"><input type="hidden" id="sortLOSE_status" value=0></br></th>
+			<th>Elo<br><input type="button" id="sortELO_Button" value="Sort" style="width:40px"><input type="hidden" id="sortELO_status" value=0></br></th>
+			<th>League<br><input type="button" id="sortLEAGUE_Button" value="Sort" style="width:40px"><input type="hidden" id="sortLEAGUE_status" value=0></br></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>			
+		</tbody>
+	</table>
+</body>
+<script>
+var playerData = { 
+	'0': {ID:1,HP: 100,ATT: 100,DEF: 100,SPD: 100,AVG:100,WIN: 0,LOSE: 0,ELO:1000,LEAGUE:1}, 
+	'1': {ID:2,HP: 100,ATT: 100,DEF: 100,SPD: 100,AVG:100,WIN: 0,LOSE: 0,ELO:1000,LEAGUE:1} 
+};
+renderPlayerTable();
+randomNewPlayer();
+
+checkPlayerTableSize_Button.addEventListener('click', function() {
+	//Select the table element
+	const table = document.getElementById("PlayerTable");
+	console.log("playerData: " + Object.keys(playerData).length);
+	console.log("Player Table Rows: " + table.rows.length);
+	console.log(playerData);
+});
+renderPlayerTable_Button.addEventListener('click', renderPlayerTable);
+swapPlayer_Button.addEventListener('click', function() {
+	// Select two players by user input
+	let player1 = document.getElementById("swapFirstPlayer").value;
+	let player2 = document.getElementById("swapSecondPlayer").value;
+	// Check whether player1 and player2 is larger than the max. number of player
+	if (player1 > Object.keys(playerData).length-1 || player2 > Object.keys(playerData).length-1) {return}
+	// Swap Player1 and Player2, the row parameters would not be affected.
+    const temp = playerData[player1];
+    playerData[player1] = playerData[player2];
+    playerData[player2] = temp;
+	// Update the PlayerTable
+	renderPlayerTable();	
+});
+addPlayer_Button.addEventListener('click', function() {
+	// Repeat the function n times.
+	let times = Number(document.getElementById("addPlayerTimes").value);
+	for (let i = 0;i<times;i++) {
+		addOneRandomPlayer();
+	}
+});
+function addOneRandomPlayer() {
+		// key = The last row of playerData
+		let key = Object.keys(playerData).length;
+		// The attributes are input by user
+		let id = Number(document.getElementById("addPlayerID").value);
+		let hp = Number(document.getElementById("addPlayerHP").value);
+		let att = Number(document.getElementById("addPlayerATT").value);
+		let def = Number(document.getElementById("addPlayerDEF").value);
+		let spd = Number(document.getElementById("addPlayerSPD").value);
+		let avg = (hp+att+def+spd)/4;
+		let win = Number(document.getElementById("addPlayerWIN").value);
+		let lose = Number(document.getElementById("addPlayerLOSE").value);
+		let elo = Number(document.getElementById("addPlayerELO").value);
+		let league = Number(document.getElementById("addPlayerLEAGUE").value);
+		addPlayer(id,hp,att,def,spd,avg,win,lose,elo,league);
+		document.getElementById("addPlayerID").value = id+1;
+		randomNewPlayer();
+}
+randomNewPlayer_Button.addEventListener('click', randomNewPlayer);
+sortID_Button.addEventListener('click', function () {
+	if (document.getElementById("sortID_status").value == 0) {
+		sortPlayer('ID',0);
+		document.getElementById("sortID_status").value = 1;
+	} else {
+		sortPlayer('ID',1);
+		document.getElementById("sortID_status").value = 0;
+	}
+});
+sortHP_Button.addEventListener('click', function () {
+	if (document.getElementById("sortHP_status").value == 0) {
+		sortPlayer('HP',0);
+		document.getElementById("sortHP_status").value = 1;
+	} else {
+		sortPlayer('HP',1);
+		document.getElementById("sortHP_status").value = 0;
+	}
+});
+sortATT_Button.addEventListener('click', function () {
+	if (document.getElementById("sortATT_status").value == 0) {
+		sortPlayer('ATT',0);
+		document.getElementById("sortATT_status").value = 1;
+	} else {
+		sortPlayer('ATT',1);
+		document.getElementById("sortATT_status").value = 0;
+	}
+});
+sortDEF_Button.addEventListener('click', function () {
+	if (document.getElementById("sortDEF_status").value == 0) {
+		sortPlayer('DEF',0);
+		document.getElementById("sortDEF_status").value = 1;
+	} else {
+		sortPlayer('DEF',1);
+		document.getElementById("sortDEF_status").value = 0;
+	}
+});
+sortSPD_Button.addEventListener('click', function () {
+	if (document.getElementById("sortSPD_status").value == 0) {
+		sortPlayer('SPD',0);
+		document.getElementById("sortSPD_status").value = 1;
+	} else {
+		sortPlayer('SPD',1);
+		document.getElementById("sortSPD_status").value = 0;
+	}
+});
+sortAVERAGE_Button.addEventListener('click', function () {
+	if (document.getElementById("sortAVERAGE_status").value == 0) {
+		sortPlayer('AVG',0);
+		document.getElementById("sortAVERAGE_status").value = 1;
+	} else {
+		sortPlayer('AVG',1);
+		document.getElementById("sortAVERAGE_status").value = 0;
+	}
+});
+sortWIN_Button.addEventListener('click', function () {
+	if (document.getElementById("sortWIN_status").value == 0) {
+		sortPlayer('WIN',0);
+		document.getElementById("sortWIN_status").value = 1;
+	} else {
+		sortPlayer('WIN',1);
+		document.getElementById("sortWIN_status").value = 0;
+	}
+});
+sortLOSE_Button.addEventListener('click', function () {
+	if (document.getElementById("sortLOSE_status").value == 0) {
+		sortPlayer('LOSE',0);
+		document.getElementById("sortLOSE_status").value = 1;
+	} else {
+		sortPlayer('LOSE',1);
+		document.getElementById("sortLOSE_status").value = 0;
+	}
+});
+sortELO_Button.addEventListener('click', function () {
+	if (document.getElementById("sortELO_status").value == 0) {
+		sortPlayer('ELO',0);
+		document.getElementById("sortELO_status").value = 1;
+	} else {
+		sortPlayer('ELO',1);
+		document.getElementById("sortELO_status").value = 0;
+	}
+});
+sortLEAGUE_Button.addEventListener('click', function () {
+	if (document.getElementById("sortLEAGUE_status").value == 0) {
+		sortPlayer('LEAGUE',0);
+		document.getElementById("sortLEAGUE_status").value = 1;
+	} else {
+		sortPlayer('LEAGUE',1);
+		document.getElementById("sortLEAGUE_status").value = 0;
+	}
+});
+repeatTimes_Button.addEventListener('click', function () {
+	const startTime = Date.now();
+	let times = document.getElementById("repeatTimes").value;
+	for (let i = 0; i<times; i++) {
+		randomNewPlayer();
+		addOneRandomPlayer();
+		sortPlayer('AVG',0);
+		delLastPlayer();
+	}
+	const endTime = Date.now();
+	console.log(`Execution time: ${endTime - startTime} ms`);
+});
+stat_Button.addEventListener('click', function () {
+	console.log("Mean of HP: " + calculateMean('HP') + " Stdev of HP: " + calculateStdDev('HP'));
+	console.log("Mean of ATT: " + calculateMean('ATT') + " Stdev of ATT: " + calculateStdDev('ATT'));
+	console.log("Mean of DEF: " + calculateMean('DEF') + " Stdev of DEF: " + calculateStdDev('DEF'));
+	console.log("Mean of SPD: " + calculateMean('SPD') + " Stdev of SPD: " + calculateStdDev('SPD'));
+});
+function sortPlayer(property,status) {
+		// If the value of "sortXXX_status" is 0, the function will sort the playerData array in descending order based on the HP property
+		if (status == 0) {
+		for (let i = 0; i<Object.keys(playerData).length-1; i++) {
+		for (let j = 0; j<Object.keys(playerData).length-1; j++) {
+			// swap position if HP of Player j is smaller than Player j+1
+			if (playerData[j][property] <  playerData[j+1][property]) {
+				swapPlayer(j,j+1);
+			}
+		}}
+    } else {
+	// If the value of "sortXXX_status" is 1, the function will sort the playerData array in ascending order based on the HP property
+			for (let i = 0; i<Object.keys(playerData).length-1; i++) {
+			for (let j = 0; j<Object.keys(playerData).length-1; j++) {
+			// swap position if HP of Player j is larger than Player j+1
+			if (playerData[j][property] >  playerData[j+1][property]) {
+				swapPlayer(j,j+1);
+			}
+		}}
+    }	
+			renderPlayerTable();
+}
+function randomNewPlayer() {
+	document.getElementById("addPlayerHP").value = randomNumber(50,150);
+	document.getElementById("addPlayerATT").value = randomNumber(50,150);
+	document.getElementById("addPlayerDEF").value = randomNumber(50,150);
+	document.getElementById("addPlayerSPD").value = randomNumber(50,150);
+	document.getElementById("addPlayerWIN").value = 0;
+	document.getElementById("addPlayerLOSE").value = 0;
+	document.getElementById("addPlayerELO").value = 1000;
+	document.getElementById("addPlayerLEAGUE").value = 1;
+}
+deletePlayer_Button.addEventListener('click', function() {
+	// Repeat the function n times.
+	let times = Number(document.getElementById("delPlayerTimes").value);
+	for (let i = 0;i<times;i++) {
+		delLastPlayer();
+	}
+	renderPlayerTable();
+});
+function delLastPlayer() {
+		//Delete the last player
+		let key = Object.keys(playerData).length - 1;
+		delete playerData[key];
+		deleteLastRow_PlayerTable();
+}
+function renderPlayerTable() {
+	//Select the table element
+	const table = document.getElementById("PlayerTable");
+	let i = 1;
+	for(const player in playerData) {
+		table.rows[i].cells[0].innerHTML = Object.getOwnPropertyNames(playerData)[player];
+		table.rows[i].cells[1].innerHTML = playerData[player].ID;
+		table.rows[i].cells[2].innerHTML = playerData[player].HP;
+		table.rows[i].cells[3].innerHTML = playerData[player].ATT;
+		table.rows[i].cells[4].innerHTML = playerData[player].DEF;
+		table.rows[i].cells[5].innerHTML = playerData[player].SPD;
+		table.rows[i].cells[6].innerHTML = playerData[player].AVG;
+		table.rows[i].cells[7].innerHTML = playerData[player].WIN;
+		table.rows[i].cells[8].innerHTML = playerData[player].LOSE;
+		table.rows[i].cells[9].innerHTML = playerData[player].ELO;
+		table.rows[i].cells[10].innerHTML = playerData[player].LEAGUE;
+		i += 1;
+	}	
+}
+function swapPlayer(player1,player2) {
+	const temp = playerData[player1];
+    playerData[player1] = playerData[player2];
+    playerData[player2] = temp;
+	renderPlayerTable();
+}
+function addPlayer(id,hp,att,def,spd,avg,win,lose,elo,league) {
+	let key = Object.keys(playerData).length;
+	playerData[key] = {ID: id,HP: hp,ATT: att,DEF: def,SPD: spd,AVG: avg,WIN: win,LOSE: lose,ELO: elo,LEAGUE: league};
+	addNewRow_PlayerTable();
+	renderPlayerTable();
+}
+function addNewRow_PlayerTable() {
+	// Select the table element
+	var table = document.getElementById("PlayerTable");
+	// Insert a new row at the last position
+	var newRow = table.insertRow(table.rows.length);
+	// Insert a new cells (11 columns) in the new row
+	var cells = Array.from({length: 11}, () => newRow.insertCell());
+}
+function deleteLastRow_PlayerTable() {
+	// Delete the last row in the PlayerTable
+	// Select the table element
+	var table = document.getElementById("PlayerTable");
+	// Get the number of rows in the table
+	var rowCount = table.rows.length;
+	// Delete the last row
+	table.deleteRow(rowCount - 1);
+}
+GitHub_Button.addEventListener('click', function() {
+	event.preventDefault();
+        window.open("https://github.com/OutliersEcon/JavaScript-Tools/blob/main/PlayerFight.html");
+});
+function randomNumber(min, max) {
+  // create a variable to hold the random number
+  let randomNum = 0;
+  // create a loop to generate 12 random numbers
+  for (let i = 0; i < 12; i++) {
+    // generate a random number between 0 and 1 using Math.random()
+    let num = Math.random();
+    // add the random number to the total
+    randomNum += num;
+  }
+  // divide the total by 12 to get the mean
+  randomNum = randomNum/12;
+  // use the mean to generate a normally distributed random number
+  randomNum = Math.floor((max - min + 1)*randomNum) + min;
+  // check if the number generated is within the range of min and max
+  if(randomNum < min) {
+    randomNum = min;
+  }
+  if(randomNum > max) {
+    randomNum = max;
+  }
+  // return the number
+  return randomNum;
+}
+function calculateMean(property) {
+    let sum = 0;
+    let sumSquared = 0;
+    let n = Object.keys(playerData).length;
+
+    // calculate the sum of the HP values
+    for (let i = 0; i < n; i++) {
+        sum += playerData[i][property];
+		
+    }
+	
+    // calculate the mean of the HP values
+    let calculateMean = sum / n;
+
+    return calculateMean;
+}
+function calculateStdDev(property) {
+    let sum = 0;
+    let sumSquared = 0;
+    let n = Object.keys(playerData).length;
+
+    // calculate the sum of the HP values
+    for (let i = 0; i < n; i++) {
+        sum += playerData[i][property];
+		
+    }
+	
+    // calculate the mean of the HP values
+    let mean = sum / n;
+
+    // calculate the sum of the squared differences from the mean
+    for (let i = 0; i < n; i++) {
+        sumSquared += Math.pow((playerData[i][property] - mean), 2);
+    }
+
+    // calculate the standard deviation
+    let stdDev = Math.sqrt(sumSquared / n);
+
+    return stdDev;
+}
+</script>
+</html>

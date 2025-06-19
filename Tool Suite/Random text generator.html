@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Text Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f4f7fa;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, color 0.3s;
+      position: relative;
+    }
+
+    body.dark-mode .container {
+      background-color: #2c2c2c;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    body.dark-mode h2 {
+      color: #e0e0e0;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    body.dark-mode p {
+      color: #adb5bd;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      width: 120px;
+      font-weight: 500;
+      color: #444;
+    }
+
+    body.dark-mode label {
+      color: #e0e0e0;
+    }
+
+    input, select {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode input, body.dark-mode select {
+      background-color: #3a3a3a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    input:invalid {
+      border-color: #dc3545;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      color: #fff;
+    }
+
+    button:nth-child(1) {
+      background-color: #007bff;
+    }
+
+    button:nth-child(1):hover {
+      background-color: #0056b3;
+    }
+
+    button:nth-child(2) {
+      background-color: #28a745;
+    }
+
+    button:nth-child(2):hover {
+      background-color: #218838;
+    }
+
+    #dark-mode-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #6c757d;
+      padding: 8px; /* Even smaller padding for low-profile look */
+      font-size: 14px; /* Smaller font for icon */
+      width: 32px; /* Fixed width for circular shape */
+      height: 32px; /* Fixed height for circular shape */
+      border-radius: 50%; /* Circular button */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.2s;
+      font-family: 'Segoe UI', Tahoma, sans-serif; /* Avoid emoji fonts */
+    }
+
+    #dark-mode-toggle:hover {
+      background-color: #5a6268;
+      transform: scale(1.1); /* Subtle hover effect */
+    }
+
+    body.dark-mode #dark-mode-toggle {
+      background-color: #adb5bd; /* Lighter gray in dark mode for contrast */
+    }
+
+    body.dark-mode #dark-mode-toggle:hover {
+      background-color: #8f9ba6;
+    }
+
+    #result {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      margin: 20px 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      text-align: center;
+      word-break: break-all;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode #result {
+      background-color: #3a3a3a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    .excel-section, .google-apps-script-section {
+      margin-top: 30px;
+      padding: 20px;
+      border-top: 2px solid #eee;
+      transition: border-color 0.3s;
+    }
+
+    body.dark-mode .excel-section, body.dark-mode .google-apps-script-section {
+      border-color: #555;
+    }
+
+    .excel-section h3, .google-apps-script-section h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    body.dark-mode .excel-section h3, body.dark-mode .google-apps-script-section h3 {
+      color: #e0e0e0;
+    }
+
+    #excelFormula, #googleAppsScript {
+      background-color: #f1f3f5;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      word-break: break-all;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode #excelFormula, body.dark-mode #googleAppsScript {
+      background-color: #3a3a3a;
+      color: #e0e0e0;
+    }
+
+    .excel-section button, .google-apps-script-section button {
+      background-color: #6c757d;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    .excel-section button:hover, .google-apps-script-section button:hover {
+      background-color: #5a6268;
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    body.dark-mode .error {
+      color: #ff6b6b;
+    }
+
+    .copy-message {
+      text-align: center;
+      min-height: 20px;
+      font-size: 14px;
+      color: #28a745;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    body.dark-mode .copy-message {
+      color: #2ecc71;
+    }
+
+    .copy-message.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        margin: 20px auto;
+        padding: 10px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      button {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      #dark-mode-toggle {
+        padding: 6px;
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Random Text Generator</h2>
+    <button id="dark-mode-toggle">☾</button>
+    <p style="text-align: center; margin-bottom: 20px;">
+      This tool generates random text of a specified length in mixed, all uppercase, or all lowercase, and provides equivalent Excel and Google Apps Script code for use in spreadsheets.
+    </p>
+    <div class="input-group">
+      <label for="length">Length:</label>
+      <input type="number" id="length" min="1" max="100" value="8" required>
+    </div>
+    <div class="error" id="lengthError">Length must be between 1 and 100.</div>
+    <div class="input-group">
+      <label for="case">Case:</label>
+      <select id="case">
+        <option value="mixed">Mixed</option>
+        <option value="upper">All Upper Case</option>
+        <option value="lower">All Lower Case</option>
+      </select>
+    </div>
+    <div class="button-group">
+      <button onclick="generateText()">Generate</button>
+      <button onclick="copyText()">Copy</button>
+    </div>
+    <div id="result"></div>
+    <div class="copy-message" id="copyTextMessage"></div>
+
+    <div class="excel-section">
+      <h3>Excel Formula Equivalent</h3>
+      <p id="excelFormula">=LET(chars,CHAR(RANDARRAY(8,1,97,122,TRUE)),TEXTJOIN("",TRUE,IF(RANDARRAY(8,1,0,1,TRUE)>0.5,UPPER(chars),chars)))</p>
+      <button onclick="copyFormula()">Copy Formula</button>
+      <div class="copy-message" id="copyFormulaMessage"></div>
+    </div>
+
+    <div class="google-apps-script-section">
+      <h3>Google Apps Script Equivalent</h3>
+      <p id="googleAppsScript">
+/**
+ * Generates random text of specified length and case type.
+ * @param {number} length The length of the text to generate (1-100).
+ * @param {string} caseType The case type: "mixed", "upper", or "lower".
+ * @return {string} Random text.
+ * @customfunction
+ */
+function RANDOMTEXT(length, caseType) {
+  if (length < 1 || length > 100 || isNaN(length)) {
+    throw new Error("Length must be between 1 and 100.");
+  }
+  caseType = (caseType || "upper").toLowerCase();
+  if (!["mixed", "upper", "lower"].includes(caseType)) {
+    caseType = "upper";
+  }
+  const chars = "abcdefghijklmnopqrstuvwxyz";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    const randomChar = chars[Math.floor(Math.random() * chars.length)];
+    if (caseType === "upper") {
+      result += randomChar.toUpperCase();
+    } else if (caseType === "lower") {
+      result += randomChar.toLowerCase();
+    } else {
+      result += Math.random() > 0.5 ? randomChar.toUpperCase() : randomChar.toLowerCase();
+    }
+  }
+  return result;
+}
+      </p>
+      <button onclick="copyGoogleAppsScript()">Copy Script</button>
+      <div class="copy-message" id="copyGoogleAppsScriptMessage"></div>
+    </div>
+  </div>
+
+  <script>
+    // Auto-generate text on page load
+    generateText();
+
+    function generateText() {
+      const lengthInput = document.getElementById('length');
+      const length = parseInt(lengthInput.value);
+      const lengthError = document.getElementById('lengthError');
+
+      // Validate length
+      if (isNaN(length) || length < 1 || length > 100) {
+        lengthError.style.display = 'block';
+        lengthInput.focus();
+        return;
+      } else {
+        lengthError.style.display = 'none';
+      }
+
+      let caseType = document.getElementById('case').value;
+      // Default to "upper" if caseType is invalid or missing
+      if (!["mixed", "upper", "lower"].includes(caseType)) {
+        caseType = "upper";
+      }
+
+      const chars = 'abcdefghijklmnopqrstuvwxyz';
+      let result = '';
+
+      // Generate random text
+      for (let i = 0; i < length; i++) {
+        const randomChar = chars[Math.floor(Math.random() * chars.length)];
+        if (caseType === "upper") {
+          result += randomChar.toUpperCase();
+        } else if (caseType === "lower") {
+          result += randomChar.toLowerCase();
+        } else { // mixed
+          result += Math.random() > 0.5 ? randomChar.toUpperCase() : randomChar.toLowerCase();
+        }
+      }
+
+      document.getElementById('result').textContent = result;
+
+      // Update Excel formula and Google Apps Script example after generating text
+      updateExcelFormula();
+      updateGoogleAppsScript();
+    }
+
+    function updateExcelFormula() {
+      const length = parseInt(document.getElementById('length').value) || 8;
+      let caseType = document.getElementById('case').value;
+      // Default to "upper" if caseType is invalid or missing
+      if (!["mixed", "upper", "lower"].includes(caseType)) {
+        caseType = "upper";
+      }
+
+      let excelFormula;
+      if (caseType === "upper") {
+        excelFormula = `=LET(chars,CHAR(RANDARRAY(${length},1,97,122,TRUE)),TEXTJOIN("",TRUE,UPPER(chars)))`;
+      } else if (caseType === "lower") {
+        excelFormula = `=LET(chars,CHAR(RANDARRAY(${length},1,97,122,TRUE)),TEXTJOIN("",TRUE,chars))`;
+      } else { // mixed
+        excelFormula = `=LET(chars,CHAR(RANDARRAY(${length},1,97,122,TRUE)),TEXTJOIN("",TRUE,IF(RANDARRAY(${length},1,0,1,TRUE)>0.5,UPPER(chars),chars)))`;
+      }
+
+      document.getElementById('excelFormula').textContent = excelFormula;
+    }
+
+    function updateGoogleAppsScript() {
+      const length = parseInt(document.getElementById('length').value) || 8;
+      let caseType = document.getElementById('case').value;
+      // Default to "upper" if caseType is invalid or missing
+      if (!["mixed", "upper", "lower"].includes(caseType)) {
+        caseType = "upper";
+      }
+
+      const scriptCode = 
+`/**
+ * Generates random text of specified length and case type.
+ * @param {number} length The length of the text to generate (1-100).
+ * @param {string} caseType The case type: "mixed", "upper", or "lower".
+ * @return {string} Random text.
+ * @customfunction
+ */
+function RANDOMTEXT(length, caseType) {
+  if (length < 1 || length > 100 || isNaN(length)) {
+    throw new Error("Length must be between 1 and 100.");
+  }
+  caseType = (caseType || "${caseType}").toLowerCase();
+  if (!["mixed", "upper", "lower"].includes(caseType)) {
+    caseType = "upper";
+  }
+  const chars = "abcdefghijklmnopqrstuvwxyz";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    const randomChar = chars[Math.floor(Math.random() * chars.length)];
+    if (caseType === "upper") {
+      result += randomChar.toUpperCase();
+    } else if (caseType === "lower") {
+      result += randomChar.toLowerCase();
+    } else {
+      result += Math.random() > 0.5 ? randomChar.toUpperCase() : randomChar.toLowerCase();
+    }
+  }
+  return result;
+}
+`;
+      document.getElementById('googleAppsScript').textContent = scriptCode;
+    }
+
+    function copyText() {
+      const text = document.getElementById('result').textContent;
+      const messageElement = document.getElementById('copyTextMessage');
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          messageElement.textContent = 'Text copied to clipboard!';
+          messageElement.classList.add('show');
+          setTimeout(() => {
+            messageElement.classList.remove('show');
+            setTimeout(() => {
+              messageElement.textContent = '';
+            }, 500);
+          }, 2000);
+        });
+      } else {
+        messageElement.textContent = 'No text to copy!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      }
+    }
+
+    function copyFormula() {
+      const formula = document.getElementById('excelFormula').textContent;
+      const messageElement = document.getElementById('copyFormulaMessage');
+      navigator.clipboard.writeText(formula).then(() => {
+        messageElement.textContent = 'Formula copied to clipboard!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      });
+    }
+
+    function copyGoogleAppsScript() {
+      const script = document.getElementById('googleAppsScript').textContent;
+      const messageElement = document.getElementById('copyGoogleAppsScriptMessage');
+      navigator.clipboard.writeText(script).then(() => {
+        messageElement.textContent = 'Script copied to clipboard!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      });
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const toggleButton = document.getElementById('dark-mode-toggle');
+      toggleButton.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+    }
+
+    // Auto-update text (and Excel formula) when the length value changes
+    document.getElementById('length').addEventListener('input', function() {
+      const lengthError = document.getElementById('lengthError');
+      if (this.value < 1) {
+        this.value = 1;
+        lengthError.style.display = 'block';
+      } else if (this.value > 100) {
+        this.value = 100;
+        lengthError.style.display = 'block';
+      } else {
+        lengthError.style.display = 'none';
+      }
+      generateText();
+    });
+
+    // Auto-update text (and Excel formula) when the case selection changes
+    document.getElementById('case').addEventListener('change', function() {
+      generateText();
+    });
+
+    // Add event listener for dark mode toggle
+    document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+  </script>
+</body>
+</html>

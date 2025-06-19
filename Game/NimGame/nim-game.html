@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nim Game</title>
+  <link rel="stylesheet" href="nim-game.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Nim Game</h2>
+    <button id="dark-mode-toggle">☾</button>
+    <p>Take 1 to <span id="max-take-display">3</span> objects each turn. Configure objects (1–20), max take per turn (1–5), game mode, and rules (last taker wins or loses).</p>
+    <div id="warning" class="warning" aria-live="polite"></div>
+    <div class="input-group">
+      <label for="mode">Game Mode:</label>
+      <select id="mode">
+        <option value="two-player">Two Players</option>
+        <option value="vs-ai">vs AI</option>
+      </select>
+    </div>
+    <div class="input-group" id="difficulty-group">
+      <label for="difficulty">AI Difficulty:</label>
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="objects">Objects:</label>
+      <input type="number" id="objects" min="1" max="20" value="20" required>
+      <span class="hint" id="objectsHint">Range: 1 to 20</span>
+    </div>
+    <div class="input-group">
+      <label for="max-take">Max Take per Turn:</label>
+      <input type="number" id="max-take" min="1" max="5" value="3" required>
+      <span class="hint" id="maxTakeHint">Range: 1 to 5</span>
+    </div>
+    <div class="input-group">
+      <label for="rules">Game Rules:</label>
+      <select id="rules">
+        <option value="normal">Last taker wins</option>
+        <option value="misere">Last taker loses</option>
+      </select>
+    </div>
+    <div class="button-group">
+      <button onclick="startGame()">Start Game</button>
+    </div>
+    <p id="turn" class="turn">Click a Take button to start</p>
+    <p id="ai-thinking" class="ai-thinking">AI is thinking...</p>
+    <div class="taken-objects-container">
+      <div class="taken-objects" id="taken-1">Player 1 Taken: <span class="objects-display"></span></div>
+      <div class="taken-objects" id="taken-2">Player 2 Taken: <span class="objects-display"></span></div>
+    </div>
+    <section class="pile-container" id="pile-container" role="region" aria-labelledby="pile-label"></section>
+    <div id="status"></div>
+    <div class="button-group" id="reset-group" style="display: none;">
+      <button onclick="resetGame()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let currentPlayer = '1';
+    let objects = 20;
+    let initialObjects = 20;
+    let gameActive = false;
+    let isAIMode = false;
+    let aiDifficulty = 'easy';
+    let maxTake = 3;
+    let rules = 'normal';
+    let taken1 = 0;
+    let taken2 = 0;
+    let aiTimer = null;
+
+    function showWarning(message) {
+      const warningElement = document.getElementById('warning');
+      warningElement.textContent = message;
+      warningElement.classList.add('show');
+      console.log(`[${new Date().toLocaleTimeString('en-US')}]: ${message}`);
+      setTimeout(() => {
+        warningElement.classList.remove('show');
+        warningElement.textContent = '';
+      }, 3000);
+    }
+
+    function toggleDifficulty() {
+      const mode = document.getElementById('mode').value;
+      if (gameActive && mode !== (isAIMode ? 'vs-ai' : 'two-player')) {
+        isAIMode = mode === 'vs-ai';
+        document.getElementById('taken-2').firstChild.textContent = isAIMode ? 'AI Taken:' : 'Player 2 Taken:';
+        resetGame();
+        showWarning('Game reset due to mode change.');
+      }
+      document.getElementById('difficulty-group').classList.toggle('show', mode === 'vs-ai');
+    }
+
+    function initializePile() {
+      initialObjects = parseInt(document.getElementById('objects').value) || 20;
+      maxTake = parseInt(document.getElementById('max-take').value) || 3;
+      objects = initialObjects;
+      document.getElementById('max-take-display').textContent = maxTake;
+      document.getElementById('taken-2').firstChild.textContent = isAIMode ? 'AI Taken:' : 'Player 2 Taken:';
+
+      const pileContainer = document.getElementById('pile-container');
+      pileContainer.innerHTML = '';
+
+      const pile = document.createElement('article');
+      pile.classList.add('pile');
+      pile.setAttribute('tabindex', '0');
+      const pileLabel = document.createElement('div');
+      pileLabel.classList.add('pile-label');
+      pileLabel.textContent = `Objects: ${objects}/${initialObjects}`;
+      pile.appendChild(pileLabel);
+      const objectsDisplay = document.createElement('div');
+      objectsDisplay.classList.add('objects-display');
+
+      // Calculate grid arrangement
+      const columns = Math.ceil(Math.sqrt(initialObjects));
+      const rows = Math.ceil(initialObjects / columns);
+      objectsDisplay.style.gridTemplateColumns = `repeat(${columns}, 10px)`;
+      objectsDisplay.style.gridTemplateRows = `repeat(${rows}, 10px)`;
+
+      for (let j = 0; j < initialObjects; j++) {
+        const object = document.createElement('span');
+        object.classList.add('object');
+        objectsDisplay.appendChild(object);
+      }
+      pile.appendChild(objectsDisplay);
+      const takeButtons = document.createElement('div');
+      takeButtons.classList.add('take-buttons');
+      for (let j = 1; j <= Math.min(objects, maxTake); j++) {
+        const button = document.createElement('button');
+        button.textContent = `Take ${j}`;
+        button.setAttribute('data-take', j);
+        button.setAttribute('aria-label', `Take ${j} objects`);
+        button.addEventListener('click', () => handleTake(j));
+        if (objects < j) button.disabled = true;
+        takeButtons.appendChild(button);
+      }
+      pile.appendChild(takeButtons);
+      pileContainer.appendChild(pile);
+
+      updateTakenDisplay();
+    }
+
+    function updatePile() {
+      const pileContainer = document.getElementById('pile-container');
+      const pile = pileContainer.querySelector('.pile');
+      const pileLabel = pile.querySelector('.pile-label');
+      pileLabel.textContent = `Objects: ${objects}/${initialObjects}`;
+      const objectsDisplay = pile.querySelector('.objects-display');
+      objectsDisplay.innerHTML = '';
+      for (let j = 0; j < objects; j++) {
+        const object = document.createElement('span');
+        object.classList.add('object');
+        objectsDisplay.appendChild(object);
+      }
+      const takeButtons = pile.querySelector('.take-buttons');
+      takeButtons.innerHTML = '';
+      if (objects > 0) {
+        for (let j = 1; j <= Math.min(objects, maxTake); j++) {
+          const button = document.createElement('button');
+          button.textContent = `Take ${j}`;
+          button.setAttribute('data-take', j);
+          button.setAttribute('aria-label', `Take ${j} objects`);
+          button.addEventListener('click', () => handleTake(j));
+          if (objects < j) button.disabled = true;
+          takeButtons.appendChild(button);
+        }
+      } else {
+        const emptyLabel = document.createElement('div');
+        emptyLabel.textContent = 'Empty';
+        emptyLabel.style.color = '#888';
+        takeButtons.appendChild(emptyLabel);
+      }
+    }
+
+    function updateTakenDisplay() {
+      const display1 = document.getElementById('taken-1').querySelector('.objects-display');
+      const display2 = document.getElementById('taken-2').querySelector('.objects-display');
+      display1.innerHTML = '<span class="object"></span>'.repeat(taken1);
+      display2.innerHTML = '<span class="object"></span>'.repeat(taken2);
+    }
+
+    function startGame() {
+      const objectsInput = document.getElementById('objects');
+      const maxTakeInput = document.getElementById('max-take');
+      isAIMode = document.getElementById('mode').value === 'vs-ai';
+      aiDifficulty = document.getElementById('difficulty').value;
+      rules = document.getElementById('rules').value;
+
+      initialObjects = parseInt(objectsInput.value);
+      maxTake = parseInt(maxTakeInput.value);
+
+      let valid = true;
+      if (isNaN(initialObjects) || initialObjects < 1 || initialObjects > 20) {
+        showWarning('Number of objects must be between 1 and 20.');
+        objectsInput.focus();
+        valid = false;
+      }
+      if (isNaN(maxTake) || maxTake < 1 || maxTake > 5 || maxTake > initialObjects) {
+        showWarning('Max objects per turn must be between 1 and 5 and not exceed total objects.');
+        maxTakeInput.focus();
+        valid = false;
+      }
+      if (!valid) return false;
+
+      gameActive = true;
+      currentPlayer = '1';
+      taken1 = 0;
+      taken2 = 0;
+      objects = initialObjects;
+      document.getElementById('turn').style.display = 'block';
+      document.getElementById('turn').className = `turn player${currentPlayer}`;
+      document.getElementById('ai-thinking').classList.remove('show');
+      document.getElementById('reset-group').style.display = 'flex';
+      document.getElementById('status').textContent = '';
+      document.getElementById('turn').textContent = `Player ${currentPlayer}'s turn`;
+
+      initializePile();
+
+      if (isAIMode && currentPlayer === '2') {
+        document.getElementById('ai-thinking').classList.add('show');
+        aiTimer = setTimeout(makeAIMove, 500);
+      }
+      return true;
+    }
+
+    function handleTake(count) {
+      if (!gameActive) {
+        if (!startGame()) return; // Start game if not active, exit if invalid
+      }
+      if (isAIMode && currentPlayer === '2' || objects < count) {
+        return;
+      }
+
+      objects -= count;
+      if (currentPlayer === '1') taken1 += count;
+      else taken2 += count;
+      updatePile();
+      updateTakenDisplay();
+
+      if (checkGameEnd()) {
+        const winner = rules === 'normal' ? currentPlayer : (currentPlayer === '1' ? '2' : '1');
+        const winnerText = isAIMode && winner === '2' ? 'AI' : `Player ${winner}`;
+        document.getElementById('status').textContent = `Game Over! ${winnerText} wins!`;
+        document.getElementById('ai-thinking').classList.remove('show');
+        gameActive = false;
+        return;
+      }
+
+      currentPlayer = currentPlayer === '1' ? '2' : '1';
+      document.getElementById('turn').className = `turn player${currentPlayer}`;
+      document.getElementById('turn').textContent = `Player ${currentPlayer}'s turn`;
+
+      if (isAIMode && gameActive && currentPlayer === '2') {
+        document.getElementById('ai-thinking').classList.add('show');
+        aiTimer = setTimeout(makeAIMove, 500);
+      }
+
+      const pile = document.querySelector('.pile');
+      if (pile) pile.focus();
+    }
+
+    function checkGameEnd() {
+      return objects === 0;
+    }
+
+    function makeAIMove() {
+      if (!gameActive || !isAIMode || currentPlayer !== '2') {
+        document.getElementById('ai-thinking').classList.remove('show');
+        return;
+      }
+
+      let move = aiDifficulty === 'easy' ? getEasyMove() : getHardMove();
+
+      if (move) {
+        objects -= move.count;
+        taken2 += move.count;
+        updatePile();
+        updateTakenDisplay();
+
+        if (checkGameEnd()) {
+          const winner = rules === 'normal' ? '2' : '1';
+          const winnerText = rules === 'normal' ? 'AI' : 'Player 1';
+          document.getElementById('status').textContent = `Game Over! ${winnerText} wins!`;
+          document.getElementById('ai-thinking').classList.remove('show');
+          gameActive = false;
+          return;
+        }
+
+        currentPlayer = '1';
+        document.getElementById('turn').className = `turn player${currentPlayer}`;
+        document.getElementById('turn').textContent = `Player ${currentPlayer}'s turn`;
+      }
+      document.getElementById('ai-thinking').classList.remove('show');
+    }
+
+    function getEasyMove() {
+      const validMoves = [];
+      for (let j = 1; j <= Math.min(objects, maxTake); j++) {
+        validMoves.push({ count: j });
+      }
+      return validMoves.length ? validMoves[Math.floor(Math.random() * validMoves.length)] : null;
+    }
+
+    function getHardMove() {
+      if (objects <= maxTake) {
+        return rules === 'normal' ? { count: objects } : { count: objects - 1 || 1 };
+      }
+      const remainder = objects % (maxTake + 1);
+      return { count: remainder === 0 ? maxTake : remainder };
+    }
+
+    function resetGame() {
+      clearTimeout(aiTimer);
+      gameActive = true;
+      currentPlayer = '1';
+      taken1 = 0;
+      taken2 = 0;
+      objects = initialObjects;
+      document.getElementById('turn').className = `turn player${currentPlayer}`;
+      document.getElementById('turn').textContent = `Player ${currentPlayer}'s turn`;
+      document.getElementById('ai-thinking').classList.remove('show');
+      document.getElementById('status').textContent = '';
+      updatePile();
+      updateTakenDisplay();
+
+      if (isAIMode && currentPlayer === '2') {
+        document.getElementById('ai-thinking').classList.add('show');
+        aiTimer = setTimeout(makeAIMove, 500);
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const toggleButton = document.getElementById('dark-mode-toggle');
+      toggleButton.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+    }
+
+    function updateHints() {
+      const objectsInput = parseInt(document.getElementById('objects').value) || 1;
+      const maxTakeInput = parseInt(document.getElementById('max-take').value) || 1;
+
+      let valid = true;
+      if (objectsInput < 1 || objectsInput > 20) {
+        showWarning('Number of objects must be between 1 and 20.');
+        valid = false;
+      }
+      if (maxTakeInput < 1 || maxTakeInput > 5 || maxTakeInput > objectsInput) {
+        showWarning('Max objects per turn must be between 1 and 5 and not exceed total objects.');
+        valid = false;
+      }
+
+      if (valid) {
+        document.getElementById('max-take-display').textContent = maxTakeInput;
+      }
+
+      if (valid && gameActive && (objectsInput !== initialObjects || maxTakeInput !== maxTake)) {
+        initialObjects = objectsInput;
+        maxTake = maxTakeInput;
+        resetGame();
+        showWarning('Game reset due to configuration change.');
+      }
+
+      document.getElementById('objectsHint').textContent = 'Range: 1 to 20';
+      document.getElementById('maxTakeHint').textContent = 'Range: 1 to 5';
+    }
+
+    document.getElementById('objects').addEventListener('input', updateHints);
+    document.getElementById('max-take').addEventListener('input', updateHints);
+    document.getElementById('mode').addEventListener('change', toggleDifficulty);
+    document.getElementById('difficulty').addEventListener('change', function() {
+      if (gameActive) {
+        aiDifficulty = this.value;
+        showWarning(`AI difficulty changed to ${this.value}.`);
+      }
+    });
+    document.getElementById('rules').addEventListener('change', function() {
+      if (gameActive) {
+        rules = this.value;
+        resetGame();
+        showWarning(`Game rules changed to: ${this.value === 'normal' ? 'Last taker wins' : 'Last taker loses'}.`);
+      }
+    });
+    document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+    document.addEventListener('keydown', (e) => {
+      if (!gameActive) {
+        if (e.key >= '1' && e.key <= maxTake) {
+          if (startGame()) handleTake(parseInt(e.key));
+        }
+        return;
+      }
+      if (isAIMode && currentPlayer === '2') return;
+      const pile = document.querySelector('.pile:focus');
+      if (pile && e.key >= '1' && e.key <= maxTake) {
+        const take = parseInt(e.key);
+        if (objects >= take) handleTake(take);
+      }
+    });
+
+    window.onload = () => {
+      initializePile();
+      toggleDifficulty();
+    };
+  </script>
+</body>
+</html>

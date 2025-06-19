@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>Archive URL</title>
+<style>
+.button {
+    width:180px;
+}
+</style>
+</head>
+<body>
+<form>
+    <label for="url">Enter an URL:</label><br>
+    <input type="text" id="url"><br>
+    <p></p>
+    <input type="button" id="checkInternetArchive_Button" value="Check Internet Archive" style="width:180px">
+    <input type="button" id="saveInternetArchive_Button" value="Save Internet Archive" style="width:180px">
+    <p></p>
+    <input type="button" id="checkArchiveToday_Button" value="Check Archive Today" style="width:180px">
+    <input type="button" id="saveArchiveToday_Button" value="Save Archive Today" style="width:180px">
+    <p></p>
+    <input type="button" id="clear_Button" value="Clear" style="width:88px">
+    <input type="button" id="paste_Button" value="Paste" style="width:88px">
+    <input type="button" id="GitHub_Button" value="GitHub" style="width:88px">
+</form>
+</body>
+<script>
+//2023-01-13
+checkInternetArchive_Button.addEventListener('click', function() {
+	event.preventDefault();
+	const url = document.getElementById("url").value;
+      window.open("https://web.archive.org/web/*/" + url);
+});
+saveInternetArchive_Button.addEventListener('click', function() {
+	event.preventDefault();
+	const url = document.getElementById("url").value;
+      window.open("https://web.archive.org/save/" + url);
+});
+checkArchiveToday_Button.addEventListener('click', function() {
+	event.preventDefault();
+	const url = document.getElementById("url").value;
+      window.open("https://archive.today/" + url);
+});
+saveArchiveToday_Button.addEventListener('click', function() {
+	event.preventDefault();
+	const url = document.getElementById("url").value;
+      window.open("https://archive.today/?url=" + url);
+});
+paste_Button.addEventListener('click', function() {
+	navigator.clipboard
+	.readText()
+	.then(
+	cliptext =>
+	(document.getElementById('url').value = cliptext),
+	err => console.log(err)
+);
+});
+clear_Button.addEventListener('click', function(){
+	event.preventDefault();
+	document.getElementById("url").value = "";	
+});
+GitHub_Button.addEventListener('click', function() {
+	event.preventDefault();
+        window.open("https://github.com/OutliersEcon/JavaScript-Tools/blob/main/archiveURLTool.html");
+});
+</script>
+</html>
