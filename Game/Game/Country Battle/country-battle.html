@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Battle</title>
+  <link rel="stylesheet" href="country-battle-style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Country Battle</h2>
+    <button id="dark-mode-toggle">☾</button>
+    <p>Configure the grid size, number of countries, speed, terrain, and boundary type, then start the battle simulation.</p>
+    <div class="input-group">
+      <label for="gridSize">Grid Size:</label>
+      <input type="number" id="gridSize" min="10" max="100" value="100">
+    </div>
+    <p>Min: 10, Max: 100</p>
+    <div class="input-group">
+      <label for="numCountries">Countries:</label>
+      <input type="number" id="numCountries" min="2" max="10" value="10">
+    </div>
+    <p>Min: 2, Max: 10</p>
+    <div class="input-group">
+      <label for="updateFrequency">Speed (updates/sec):</label>
+      <input type="number" id="updateFrequency" min="1" max="20" value="20">
+    </div>
+    <p>Min: 1, Max: 20</p>
+    <div class="input-group">
+      <label for="boundaryType">Boundary:</label>
+      <select id="boundaryType">
+        <option value="toroidal">Toroidal</option>
+        <option value="fixed">Fixed</option>
+      </select>
+    </div>
+    <div class="terrain-controls">
+      <h3 style="margin-bottom: 15px; text-align: center;">Terrain System</h3>
+      <div class="input-group">
+        <label for="mountainPercent">Mountain %:</label>
+        <input type="number" id="mountainPercent" min="0" max="50" value="15">
+      </div>
+      <div class="input-group">
+        <label for="waterPercent">Water %:</label>
+        <input type="number" id="waterPercent" min="0" max="50" value="15">
+      </div>
+      <div class="terrain-legend">
+        <div class="terrain-legend-item">
+          <div class="terrain-legend-color" style="background-color: #FFFFFF; border: 2px solid #ccc;"></div>
+          <span>Plains (neutral)</span>
+        </div>
+        <div class="terrain-legend-item">
+          <div class="terrain-legend-color" style="background-color: #8B4513;"></div>
+          <span>Mountains (+defense)</span>
+        </div>
+        <div class="terrain-legend-item">
+          <div class="terrain-legend-color" style="background-color: #4169E1;"></div>
+          <span>Water (+attack)</span>
+        </div>
+      </div>
+    </div>
+    <div class="display-controls">
+      <h3 style="margin-bottom: 15px; text-align: center;">Display Options</h3>
+      <div class="input-group">
+        <label for="showCountries">Show Countries:</label>
+        <input type="checkbox" id="showCountries" checked style="width: auto; margin-left: 10px;">
+      </div>
+      <div class="input-group">
+        <label for="showTerrain">Show Terrain:</label>
+        <input type="checkbox" id="showTerrain" checked style="width: auto; margin-left: 10px;">
+      </div>
+    </div>
+    <div class="bless-controls">
+      <h3 style="margin-bottom: 15px; text-align: center;">Divine Interventions ⚡</h3>
+      <div class="input-group">
+        <label for="blessCountry">Target Country:</label>
+        <select id="blessCountry">
+          <option value="1">Country 1</option>
+          <option value="2">Country 2</option>
+          <option value="3">Country 3</option>
+          <option value="4">Country 4</option>
+          <option value="5">Country 5</option>
+          <option value="6">Country 6</option>
+          <option value="7">Country 7</option>
+          <option value="8">Country 8</option>
+          <option value="9">Country 9</option>
+          <option value="10">Country 10</option>
+        </select>
+      </div>
+      <div class="blessing-grid">
+        <button class="blessing-button war" onclick="castBlessing('war')">
+          ⚔️ Blessing of War<br>
+          <small>+50% attack for 10 rounds</small>
+          <div class="blessing-cooldown" id="war-cooldown"></div>
+        </button>
+        <button class="blessing-button shield" onclick="castBlessing('shield')">
+          🛡️ Blessing of Protection<br>
+          <small>+50% defense for 10 rounds</small>
+          <div class="blessing-cooldown" id="shield-cooldown"></div>
+        </button>
+        <button class="blessing-button fortress" onclick="castBlessing('fortress')">
+          🏰 Blessing of Fortification<br>
+          <small>Immune to conquest for 3 rounds</small>
+          <div class="blessing-cooldown" id="fortress-cooldown"></div>
+        </button>
+      </div>
+      <div id="active-blessings"></div>
+    </div>
+    <div class="button-group">
+      <div class="main-controls">
+        <button onclick="toggleSimulation()">Start</button>
+        <button onclick="clearGrid()">Clear</button>
+        <button onclick="randomizeGrid()">Randomize</button>
+      </div>
+      <div class="export-import-controls">
+        <button onclick="exportMap()">Export Map</button>
+        <button onclick="document.getElementById('import-file').click()">Import Map</button>
+      </div>
+    </div>
+    <input type="file" id="import-file" accept=".json" onchange="importMap(event)">
+    <div class="game-area">
+      <canvas id="gameCanvas"></canvas>
+      <div id="stats-panel">
+        <div class="stats-item">Battles This Round: <span id="battles-count">0</span></div>
+        <div id="country-stats"></div>
+      </div>
+    </div>
+    <div id="status">Round: 0, Countries Remaining: 0</div>
+    <div id="battle-log">
+      <h3>Battle Log</h3>
+      <div id="battle-log-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let gridSize = parseInt(document.getElementById('gridSize').value);
+    let numCountries = parseInt(document.getElementById('numCountries').value);
+    let cellSize = 10;
+    let grid = [];
+    let terrain = [];
+    let isRunning = false;
+    let round = 0;
+    let animationId = null;
+    let updateFrequency = parseInt(document.getElementById('updateFrequency').value);
+    let boundaryType = document.getElementById('boundaryType').value;
+    let battlesThisRound = 0;
+    let countryHighs = [];
+    let countryLows = [];
+    let battleLog = [];
+    let mountainPercent = 15;
+    let waterPercent = 15;
+    let showCountries = true;
+    let showTerrain = true;
+
+    // Blessing system
+    let activeBlessings = [];
+    let blessingCooldowns = {
+      war: 0,
+      shield: 0,
+      fortress: 0
+    };
+
+    // Define colors for up to 10 countries
+    const countryColors = [
+      '#FF0000', // Red
+      '#00FF00', // Green
+      '#0000FF', // Blue
+      '#FFFF00', // Yellow
+      '#FF00FF', // Magenta
+      '#00FFFF', // Cyan
+      '#FFA500', // Orange
+      '#800080', // Purple
+      '#008000', // Dark Green
+      '#FFC0CB'  // Pink
+    ];
+
+    // Terrain types
+    const TERRAIN_PLAINS = 0;
+    const TERRAIN_MOUNTAIN = 1;
+    const TERRAIN_WATER = 2;
+
+    const terrainColors = {
+      [TERRAIN_PLAINS]: '#FFFFFF',  // White
+      [TERRAIN_MOUNTAIN]: '#8B4513', // Brown
+      [TERRAIN_WATER]: '#4169E1'    // Royal blue
+    };
+
+    function resizeCanvas() {
+      gridSize = Math.max(10, Math.min(100, parseInt(document.getElementById('gridSize').value)));
+      numCountries = Math.max(2, Math.min(10, parseInt(document.getElementById('numCountries').value)));
+      cellSize = Math.min(600 / gridSize, 10);
+      canvas.width = gridSize * cellSize;
+      canvas.height = gridSize * cellSize;
+      initializeGrid();
+      updateBlessCountryOptions();
+      updateStats();
+      drawGrid();
+    }
+
+    function initializeGrid() {
+      grid = Array(gridSize).fill().map(() => Array(gridSize).fill(0));
+      terrain = Array(gridSize).fill().map(() => Array(gridSize).fill(TERRAIN_PLAINS));
+      round = 0;
+      battlesThisRound = 0;
+      countryHighs = Array(numCountries).fill(0);
+      countryLows = Array(numCountries).fill(Infinity);
+      battleLog = [];
+      activeBlessings = [];
+      blessingCooldowns = { war: 0, shield: 0, fortress: 0 };
+      updateBattleLog();
+      updateActiveBlessings();
+      updateBlessingCooldowns();
+      generateTerrain();
+    }
+
+    function generateTerrain() {
+      const totalCells = gridSize * gridSize;
+      const mountainCells = Math.floor(totalCells * mountainPercent / 100);
+      const waterCells = Math.floor(totalCells * waterPercent / 100);
+
+      // Reset to plains
+      terrain = Array(gridSize).fill().map(() => Array(gridSize).fill(TERRAIN_PLAINS));
+
+      // Generate mountain regions using blob-like growth
+      generateTerrainBlobs(TERRAIN_MOUNTAIN, mountainCells);
+      
+      // Generate water regions using blob-like growth
+      generateTerrainBlobs(TERRAIN_WATER, waterCells);
+    }
+
+    function generateTerrainBlobs(terrainType, targetCells) {
+      let placedCells = 0;
+      const maxAttempts = 50; // Prevent infinite loops
+      
+      while (placedCells < targetCells) {
+        // Start a new blob
+        let blobSize = Math.min(
+          Math.floor(Math.random() * 15) + 5, // Blob size between 5-20 cells
+          targetCells - placedCells
+        );
+        
+        // Find a starting point for the blob
+        let startX, startY;
+        let attempts = 0;
+        do {
+          startX = Math.floor(Math.random() * gridSize);
+          startY = Math.floor(Math.random() * gridSize);
+          attempts++;
+        } while (terrain[startX][startY] !== TERRAIN_PLAINS && attempts < maxAttempts);
+        
+        if (attempts >= maxAttempts) break;
+        
+        // Grow the blob using a flood-fill like approach
+        const blobCells = [{x: startX, y: startY}];
+        terrain[startX][startY] = terrainType;
+        placedCells++;
+        
+        while (blobCells.length > 0 && placedCells < targetCells && blobSize > 1) {
+          const currentCell = blobCells.splice(Math.floor(Math.random() * blobCells.length), 1)[0];
+          
+          // Try to expand to neighboring cells
+          const neighbors = getNeighbors(currentCell.x, currentCell.y);
+          const validNeighbors = neighbors.filter(n => 
+            n.x >= 0 && n.x < gridSize && 
+            n.y >= 0 && n.y < gridSize && 
+            terrain[n.x][n.y] === TERRAIN_PLAINS
+          );
+          
+          if (validNeighbors.length > 0) {
+            // Choose a random neighbor to expand to
+            const expandTo = validNeighbors[Math.floor(Math.random() * validNeighbors.length)];
+            terrain[expandTo.x][expandTo.y] = terrainType;
+            blobCells.push(expandTo);
+            placedCells++;
+            blobSize--;
+          }
+        }
+      }
+    }
+
+    function getNeighbors(x, y) {
+      return [
+        {x: x - 1, y: y},
+        {x: x + 1, y: y},
+        {x: x, y: y - 1},
+        {x: x, y: y + 1},
+        // Include diagonal neighbors for more natural blob shapes
+        {x: x - 1, y: y - 1},
+        {x: x - 1, y: y + 1},
+        {x: x + 1, y: y - 1},
+        {x: x + 1, y: y + 1}
+      ];
+    }
+
+    function updateBlessCountryOptions() {
+      const select = document.getElementById('blessCountry');
+      select.innerHTML = '';
+      for (let i = 1; i <= numCountries; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = `Country ${i}`;
+        select.appendChild(option);
+      }
+    }
+
+    function castBlessing(type) {
+      if (blessingCooldowns[type] > 0) {
+        alert(`This blessing is on cooldown for ${blessingCooldowns[type]} more rounds!`);
+        return;
+      }
+
+      const countryId = parseInt(document.getElementById('blessCountry').value);
+      const countryStats = computeCountryStats();
+      
+      if (countryStats.counts[countryId - 1] === 0) {
+        alert(`Country ${countryId} has been eliminated and cannot receive blessings!`);
+        return;
+      }
+
+      let blessing = null;
+
+      switch (type) {
+        case 'war':
+          blessing = {
+            type: 'war',
+            country: countryId,
+            duration: 10,
+            effect: 'attack',
+            multiplier: 1.5,
+            name: 'Blessing of War ⚔️'
+          };
+          blessingCooldowns.war = 15;
+          break;
+        
+        case 'shield':
+          blessing = {
+            type: 'shield',
+            country: countryId,
+            duration: 10,
+            effect: 'defense',
+            multiplier: 1.5,
+            name: 'Blessing of Protection 🛡️'
+          };
+          blessingCooldowns.shield = 15;
+          break;
+        
+        case 'fortress':
+          blessing = {
+            type: 'fortress',
+            country: countryId,
+            duration: 3,
+            effect: 'immunity',
+            multiplier: 1.0,
+            name: 'Blessing of Fortification 🏰'
+          };
+          blessingCooldowns.fortress = 20;
+          break;
+      }
+
+      if (blessing) {
+        activeBlessings.push(blessing);
+        battleLog.push(`Round ${round}: ${blessing.name} cast on Country ${countryId}`);
+        updateBattleLog();
+        updateActiveBlessings();
+        updateBlessingCooldowns();
+      }
+    }
+
+    function updateActiveBlessings() {
+      const container = document.getElementById('active-blessings');
+      container.innerHTML = '';
+      
+      if (activeBlessings.length === 0) return;
+      
+      activeBlessings.forEach(blessing => {
+        const div = document.createElement('div');
+        div.className = 'active-blessing';
+        let effectText = '';
+        
+        if (blessing.effect === 'immunity') {
+          effectText = `Country ${blessing.country} is immune to conquest`;
+        } else {
+          const multiplierText = `+${Math.round((blessing.multiplier - 1) * 100)}%`;
+          effectText = `Country ${blessing.country} has ${multiplierText} ${blessing.effect}`;
+        }
+        
+        div.innerHTML = `
+          <strong>${blessing.name}</strong><br>
+          ${effectText}<br>
+          <small>Duration: ${blessing.duration} rounds remaining</small>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function updateBlessingCooldowns() {
+      Object.keys(blessingCooldowns).forEach(type => {
+        const element = document.getElementById(`${type}-cooldown`);
+        if (blessingCooldowns[type] > 0) {
+          element.textContent = `Cooldown: ${blessingCooldowns[type]} rounds`;
+          element.parentElement.disabled = true;
+          element.parentElement.style.opacity = '0.6';
+        } else {
+          element.textContent = '';
+          element.parentElement.disabled = false;
+          element.parentElement.style.opacity = '1';
+        }
+      });
+    }
+
+    function getBlessingMultiplier(countryId, effectType) {
+      let multiplier = 1.0;
+      
+      activeBlessings.forEach(blessing => {
+        if (blessing.effect === effectType && blessing.country === countryId) {
+          multiplier *= blessing.multiplier;
+        }
+      });
+      
+      return multiplier;
+    }
+
+    function isCountryImmune(countryId) {
+      return activeBlessings.some(blessing => 
+        blessing.effect === 'immunity' && blessing.country === countryId
+      );
+    }
+
+    function randomizeGrid() {
+      numCountries = Math.max(2, Math.min(10, parseInt(document.getElementById('numCountries').value)));
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          grid[i][j] = Math.floor(Math.random() * numCountries) + 1;
+        }
+      }
+      round = 0;
+      battlesThisRound = 0;
+      countryHighs = Array(numCountries).fill(0);
+      countryLows = Array(numCountries).fill(Infinity);
+      battleLog = [];
+      activeBlessings = [];
+      blessingCooldowns = { war: 0, shield: 0, fortress: 0 };
+      updateBattleLog();
+      updateActiveBlessings();
+      updateBlessingCooldowns();
+      generateTerrain();
+      updateBlessCountryOptions();
+      updateStats();
+      drawGrid();
+    }
+
+    function clearGrid() {
+      initializeGrid();
+      round = 0;
+      battlesThisRound = 0;
+      updateBlessCountryOptions();
+      updateStats();
+      if (isRunning) toggleSimulation();
+      drawGrid();
+    }
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          let cellColor = null;
+
+          // Determine what to draw based on display options
+          if (showTerrain && showCountries) {
+            // Show both: terrain for empty cells, countries for occupied cells
+            if (grid[i][j] === 0) {
+              cellColor = terrainColors[terrain[i][j]];
+            } else {
+              cellColor = countryColors[grid[i][j] - 1];
+            }
+          } else if (showTerrain && !showCountries) {
+            // Show only terrain
+            cellColor = terrainColors[terrain[i][j]];
+          } else if (!showTerrain && showCountries) {
+            // Show only countries
+            if (grid[i][j] === 0) {
+              cellColor = document.body.classList.contains('dark-mode') ? '#3a3a3a' : '#f8f9fa';
+            } else {
+              cellColor = countryColors[grid[i][j] - 1];
+            }
+          } else {
+            // Show neither (empty grid)
+            cellColor = document.body.classList.contains('dark-mode') ? '#3a3a3a' : '#f8f9fa';
+          }
+
+          ctx.fillStyle = cellColor;
+          ctx.fillRect(j * cellSize, i * cellSize, cellSize - 1, cellSize - 1);
+        }
+      }
+    }
+
+    function countNeighbors(x, y, countryId) {
+      let count = 0;
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue;
+          let nx = x + i;
+          let ny = y + j;
+          if (boundaryType === 'toroidal') {
+            nx = (nx + gridSize) % gridSize;
+            ny = (ny + gridSize) % gridSize;
+            if (grid[nx][ny] === countryId) count++;
+          } else if (boundaryType === 'fixed') {
+            if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize) {
+              if (grid[nx][ny] === countryId) count++;
+            }
+          }
+        }
+      }
+      return count;
+    }
+
+    function computeCountryStats() {
+      const counts = Array(numCountries).fill(0);
+      const neighborSums = Array(numCountries).fill(0);
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          if (grid[i][j] > 0) {
+            const countryIndex = grid[i][j] - 1;
+            counts[countryIndex]++;
+            neighborSums[countryIndex] += countNeighbors(i, j, grid[i][j]);
+          }
+        }
+      }
+      const densityIndices = counts.map((count, index) => 
+        count > 0 ? parseFloat((neighborSums[index] / count).toFixed(2)) : 0
+      );
+      return { counts, densityIndices };
+    }
+
+    function updateStats() {
+      const stats = computeCountryStats();
+      const counts = stats.counts || Array(numCountries).fill(0);
+      const densityIndices = stats.densityIndices || Array(numCountries).fill(0);
+      const totalCells = gridSize * gridSize;
+      const remaining = counts.filter(count => count > 0).length;
+      let statusText = `Round: ${round}, Countries Remaining: ${remaining}`;
+      if (remaining <= 1) {
+        statusText += remaining === 1 ? ' (One country dominates)' : ' (No countries remain)';
+      }
+      document.getElementById('status').textContent = statusText;
+
+      // Update historical highs and lows
+      counts.forEach((count, index) => {
+        if (count > countryHighs[index]) {
+          countryHighs[index] = count;
+        }
+        if (count > 0 && count < countryLows[index]) {
+          countryLows[index] = count;
+        }
+      });
+
+      // Compute strength scores and sort countries
+      const countryData = counts.map((count, index) => {
+        const density = parseFloat(densityIndices[index] || 0);
+        return {
+          index,
+          count,
+          density,
+          percentage: ((count / totalCells) * 100).toFixed(2),
+          high: countryHighs[index],
+          low: countryLows[index] === Infinity ? 'N/A' : countryLows[index],
+          strength: count * (1 + density / 8)
+        };
+      }).filter(data => data.count > 0).sort((a, b) => 
+        b.strength - a.strength || // Primary: strength score
+        b.count - a.count ||       // Secondary: cell count
+        b.density - a.density ||   // Tertiary: density
+        a.index - b.index          // Quaternary: country ID
+      );
+
+      // Update stats panel
+      document.getElementById('battles-count').textContent = battlesThisRound;
+      const countryStats = document.getElementById('country-stats');
+      countryStats.innerHTML = '';
+      countryData.forEach(data => {
+        const div = document.createElement('div');
+        div.className = 'stats-item';
+        div.innerHTML = `
+          <span class="color-box" style="background-color: ${countryColors[data.index]};"></span>
+          Country ${data.index + 1}: ${data.count} cells (${data.percentage}%)
+          <div class="country-stat">High: ${data.high} cells</div>
+          <div class="country-stat">Low: ${data.low} cells</div>
+          <div class="country-stat">Density: ${data.density.toFixed(2)}</div>
+        `;
+        countryStats.appendChild(div);
+      });
+    }
+
+    function updateGrid() {
+      const newGrid = JSON.parse(JSON.stringify(grid));
+      const battles = [];
+      const previousCounts = computeCountryStats().counts;
+
+      // Identify potential battles
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          if (grid[i][j] === 0) continue;
+          for (let di = -1; di <= 1; di++) {
+            for (let dj = -1; dj <= 1; dj++) {
+              if (di === 0 && dj === 0) continue;
+              let ni = i + di;
+              let nj = j + dj;
+              if (boundaryType === 'toroidal') {
+                ni = (ni + gridSize) % gridSize;
+                nj = (nj + gridSize) % gridSize;
+              } else if (boundaryType === 'fixed') {
+                if (ni < 0 || ni >= gridSize || nj < 0 || nj >= gridSize) continue;
+              }
+              if (grid[ni][nj] !== 0 && grid[ni][nj] !== grid[i][j]) {
+                battles.push({ attacker: { x: i, y: j, id: grid[i][j] }, defender: { x: ni, y: nj, id: grid[ni][nj] } });
+              }
+            }
+          }
+        }
+      }
+
+      // Randomly select battles to resolve
+      const maxBattles = Math.floor(gridSize * gridSize * 0.05);
+      const selectedBattles = battles.sort(() => Math.random() - 0.5).slice(0, maxBattles);
+      battlesThisRound = selectedBattles.length;
+
+      // Resolve battles
+      for (const battle of selectedBattles) {
+        const attacker = battle.attacker;
+        const defender = battle.defender;
+
+        // Check if defender is immune to conquest
+        if (isCountryImmune(defender.id)) {
+          continue; // Skip this battle, fortified country cannot be conquered
+        }
+
+        const attackerNeighbors = countNeighbors(attacker.x, attacker.y, attacker.id);
+        const defenderNeighbors = countNeighbors(defender.x, defender.y, defender.id);
+
+        let attackerStrength = 0.3 + 0.1 * attackerNeighbors;
+        let defenderStrength = 0.3 + 0.1 * defenderNeighbors;
+
+        // Apply terrain effects if terrain percentages are set (mountains/water > 0%)
+        if (mountainPercent > 0 || waterPercent > 0) {
+          const defenderTerrain = terrain[defender.x][defender.y];
+          if (defenderTerrain === TERRAIN_MOUNTAIN) {
+            defenderStrength *= 1.3; // Mountains favor defense
+          } else if (defenderTerrain === TERRAIN_WATER) {
+            attackerStrength *= 1.3; // Water favors attack
+          }
+        }
+
+        // Apply blessing effects
+        const attackBonus = getBlessingMultiplier(attacker.id, 'attack');
+        const defenseBonus = getBlessingMultiplier(defender.id, 'defense');
+
+        attackerStrength *= attackBonus;
+        defenderStrength *= defenseBonus;
+
+        const totalStrength = attackerStrength + defenderStrength;
+        const attackerWinProb = attackerStrength / totalStrength;
+
+        if (Math.random() < attackerWinProb) {
+          newGrid[defender.x][defender.y] = attacker.id;
+        }
+      }
+
+      grid = newGrid;
+      round++;
+
+      // Update blessing durations and cooldowns
+      activeBlessings = activeBlessings.filter(blessing => {
+        blessing.duration--;
+        if (blessing.duration <= 0) {
+          battleLog.push(`Round ${round}: ${blessing.name} on Country ${blessing.country} has expired`);
+          return false;
+        }
+        return true;
+      });
+
+      Object.keys(blessingCooldowns).forEach(type => {
+        if (blessingCooldowns[type] > 0) {
+          blessingCooldowns[type]--;
+        }
+      });
+
+      // Check for eliminated countries and log them
+      const currentCounts = computeCountryStats().counts;
+      for (let i = 0; i < numCountries; i++) {
+        if (previousCounts[i] > 0 && currentCounts[i] === 0) {
+          battleLog.push(`Round ${round}: Country ${i + 1} eliminated`);
+          // Remove any active blessings for eliminated countries
+          activeBlessings = activeBlessings.filter(blessing => blessing.country !== (i + 1));
+        }
+      }
+
+      updateStats();
+      updateBattleLog();
+      updateActiveBlessings();
+      updateBlessingCooldowns();
+
+      // Check stopping condition
+      const remaining = currentCounts.filter(count => count > 0).length;
+      if (remaining <= 1) {
+        isRunning = false;
+        document.querySelector('.main-controls button:nth-child(1)').textContent = 'Start';
+      }
+
+      drawGrid();
+    }
+
+    function updateBattleLog() {
+      const logContent = document.getElementById('battle-log-content');
+      logContent.innerHTML = battleLog.slice(-20).join('<br>'); // Show last 20 entries, newest at bottom
+      logContent.scrollTop = logContent.scrollHeight; // Auto-scroll to bottom
+    }
+
+    function toggleSimulation() {
+      isRunning = !isRunning;
+      document.querySelector('.main-controls button:nth-child(1)').textContent = isRunning ? 'Pause' : 'Start';
+      if (isRunning) {
+        animate();
+      } else {
+        cancelAnimationFrame(animationId);
+      }
+    }
+
+    function animate() {
+      if (!isRunning) return;
+      updateGrid();
+      const interval = 1000 / updateFrequency;
+      animationId = setTimeout(() => requestAnimationFrame(animate), interval);
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      document.getElementById('dark-mode-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+      drawGrid();
+      updateStats();
+    }
+
+    function exportMap() {
+      const mapData = {
+        gridSize,
+        numCountries,
+        grid,
+        terrain,
+        mountainPercent,
+        waterPercent,
+        boundaryType,
+        round,
+        battleLog,
+        countryHighs,
+        countryLows,
+        showCountries,
+        showTerrain,
+        activeBlessings,
+        blessingCooldowns
+      };
+
+      const dataStr = JSON.stringify(mapData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `country-battle-map-round-${round}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    function importMap(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const mapData = JSON.parse(e.target.result);
+          
+          // Validate and load data
+          if (mapData.gridSize && mapData.grid && mapData.numCountries) {
+            gridSize = mapData.gridSize;
+            numCountries = mapData.numCountries;
+            grid = mapData.grid;
+            terrain = mapData.terrain || Array(gridSize).fill().map(() => Array(gridSize).fill(TERRAIN_PLAINS));
+            mountainPercent = mapData.mountainPercent || 15;
+            waterPercent = mapData.waterPercent || 15;
+            boundaryType = mapData.boundaryType || 'toroidal';
+            round = mapData.round || 0;
+            battleLog = mapData.battleLog || [];
+            countryHighs = mapData.countryHighs || Array(numCountries).fill(0);
+            countryLows = mapData.countryLows || Array(numCountries).fill(Infinity);
+            showCountries = mapData.showCountries !== undefined ? mapData.showCountries : true;
+            showTerrain = mapData.showTerrain !== undefined ? mapData.showTerrain : true;
+            activeBlessings = mapData.activeBlessings || [];
+            blessingCooldowns = mapData.blessingCooldowns || { war: 0, shield: 0, fortress: 0 };
+
+            // Update UI controls
+            document.getElementById('gridSize').value = gridSize;
+            document.getElementById('numCountries').value = numCountries;
+            document.getElementById('boundaryType').value = boundaryType;
+            document.getElementById('mountainPercent').value = mountainPercent;
+            document.getElementById('waterPercent').value = waterPercent;
+            document.getElementById('showCountries').checked = showCountries;
+            document.getElementById('showTerrain').checked = showTerrain;
+
+            // Resize canvas and update display
+            cellSize = Math.min(600 / gridSize, 10);
+            canvas.width = gridSize * cellSize;
+            canvas.height = gridSize * cellSize;
+            
+            if (isRunning) toggleSimulation();
+            updateBlessCountryOptions();
+            updateStats();
+            updateBattleLog();
+            updateActiveBlessings();
+            updateBlessingCooldowns();
+            drawGrid();
+            
+            alert('Map imported successfully!');
+          } else {
+            alert('Invalid map file format.');
+          }
+        } catch (error) {
+          alert('Error importing map: ' + error.message);
+        }
+      };
+      reader.readAsText(file);
+      
+      // Reset file input
+      event.target.value = '';
+    }
+
+    // Event listeners
+    document.getElementById('gridSize').addEventListener('change', resizeCanvas);
+    document.getElementById('numCountries').addEventListener('change', resizeCanvas);
+    document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+    document.getElementById('updateFrequency').addEventListener('input', () => {
+      updateFrequency = Math.max(1, Math.min(20, parseInt(document.getElementById('updateFrequency').value)));
+    });
+    document.getElementById('boundaryType').addEventListener('change', () => {
+      boundaryType = document.getElementById('boundaryType').value;
+      if (isRunning) {
+        toggleSimulation();
+      }
+    });
+
+    document.getElementById('mountainPercent').addEventListener('change', (e) => {
+      if (!isRunning) {
+        mountainPercent = Math.max(0, Math.min(50, parseInt(e.target.value)));
+        generateTerrain();
+        drawGrid();
+      } else {
+        // Reset to previous value if simulation is running
+        e.target.value = mountainPercent;
+        alert('Cannot modify terrain while simulation is running!');
+      }
+    });
+
+    document.getElementById('waterPercent').addEventListener('change', (e) => {
+      if (!isRunning) {
+        waterPercent = Math.max(0, Math.min(50, parseInt(e.target.value)));
+        generateTerrain();
+        drawGrid();
+      } else {
+        // Reset to previous value if simulation is running
+        e.target.value = waterPercent;
+        alert('Cannot modify terrain while simulation is running!');
+      }
+    });
+
+    document.getElementById('showCountries').addEventListener('change', (e) => {
+      showCountries = e.target.checked;
+      drawGrid();
+    });
+
+    document.getElementById('showTerrain').addEventListener('change', (e) => {
+      showTerrain = e.target.checked;
+      drawGrid();
+    });
+
+    canvas.addEventListener('click', (e) => {
+      if (isRunning) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor((e.clientX - rect.left) / cellSize);
+      const y = Math.floor((e.clientY - rect.top) / cellSize);
+      grid[y][x] = (grid[y][x] % numCountries) + 1;
+      updateStats();
+      drawGrid();
+    });
+
+    resizeCanvas();
+    randomizeGrid();
+  </script>
+</body>
+</html>
+
