@@ -184,10 +184,17 @@ body.dark-mode .bless-controls {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   color: #fff;
+  position: relative;
 }
 
 .blessing-button:hover {
   transform: translateY(-2px);
+}
+
+.blessing-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .blessing-button.war {
@@ -215,16 +222,23 @@ body.dark-mode .bless-controls {
 }
 
 .blessing-cooldown {
-  font-size: 12px;
-  color: #666;
-  margin-top: 5px;
+  font-size: 10px;
+  color: #fff;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background-color: rgba(0,0,0,0.7);
+  padding: 2px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
 }
 
 body.dark-mode .blessing-cooldown {
-  color: #aaa;
+  background-color: rgba(255,255,255,0.2);
 }
 
-.active-blessing {
+.active-blessing,
+.active-disaster {
   background-color: #fff3cd;
   border: 1px solid #ffeaa7;
   border-radius: 5px;
@@ -236,6 +250,16 @@ body.dark-mode .blessing-cooldown {
 body.dark-mode .active-blessing {
   background-color: #3d3d3d;
   border-color: #555;
+}
+
+.active-disaster {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+body.dark-mode .active-disaster {
+  background-color: #4a2c2e;
+  border-color: #6d2730;
 }
 
 #dark-mode-toggle {
@@ -350,6 +374,48 @@ body.dark-mode #battle-log {
   color: #e0e0e0;
 }
 
+.log-filters {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #f8f9fa;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.filter-btn:hover {
+  background-color: #e9ecef;
+}
+
+.filter-btn.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+body.dark-mode .filter-btn {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .filter-btn:hover {
+  background-color: #4a4a4a;
+}
+
+body.dark-mode .filter-btn.active {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
 .stats-item {
   margin-bottom: 15px;
 }
@@ -392,6 +458,7 @@ body.dark-mode .terrain-controls {
   gap: 20px;
   justify-content: center;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .terrain-legend-item {
@@ -425,6 +492,21 @@ body.dark-mode .terrain-legend-color {
 }
 
 body.dark-mode .display-controls {
+  background-color: #3a3a3a;
+  border-color: #555;
+}
+
+.disaster-controls {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  width: 100%;
+  max-width: 600px;
+}
+
+body.dark-mode .disaster-controls {
   background-color: #3a3a3a;
   border-color: #555;
 }
@@ -480,5 +562,13 @@ body.dark-mode .display-controls {
 
   .blessing-grid {
     grid-template-columns: 1fr;
+  }
+
+  .terrain-legend {
+    gap: 10px;
+  }
+
+  .log-filters {
+    flex-wrap: wrap;
   }
 }

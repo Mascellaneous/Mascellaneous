@@ -43,6 +43,10 @@
         <label for="waterPercent">Water %:</label>
         <input type="number" id="waterPercent" min="0" max="50" value="15">
       </div>
+      <div class="input-group">
+        <label for="desertPercent">Desert %:</label>
+        <input type="number" id="desertPercent" min="0" max="30" value="5">
+      </div>
       <div class="terrain-legend">
         <div class="terrain-legend-item">
           <div class="terrain-legend-color" style="background-color: #FFFFFF; border: 2px solid #ccc;"></div>
@@ -56,6 +60,10 @@
           <div class="terrain-legend-color" style="background-color: #4169E1;"></div>
           <span>Water (+attack)</span>
         </div>
+        <div class="terrain-legend-item">
+          <div class="terrain-legend-color" style="background-color: #000000;"></div>
+          <span>Desert (impassable)</span>
+        </div>
       </div>
     </div>
     <div class="display-controls">
@@ -68,6 +76,15 @@
         <label for="showTerrain">Show Terrain:</label>
         <input type="checkbox" id="showTerrain" checked style="width: auto; margin-left: 10px;">
       </div>
+    </div>
+    <!-- Natural Disaster Controls -->
+    <div class="disaster-controls">
+      <h3 style="margin-bottom: 15px; text-align: center;">Natural Disasters 🌪️</h3>
+      <div class="input-group">
+        <label for="enableDisasters">Enable Disasters:</label>
+        <input type="checkbox" id="enableDisasters" style="width: auto; margin-left: 10px;">
+      </div>
+      <div id="active-disasters"></div>
     </div>
     <div class="bless-controls">
       <h3 style="margin-bottom: 15px; text-align: center;">Divine Interventions ⚡</h3>
@@ -127,6 +144,12 @@
     <div id="status">Round: 0, Countries Remaining: 0</div>
     <div id="battle-log">
       <h3>Battle Log</h3>
+      <div class="log-filters">
+        <button class="filter-btn active" onclick="setLogFilter('all')">All</button>
+        <button class="filter-btn" onclick="setLogFilter('important')">Important</button>
+        <button class="filter-btn" onclick="setLogFilter('disasters')">Disasters</button>
+        <button class="filter-btn" onclick="setLogFilter('blessings')">Blessings</button>
+      </div>
       <div id="battle-log-content"></div>
     </div>
   </div>
@@ -148,11 +171,14 @@
     let countryHighs = [];
     let countryLows = [];
     let battleLog = [];
+    let currentLogFilter = 'all';
     let mountainPercent = 15;
     let waterPercent = 15;
+    let desertPercent = 5;
     let showCountries = true;
     let showTerrain = true;
-
+    let enableDisasters = false;
+    
     // Blessing system
     let activeBlessings = [];
     let blessingCooldowns = {
@@ -160,30 +186,27 @@
       shield: 0,
       fortress: 0
     };
+    
+    // Disaster system
+    let activeDisasters = [];
 
     // Define colors for up to 10 countries
     const countryColors = [
-      '#FF0000', // Red
-      '#00FF00', // Green
-      '#0000FF', // Blue
-      '#FFFF00', // Yellow
-      '#FF00FF', // Magenta
-      '#00FFFF', // Cyan
-      '#FFA500', // Orange
-      '#800080', // Purple
-      '#008000', // Dark Green
-      '#FFC0CB'  // Pink
+      '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF',
+      '#00FFFF', '#FFA500', '#800080', '#008000', '#FFC0CB'
     ];
 
     // Terrain types
     const TERRAIN_PLAINS = 0;
     const TERRAIN_MOUNTAIN = 1;
     const TERRAIN_WATER = 2;
+    const TERRAIN_DESERT = 3;
 
     const terrainColors = {
-      [TERRAIN_PLAINS]: '#FFFFFF',  // White
-      [TERRAIN_MOUNTAIN]: '#8B4513', // Brown
-      [TERRAIN_WATER]: '#4169E1'    // Royal blue
+      [TERRAIN_PLAINS]: '#FFFFFF',
+      [TERRAIN_MOUNTAIN]: '#8B4513',
+      [TERRAIN_WATER]: '#4169E1',
+      [TERRAIN_DESERT]: '#000000'
     };
 
     function resizeCanvas() {
@@ -207,9 +230,11 @@
       countryLows = Array(numCountries).fill(Infinity);
       battleLog = [];
       activeBlessings = [];
+      activeDisasters = [];
       blessingCooldowns = { war: 0, shield: 0, fortress: 0 };
       updateBattleLog();
       updateActiveBlessings();
+      updateActiveDisasters();
       updateBlessingCooldowns();
       generateTerrain();
     }
@@ -218,29 +243,24 @@
       const totalCells = gridSize * gridSize;
       const mountainCells = Math.floor(totalCells * mountainPercent / 100);
       const waterCells = Math.floor(totalCells * waterPercent / 100);
+      const desertCells = Math.floor(totalCells * desertPercent / 100);
 
-      // Reset to plains
       terrain = Array(gridSize).fill().map(() => Array(gridSize).fill(TERRAIN_PLAINS));
-
-      // Generate mountain regions using blob-like growth
       generateTerrainBlobs(TERRAIN_MOUNTAIN, mountainCells);
-      
-      // Generate water regions using blob-like growth
       generateTerrainBlobs(TERRAIN_WATER, waterCells);
+      generateTerrainBlobs(TERRAIN_DESERT, desertCells);
     }
 
     function generateTerrainBlobs(terrainType, targetCells) {
       let placedCells = 0;
-      const maxAttempts = 50; // Prevent infinite loops
+      const maxAttempts = 50;
       
       while (placedCells < targetCells) {
-        // Start a new blob
         let blobSize = Math.min(
-          Math.floor(Math.random() * 15) + 5, // Blob size between 5-20 cells
+          Math.floor(Math.random() * 15) + 5,
           targetCells - placedCells
         );
         
-        // Find a starting point for the blob
         let startX, startY;
         let attempts = 0;
         do {
@@ -251,7 +271,6 @@
         
         if (attempts >= maxAttempts) break;
         
-        // Grow the blob using a flood-fill like approach
         const blobCells = [{x: startX, y: startY}];
         terrain[startX][startY] = terrainType;
         placedCells++;
@@ -259,7 +278,6 @@
         while (blobCells.length > 0 && placedCells < targetCells && blobSize > 1) {
           const currentCell = blobCells.splice(Math.floor(Math.random() * blobCells.length), 1)[0];
           
-          // Try to expand to neighboring cells
           const neighbors = getNeighbors(currentCell.x, currentCell.y);
           const validNeighbors = neighbors.filter(n => 
             n.x >= 0 && n.x < gridSize && 
@@ -268,7 +286,6 @@
           );
           
           if (validNeighbors.length > 0) {
-            // Choose a random neighbor to expand to
             const expandTo = validNeighbors[Math.floor(Math.random() * validNeighbors.length)];
             terrain[expandTo.x][expandTo.y] = terrainType;
             blobCells.push(expandTo);
@@ -281,16 +298,13 @@
 
     function getNeighbors(x, y) {
       return [
-        {x: x - 1, y: y},
-        {x: x + 1, y: y},
-        {x: x, y: y - 1},
-        {x: x, y: y + 1},
-        // Include diagonal neighbors for more natural blob shapes
-        {x: x - 1, y: y - 1},
-        {x: x - 1, y: y + 1},
-        {x: x + 1, y: y - 1},
-        {x: x + 1, y: y + 1}
+        {x: x - 1, y: y}, {x: x + 1, y: y}, {x: x, y: y - 1}, {x: x, y: y + 1},
+        {x: x - 1, y: y - 1}, {x: x - 1, y: y + 1}, {x: x + 1, y: y - 1}, {x: x + 1, y: y + 1}
       ];
+    }
+
+    function isTerrainOccupiable(terrainType) {
+      return terrainType !== TERRAIN_DESERT;
     }
 
     function updateBlessCountryOptions() {
@@ -360,11 +374,32 @@
 
       if (blessing) {
         activeBlessings.push(blessing);
-        battleLog.push(`Round ${round}: ${blessing.name} cast on Country ${countryId}`);
+        addBattleLogEntry(`${blessing.name} cast on Country ${countryId}`, 'blessing');
         updateBattleLog();
         updateActiveBlessings();
         updateBlessingCooldowns();
       }
+    }
+
+    function addBattleLogEntry(message, type = 'normal') {
+      battleLog.push({
+        round: round,
+        message: message,
+        type: type,
+        timestamp: Date.now()
+      });
+    }
+
+    function setLogFilter(filter) {
+      currentLogFilter = filter;
+      
+      // Update button states
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      updateBattleLog();
     }
 
     function updateActiveBlessings() {
@@ -397,14 +432,15 @@
     function updateBlessingCooldowns() {
       Object.keys(blessingCooldowns).forEach(type => {
         const element = document.getElementById(`${type}-cooldown`);
+        const button = element.parentElement;
         if (blessingCooldowns[type] > 0) {
-          element.textContent = `Cooldown: ${blessingCooldowns[type]} rounds`;
-          element.parentElement.disabled = true;
-          element.parentElement.style.opacity = '0.6';
+          element.textContent = `${blessingCooldowns[type]}`;
+          button.disabled = true;
+          button.style.opacity = '0.6';
         } else {
           element.textContent = '';
-          element.parentElement.disabled = false;
-          element.parentElement.style.opacity = '1';
+          button.disabled = false;
+          button.style.opacity = '1';
         }
       });
     }
@@ -417,7 +453,13 @@
           multiplier *= blessing.multiplier;
         }
       });
-      
+
+      activeDisasters.forEach(disaster => {
+        if (disaster.effectType === 'defense' && disaster.country === countryId) {
+          multiplier *= disaster.multiplier;
+        }
+      });      
+
       return multiplier;
     }
 
@@ -427,24 +469,129 @@
       );
     }
 
-    function randomizeGrid() {
-      numCountries = Math.max(2, Math.min(10, parseInt(document.getElementById('numCountries').value)));
-      for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
-          grid[i][j] = Math.floor(Math.random() * numCountries) + 1;
+    function updateActiveDisasters() {
+      const container = document.getElementById('active-disasters');
+      container.innerHTML = '';
+
+      if (activeDisasters.length === 0) return;
+
+      activeDisasters.forEach(disaster => {
+        const div = document.createElement('div');
+        div.className = 'active-disaster';
+        let effectText = `Country ${disaster.country} has -${Math.round((1 - disaster.multiplier) * 100)}% defense`;
+        div.innerHTML = `
+          <strong>${disaster.name}</strong><br>
+          ${effectText}<br>
+          <small>Duration: ${disaster.duration} rounds remaining</small>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function triggerDisasters() {
+      if (!enableDisasters || Math.random() > 0.05) return; // 5% chance per round
+
+      const disasterType = Math.random() < 0.5 ? 'unoccupation' : 'defense';
+
+      if (disasterType === 'unoccupation') {
+        const totalCells = gridSize * gridSize;
+        const cellsToClearTarget = Math.floor(totalCells * 0.05); // 5% of cells
+
+        // Collect all eligible cells (occupied and occupiable)
+        const eligibleCells = [];
+        for (let i = 0; i < gridSize; i++) {
+          for (let j = 0; j < gridSize; j++) {
+            if (grid[i][j] > 0 && isTerrainOccupiable(terrain[i][j])) {
+              eligibleCells.push({ x: i, y: j, countryId: grid[i][j] });
+            }
+          }
+        }
+
+        // Determine how many cells to clear (min of target and available)
+        const cellsToClear = Math.min(cellsToClearTarget, eligibleCells.length);
+        if (cellsToClear === 0) {
+          addBattleLogEntry(`Natural disaster found no occupied cells to clear`, 'disaster');
+          updateBattleLog();
+          return;
+        }
+
+        // Randomly shuffle and select cells to clear
+        const shuffledCells = eligibleCells.sort(() => Math.random() - 0.5).slice(0, cellsToClear);
+        const affectedCountries = {};
+
+        // Clear selected cells
+        shuffledCells.forEach(cell => {
+          grid[cell.x][cell.y] = 0;
+          affectedCountries[cell.countryId] = (affectedCountries[cell.countryId] || 0) + 1;
+        });
+
+        // Draw current grid state
+        drawGrid();
+
+        // Flash cleared cells
+        ctx.fillStyle = '#FF4500'; // Orange flash
+        shuffledCells.forEach(cell => {
+          ctx.fillRect(cell.y * cellSize, cell.x * cellSize, cellSize - 1, cellSize - 1);
+        });
+        setTimeout(() => drawGrid(), 200); // Redraw after 200ms
+
+        // Log affected countries and cell losses
+        const logEntries = Object.entries(affectedCountries)
+          .map(([countryId, count]) => `Country ${countryId} lost ${count} cell${count > 1 ? 's' : ''}`)
+          .join(', ');
+        addBattleLogEntry(`Natural disaster cleared ${cellsToClear} cells: ${logEntries}`, 'disaster');
+        updateBattleLog();
+        updateStats(); // Reflect cell losses in stats panel
+      } else if (disasterType === 'defense') {
+        const countryStats = computeCountryStats();
+        const aliveCountries = countryStats.counts
+          .map((count, index) => count > 0 ? index + 1 : null)
+          .filter(id => id !== null);
+        
+        if (aliveCountries.length > 0) {
+          const targetCountry = aliveCountries[Math.floor(Math.random() * aliveCountries.length)];
+          activeDisasters.push({
+            type: 'disaster',
+            name: '🌪️ Disaster Strike',
+            country: targetCountry,
+            duration: 10,
+            effectType: 'defense',
+            multiplier: 0.5
+          });
+          addBattleLogEntry(`Disaster weakened Country ${targetCountry}'s defense for 10 rounds`, 'disaster');
+          updateBattleLog();
+          updateActiveDisasters();
         }
       }
+    }
+
+    function randomizeGrid() {
+      numCountries = Math.max(2, Math.min(10, parseInt(document.getElementById('numCountries').value)));
+      
+      generateTerrain();
+      
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          if (isTerrainOccupiable(terrain[i][j])) {
+            grid[i][j] = Math.floor(Math.random() * numCountries) + 1;
+          } else {
+            grid[i][j] = 0;
+          }
+        }
+      }
+      
       round = 0;
       battlesThisRound = 0;
       countryHighs = Array(numCountries).fill(0);
       countryLows = Array(numCountries).fill(Infinity);
       battleLog = [];
       activeBlessings = [];
+      activeDisasters = [];
       blessingCooldowns = { war: 0, shield: 0, fortress: 0 };
       updateBattleLog();
       updateActiveBlessings();
+      updateActiveDisasters();
       updateBlessingCooldowns();
-      generateTerrain();
       updateBlessCountryOptions();
       updateStats();
       drawGrid();
@@ -466,26 +613,21 @@
         for (let j = 0; j < gridSize; j++) {
           let cellColor = null;
 
-          // Determine what to draw based on display options
           if (showTerrain && showCountries) {
-            // Show both: terrain for empty cells, countries for occupied cells
-            if (grid[i][j] === 0) {
+            if (grid[i][j] === 0 || terrain[i][j] === TERRAIN_DESERT) {
               cellColor = terrainColors[terrain[i][j]];
             } else {
               cellColor = countryColors[grid[i][j] - 1];
             }
           } else if (showTerrain && !showCountries) {
-            // Show only terrain
             cellColor = terrainColors[terrain[i][j]];
           } else if (!showTerrain && showCountries) {
-            // Show only countries
             if (grid[i][j] === 0) {
               cellColor = document.body.classList.contains('dark-mode') ? '#3a3a3a' : '#f8f9fa';
             } else {
               cellColor = countryColors[grid[i][j] - 1];
             }
           } else {
-            // Show neither (empty grid)
             cellColor = document.body.classList.contains('dark-mode') ? '#3a3a3a' : '#f8f9fa';
           }
 
@@ -546,7 +688,6 @@
       }
       document.getElementById('status').textContent = statusText;
 
-      // Update historical highs and lows
       counts.forEach((count, index) => {
         if (count > countryHighs[index]) {
           countryHighs[index] = count;
@@ -556,7 +697,6 @@
         }
       });
 
-      // Compute strength scores and sort countries
       const countryData = counts.map((count, index) => {
         const density = parseFloat(densityIndices[index] || 0);
         return {
@@ -569,13 +709,9 @@
           strength: count * (1 + density / 8)
         };
       }).filter(data => data.count > 0).sort((a, b) => 
-        b.strength - a.strength || // Primary: strength score
-        b.count - a.count ||       // Secondary: cell count
-        b.density - a.density ||   // Tertiary: density
-        a.index - b.index          // Quaternary: country ID
+        b.strength - a.strength || b.count - a.count || b.density - a.density || a.index - b.index
       );
 
-      // Update stats panel
       document.getElementById('battles-count').textContent = battlesThisRound;
       const countryStats = document.getElementById('country-stats');
       countryStats.innerHTML = '';
@@ -598,10 +734,9 @@
       const battles = [];
       const previousCounts = computeCountryStats().counts;
 
-      // Identify potential battles
       for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
-          if (grid[i][j] === 0) continue;
+          if (grid[i][j] === 0 || !isTerrainOccupiable(terrain[i][j])) continue;
           for (let di = -1; di <= 1; di++) {
             for (let dj = -1; dj <= 1; dj++) {
               if (di === 0 && dj === 0) continue;
@@ -613,7 +748,10 @@
               } else if (boundaryType === 'fixed') {
                 if (ni < 0 || ni >= gridSize || nj < 0 || nj >= gridSize) continue;
               }
-              if (grid[ni][nj] !== 0 && grid[ni][nj] !== grid[i][j]) {
+              
+              // Can attack empty cells (grid value 0) or cells belonging to other countries
+              if (isTerrainOccupiable(terrain[ni][nj]) && 
+                  (grid[ni][nj] === 0 || (grid[ni][nj] !== grid[i][j] && grid[ni][nj] !== 0))) {
                 battles.push({ attacker: { x: i, y: j, id: grid[i][j] }, defender: { x: ni, y: nj, id: grid[ni][nj] } });
               }
             }
@@ -621,40 +759,45 @@
         }
       }
 
-      // Randomly select battles to resolve
       const maxBattles = Math.floor(gridSize * gridSize * 0.05);
       const selectedBattles = battles.sort(() => Math.random() - 0.5).slice(0, maxBattles);
       battlesThisRound = selectedBattles.length;
 
-      // Resolve battles
       for (const battle of selectedBattles) {
         const attacker = battle.attacker;
         const defender = battle.defender;
 
-        // Check if defender is immune to conquest
-        if (isCountryImmune(defender.id)) {
-          continue; // Skip this battle, fortified country cannot be conquered
+        // Check if defender is immune (only applies to countries, not empty cells)
+        if (defender.id !== 0 && isCountryImmune(defender.id)) {
+          continue;
         }
 
         const attackerNeighbors = countNeighbors(attacker.x, attacker.y, attacker.id);
-        const defenderNeighbors = countNeighbors(defender.x, defender.y, defender.id);
+        let defenderNeighbors = 0;
+        
+        // Empty cells have no neighbors to help defend
+        if (defender.id !== 0) {
+          defenderNeighbors = countNeighbors(defender.x, defender.y, defender.id);
+        }
 
-        let attackerStrength = 0.3 + 0.1 * attackerNeighbors;
-        let defenderStrength = 0.3 + 0.1 * defenderNeighbors;
+        let attackerStrength = 0.3 + 0.15 * attackerNeighbors;
+        let defenderStrength = 0.1 + 0.15 * defenderNeighbors; // Empty cells have very low base defense
 
-        // Apply terrain effects if terrain percentages are set (mountains/water > 0%)
         if (mountainPercent > 0 || waterPercent > 0) {
           const defenderTerrain = terrain[defender.x][defender.y];
           if (defenderTerrain === TERRAIN_MOUNTAIN) {
-            defenderStrength *= 1.3; // Mountains favor defense
+            defenderStrength *= 1.3;
           } else if (defenderTerrain === TERRAIN_WATER) {
-            attackerStrength *= 1.3; // Water favors attack
+            attackerStrength *= 1.3;
           }
         }
 
-        // Apply blessing effects
+        // Apply blessing effects (only to countries, not empty cells)
         const attackBonus = getBlessingMultiplier(attacker.id, 'attack');
-        const defenseBonus = getBlessingMultiplier(defender.id, 'defense');
+        let defenseBonus = 1.0;
+        if (defender.id !== 0) {
+          defenseBonus = getBlessingMultiplier(defender.id, 'defense');
+        }
 
         attackerStrength *= attackBonus;
         defenderStrength *= defenseBonus;
@@ -667,14 +810,26 @@
         }
       }
 
-      grid = newGrid;
+      grid = newGrid; // Update grid with battle results
       round++;
 
-      // Update blessing durations and cooldowns
+      // Trigger disasters after battles
+      triggerDisasters();
+
+      // Update blessings and disasters
       activeBlessings = activeBlessings.filter(blessing => {
         blessing.duration--;
         if (blessing.duration <= 0) {
-          battleLog.push(`Round ${round}: ${blessing.name} on Country ${blessing.country} has expired`);
+          addBattleLogEntry(`${blessing.name} on Country ${blessing.country} has expired`, 'blessing');
+          return false;
+        }
+        return true;
+      });
+
+      activeDisasters = activeDisasters.filter(disaster => {
+        disaster.duration--;
+        if (disaster.duration <= 0) {
+          addBattleLogEntry(`${disaster.name} on Country ${disaster.country} has ended`, 'disaster');
           return false;
         }
         return true;
@@ -686,26 +841,29 @@
         }
       });
 
-      // Check for eliminated countries and log them
       const currentCounts = computeCountryStats().counts;
       for (let i = 0; i < numCountries; i++) {
         if (previousCounts[i] > 0 && currentCounts[i] === 0) {
-          battleLog.push(`Round ${round}: Country ${i + 1} eliminated`);
-          // Remove any active blessings for eliminated countries
+          addBattleLogEntry(`Country ${i + 1} eliminated`, 'important');
           activeBlessings = activeBlessings.filter(blessing => blessing.country !== (i + 1));
+          activeDisasters = activeDisasters.filter(disaster => disaster.country !== (i + 1));
         }
       }
 
       updateStats();
       updateBattleLog();
       updateActiveBlessings();
+      updateActiveDisasters();
       updateBlessingCooldowns();
 
-      // Check stopping condition
       const remaining = currentCounts.filter(count => count > 0).length;
       if (remaining <= 1) {
         isRunning = false;
         document.querySelector('.main-controls button:nth-child(1)').textContent = 'Start';
+        if (remaining === 1) {
+          const winnerIndex = currentCounts.findIndex(count => count > 0);
+          addBattleLogEntry(`Country ${winnerIndex + 1} wins the battle!`, 'important');
+        }
       }
 
       drawGrid();
@@ -713,8 +871,30 @@
 
     function updateBattleLog() {
       const logContent = document.getElementById('battle-log-content');
-      logContent.innerHTML = battleLog.slice(-20).join('<br>'); // Show last 20 entries, newest at bottom
-      logContent.scrollTop = logContent.scrollHeight; // Auto-scroll to bottom
+      
+      let filteredLog = battleLog;
+      
+      if (currentLogFilter !== 'all') {
+        filteredLog = battleLog.filter(entry => {
+          switch (currentLogFilter) {
+            case 'important':
+              return entry.type === 'important';
+            case 'disasters':
+              return entry.type === 'disaster';
+            case 'blessings':
+              return entry.type === 'blessing';
+            default:
+              return true;
+          }
+        });
+      }
+      
+      const displayLog = filteredLog.slice(-20).map(entry => 
+        `Round ${entry.round}: ${entry.message}`
+      );
+      
+      logContent.innerHTML = displayLog.join('<br>');
+      logContent.scrollTop = logContent.scrollHeight;
     }
 
     function toggleSimulation() {
@@ -743,21 +923,9 @@
 
     function exportMap() {
       const mapData = {
-        gridSize,
-        numCountries,
-        grid,
-        terrain,
-        mountainPercent,
-        waterPercent,
-        boundaryType,
-        round,
-        battleLog,
-        countryHighs,
-        countryLows,
-        showCountries,
-        showTerrain,
-        activeBlessings,
-        blessingCooldowns
+        gridSize, numCountries, grid, terrain, mountainPercent, waterPercent, desertPercent,
+        boundaryType, round, battleLog, countryHighs, countryLows, showCountries, showTerrain,
+        enableDisasters, activeBlessings, activeDisasters, blessingCooldowns
       };
 
       const dataStr = JSON.stringify(mapData, null, 2);
@@ -782,7 +950,6 @@
         try {
           const mapData = JSON.parse(e.target.result);
           
-          // Validate and load data
           if (mapData.gridSize && mapData.grid && mapData.numCountries) {
             gridSize = mapData.gridSize;
             numCountries = mapData.numCountries;
@@ -790,6 +957,7 @@
             terrain = mapData.terrain || Array(gridSize).fill().map(() => Array(gridSize).fill(TERRAIN_PLAINS));
             mountainPercent = mapData.mountainPercent || 15;
             waterPercent = mapData.waterPercent || 15;
+            desertPercent = mapData.desertPercent || 5;
             boundaryType = mapData.boundaryType || 'toroidal';
             round = mapData.round || 0;
             battleLog = mapData.battleLog || [];
@@ -797,19 +965,21 @@
             countryLows = mapData.countryLows || Array(numCountries).fill(Infinity);
             showCountries = mapData.showCountries !== undefined ? mapData.showCountries : true;
             showTerrain = mapData.showTerrain !== undefined ? mapData.showTerrain : true;
+            enableDisasters = mapData.enableDisasters || false;
             activeBlessings = mapData.activeBlessings || [];
+            activeDisasters = mapData.activeDisasters || [];
             blessingCooldowns = mapData.blessingCooldowns || { war: 0, shield: 0, fortress: 0 };
 
-            // Update UI controls
             document.getElementById('gridSize').value = gridSize;
             document.getElementById('numCountries').value = numCountries;
             document.getElementById('boundaryType').value = boundaryType;
             document.getElementById('mountainPercent').value = mountainPercent;
             document.getElementById('waterPercent').value = waterPercent;
+            document.getElementById('desertPercent').value = desertPercent;
             document.getElementById('showCountries').checked = showCountries;
             document.getElementById('showTerrain').checked = showTerrain;
+            document.getElementById('enableDisasters').checked = enableDisasters;
 
-            // Resize canvas and update display
             cellSize = Math.min(600 / gridSize, 10);
             canvas.width = gridSize * cellSize;
             canvas.height = gridSize * cellSize;
@@ -819,6 +989,7 @@
             updateStats();
             updateBattleLog();
             updateActiveBlessings();
+            updateActiveDisasters();
             updateBlessingCooldowns();
             drawGrid();
             
@@ -832,7 +1003,6 @@
       };
       reader.readAsText(file);
       
-      // Reset file input
       event.target.value = '';
     }
 
@@ -854,9 +1024,8 @@
       if (!isRunning) {
         mountainPercent = Math.max(0, Math.min(50, parseInt(e.target.value)));
         generateTerrain();
-        drawGrid();
+        randomizeGrid();
       } else {
-        // Reset to previous value if simulation is running
         e.target.value = mountainPercent;
         alert('Cannot modify terrain while simulation is running!');
       }
@@ -866,10 +1035,20 @@
       if (!isRunning) {
         waterPercent = Math.max(0, Math.min(50, parseInt(e.target.value)));
         generateTerrain();
-        drawGrid();
+        randomizeGrid(); 
       } else {
-        // Reset to previous value if simulation is running
         e.target.value = waterPercent;
+        alert('Cannot modify terrain while simulation is running!');
+      }
+    });
+
+    document.getElementById('desertPercent').addEventListener('change', (e) => {
+      if (!isRunning) {
+        desertPercent = Math.max(0, Math.min(30, parseInt(e.target.value)));
+        generateTerrain();
+        randomizeGrid();
+      } else {
+        e.target.value = desertPercent;
         alert('Cannot modify terrain while simulation is running!');
       }
     });
@@ -884,14 +1063,30 @@
       drawGrid();
     });
 
+    document.getElementById('enableDisasters').addEventListener('change', (e) => {
+      enableDisasters = e.target.checked;
+      if (!enableDisasters) {
+        activeDisasters = [];
+        updateActiveDisasters();
+        addBattleLogEntry('Natural disasters disabled', 'disaster');
+        updateBattleLog();
+      } else {
+        addBattleLogEntry('Natural disasters enabled', 'disaster');
+        updateBattleLog();
+      }
+    });
+
     canvas.addEventListener('click', (e) => {
       if (isRunning) return;
       const rect = canvas.getBoundingClientRect();
       const x = Math.floor((e.clientX - rect.left) / cellSize);
       const y = Math.floor((e.clientY - rect.top) / cellSize);
-      grid[y][x] = (grid[y][x] % numCountries) + 1;
-      updateStats();
-      drawGrid();
+      
+      if (isTerrainOccupiable(terrain[y][x])) {
+        grid[y][x] = (grid[y][x] % numCountries) + 1;
+        updateStats();
+        drawGrid();
+      }
     });
 
     resizeCanvas();
@@ -899,4 +1094,3 @@
   </script>
 </body>
 </html>
-
