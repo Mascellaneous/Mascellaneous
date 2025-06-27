@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Slice Area Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center elements horizontally */
+            gap: 20px;
+        }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px; /* Fixed width for consistency */
+            text-align: center;
+        }
+        .controls label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .controls input[type="range"] {
+            width: 200px;
+        }
+        .controls p {
+            margin: 10px 0;
+        }
+        .plot-toggle {
+            margin: 10px 0;
+        }
+        .plot-toggle button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .plot-toggle button:hover {
+            background-color: #0056b3;
+        }
+        .plot-toggle button.active {
+            background-color: #28a745;
+        }
+        #pizzaCanvas {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 400px; /* Increased to accommodate max radius */
+            height: 400px;
+        }
+        #areaChart {
+            max-width: 400px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Pizza Slice Area Visualization</h1>
+    <div class="container">
+        <div class="controls">
+            <label for="radius">Radius (inches): <span id="radiusValue">10</span></label>
+            <input type="range" id="radius" min="5" max="15" value="10" step="0.1">
+            <label for="angle">Angle (degrees): <span id="angleValue">45</span></label>
+            <input type="range" id="angle" min="10" max="180" value="45" step="1">
+            <p>Area: <span id="area">39.27</span> square inches</p>
+            <div class="plot-toggle">
+                <button id="plotRadius" class="active">Plot Area vs. Radius</button>
+                <button id="plotAngle">Plot Area vs. Angle</button>
+            </div>
+        </div>
+        <svg id="pizzaCanvas" width="400" height="400"></svg>
+        <canvas id="areaChart" width="400" height="300"></canvas>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const radiusInput = document.getElementById('radius');
+        const angleInput = document.getElementById('angle');
+        const radiusValue = document.getElementById('radiusValue');
+        const angleValue = document.getElementById('angleValue');
+        const areaDisplay = document.getElementById('area');
+        const pizzaCanvas = document.getElementById('pizzaCanvas');
+        const plotRadiusBtn = document.getElementById('plotRadius');
+        const plotAngleBtn = document.getElementById('plotAngle');
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('areaChart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Area (sq inches)',
+                    data: [],
+                    borderColor: '#007bff',
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Radius (inches)' } },
+                    y: { title: { display: true, text: 'Area (sq inches)' } }
+                }
+            }
+        });
+
+        // Function to calculate area
+        function calculateArea(radius, angleDegrees) {
+            const angleRadians = angleDegrees * Math.PI / 180;
+            return (Math.PI * radius * radius * angleDegrees) / 360;
+        }
+
+        // Function to draw pizza slice
+        function drawPizzaSlice(radius, angleDegrees) {
+            const svgNS = "http://www.w3.org/2000/svg";
+            pizzaCanvas.innerHTML = ''; // Clear previous drawing
+
+            // Scale radius for SVG (1 inch = 10 pixels for display)
+            const svgRadius = radius * 10;
+            const centerX = 200; // Center of 400x400 SVG
+            const centerY = 200;
+            const angleRadians = angleDegrees * Math.PI / 180;
+
+            // Create sector path, starting at angle 0 and sweeping to angleDegrees
+            const startX = centerX + svgRadius * Math.cos(0); // Start at angle 0 (right)
+            const startY = centerY + svgRadius * Math.sin(0);
+            const endX = centerX + svgRadius * Math.cos(angleRadians); // End at angleDegrees
+            const endY = centerY + svgRadius * Math.sin(angleRadians);
+            const largeArcFlag = angleDegrees > 180 ? 1 : 0;
+
+            // SVG path: Move to center, line to start, arc to end, line back to center
+            const pathData = `
+                M ${centerX},${centerY}
+                L ${startX},${startY}
+                A ${svgRadius},${svgRadius} 0 ${largeArcFlag} 1 ${endX},${endY}
+                Z
+            `;
+
+            const path = document.createElementNS(svgNS, 'path');
+            path.setAttribute('d', pathData);
+            path.setAttribute('fill', '#ffcc00');
+            path.setAttribute('stroke', '#000');
+            path.setAttribute('stroke-width', '2');
+            pizzaCanvas.appendChild(path);
+        }
+
+        // Function to update chart
+        function updateChart(plotType, radius, angleDegrees) {
+            let labels = [];
+            let data = [];
+            if (plotType === 'radius') {
+                labels = Array.from({ length: 16 }, (_, i) => 5 + i); // Radius from 5 to 20
+                data = labels.map(r => calculateArea(r, angleDegrees));
+                chart.options.scales.x.title.text = 'Radius (inches)';
+            } else {
+                labels = Array.from({ length: 18 }, (_, i) => 10 + i * 10); // Angle from 10 to 180
+                data = labels.map(a => calculateArea(radius, a));
+                chart.options.scales.x.title.text = 'Angle (degrees)';
+            }
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.update();
+        }
+
+        // Update function
+        function updateVisualization() {
+            const radius = parseFloat(radiusInput.value);
+            const angle = parseFloat(angleInput.value);
+            const area = calculateArea(radius, angle);
+
+            // Update displays
+            radiusValue.textContent = radius.toFixed(1);
+            angleValue.textContent = angle.toFixed(0);
+            areaDisplay.textContent = area.toFixed(2);
+
+            // Draw pizza slice
+            drawPizzaSlice(radius, angle);
+
+            // Update chart based on active plot type
+            const plotType = plotRadiusBtn.classList.contains('active') ? 'radius' : 'angle';
+            updateChart(plotType, radius, angle);
+        }
+
+        // Event listeners
+        radiusInput.addEventListener('input', updateVisualization);
+        angleInput.addEventListener('input', updateVisualization);
+        plotRadiusBtn.addEventListener('click', () => {
+            plotRadiusBtn.classList.add('active');
+            plotAngleBtn.classList.remove('active');
+            updateVisualization();
+        });
+        plotAngleBtn.addEventListener('click', () => {
+            plotAngleBtn.classList.add('active');
+            plotRadiusBtn.classList.remove('active');
+            updateVisualization();
+        });
+
+        // Initial render
+        updateVisualization();
+    </script>
+</body>
+</html>
