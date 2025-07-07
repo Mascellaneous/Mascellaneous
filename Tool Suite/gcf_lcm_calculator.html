@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GCF and LCM Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f4f7fa;
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, color 0.3s;
+      position: relative;
+      flex: 1;
+      min-width: 300px;
+      max-width: 700px;
+    }
+
+    body.dark-mode .container {
+      background-color: #2c2c2c;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .sidebar {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, color 0.3s;
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #2c2c2c;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    body.dark-mode h2 {
+      color: #e0e0e0;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    body.dark-mode p {
+      color: #adb5bd;
+    }
+
+    .sidebar p {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .excel-label {
+      text-align: left;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    body.dark-mode .excel-label {
+      color: #adb5bd;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      width: 120px;
+      font-weight: 500;
+      color: #444;
+    }
+
+    body.dark-mode label {
+      color: #e0e0e0;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode input {
+      background-color: #3a3a3a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    input:invalid {
+      border-color: #dc3545;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      color: #fff;
+    }
+
+    button:nth-child(1) {
+      background-color: #28a745;
+    }
+
+    button:nth-child(1):hover {
+      background-color: #218838;
+    }
+
+    button:nth-child(2) {
+      background-color: #dc3545;
+    }
+
+    button:nth-child(2):hover {
+      background-color: #c82333;
+    }
+
+    #dark-mode-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #6c757d;
+      padding: 8px;
+      font-size: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.2s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #dark-mode-toggle:hover {
+      background-color: #5a6268;
+      transform: scale(1.1);
+    }
+
+    body.dark-mode #dark-mode-toggle {
+      background-color: #adb5bd;
+    }
+
+    body.dark-mode #dark-mode-toggle:hover {
+      background-color: #8f9ba6;
+    }
+
+    #result {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      margin: 20px 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      text-align: left;
+      word-break: break-all;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      white-space: pre-line;
+    }
+
+    body.dark-mode #result {
+      background-color: #3a3a3a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    .excel-section, .google-apps-script-section {
+      margin-top: 30px;
+      padding: 20px;
+      border-top: 2px solid #eee;
+      transition: border-color 0.3s;
+    }
+
+    body.dark-mode .excel-section, body.dark-mode .google-apps-script-section {
+      border-color: #555;
+    }
+
+    .excel-section h3, .google-apps-script-section h3, .sidebar h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    body.dark-mode .excel-section h3, body.dark-mode .google-apps-script-section h3, body.dark-mode .sidebar h3 {
+      color: #e0e0e0;
+    }
+
+    #excelGcfFormula, #excelLcmFormula, #googleAppsScript {
+      background-color: #f1f3f5;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      word-break: break-all;
+      transition: background-color 0.3s, color 0.3s;
+      margin-bottom: 10px;
+    }
+
+    body.dark-mode #excelGcfFormula, body.dark-mode #excelLcmFormula, body.dark-mode #googleAppsScript {
+      background-color: #3a3a3a;
+      color: #e0e0e0;
+    }
+
+    .excel-section button, .google-apps-script-section button {
+      background-color: #6c757d;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    .excel-section button:hover, .google-apps-script-section button:hover {
+      background-color: #5a6268;
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+      text-align: center;
+    }
+
+    body.dark-mode .error {
+      color: #ff6b6b;
+    }
+
+    .copy-message {
+      text-align: center;
+      min-height: 20px;
+      font-size: 14px;
+      color: #28a745;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    body.dark-mode .copy-message {
+      color: #2ecc71;
+    }
+
+    .copy-message.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        margin: 20px auto;
+        padding: 10px;
+        flex-direction: column;
+      }
+
+      .container, .sidebar {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container, .sidebar {
+        padding: 15px;
+      }
+
+      button {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      #dark-mode-toggle {
+        padding: 6px;
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>GCF and LCM Calculator</h2>
+    <button id="dark-mode-toggle">☾</button>
+    <p>Enter positive integers separated by commas to find their Greatest Common Factor (GCF), Least Common Multiple (LCM), and divisors.</p>
+    <div class="input-group">
+      <label for="numbers">Numbers:</label>
+      <input type="text" id="numbers" placeholder="e.g., 12, 18, 24" required>
+    </div>
+    <div class="error" id="numbersError">Please enter valid positive integers separated by commas.</div>
+    <div class="button-group">
+      <button onclick="copyResult()" tabindex="0" aria-label="Copy GCF, LCM, and divisors results">Copy Results</button>
+      <button onclick="clearInput()" tabindex="0" aria-label="Clear input and results">Clear</button>
+    </div>
+    <div id="result"></div>
+    <div class="copy-message" id="copyMessage"></div>
+
+    <div class="excel-section">
+      <h3>Excel Formula Equivalent</h3>
+      <div>
+        <p class="excel-label">The GCF:</p>
+        <p id="excelGcfFormula">=GCD(A1, B1)</p>
+        <button onclick="copyGcfFormula()" tabindex="0" aria-label="Copy GCF formula">Copy GCF Formula</button>
+        <div class="copy-message" id="copyGcfFormulaMessage"></div>
+      </div>
+      <div>
+        <p class="excel-label">The LCM:</p>
+        <p id="excelLcmFormula">=LCM(A1, B1)</p>
+        <button onclick="copyLcmFormula()" tabindex="0" aria-label="Copy LCM formula">Copy LCM Formula</button>
+        <div class="copy-message" id="copyLcmFormulaMessage"></div>
+      </div>
+    </div>
+
+    <div class="google-apps-script-section">
+      <h3>Google Apps Script Equivalent</h3>
+      <p id="googleAppsScript">
+/**
+ * Calculates the Greatest Common Factor (GCF) of multiple numbers.
+ * @param {...number} numbers The numbers to find the GCF of.
+ * @return {number} The GCF of the numbers.
+ * @customfunction
+ */
+function GCF(...numbers) {
+  if (numbers.length < 2 || numbers.some(n => !Number.isInteger(n) || n <= 0)) {
+    throw new Error("Please provide at least two positive integers.");
+  }
+  function gcd(a, b) {
+    while (b) {
+      a %= b;
+      [a, b] = [b, a];
+    }
+    return a;
+  }
+  return numbers.reduce((a, b) => gcd(a, b));
+}
+
+/**
+ * Calculates the Least Common Multiple (LCM) of multiple numbers.
+ * @param {...number} numbers The numbers to find the LCM of.
+ * @return {number} The LCM of the numbers.
+ * @customfunction
+ */
+function LCM(...numbers) {
+  if (numbers.length < 2 || numbers.some(n => !Number.isInteger(n) || n <= 0)) {
+    throw new Error("Please provide at least two positive integers.");
+  }
+  function gcd(a, b) {
+    while (b) {
+      a %= b;
+      [a, b] = [b, a];
+    }
+    return a;
+  }
+  function lcm(a, b) {
+    return (a * b) / gcd(a, b);
+  }
+  return numbers.reduce((a, b) => lcm(a, b));
+}
+
+/**
+ * Calculates the divisors of a number.
+ * @param {number} number The number to find divisors for.
+ * @return {string} A comma-separated list of divisors.
+ * @customfunction
+ */
+function DIVISORS(number) {
+  if (!Number.isInteger(number) || number <= 0) {
+    throw new Error("Please provide a positive integer.");
+  }
+  const divisors = [];
+  for (let i = 1; i <= Math.sqrt(number); i++) {
+    if (number % i === 0) {
+      divisors.push(i);
+      if (i !== number / i) {
+        divisors.push(number / i);
+      }
+    }
+  }
+  return divisors.sort((a, b) => a - b).join(", ");
+}
+      </p>
+      <button onclick="copyGoogleAppsScript()" tabindex="0" aria-label="Copy Google Apps Script">Copy Script</button>
+      <div class="copy-message" id="copyGoogleAppsScriptMessage"></div>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <h3>About GCF, LCM, and Divisors</h3>
+    <p><strong>Greatest Common Factor (GCF):</strong> The GCF of two or more numbers is the largest positive integer that divides each of the numbers without leaving a remainder. It is useful for simplifying fractions and finding common denominators.</p>
+    <p><strong>Least Common Multiple (LCM):</strong> The LCM of two or more numbers is the smallest positive integer that is divisible by each of the numbers. It is used in adding or subtracting fractions and solving problems involving cycles or events.</p>
+    <p><strong>Divisors:</strong> A divisor of a number is a positive integer that divides it evenly, leaving no remainder. For example, the divisors of 12 are 1, 2, 3, 4, 6, and 12.</p>
+  </div>
+
+  <script>
+    function gcd(a, b) {
+      while (b) {
+        a %= b;
+        [a, b] = [b, a];
+      }
+      return a;
+    }
+
+    function lcm(a, b) {
+      return (a * b) / gcd(a, b);
+    }
+
+    function calculateGcf(numbers) {
+      return numbers.reduce((a, b) => gcd(a, b));
+    }
+
+    function calculateLcm(numbers) {
+      return numbers.reduce((a, b) => lcm(a, b));
+    }
+
+    function getDivisors(num) {
+      const divisors = [];
+      for (let i = 1; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) {
+          divisors.push(i);
+          if (i !== num / i) {
+            divisors.push(num / i);
+          }
+        }
+      }
+      return divisors.sort((a, b) => a - b);
+    }
+
+    function calculate() {
+      const input = document.getElementById('numbers').value;
+      const numbersError = document.getElementById('numbersError');
+      const resultElement = document.getElementById('result');
+
+      // Validate input
+      const numbers = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+      if (numbers.length < 2 || numbers.some(num => num <= 0 || !Number.isInteger(num))) {
+        numbersError.style.display = 'block';
+        resultElement.textContent = '';
+        document.getElementById('excelGcfFormula').textContent = '=GCD(A1, B1)';
+        document.getElementById('excelLcmFormula').textContent = '=LCM(A1, B1)';
+        return;
+      } else {
+        numbersError.style.display = 'none';
+      }
+
+      // Calculate GCF and LCM
+      const gcf = calculateGcf(numbers);
+      const lcm = calculateLcm(numbers);
+
+      // Calculate divisors
+      const divisorsText = numbers.map(num => `Divisors of ${num}: ${getDivisors(num).join(', ')}`).join('\n');
+
+      // Display results
+      resultElement.textContent = `GCF: ${gcf}\nLCM: ${lcm}\n\nDivisors of Each Number:\n${divisorsText}`;
+
+      // Update Excel formulas
+      updateExcelFormulas(numbers);
+    }
+
+    function updateExcelFormulas(numbers) {
+      const numberList = numbers.join(", ");
+      document.getElementById('excelGcfFormula').textContent = `=GCD(${numberList})`;
+      document.getElementById('excelLcmFormula').textContent = `=LCM(${numberList})`;
+    }
+
+    function clearInput() {
+      const input = document.getElementById('numbers');
+      input.value = '';
+      document.getElementById('numbersError').style.display = 'none';
+      document.getElementById('result').textContent = '';
+      document.getElementById('excelGcfFormula').textContent = '=GCD(A1, B1)';
+      document.getElementById('excelLcmFormula').textContent = '=LCM(A1, B1)';
+    }
+
+    function copyResult() {
+      const text = document.getElementById('result').textContent;
+      const messageElement = document.getElementById('copyMessage');
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          messageElement.textContent = 'Results copied to clipboard!';
+          messageElement.classList.add('show');
+          setTimeout(() => {
+            messageElement.classList.remove('show');
+            setTimeout(() => {
+              messageElement.textContent = '';
+            }, 500);
+          }, 2000);
+        });
+      } else {
+        messageElement.textContent = 'No results to copy!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      }
+    }
+
+    function copyGcfFormula() {
+      const formula = document.getElementById('excelGcfFormula').textContent;
+      const messageElement = document.getElementById('copyGcfFormulaMessage');
+      if (formula) {
+        navigator.clipboard.writeText(formula).then(() => {
+          messageElement.textContent = 'GCF formula copied to clipboard!';
+          messageElement.classList.add('show');
+          setTimeout(() => {
+            messageElement.classList.remove('show');
+            setTimeout(() => {
+              messageElement.textContent = '';
+            }, 500);
+          }, 2000);
+        });
+      } else {
+        messageElement.textContent = 'No formula to copy!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      }
+    }
+
+    function copyLcmFormula() {
+      const formula = document.getElementById('excelLcmFormula').textContent;
+      const messageElement = document.getElementById('copyLcmFormulaMessage');
+      if (formula) {
+        navigator.clipboard.writeText(formula).then(() => {
+          messageElement.textContent = 'LCM formula copied to clipboard!';
+          messageElement.classList.add('show');
+          setTimeout(() => {
+            messageElement.classList.remove('show');
+            setTimeout(() => {
+              messageElement.textContent = '';
+            }, 500);
+          }, 2000);
+        });
+      } else {
+        messageElement.textContent = 'No formula to copy!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      }
+    }
+
+    function copyGoogleAppsScript() {
+      const script = document.getElementById('googleAppsScript').textContent;
+      const messageElement = document.getElementById('copyGoogleAppsScriptMessage');
+      if (script) {
+        navigator.clipboard.writeText(script).then(() => {
+          messageElement.textContent = 'Script copied to clipboard!';
+          messageElement.classList.add('show');
+          setTimeout(() => {
+            messageElement.classList.remove('show');
+            setTimeout(() => {
+              messageElement.textContent = '';
+            }, 500);
+          }, 2000);
+        });
+      } else {
+        messageElement.textContent = 'No script to copy!';
+        messageElement.classList.add('show');
+        setTimeout(() => {
+          messageElement.classList.remove('show');
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 500);
+        }, 2000);
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const toggleButton = document.getElementById('dark-mode-toggle');
+      toggleButton.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+    }
+
+    // Add event listener for dark mode toggle
+    document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+
+    // Auto-calculate on input change
+    document.getElementById('numbers').addEventListener('input', calculate);
+
+    // Initialize Google Apps Script section (static content)
+    document.getElementById('googleAppsScript').textContent = document.getElementById('googleAppsScript').textContent.trim();
+  </script>
+</body>
+</html>
