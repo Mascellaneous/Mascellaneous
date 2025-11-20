@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>偉倫的選擇：機會成本互動教室</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5a623;
+            --accent-color: #e74c3c;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .definition-box {
+            background-color: #e8f4fd;
+            border-left: 5px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .definition-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 300px;
+            background-color: #fafafa;
+            border-bottom: 2px solid #ddd;
+            padding: 20px 10px 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .bar {
+            width: 60%;
+            background-color: #ccc;
+            border-radius: 8px 8px 0 0;
+            transition: height 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s;
+            position: relative;
+            min-height: 40px; /* Ensure label is visible */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 10px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .bar-value {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Status Badges */
+        .badge {
+            position: absolute;
+            top: -35px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .badge.choice {
+            background-color: var(--primary-color);
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .badge.cost {
+            background-color: var(--accent-color);
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Controls */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .scenario-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .scenario-btn:hover {
+            background-color: #f9f9f9;
+            border-color: var(--primary-color);
+        }
+
+        .scenario-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .slider-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .slider-group label {
+            width: 120px;
+            font-weight: bold;
+        }
+
+        input[type=range] {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-panel {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 20px;
+            border-radius: 8px;
+            animation: fadeIn 0.5s;
+        }
+
+        .explanation-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .chart-container {
+                height: 250px;
+            }
+            .bar {
+                width: 80%;
+            }
+            .badge {
+                font-size: 0.7em;
+                top: -45px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>偉倫的機會成本實驗室</h1>
+    
+    <div class="definition-box">
+        <span class="definition-title">💡 什麼是機會成本？</span><br>
+        機會成本是在作出選擇時，所放棄的選項中，<strong>價值最高</strong>的那一項。
+    </div>
+
+    <!-- Visualization -->
+    <div class="chart-container">
+        <!-- Running -->
+        <div class="bar-group">
+            <div id="badge-running" class="badge"></div>
+            <div id="bar-running" class="bar" style="height: 0%;"></div>
+            <div class="bar-label">🏃‍♂️ 跑步</div>
+            <div id="val-running" class="bar-value">價值: 0</div>
+        </div>
+
+        <!-- Magic -->
+        <div class="bar-group">
+            <div id="badge-magic" class="badge"></div>
+            <div id="bar-magic" class="bar" style="height: 0%;"></div>
+            <div class="bar-label">🎩 練習魔術</div>
+            <div id="val-magic" class="bar-value">價值: 0</div>
+        </div>
+
+        <!-- Comics -->
+        <div class="bar-group">
+            <div id="badge-comics" class="badge"></div>
+            <div id="bar-comics" class="bar" style="height: 0%;"></div>
+            <div class="bar-label">📱 看網絡漫畫</div>
+            <div id="val-comics" class="bar-value">價值: 0</div>
+        </div>
+    </div>
+
+    <!-- Scenarios -->
+    <h3>👇 點擊下方按鈕模擬不同情境：</h3>
+    <div class="controls">
+        <button class="scenario-btn active" onclick="setScenario('initial')">
+            <strong>1. 初始狀態</strong><br>跑步 > 魔術 > 漫畫
+        </button>
+        <button class="scenario-btn" onclick="setScenario('hot')">
+            <strong>2. 已選選項價值改變</strong><br>天氣太熱，跑步價值下降
+        </button>
+        <button class="scenario-btn" onclick="setScenario('magic')">
+            <strong>3. 最高價值放棄項改變</strong><br>學會新招，魔術價值上升
+        </button>
+        <button class="scenario-btn" onclick="setScenario('comics1')">
+            <strong>4. 其他放棄項改變 (微升)</strong><br>漫畫好看，價值微升
+        </button>
+        <button class="scenario-btn" onclick="setScenario('comics2')">
+            <strong>5. 其他放棄項改變 (大升)</strong><br>漫畫超好看，變成第二選擇
+        </button>
+    </div>
+
+    <!-- Manual Sliders -->
+    <div class="slider-container">
+        <p style="margin-top:0; font-size:0.9em; color:#666;">或者手動調整價值來觀察變化：</p>
+        <div class="slider-group">
+            <label>🏃‍♂️ 跑步價值</label>
+            <input type="range" id="slider-running" min="0" max="100" oninput="manualUpdate('running', this.value)">
+        </div>
+        <div class="slider-group">
+            <label>🎩 魔術價值</label>
+            <input type="range" id="slider-magic" min="0" max="100" oninput="manualUpdate('magic', this.value)">
+        </div>
+        <div class="slider-group">
+            <label>📱 漫畫價值</label>
+            <input type="range" id="slider-comics" min="0" max="100" oninput="manualUpdate('comics', this.value)">
+        </div>
+    </div>
+
+    <!-- Explanation -->
+    <div class="explanation-panel">
+        <span class="explanation-title">📢 老師的分析：</span>
+        <div id="explanation-text">
+            載入中...
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initial Values
+    let values = {
+        running: 90,
+        magic: 70,
+        comics: 50
+    };
+
+    const names = {
+        running: "跑步",
+        magic: "練習魔術",
+        comics: "看網絡漫畫"
+    };
+
+    // Scenarios Data
+    const scenarios = {
+        initial: { running: 90, magic: 70, comics: 50, desc: "這是偉倫一開始的喜好次序。因為時間有限，他只能選價值最高的。" },
+        hot: { running: 80, magic: 70, comics: 50, desc: "天氣太熱了！跑步雖然還是第一名，但價值下降了。注意看機會成本（紅色標籤）有變嗎？" },
+        magic: { running: 90, magic: 85, comics: 50, desc: "偉倫學會了新魔術！練習魔術的價值提升了。這會如何影響選擇跑步的代價？" },
+        comics1: { running: 90, magic: 70, comics: 60, desc: "漫畫變得好看了，價值提升，但還沒有超過魔術。" },
+        comics2: { running: 90, magic: 70, comics: 80, desc: "這部漫畫太精彩了！它的價值大幅提升，甚至超過了練習魔術。" }
+    };
+
+    function updateUI(scenarioKey = null) {
+        // 1. Sort to find Choice and Opportunity Cost
+        // Convert object to array of [key, value]
+        let sortedItems = Object.entries(values).sort((a, b) => b[1] - a[1]);
+        
+        const choiceKey = sortedItems[0][0];
+        const choiceValue = sortedItems[0][1];
+        
+        const costKey = sortedItems[1][0];
+        const costValue = sortedItems[1][1];
+
+        // 2. Update Bars and Sliders
+        for (let key in values) {
+            const val = values[key];
+            const bar = document.getElementById(`bar-${key}`);
+            const badge = document.getElementById(`badge-${key}`);
+            
+            // Update height (max 100px logic mapped to %)
+            bar.style.height = `${val}%`;
+            bar.innerText = val;
+            document.getElementById(`val-${key}`).innerText = `價值: ${val}`;
+            
+            // Update slider
+            document.getElementById(`slider-${key}`).value = val;
+
+            // Reset styles
+            bar.style.backgroundColor = "#ccc";
+            badge.className = "badge";
+            badge.innerText = "";
+        }
+
+        // 3. Highlight Choice (Highest Value)
+        const choiceBar = document.getElementById(`bar-${choiceKey}`);
+        choiceBar.style.backgroundColor = "var(--primary-color)";
+        const choiceBadge = document.getElementById(`badge-${choiceKey}`);
+        choiceBadge.classList.add("choice");
+        choiceBadge.innerText = "✅ 偉倫的選擇";
+
+        // 4. Highlight Opportunity Cost (2nd Highest Value)
+        const costBar = document.getElementById(`bar-${costKey}`);
+        costBar.style.backgroundColor = "var(--accent-color)";
+        const costBadge = document.getElementById(`badge-${costKey}`);
+        costBadge.classList.add("cost");
+        costBadge.innerText = "⚠️ 機會成本";
+
+        // 5. Generate Explanation
+        let explanation = "";
+        
+        if (scenarioKey && scenarios[scenarioKey].desc) {
+            explanation += `<p><strong>情境描述：</strong>${scenarios[scenarioKey].desc}</p>`;
+        }
+
+        explanation += `<p>偉倫選擇了 <strong>${names[choiceKey]}</strong> (價值 ${choiceValue})。</p>`;
+        explanation += `<p>他放棄的選項中，價值最高的是 <strong>${names[costKey]}</strong> (價值 ${costValue})。</p>`;
+        explanation += `<p style="color: var(--accent-color); font-weight:bold;">👉 所以，選擇${names[choiceKey]}的機會成本是：${names[costKey]}。</p>`;
+
+        // Specific logic explanations based on prompt concepts
+        if (scenarioKey === 'hot') {
+            explanation += `<hr><p><em>觀察重點：</em>雖然「已選選項」(跑步) 的價值下降了，但因為放棄的選項中價值最高的(魔術)沒有變，所以<strong>機會成本維持不變</strong>。</p>`;
+        } else if (scenarioKey === 'magic') {
+            explanation += `<hr><p><em>觀察重點：</em>因為「放棄的選項中價值最高」(魔術) 的價值上升了，所以選擇跑步的<strong>機會成本上升了</strong>。</p>`;
+        } else if (scenarioKey === 'comics1') {
+            explanation += `<hr><p><em>觀察重點：</em>「其他放棄選項」(漫畫) 價值雖然上升，但沒有超過魔術。放棄的選項中價值最高的依然是魔術，所以<strong>機會成本維持不變</strong>。</p>`;
+        } else if (scenarioKey === 'comics2') {
+            explanation += `<hr><p><em>觀察重點：</em>「其他放棄選項」(漫畫) 價值大幅上升，超越了魔術，成為了放棄選項中的第一名。因此，<strong>機會成本改變了</strong> (變成了漫畫)。</p>`;
+        }
+
+        document.getElementById('explanation-text').innerHTML = explanation;
+    }
+
+    function setScenario(key) {
+        // Update values based on scenario
+        values = { ...scenarios[key] };
+        delete values.desc; // remove description key for calculation
+
+        // Update active button state
+        document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        updateUI(key);
+    }
+
+    function manualUpdate(key, value) {
+        values[key] = parseInt(value);
+        
+        // Remove active state from scenario buttons since we are in manual mode
+        document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+        
+        updateUI(null);
+    }
+
+    // Initialize
+    updateUI('initial');
+
+</script>
+
+</body>
+</html>
