@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期權 Greeks 互動實驗室</title>
+    <!-- 引入 Chart.js 用於繪圖 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        /* Grid Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Controls Section */
+        .controls {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            color: var(--primary-color);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .value-display {
+            float: right;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .toggle-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .toggle-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Visualization Section */
+        .visualization {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 400px;
+            position: relative;
+        }
+
+        /* Greeks Cards */
+        .greeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .greek-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .greek-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .greek-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .greek-symbol {
+            font-family: serif;
+            font-style: italic;
+            color: #bdc3c7;
+            font-size: 1.5em;
+        }
+
+        .greek-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #27ae60;
+        }
+
+        .greek-desc {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .math-def {
+            font-size: 0.75em;
+            color: #999;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Tooltip/Explanation Box */
+        .info-box {
+            background: #e8f6f3;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            border: 1px solid #d1f2eb;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>期權 Greeks 互動實驗室</h1>
+        <div class="subtitle">專為大學生設計的 Black-Scholes 模型視覺化工具</div>
+    </header>
+
+    <div class="dashboard">
+        <!-- 左側控制面板 -->
+        <aside class="controls">
+            <div class="toggle-group">
+                <button class="toggle-btn active" id="btnCall" onclick="setOptionType('call')">Call (看漲)</button>
+                <button class="toggle-btn" id="btnPut" onclick="setOptionType('put')">Put (看跌)</button>
+            </div>
+
+            <div class="control-group">
+                <label>標的股價 (S) <span id="valS" class="value-display">100</span></label>
+                <input type="range" id="inputS" min="50" max="150" value="100" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>行使價 (K) <span id="valK" class="value-display">100</span></label>
+                <input type="range" id="inputK" min="50" max="150" value="100" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>剩餘時間 (年) (T) <span id="valT" class="value-display">1.00</span></label>
+                <input type="range" id="inputT" min="0.01" max="3" value="1" step="0.01">
+            </div>
+
+            <div class="control-group">
+                <label>波動率 (σ) <span id="valV" class="value-display">20%</span></label>
+                <input type="range" id="inputV" min="1" max="100" value="20" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>無風險利率 (r) <span id="valR" class="value-display">5%</span></label>
+                <input type="range" id="inputR" min="0" max="20" value="5" step="0.5">
+            </div>
+
+            <div class="info-box">
+                <h3>💡 學習提示</h3>
+                <p id="learning-tip">試著移動「股價」滑桿，觀察 Delta 如何變化。當期權由價外 (OTM) 變為價內 (ITM) 時，Delta 會發生劇烈變化。</p>
+            </div>
+        </aside>
+
+        <!-- 右側視覺化區域 -->
+        <main class="visualization">
+            <!-- Greeks 卡片 -->
+            <div class="greeks-grid">
+                <div class="greek-card" style="border-left-color: #e74c3c;">
+                    <div class="greek-name">Delta <span class="greek-symbol">Δ</span></div>
+                    <div class="greek-value" id="greekDelta">0.0000</div>
+                    <div class="greek-desc">方向與速度。股價每變動 $1，期權價格變動多少。</div>
+                    <div class="math-def">∂V/∂S (一階導數)</div>
+                </div>
+
+                <div class="greek-card" style="border-left-color: #f39c12;">
+                    <div class="greek-name">Gamma <span class="greek-symbol">Γ</span></div>
+                    <div class="greek-value" id="greekGamma">0.0000</div>
+                    <div class="greek-desc">加速度。股價每變動 $1，Delta 變動多少。</div>
+                    <div class="math-def">∂²V/∂S² (二階導數)</div>
+                </div>
+
+                <div class="greek-card" style="border-left-color: #8e44ad;">
+                    <div class="greek-name">Theta <span class="greek-symbol">Θ</span></div>
+                    <div class="greek-value" id="greekTheta">0.0000</div>
+                    <div class="greek-desc">時間衰減。每過一天，期權價值損失多少。</div>
+                    <div class="math-def">∂V/∂t (對時間的敏感度)</div>
+                </div>
+
+                <div class="greek-card" style="border-left-color: #2980b9;">
+                    <div class="greek-name">Vega <span class="greek-symbol">ν</span></div>
+                    <div class="greek-value" id="greekVega">0.0000</div>
+                    <div class="greek-desc">波動敏感度。波動率每升 1%，價格變動多少。</div>
+                    <div class="math-def">∂V/∂σ (對波動率的敏感度)</div>
+                </div>
+
+                <div class="greek-card" style="border-left-color: #95a5a6;">
+                    <div class="greek-name">Rho <span class="greek-symbol">ρ</span></div>
+                    <div class="greek-value" id="greekRho">0.0000</div>
+                    <div class="greek-desc">利率敏感度。利率每升 1%，價格變動多少。</div>
+                    <div class="math-def">∂V/∂r (對利率的敏感度)</div>
+                </div>
+            </div>
+
+            <!-- 圖表 -->
+            <div class="chart-container">
+                <canvas id="optionChart"></canvas>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    // --- Black-Scholes Math Functions ---
+
+    // 標準常態分佈累積函數 (CDF)
+    function N(x) {
+        var a1 =  0.254829592;
+        var a2 = -0.284496736;
+        var a3 =  1.421413741;
+        var a4 = -1.453152027;
+        var a5 =  1.061405429;
+        var p  =  0.3275911;
+
+        var sign = 1;
+        if (x < 0) sign = -1;
+        x = Math.abs(x)/Math.sqrt(2.0);
+
+        var t = 1.0/(1.0 + p*x);
+        var y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+
+        return 0.5*(1.0 + sign*y);
+    }
+
+    // 標準常態分佈機率密度函數 (PDF)
+    function n(x) {
+        return (1.0 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * x * x);
+    }
+
+    // Black-Scholes 計算核心
+    function calculateBS(S, K, T, sigma, r, type) {
+        // 避免 T=0 導致除以零
+        if(T <= 0) T = 0.00001;
+
+        var d1 = (Math.log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma * Math.sqrt(T));
+        var d2 = d1 - sigma * Math.sqrt(T);
+
+        var price, delta, gamma, theta, vega, rho;
+
+        if (type === 'call') {
+            price = S * N(d1) - K * Math.exp(-r * T) * N(d2);
+            delta = N(d1);
+            rho = K * T * Math.exp(-r * T) * N(d2) / 100; // 除以100表示每1%變動
+            theta = (- (S * n(d1) * sigma) / (2 * Math.sqrt(T)) - r * K * Math.exp(-r * T) * N(d2)) / 365; // 每日衰減
+        } else {
+            price = K * Math.exp(-r * T) * N(-d2) - S * N(-d1);
+            delta = N(d1) - 1;
+            rho = -K * T * Math.exp(-r * T) * N(-d2) / 100;
+            theta = (- (S * n(d1) * sigma) / (2 * Math.sqrt(T)) + r * K * Math.exp(-r * T) * N(-d2)) / 365;
+        }
+
+        gamma = n(d1) / (S * sigma * Math.sqrt(T));
+        vega = S * Math.sqrt(T) * n(d1) / 100; // 除以100表示每1%變動
+
+        return {
+            price: price,
+            delta: delta,
+            gamma: gamma,
+            theta: theta,
+            vega: vega,
+            rho: rho
+        };
+    }
+
+    // --- App State ---
+    let state = {
+        S: 100,
+        K: 100,
+        T: 1,
+        v: 0.20, // 20%
+        r: 0.05, // 5%
+        type: 'call'
+    };
+
+    // --- Chart Setup ---
+    const ctx = document.getElementById('optionChart').getContext('2d');
+    let chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: '期權理論價格 (Theoretical Price)',
+                    data: [],
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: '當前股價位置',
+                    data: [],
+                    borderColor: '#e74c3c',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 5,
+                    pointBackgroundColor: '#e74c3c',
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: '標的資產價格 (Stock Price)' },
+                    grid: { display: false }
+                },
+                y: {
+                    title: { display: true, text: '期權價格 (Option Price)' },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // --- UI Logic ---
+
+    function updateUI() {
+        // Update Labels
+        document.getElementById('valS').textContent = state.S;
+        document.getElementById('valK').textContent = state.K;
+        document.getElementById('valT').textContent = state.T.toFixed(2);
+        document.getElementById('valV').textContent = Math.round(state.v * 100) + '%';
+        document.getElementById('valR').textContent = (state.r * 100).toFixed(1) + '%';
+
+        // Calculate Greeks for current state
+        const res = calculateBS(state.S, state.K, state.T, state.v, state.r, state.type);
+
+        // Update Greek Cards
+        document.getElementById('greekDelta').textContent = res.delta.toFixed(4);
+        document.getElementById('greekGamma').textContent = res.gamma.toFixed(4);
+        document.getElementById('greekTheta').textContent = res.theta.toFixed(4);
+        document.getElementById('greekVega').textContent = res.vega.toFixed(4);
+        document.getElementById('greekRho').textContent = res.rho.toFixed(4);
+
+        // Color coding for positive/negative
+        document.getElementById('greekTheta').style.color = res.theta < 0 ? '#e74c3c' : '#27ae60';
+        document.getElementById('greekDelta').style.color = res.delta < 0 ? '#e74c3c' : '#27ae60';
+
+        updateChart();
+        updateTip();
+    }
+
+    function updateChart() {
+        // Generate data points for the curve (S +/- 50%)
+        const range = 0.5; 
+        const minS = Math.floor(state.K * (1 - range));
+        const maxS = Math.ceil(state.K * (1 + range));
+        const steps = 50;
+        const stepSize = (maxS - minS) / steps;
+
+        let labels = [];
+        let prices = [];
+        let currentSpotData = [];
+
+        for (let i = 0; i <= steps; i++) {
+            let s = minS + i * stepSize;
+            labels.push(s.toFixed(0));
+            let bs = calculateBS(s, state.K, state.T, state.v, state.r, state.type);
+            prices.push(bs.price);
+            
+            // Prepare the "Current Spot" dot
+            if (Math.abs(s - state.S) < stepSize / 2) {
+                // This is approximate for the chart visual
+            }
+        }
+
+        // Create a dataset that is just a single point at the current S
+        const currentBS = calculateBS(state.S, state.K, state.T, state.v, state.r, state.type);
+        // We need to map this single point to the chart labels, which is tricky in Chart.js line charts without 'scatter'
+        // Instead, we will just update the main curve.
+        // To show the current spot, we can use an annotation or a scatter dataset overlaid.
+        // Let's keep it simple: Just the curve. The user knows S from the slider.
+        
+        // Actually, let's add a vertical line effect by finding the closest index
+        let closestIndex = 0;
+        let minDiff = 99999;
+        labels.forEach((l, idx) => {
+            if (Math.abs(parseFloat(l) - state.S) < minDiff) {
+                minDiff = Math.abs(parseFloat(l) - state.S);
+                closestIndex = idx;
+            }
+        });
+
+        let spotDataset = new Array(labels.length).fill(null);
+        spotDataset[closestIndex] = currentBS.price;
+
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = prices;
+        chart.data.datasets[1].data = spotDataset;
+        chart.update();
+    }
+
+    function updateTip() {
+        const tipEl = document.getElementById('learning-tip');
+        const moneyness = state.S / state.K;
+        
+        if (state.T < 0.1) {
+            tipEl.textContent = "⚠️ 快要到期了！注意 Gamma 風險會變得非常高，這意味著 Delta 會隨股價劇烈波動。";
+        } else if (state.v > 0.5) {
+            tipEl.textContent = "📈 波動率很高！這讓 Vega 變得重要。注意期權價格現在包含了很高的「時間價值」或「恐慌溢價」。";
+        } else if (Math.abs(moneyness - 1) < 0.05) {
+            tipEl.textContent = "🎯 價平 (At-The-Money)！此時 Gamma 和 Vega 通常是最大的。這是期權對股價和波動率最敏感的時候。";
+        } else if ((state.type === 'call' && moneyness > 1.2) || (state.type === 'put' && moneyness < 0.8)) {
+            tipEl.textContent = "💰 深度價內 (Deep ITM)。Delta 接近 1 (或 -1)，期權的行為幾乎和持有股票一樣。";
+        } else {
+            tipEl.textContent = "試著移動「股價」滑桿，觀察 Delta 如何變化。這代表了這張期權合約變現的機率。";
+        }
+    }
+
+    function setOptionType(type) {
+        state.type = type;
+        document.getElementById('btnCall').className = type === 'call' ? 'toggle-btn active' : 'toggle-btn';
+        document.getElementById('btnPut').className = type === 'put' ? 'toggle-btn active' : 'toggle-btn';
+        updateUI();
+    }
+
+    // --- Event Listeners ---
+    document.getElementById('inputS').addEventListener('input', (e) => { state.S = parseFloat(e.target.value); updateUI(); });
+    document.getElementById('inputK').addEventListener('input', (e) => { state.K = parseFloat(e.target.value); updateUI(); });
+    document.getElementById('inputT').addEventListener('input', (e) => { state.T = parseFloat(e.target.value); updateUI(); });
+    document.getElementById('inputV').addEventListener('input', (e) => { state.v = parseFloat(e.target.value) / 100; updateUI(); });
+    document.getElementById('inputR').addEventListener('input', (e) => { state.r = parseFloat(e.target.value) / 100; updateUI(); });
+
+    // Initialize
+    updateUI();
+
+</script>
+
+</body>
+</html>
