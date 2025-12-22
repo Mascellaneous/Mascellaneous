@@ -19,8 +19,14 @@ function renderFinance() {
                     <input type="number" id="discPercent" oninput="calcDiscount()" placeholder="0">
                 </div>
             </div>
-            <div class="result-box"><span>Final Price: <span id="discFinal">0.00</span></span></div>
-            <div class="result-box" style="margin-top:5px"><span>You Save: <span id="discSave">0.00</span></span></div>
+            <div class="result-box">
+                <span>Final Price: <span id="discFinal">0.00</span></span>
+                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('discFinal').innerText, this)" title="Copy">📋</button>
+            </div>
+            <div class="result-box" style="margin-top:5px">
+                <span>You Save: <span id="discSave">0.00</span></span>
+                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('discSave').innerText, this)" title="Copy">📋</button>
+            </div>
         </div>
 
         <!-- Tip Calculator -->
@@ -29,16 +35,82 @@ function renderFinance() {
             <p class="desc">Calculate tip amount and total bill.</p>
             <div class="row">
                 <div>
-                    <label>Bill Amount</label>
-                    <input type="number" id="tipBill" oninput="calcTip()" placeholder="0.00">
+                    <label>Bill Amount ($)</label>
+                    <input type="number" id="finBill" oninput="calcTip()" placeholder="0.00">
                 </div>
                 <div>
                     <label>Tip %</label>
-                    <input type="number" id="tipPercent" oninput="calcTip()" placeholder="15">
+                    <input type="number" id="finTipPct" oninput="calcTip()" placeholder="15">
                 </div>
             </div>
-            <div class="result-box"><span>Tip Amount: <span id="tipAmt">0.00</span></span></div>
-            <div class="result-box" style="margin-top:5px"><span>Total to Pay: <span id="tipTotal">0.00</span></span></div>
+            <div class="result-box">
+                <span>Tip Amount: $<span id="resTipAmt">0.00</span></span>
+                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resTipAmt').innerText, this)" title="Copy">📋</button>
+            </div>
+            <div class="result-box" style="margin-top:5px">
+                <span>Total Bill: $<span id="resTotalBill">0.00</span></span>
+                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resTotalBill').innerText, this)" title="Copy">📋</button>
+            </div>
+        </div>
+
+        <!-- TVM Calculator (Future Value) -->
+        <div class="tool-card">
+            <h3>Future Value Calculator</h3>
+            <p class="desc">Calculate the future value of an investment (Compound Interest).</p>
+            <div class="row">
+                <div>
+                    <label>Present Value (PV)</label>
+                    <input type="number" id="tvmPV" oninput="calcTVM()" placeholder="Initial Amount">
+                </div>
+                <div>
+                    <label>Interest Rate (%)</label>
+                    <input type="number" id="tvmRate" oninput="calcTVM()" placeholder="Annual Rate">
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <label>Years (t)</label>
+                    <input type="number" id="tvmYears" oninput="calcTVM()" placeholder="Duration">
+                </div>
+                <div>
+                    <!-- Empty spacer for alignment -->
+                </div>
+            </div>
+            <div class="result-box">
+                <span>Future Value (FV): $<span id="resFV">0.00</span></span>
+                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resFV').innerText, this)" title="Copy">📋</button>
+            </div>
+            <p class="desc" style="margin-top:5px; font-size:0.8rem;">Formula: FV = PV * (1 + r/100)^t</p>
+        </div>
+
+        <!-- Present Value Calculator -->
+        <div class="tool-card">
+            <h3>Present Value Calculator</h3>
+            <p class="desc">Calculate the amount needed today to reach a future goal.</p>
+            <div class="row">
+                <div>
+                    <label>Target Future Value ($)</label>
+                    <input type="number" id="pvTargetFV" oninput="calcPV()" placeholder="Goal Amount">
+                </div>
+                <div>
+                    <label>Interest Rate (%)</label>
+                    <input type="number" id="pvRate" oninput="calcPV()" placeholder="Annual Rate">
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <label>Years (t)</label>
+                    <input type="number" id="pvYears" oninput="calcPV()" placeholder="Duration">
+                </div>
+                <div>
+                    <!-- Empty spacer for alignment -->
+                </div>
+            </div>
+            <div class="result-box">
+                <span>Present Value (PV): $<span id="resPV">0.00</span></span>
+                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resPV').innerText, this)" title="Copy">📋</button>
+            </div>
+            <p class="desc" style="margin-top:5px; font-size:0.8rem;">Formula: PV = FV / (1 + r/100)^t</p>
         </div>
     `;
     document.getElementById('Finance').innerHTML = html;
@@ -56,12 +128,42 @@ function calcDiscount() {
 }
 
 function calcTip() {
-    const bill = parseFloat(document.getElementById('tipBill').value) || 0;
-    const percent = parseFloat(document.getElementById('tipPercent').value) || 0;
+    const bill = parseFloat(document.getElementById('finBill').value) || 0;
+    const tipPct = parseFloat(document.getElementById('finTipPct').value) || 0;
 
-    const tip = bill * (percent / 100);
-    const total = bill + tip;
+    const tipAmt = bill * (tipPct / 100);
+    const total = bill + tipAmt;
 
-    document.getElementById('tipAmt').innerText = tip.toFixed(2);
-    document.getElementById('tipTotal').innerText = total.toFixed(2);
+    document.getElementById('resTipAmt').innerText = tipAmt.toFixed(2);
+    document.getElementById('resTotalBill').innerText = total.toFixed(2);
+}
+
+function calcTVM() {
+    const pv = parseFloat(document.getElementById('tvmPV').value) || 0;
+    const r = parseFloat(document.getElementById('tvmRate').value) || 0;
+    const t = parseFloat(document.getElementById('tvmYears').value) || 0;
+
+    // FV = PV * (1 + r)^t
+    // Note: Input r is percentage, so we divide by 100
+    const fv = pv * Math.pow((1 + (r / 100)), t);
+
+    document.getElementById('resFV').innerText = fv.toFixed(2);
+}
+
+function calcPV() {
+    const fv = parseFloat(document.getElementById('pvTargetFV').value) || 0;
+    const r = parseFloat(document.getElementById('pvRate').value) || 0;
+    const t = parseFloat(document.getElementById('pvYears').value) || 0;
+
+    // PV = FV / (1 + r)^t
+    // Note: Input r is percentage, so we divide by 100
+    // If r is -100 (which would cause division by zero), we handle implicitly by JS Infinity or check
+    let pv = 0;
+    if (r === -100) {
+        pv = 0; 
+    } else {
+        pv = fv / Math.pow((1 + (r / 100)), t);
+    }
+
+    document.getElementById('resPV').innerText = pv.toFixed(2);
 }
