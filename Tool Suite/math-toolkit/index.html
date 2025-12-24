@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Math Toolkit</h1>
+        <p>Simple tools to calculate, convert, and analyze numbers.</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'Arithmetic')">Arithmetic</button>
+        <button class="tab-btn" onclick="openTab(event, 'Geometry')">Geometry</button>
+        <button class="tab-btn" onclick="openTab(event, 'Statistics')">Statistics</button>
+        <button class="tab-btn" onclick="openTab(event, 'Units')">Units</button>
+        <button class="tab-btn" onclick="openTab(event, 'Finance')">Finance</button>
+        <button class="tab-btn" onclick="openTab(event, 'TimeDate')">Time & Date</button>
+    </div>
+
+    <!-- Tab Content Containers -->
+    <div id="Arithmetic" class="tab-content" style="display:block;"></div>
+    <div id="Geometry" class="tab-content"></div>
+    <div id="Statistics" class="tab-content"></div>
+    <div id="Units" class="tab-content"></div>
+    <div id="Finance" class="tab-content"></div>
+    <div id="TimeDate" class="tab-content"></div>
+
+</div>
+
+<!-- Scroll to Top Button -->
+<button id="to-top-button" onclick="scrollToTop()" title="Go to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+<script src="js/global-utils.js"></script>
+<script src="js/arithmetic.js"></script>
+<script src="js/geometry.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/units.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/time_date.js"></script>
+
+<script>
+    // Initialize all tabs on load
+    window.onload = function() {
+        renderArithmetic();
+        renderGeometry();
+        renderStatistics();
+        renderUnits();
+        renderFinance();
+        renderTimeDate();
+    };
+</script>
+
+</body>
+</html>
