@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflation Highway: Speed vs Distance</title>
+    <style>
+        :root {
+            --dashboard-bg: #111827;
+            --road-bg: #374151;
+            --grass-bg: #064e3b;
+            --sky-bg: #0f172a;
+            --accent: #00eaff;
+            --danger: #ff0055;
+            --text: #f3f4f6;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace; /* Retro digital feel */
+            background: #000;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- THE VIEWPORT (Windshield) --- */
+        .windshield {
+            width: 100%;
+            max-width: 800px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, var(--sky-bg) 0%, #1e293b 50%, var(--grass-bg) 50%, #065f46 100%);
+            border-bottom: 8px solid #000;
+            perspective: 200px;
+        }
+
+        /* The Road */
+        .road {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotateX(45deg);
+            width: 400px;
+            height: 150px;
+            background: #333;
+            border-left: 10px solid #fbbf24;
+            border-right: 10px solid #fbbf24;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Moving stripes on the road */
+        .stripe {
+            width: 10px;
+            height: 100%;
+            background-image: linear-gradient(to bottom, #fff 50%, transparent 50%);
+            background-size: 10px 40px; /* The repeating pattern */
+            /* Animation is controlled by JS */
+        }
+
+        /* Moving trees/buildings on side */
+        .scenery {
+            position: absolute;
+            bottom: 150px; /* Horizon line */
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .tree {
+            font-size: 40px;
+            position: relative;
+            /* Animation controlled by JS */
+        }
+
+        /* The Car Dashboard Overlay */
+        .dashboard-overlay {
+            width: 100%;
+            max-width: 800px;
+            background: var(--dashboard-bg);
+            padding: 20px;
+            box-sizing: border-box;
+            border-top: 4px solid #374151;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.5);
+        }
+
+        /* --- GAUGES --- */
+        .gauge-container {
+            background: #1f2937;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #374151;
+            position: relative;
+        }
+
+        .gauge-title {
+            color: #9ca3af;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        /* Speedometer (Inflation) */
+        .speedometer {
+            width: 120px;
+            height: 60px; /* Half circle */
+            background: #374151;
+            border-radius: 120px 120px 0 0;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .speedometer-inner {
+            width: 100px;
+            height: 50px;
+            background: #111827;
+            border-radius: 100px 100px 0 0;
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            z-index: 1;
+        }
+        .needle {
+            width: 4px;
+            height: 55px;
+            background: var(--danger);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: rotate(-90deg); /* Start left */
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            z-index: 2;
+        }
+        .speed-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-top: 5px;
+        }
+
+        /* Odometer (Price Level) */
+        .odometer-box {
+            background: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            letter-spacing: 5px;
+            padding: 10px;
+            border: 2px solid #4b5563;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .odometer-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        /* --- CONTROLS --- */
+        .controls-area {
+            width: 100%;
+            max-width: 800px;
+            background: #1f2937;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        input[type=range] {
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            background: #374151;
+            outline: none;
+            -webkit-appearance: none;
+            margin: 20px 0;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* --- EXPLANATION PANEL --- */
+        .readout-panel {
+            width: 100%;
+            max-width: 800px;
+            background: #fff;
+            color: #111;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            line-height: 1.6;
+        }
+        
+        .big-concept {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2563eb;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            background: #374151;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: monospace;
+        }
+        button:hover { background: #4b5563; }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. The Visual View (Windshield) -->
+    <div class="windshield">
+        <div class="scenery" id="scenery">
+            <!-- Trees will be generated here -->
+            <div class="tree">🌲</div>
+            <div class="tree">🌲</div>
+            <div class="tree">🏠</div>
+            <div class="tree">🌲</div>
+        </div>
+        <div class="road">
+            <div class="stripe" id="road-stripe"></div>
+        </div>
+        <!-- Simple car hood overlay -->
+        <div style="position:absolute; bottom:0; width:100%; height:40px; background:#111; border-radius: 50% 50% 0 0;"></div>
+    </div>
+
+    <!-- 2. The Dashboard -->
+    <div class="dashboard-overlay">
+        <!-- Left: Speedometer (Inflation) -->
+        <div class="gauge-container">
+            <div class="gauge-title">Inflation Rate (Speed)</div>
+            <div class="speedometer">
+                <div class="speedometer-inner"></div>
+                <div class="needle" id="needle"></div>
+            </div>
+            <div class="speed-text" id="speed-text">0%</div>
+            <div style="font-size: 0.7rem; color: #6b7280;">How fast prices change</div>
+        </div>
+
+        <!-- Right: Odometer (Price Level) -->
+        <div class="gauge-container">
+            <div class="gauge-title">Price Level (Distance)</div>
+            <div class="odometer-box" id="odometer">00100</div>
+            <div class="odometer-label">Total Cumulative Cost</div>
+        </div>
+    </div>
+
+    <!-- 3. Controls -->
+    <div class="controls-area">
+        <label style="text-transform: uppercase; letter-spacing: 2px; color: var(--accent);">
+            Gas Pedal (Inflation Control)
+        </label>
+        <input type="range" id="gas-pedal" min="-2" max="5" step="0.1" value="0">
+        
+        <div class="btn-group">
+            <button onclick="setScenario(3)">High Speed (Inflation)</button>
+            <button onclick="setScenario(1)">Low Speed (Disinflation)</button>
+            <button onclick="setScenario(0)">Parked (Zero Inflation)</button>
+            <button onclick="setScenario(-2)">Reverse (Deflation)</button>
+        </div>
+    </div>
+
+    <!-- 4. Education / Readout -->
+    <div class="readout-panel">
+        <div id="concept-display" class="big-concept">Parked.</div>
+        <div id="explanation-text">
+            The car is stopped. The distance traveled (Price Level) is not changing.
+        </div>
+    </div>
+
+    <script>
+        // --- Game State ---
+        let inflationRate = 0; // The "Speed"
+        let priceLevel = 100;  // The "Distance"
+        let stripePosition = 0;
+        let sceneryPosition = 0;
+
+        // --- DOM Elements ---
+        const gasPedal = document.getElementById('gas-pedal');
+        const needle = document.getElementById('needle');
+        const speedText = document.getElementById('speed-text');
+        const odometer = document.getElementById('odometer');
+        const roadStripe = document.getElementById('road-stripe');
+        const scenery = document.getElementById('scenery');
+        const conceptDisplay = document.getElementById('concept-display');
+        const explanationText = document.getElementById('explanation-text');
+
+        // --- The Physics Loop (Runs 60 times a second) ---
+        function gameLoop() {
+            // 1. Update Price Level (Distance) based on Inflation (Speed)
+            // We divide by 100 just to make the numbers manageable for the animation
+            priceLevel += (inflationRate / 50);
+
+            // Prevent negative prices (unrealistic)
+            if (priceLevel < 10) priceLevel = 10;
+
+            // 2. Update Visuals: Road Animation
+            // Move the stripes based on speed
+            stripePosition += (inflationRate * 2); 
+            roadStripe.style.backgroundPositionY = `${stripePosition}px`;
+
+            // Move scenery (Parallax effect, slower than road)
+            sceneryPosition -= (inflationRate * 0.5);
+            scenery.style.transform = `translateX(${sceneryPosition % 100}px)`; // Loop it roughly
+
+            // 3. Update Visuals: Odometer
+            // Format to look like a real odometer (00125)
+            let displayPrice = Math.floor(priceLevel).toString().padStart(5, '0');
+            odometer.innerText = displayPrice;
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // --- Interaction Logic ---
+        gasPedal.addEventListener('input', (e) => {
+            updateState(parseFloat(e.target.value));
+        });
+
+        function updateState(rate) {
+            inflationRate = rate;
+            gasPedal.value = rate;
+
+            // Update Speedometer UI
+            speedText.innerText = rate + "%";
+            
+            // Calculate Needle Angle
+            // Map -2 to 5 range into -90deg to 90deg
+            // Range total = 7. 
+            // -2 maps to -90deg. 0 maps to -38deg approx. 5 maps to 90deg.
+            // Let's simplify: 0% = 0deg (vertical). 
+            // Max right (5%) = 90deg. Max left (-5%) = -90deg.
+            const angle = rate * 18; // 5 * 18 = 90
+            needle.style.transform = `rotate(${angle}deg)`;
+
+            // Update Text Explanations
+            updateExplanation(rate);
+        }
+
+        function updateExplanation(rate) {
+            let concept = "";
+            let text = "";
+
+            if (rate > 2) {
+                concept = "High Inflation (Speeding)";
+                text = "You are driving fast! Look at the Odometer (Price Level) - it is shooting up very quickly.";
+            } else if (rate > 0 && rate <= 2) {
+                concept = "Low Inflation (Cruising)";
+                text = "You are moving forward, but slowly. <strong>Crucial Point:</strong> Even though you slowed down, the Odometer is still going UP. Prices are still rising, just not as fast as before.";
+            } else if (rate === 0) {
+                concept = "Zero Inflation (Parked)";
+                text = "The car is stopped. Speed is 0. The Odometer (Price Level) stays exactly where it is.";
+            } else if (rate < 0) {
+                concept = "Deflation (Reversing)";
+                text = "You are in reverse! The Odometer is actually turning backward. Prices are dropping.";
+            }
+
+            conceptDisplay.innerText = concept;
+            explanationText.innerHTML = text;
+
+            // Color coding
+            if (rate > 0) speedText.style.color = "#ef4444"; // Red
+            else if (rate < 0) speedText.style.color = "#3b82f6"; // Blue
+            else speedText.style.color = "#f3f4f6"; // White
+        }
+
+        function setScenario(rate) {
+            // Animate the slider visually
+            updateState(rate);
+        }
+
+        // Start the engine
+        requestAnimationFrame(gameLoop);
+        updateState(0); // Start parked
+
+    </script>
+</body>
+</html>
