@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantity Theory of Money Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.2.0/dist/chartjs-plugin-dragdata.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .canvas-wrapper {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+        .draggable-cursor {
+            cursor: ns-resize;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Header & Language Switch -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 id="title" class="text-2xl font-bold text-gray-800">Quantity Theory of Money Simulator</h1>
+            <button id="langBtn" onclick="toggleLanguage()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
+                中文 / English
+            </button>
+        </div>
+
+        <!-- Instructions -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 text-blue-700">
+            <p id="instruction">Drag the points on the top chart to adjust Money Supply and Real Output growth rates.</p>
+        </div>
+
+        <!-- Top Chart: Independent Variables -->
+        <div class="mb-8">
+            <h2 id="inputTitle" class="text-xl font-semibold mb-2 text-gray-700 text-center">Input: Growth Rates</h2>
+            <div class="chart-container">
+                <div class="canvas-wrapper">
+                    <canvas id="inputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Charts: Dependent Variables -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Result 1: Inflation Rate -->
+            <div>
+                <h2 id="inflationTitle" class="text-xl font-semibold mb-2 text-gray-700 text-center">Result A: Inflation Rate</h2>
+                <div class="text-center text-sm text-gray-500 mb-1" id="inflationFormula">(Money Supply Growth - Real Output Growth)</div>
+                <div class="chart-container">
+                    <div class="canvas-wrapper">
+                        <canvas id="inflationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result 2: Nominal Output Growth -->
+            <div>
+                <h2 id="nominalTitle" class="text-xl font-semibold mb-2 text-gray-700 text-center">Result B: Nominal Output Growth Rate</h2>
+                <div class="text-center text-sm text-gray-500 mb-1" id="nominalFormula">(Assuming constant Velocity ≈ Money Supply Growth)</div>
+                <div class="chart-container">
+                    <div class="canvas-wrapper">
+                        <canvas id="nominalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- State Management ---
+        let currentLang = 'en';
+        const dataPoints = 6; // Number of years on X axis
+        const initialMoneySupply = Array(dataPoints).fill(5); // Start at 5%
+        const initialRealOutput = Array(dataPoints).fill(2);  // Start at 2%
+
+        // --- Text Resources ---
+        const texts = {
+            en: {
+                title: "Quantity Theory of Money Simulator",
+                instruction: "Drag the points on the top chart to adjust Money Supply and Real Output growth rates.",
+                inputTitle: "Input: Growth Rates (%)",
+                inflationTitle: "Result A: Inflation Rate (%)",
+                nominalTitle: "Result B: Nominal Output Growth Rate (%)",
+                inflationFormula: "(Money Supply Growth - Real Output Growth)",
+                nominalFormula: "(Equal to Money Supply Growth + Velocity Growth, assuming V=0)",
+                moneySupplyLabel: "Growth rate of Money Supply",
+                realOutputLabel: "Growth rate of Real Output",
+                inflationLabel: "Inflation Rate",
+                nominalLabel: "Nominal Output Growth Rate",
+                yearLabel: "Year"
+            },
+            zh: {
+                title: "貨幣數量論模擬器",
+                instruction: "拖動上方圖表中的點以調整貨幣供應增長率和實質產出增長率。",
+                inputTitle: "輸入：增長率 (%)",
+                inflationTitle: "結果 A：通脹率 (%)",
+                nominalTitle: "結果 B：名義產出增長率 (%)",
+                inflationFormula: "(貨幣供應增長率 - 實質產出增長率)",
+                nominalFormula: "(等於貨幣供應增長率 + 流通速度增長率，假設 V=0)",
+                moneySupplyLabel: "貨幣供應增長率",
+                realOutputLabel: "實質產出增長率",
+                inflationLabel: "通脹率",
+                nominalLabel: "名義產出增長率",
+                yearLabel: "年份"
+            }
+        };
+
+        // --- Chart Configurations ---
+        const ctxInput = document.getElementById('inputChart').getContext('2d');
+        const ctxInflation = document.getElementById('inflationChart').getContext('2d');
+        const ctxNominal = document.getElementById('nominalChart').getContext('2d');
+
+        // Base options shared by all charts
+        const baseOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    grid: { display: false }
+                }
+            },
+            plugins: {
+                legend: { position: 'top' }
+            }
+        };
+
+        // 1. Input Chart (Draggable) - Scale: -15 to 15
+        const inputChart = new Chart(ctxInput, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6'],
+                datasets: [
+                    {
+                        label: texts.en.moneySupplyLabel,
+                        data: [...initialMoneySupply],
+                        borderColor: 'rgb(59, 130, 246)', // Blue
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        pointBackgroundColor: 'white',
+                        pointBorderColor: 'rgb(59, 130, 246)',
+                        fill: false,
+                        tension: 0
+                    },
+                    {
+                        label: texts.en.realOutputLabel,
+                        data: [...initialRealOutput],
+                        borderColor: 'rgb(16, 185, 129)', // Green
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        borderDash: [5, 5],
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        pointBackgroundColor: 'white',
+                        pointBorderColor: 'rgb(16, 185, 129)',
+                        fill: false,
+                        tension: 0
+                    }
+                ]
+            },
+            options: {
+                ...baseOptions,
+                scales: {
+                    ...baseOptions.scales,
+                    y: {
+                        beginAtZero: true,
+                        min: -15, // Updated min
+                        max: 15,  // Updated max
+                        grid: { color: '#e5e7eb' }
+                    }
+                },
+                plugins: {
+                    dragData: {
+                        round: 1,
+                        showTooltip: true,
+                        onDrag: function(e, datasetIndex, index, value) {
+                            e.target.style.cursor = 'grabbing';
+                        },
+                        onDragEnd: function(e, datasetIndex, index, value) {
+                            e.target.style.cursor = 'default';
+                            updateDependentCharts();
+                        }
+                    },
+                    legend: { labels: { usePointStyle: true } }
+                }
+            }
+        });
+
+        // 2. Inflation Chart (Result) - Scale: -30 to 30
+        const inflationChart = new Chart(ctxInflation, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6'],
+                datasets: [{
+                    label: texts.en.inflationLabel,
+                    data: initialMoneySupply.map((m, i) => m - initialRealOutput[i]),
+                    borderColor: 'rgb(239, 68, 68)', // Red
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    tension: 0
+                }]
+            },
+            options: {
+                ...baseOptions,
+                scales: {
+                    ...baseOptions.scales,
+                    y: {
+                        beginAtZero: true,
+                        min: -30, // Updated min for results
+                        max: 30,  // Updated max for results
+                        grid: { color: '#e5e7eb' }
+                    }
+                },
+                plugins: { legend: { display: true } }
+            }
+        });
+
+        // 3. Nominal Output Chart (Result) - Scale: -30 to 30
+        const nominalChart = new Chart(ctxNominal, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6'],
+                datasets: [{
+                    label: texts.en.nominalLabel,
+                    data: [...initialMoneySupply], 
+                    borderColor: 'rgb(139, 92, 246)', // Purple
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    tension: 0
+                }]
+            },
+            options: {
+                ...baseOptions,
+                scales: {
+                    ...baseOptions.scales,
+                    y: {
+                        beginAtZero: true,
+                        min: -30, // Updated min for results
+                        max: 30,  // Updated max for results
+                        grid: { color: '#e5e7eb' }
+                    }
+                },
+                plugins: { legend: { display: true } }
+            }
+        });
+
+        // --- Logic Functions ---
+
+        function updateDependentCharts() {
+            const moneySupplyData = inputChart.data.datasets[0].data;
+            const realOutputData = inputChart.data.datasets[1].data;
+
+            // Calculate Inflation: %ΔP = %ΔM - %ΔY
+            const inflationData = moneySupplyData.map((m, i) => m - realOutputData[i]);
+            
+            // Calculate Nominal Output Growth: %Δ(PY) = %ΔM + %ΔV (Assuming %ΔV = 0, then %Δ(PY) = %ΔM)
+            const nominalData = moneySupplyData.map(m => m); 
+
+            // Update Charts
+            inflationChart.data.datasets[0].data = inflationData;
+            inflationChart.update();
+
+            nominalChart.data.datasets[0].data = nominalData;
+            nominalChart.update();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            const t = texts[currentLang];
+
+            // Update DOM Text
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('instruction').innerText = t.instruction;
+            document.getElementById('inputTitle').innerText = t.inputTitle;
+            document.getElementById('inflationTitle').innerText = t.inflationTitle;
+            document.getElementById('nominalTitle').innerText = t.nominalTitle;
+            document.getElementById('inflationFormula').innerText = t.inflationFormula;
+            document.getElementById('nominalFormula').innerText = t.nominalFormula;
+
+            // Update Chart Labels
+            inputChart.data.datasets[0].label = t.moneySupplyLabel;
+            inputChart.data.datasets[1].label = t.realOutputLabel;
+            inflationChart.data.datasets[0].label = t.inflationLabel;
+            nominalChart.data.datasets[0].label = t.nominalLabel;
+
+            inputChart.update();
+            inflationChart.update();
+            nominalChart.update();
+        }
+    </script>
+</body>
+</html>
