@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Guide: Subsidy & Elasticity</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: "Segoe UI", "Microsoft JhengHei", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .header-info {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+        .header-info p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .question-box {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .concept-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .concept-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 1.1em;
+        }
+        .math-block {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: "Courier New", monospace;
+            margin: 10px 0;
+            border-left: 4px solid #6c757d;
+        }
+        .option-analysis {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #eee;
+        }
+        .correct-opt {
+            color: #155724;
+            font-weight: bold;
+            background-color: #d4edda;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .incorrect-opt {
+            color: #721c24;
+            font-weight: bold;
+            background-color: #f8d7da;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .decomposition-box {
+            background-color: #e2e3e5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .bilingual-text {
+            margin-bottom: 15px;
+        }
+        .en-text {
+            color: #555;
+            font-size: 0.95em;
+            margin-top: 4px;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header Section -->
+    <h1>HKDSE Economics Analysis</h1>
+    
+    <div class="header-info">
+        <p>📅 Date: 2026-01-23</p>
+        <p>📚 Topic: Demand & Supply Model / Subsidy (供需模型 / 津貼)</p>
+        <p>🔥 Difficulty: ★★★★☆ (Level 4)</p>
+    </div>
+
+    <!-- Question Section -->
+    <h2>The Question (題目)</h2>
+    <div class="question-box">
+        <p><strong>參考下列物品X的供需表。 / Refer to the following supply and demand schedule for Good X.</strong></p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>價格 / Price ($)</th>
+                    <td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
+                </tr>
+                <tr>
+                    <th>需求量 / Qd (units)</th>
+                    <td>11</td><td>9</td><td>7</td><td>5</td><td>3</td><td>1</td>
+                </tr>
+                <tr>
+                    <th>供應量 / Qs (units)</th>
+                    <td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
+                </tr>
+            </table>
+        </div>
+
+        <p class="bilingual-text">
+            若政府向物品X的生產者提供 $3 的從量補貼，下列哪項是正確的？<br>
+            <span class="en-text">If the government provides producers of Good X with a per-unit subsidy of $3, which of the following statements are correct?</span>
+        </p>
+
+        <ol>
+            <li>包括補貼在內的總收入是 $110。<br><span class="en-text">The total revenue inclusive of the subsidy is $110.</span></li>
+            <li>在介乎原初的均衡價格和新的均衡價格之間的範圍內，需求價格彈性大於一。<br><span class="en-text">Within the range between the original equilibrium price and the new equilibrium price, the price elasticity of demand is larger than one.</span></li>
+            <li>生產者補貼份額和消費者補貼份額的比率是1:2。<br><span class="en-text">The ratio of the producers' share of the subsidy to the consumers' share of the subsidy is 1:2.</span></li>
+            <li>在介乎原初的均衡價格和新的均衡價格之間的範圍內，需求價格彈性大於供應價格彈性。<br><span class="en-text">Within the range between the original equilibrium price and the new equilibrium price, the price elasticity of demand is larger than the price elasticity of supply.</span></li>
+        </ol>
+
+        <p>
+            A. 只有 (1)、(2) / (1) and (2) only<br>
+            B. 只有 (1)、(3) / (1) and (3) only<br>
+            C. 只有 (2)、(4) / (2) and (4) only<br>
+            D. 只有 (3)、(4) / (3) and (4) only
+        </p>
+    </div>
+
+    <!-- Concept Review Section -->
+    <h2>Concept Review (概念重溫)</h2>
+    
+    <div class="concept-box">
+        <span class="concept-title">1. 尋找補貼後的新均衡 (Finding New Equilibrium with Subsidy)</span>
+        <p>
+            從量補貼會使供應曲線垂直向下移動（供應增加）。生產者願意以較低的價格出售相同的數量。
+            <br>
+            <span class="en-text">A per-unit subsidy shifts the supply curve vertically downwards (increase in supply). Producers are willing to sell the same quantity at a lower price.</span>
+        </p>
+        <div class="math-block">
+            $$ P_{market} = P_{original\_supply} - Subsidy $$
+        </div>
+        <p>
+            在表格中，若要在價格 $P$ 找到新的供應量，我們應查看原本在價格 $(P + \text{Subsidy})$ 的供應量。
+            <br>
+            <span class="en-text">In a table, to find the new quantity supplied at Price $P$, we look at the quantity originally supplied at Price $(P + \text{Subsidy})$.</span>
+        </p>
+    </div>
+
+    <div class="concept-box">
+        <span class="concept-title">2. 總收入測試 (Total Revenue Test)</span>
+        <p>
+            利用價格與總收入的關係來判斷需求彈性 ($E_d$)。
+            <br>
+            <span class="en-text">Use the relationship between Price and Total Revenue to determine Price Elasticity of Demand ($E_d$).</span>
+        </p>
+        <ul>
+            <li>$P \downarrow$ & $TR \uparrow \Rightarrow$ 高彈性 Elastic ($E_d > 1$)</li>
+            <li>$P \downarrow$ & $TR \downarrow \Rightarrow$ 低彈性 Inelastic ($E_d < 1$)</li>
+        </ul>
+    </div>
+
+    <div class="concept-box">
+        <span class="concept-title">3. 補貼份額與彈性 (Subsidy Share & Elasticity)</span>
+        <p>
+            <strong>彈性越低，獲益越大。</strong> 補貼份額與彈性成反比。
+            <br>
+            <span class="en-text"><strong>The more inelastic side benefits more.</strong> Subsidy share is inversely related to elasticity.</span>
+        </p>
+        <div class="math-block">
+            $$ \frac{\text{Consumer Share}}{\text{Producer Share}} = \frac{E_s}{E_d} $$
+        </div>
+        <p>若生產者份額 > 消費者份額 $\Rightarrow E_d > E_s$。</p>
+    </div>
+
+    <!-- The Answer Section -->
+    <h2>The Answer (答案解構)</h2>
+    
+    <p><strong>正確答案：C (只有 2、4)</strong></p>
+    <p><strong>Correct Answer: C ((2) and (4) only)</strong></p>
+
+    <div class="option-analysis">
+        <h3>Step 1: 找出均衡點 (Identify Equilibriums)</h3>
+        <p>
+            <strong>原初均衡 (Original Equilibrium):</strong><br>
+            當 $P=11$ 時，$Q_d=9, Q_s=9$。所以 $P_0 = 11, Q_0 = 9$。
+        </p>
+        <p>
+            <strong>新均衡 (New Equilibrium):</strong><br>
+            補貼 = $3。供應曲線向下移 $3。<br>
+            試試看新價格 $P=10$：<br>
+            $Q_d = 11$。<br>
+            新的 $Q_s$ 是多少？生產者收到 $10$ (市價) + $3$ (補貼) = $13$。<br>
+            查表看原供應量：當 $P=13$ 時，原 $Q_s=11$。<br>
+            因為 $Q_d = Q_s' = 11$，所以新均衡點是 $P_1 = 10, Q_1 = 11$。
+        </p>
+    </div>
+
+    <div class="option-analysis">
+        <h3>選項 (1) 分析： <span class="incorrect-opt">錯誤 Incorrect</span></h3>
+        <p>
+            <strong>題目：</strong>包括補貼在內的總收入是 $110。<br>
+            <span class="en-text"><strong>Statement:</strong> The total revenue inclusive of the subsidy is $110.</span>
+        </p>
+        <p>
+            <strong>解釋：</strong><br>
+            消費者總開支 (Consumer Expenditure) = $P_1 \times Q_1 = 10 \times 11 = 110$。<br>
+            但生產者的總收入 (Total Revenue for Producers) 包括了政府補貼。<br>
+            $$ TR_{total} = (P_1 + \text{Subsidy}) \times Q_1 $$
+            $$ TR_{total} = (10 + 3) \times 11 = 13 \times 11 = 143 $$
+            所以 $110 只是市場交易額，不是生產者實收總額。
+        </p>
+    </div>
+
+    <div class="option-analysis">
+        <h3>選項 (2) 分析： <span class="correct-opt">正確 Correct</span></h3>
+        <p>
+            <strong>題目：</strong>需求價格彈性大於一。<br>
+            <span class="en-text"><strong>Statement:</strong> Price elasticity of demand is larger than one.</span>
+        </p>
+        <p>
+            <strong>解釋：</strong><br>
+            我們使用總收入測試 (Total Revenue Test)。<br>
+            原初總收入 $TR_0 = 11 \times 9 = 99$。<br>
+            新的消費者總開支 $TR_1 = 10 \times 11 = 110$。<br>
+            價格下降 ($11 \to 10$) 導致總收入上升 ($99 \to 110$)。<br>
+            這代表需求量增加的百分比大於價格下降的百分比，故需求屬<strong>高彈性 (Elastic, $E_d > 1$)</strong>。
+        </p>
+    </div>
+
+    <div class="option-analysis">
+        <h3>選項 (3) 分析： <span class="incorrect-opt">錯誤 Incorrect</span></h3>
+        <p>
+            <strong>題目：</strong>生產者補貼份額和消費者補貼份額的比率是1:2。<br>
+            <span class="en-text"><strong>Statement:</strong> The ratio of producers' share to consumers' share is 1:2.</span>
+        </p>
+        <p>
+            <strong>解釋：</strong><br>
+            每單位補貼 = $3。<br>
+            消費者獲益 (Consumer Benefit) = $P_0 - P_1 = 11 - 10 = \$1$。<br>
+            生產者獲益 (Producer Benefit) = Subsidy - Consumer Benefit = $3 - 1 = \$2$。<br>
+            (或者：生產者實收價格由 $11 升至 $13，獲益 $2)。<br>
+            <br>
+            比率 (Producer : Consumer) = $2 : 1$。<br>
+            題目說是 1:2，故錯誤。
+        </p>
+    </div>
+
+    <div class="option-analysis">
+        <h3>選項 (4) 分析： <span class="correct-opt">正確 Correct</span></h3>
+        <p>
+            <strong>題目：</strong>需求價格彈性大於供應價格彈性。<br>
+            <span class="en-text"><strong>Statement:</strong> Price elasticity of demand is larger than price elasticity of supply.</span>
+        </p>
+        <p>
+            <strong>解釋：</strong><br>
+            根據經濟學原理：<strong>較低彈性的一方享受較多的補貼利益 (The more inelastic side enjoys a larger share of subsidy)。</strong><br>
+            由選項 (3) 可知：<br>
+            生產者份額 ($2) > 消費者份額 ($1)。<br>
+            這意味著供應 (Supply) 比需求 (Demand) 更低彈性 (More Inelastic)。<br>
+            即 $E_s < E_d$，或者說 $E_d > E_s$。<br>
+            故此項正確。
+        </p>
+    </div>
+
+    <!-- Problem Decomposition Section -->
+    <h2>Problem Decomposition (題目拆解)</h2>
+    <div class="decomposition-box">
+        <h3>💡 應試策略 (Exam Strategy)</h3>
+        <ul>
+            <li>
+                <strong>不要盲目計算弧彈性 (Don't calculate Arc Elasticity blindly):</strong> 
+                雖然你可以用公式 $\frac{Q_2-Q_1}{Q_2+Q_1} \div \frac{P_2-P_1}{P_2+P_1}$ 計算，但這很花時間。題目通常設計成可以用「總收入測試」($P \times Q$) 快速判斷。
+            </li>
+            <li>
+                <strong>表格解讀技巧 (Reading the Table):</strong> 
+                遇到津貼題，心中要有一把尺：在每一個需求量下，生產者收到的錢是「市價 + 津貼」。快速檢查 $Q_d$ 是否等於 $Q_s(\text{at } P_{market} + \text{Subsidy})$。
+            </li>
+            <li>
+                <strong>份額與彈性的口訣 (Mnemonic):</strong> 
+                「越硬越著數」(The stiffer/more inelastic side gets the advantage)。
+                <br>津貼是好事 $\rightarrow$ 低彈性者分得多。
+                <br>稅項是壞事 $\rightarrow$ 低彈性者付得多。
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Tutor - Firm and Production</title>
+    
+    <!-- MathJax for rendering Mathematics -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --box-bg: #ffffff;
+            --concept-bg: #fff3cd;
+            --concept-border: #ffeeba;
+            --math-bg: #e9ecef;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--box-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header-info {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .header-item {
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .question-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .concept-box {
+            background-color: var(--concept-bg);
+            border: 1px solid var(--concept-border);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        .math-block {
+            background-color: var(--math-bg);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .option-analysis {
+            margin-top: 20px;
+        }
+
+        .option {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 4px solid #ddd;
+        }
+
+        .option.correct {
+            border-left-color: var(--success-color);
+            background-color: #f0fff4;
+        }
+
+        .option.incorrect {
+            border-left-color: var(--error-color);
+            background-color: #fff5f5;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .tag-zh { background-color: #e2e8f0; color: #4a5568; }
+        .tag-en { background-color: #bee3f8; color: #2b6cb0; }
+
+        @media (max-width: 600px) {
+            .header-info {
+                flex-direction: column;
+            }
+            .header-item {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- 1. Header -->
+    <div class="header-info">
+        <div class="header-item">📅 Date: 2026-01-23</div>
+        <div class="header-item">📚 Topic: Firm & Production (廠商與生產)</div>
+        <div class="header-item">⭐ Difficulty: ★★☆☆☆</div>
+    </div>
+
+    <h1>HKDSE Economics Analysis</h1>
+
+    <!-- 2. The Question -->
+    <section>
+        <h2>The Question (題目)</h2>
+        <div class="question-box">
+            <p><strong>中文：</strong>上表顯示某廠商的生產計劃。該廠商只採用兩種要素，即勞力和機器。</p>
+            <p><strong>English:</strong> The above table shows the production plan of a firm which employs two factors only, namely labour and machinery.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>機器 (Machinery)</th>
+                        <th>勞力 (Labour)</th>
+                        <th>勞力的平均產量 (Average Product of Labour)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>10</td><td>5</td><td>4</td></tr>
+                    <tr><td>10</td><td>6</td><td>6</td></tr>
+                    <tr><td>10</td><td>7</td><td>7</td></tr>
+                    <tr><td>10</td><td>8</td><td>X</td></tr>
+                </tbody>
+            </table>
+
+            <p><strong>中文：</strong>若上述資料說明邊際回報遞減定律，X的值 _________。</p>
+            <p><strong>English:</strong> If the above data illustrate the law of diminishing marginal returns, the value of X _________.</p>
+
+            <ul>
+                <li>A. 可以是 8 (can be 8)</li>
+                <li>B. 可以小於 7 (can be smaller than 7)</li>
+                <li>C. 必然大於 7 (must be larger than 7)</li>
+                <li>D. 必然小於 7 (must be smaller than 7)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 3. Concept Review -->
+    <section>
+        <h2>Concept Review (概念重溫)</h2>
+        <div class="concept-box">
+            <h3>1. 關鍵公式 (Key Formulas)</h3>
+            <p>要解決此問題，我們需要理解總產量 (TP)、平均產量 (AP) 和邊際產量 (MP) 之間的關係。</p>
+            <p>To solve this, we must understand the relationship between Total Product (TP), Average Product (AP), and Marginal Product (MP).</p>
+            
+            <div class="math-block">
+                $$ \text{Total Product (TP)} = \text{Average Product (AP)} \times \text{Labour (L)} $$
+                $$ \text{Marginal Product (MP)} = \text{TP}_n - \text{TP}_{n-1} $$
+            </div>
+
+            <h3>2. 邊際回報遞減定律 (Law of Diminishing Marginal Returns)</h3>
+            <p><strong>定義：</strong>在短期內，當可變要素（如勞力）不斷增加到固定要素（如機器）上時，邊際產量最終會下降。</p>
+            <p><strong>Definition:</strong> In the short run, as variable factors (like labour) are added continuously to fixed factors (like machinery), the marginal product will eventually decline.</p>
+            <p><strong>應用：</strong>如果題目說資料「說明了」定律，這意味著邊際產量 (MP) 正在下降。</p>
+            <p><strong>Application:</strong> If the data "illustrates" the law, it means the Marginal Product (MP) is falling.</p>
+        </div>
+    </section>
+
+    <!-- 4. The Answer & Analysis -->
+    <section>
+        <h2>The Answer & Analysis (答案與分析)</h2>
+        <p><strong>Correct Answer: <span style="color: var(--success-color); font-size: 1.2em;">B</span></strong></p>
+
+        <h3>Step-by-Step Calculation (逐步計算)</h3>
+
+        <p>首先，我們必須計算出每個勞力單位的<strong>總產量 (TP)</strong> 和 <strong>邊際產量 (MP)</strong>。</p>
+        <p>First, we must calculate the <strong>Total Product (TP)</strong> and <strong>Marginal Product (MP)</strong> for each unit of labour.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Labour (L)</th>
+                    <th>AP (Given)</th>
+                    <th>Calculation: TP = AP × L</th>
+                    <th>Calculation: MP = TPₙ - TPₙ₋₁</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5</td>
+                    <td>4</td>
+                    <td>$$ 5 \times 4 = 20 $$</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>6</td>
+                    <td>$$ 6 \times 6 = 36 $$</td>
+                    <td>$$ 36 - 20 = 16 $$</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>7</td>
+                    <td>$$ 7 \times 7 = 49 $$</td>
+                    <td>$$ 49 - 36 = 13 $$</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>X</td>
+                    <td>$$ 8X $$</td>
+                    <td>$$ 8X - 49 $$</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Logical Deduction (邏輯推論)</h3>
+        <p>題目指出資料符合「邊際回報遞減定律」。觀察第 6 和第 7 單位的 MP：</p>
+        <p>The question states the data illustrates the "Law of Diminishing Marginal Returns". Observe the MP for the 6th and 7th units:</p>
+        
+        <div class="math-block">
+            $$ MP(6) = 16 $$
+            $$ MP(7) = 13 $$
+        </div>
+
+        <p>因為 $$ 13 < 16 $$，遞減已經開始。為了讓定律繼續成立，第 8 單位的 MP 必須小於第 7 單位的 MP。</p>
+        <p>Since $$ 13 < 16 $$ , diminishing returns have already started. For the law to hold, the MP of the 8th unit must be smaller than the MP of the 7th unit.</p>
+
+        <div class="math-block">
+            $$ MP(8) < MP(7) $$
+            $$ 8X - 49 < 13 $$
+            $$ 8X < 62 $$
+            $$ X < 7.75 $$
+        </div>
+
+        <p><strong>結論：X 必須小於 7.75。</strong></p>
+        <p><strong>Conclusion: X must be strictly less than 7.75.</strong></p>
+
+        <div class="option-analysis">
+            <div class="option incorrect">
+                <strong>A. 可以是 8 (Can be 8)</strong>
+                <p>錯誤。我們計算出 $$ X < 7.75 $$，所以 X 不能是 8。</p>
+                <p>Incorrect. We calculated $$ X < 7.75 $$, so X cannot be 8.</p>
+            </div>
+
+            <div class="option correct">
+                <strong>B. 可以小於 7 (Can be smaller than 7)</strong>
+                <p>正確。如果 X 是 6 (小於 7)，則 $$ MP(8) = 8(6) - 49 = -1 $$，這小於 13，符合定律。這是一個「可能性」的陳述。</p>
+                <p>Correct. If X is 6 (which is smaller than 7), then $$ MP(8) = 48 - 49 = -1 $$, which is less than 13. This fits the law. This is a statement of "possibility".</p>
+            </div>
+
+            <div class="option incorrect">
+                <strong>C. 必然大於 7 (Must be larger than 7)</strong>
+                <p>錯誤。X 可以是 6 (如上所述)，所以不需要「必然」大於 7。</p>
+                <p>Incorrect. X can be 6 (as shown above), so it doesn't have to be larger than 7.</p>
+            </div>
+
+            <div class="option incorrect">
+                <strong>D. 必然小於 7 (Must be smaller than 7)</strong>
+                <p>錯誤。這是一個邏輯陷阱。X 必須小於 7.75，但不代表它必須小於 7。例如，X 可以是 7.5。</p>
+                <p>如果 $$ X = 7.5 $$，則 $$ MP(8) = 8(7.5) - 49 = 60 - 49 = 11 $$。因為 $$ 11 < 13 $$，這仍然符合定律。</p>
+                <p>Incorrect. This is a logic trap. X must be less than 7.75, but that doesn't mean it <em>must</em> be less than 7. For example, X could be 7.5.</p>
+                <p>If $$ X = 7.5 $$, then $$ MP(8) = 11 $$. Since $$ 11 < 13 $$, the law still holds.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Problem Decomposition -->
+    <section>
+        <h2>Problem Decomposition (題目拆解)</h2>
+        <div class="concept-box" style="background-color: #e6fffa; border-color: #b2f5ea;">
+            <h3>💡 考試技巧 (Exam Tips)</h3>
+            
+            <p><strong>1. 區分「可以 (Can)」與「必然 (Must)」</strong></p>
+            <p>這類題目最常考驗邏輯。計算出的範圍是 $$ X < 7.75 $$。</p>
+            <ul>
+                <li><strong>「必然小於 7」</strong>是錯的，因為 7.5 也是允許的。</li>
+                <li><strong>「可以小於 7」</strong>是對的，因為範圍內包含小於 7 的數字 (如 6, 5, 4...)。</li>
+            </ul>
+            <p><strong>1. Distinguish "Can" vs "Must"</strong></p>
+            <p>The calculated range is $$ X < 7.75 $$. "Must be smaller than 7" is false because 7.5 is allowed. "Can be smaller than 7" is true because the range includes numbers like 6, 5, etc.</p>
+
+            <p><strong>2. 不要混淆 AP 與 MP</strong></p>
+            <p>邊際回報遞減定律是關於 <strong>邊際產量 (MP)</strong> 的下降，而不是平均產量 (AP)。雖然此題中 AP 最終可能會下降，但定律的直接定義是關於 MP。</p>
+            <p><strong>2. Don't confuse AP with MP</strong></p>
+            <p>The Law of Diminishing Marginal Returns is about the decline of <strong>Marginal Product (MP)</strong>, not Average Product (AP).</p>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
