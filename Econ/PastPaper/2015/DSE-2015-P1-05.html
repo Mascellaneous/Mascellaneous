@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSE Economics Question Analysis</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.8; color: #333; padding: 20px; background-color: var(--bg); }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: var(--primary); }
+        h1 { border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        .header-info { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 30px; color: #666; font-size: 0.9em; }
+        .concept-box { background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .concept-title { font-weight: bold; color: #856404; margin-bottom: 10px; display: block; }
+        .math-block { background: #e9ecef; padding: 15px; text-align: center; margin: 15px 0; border-radius: 5px; overflow-x: auto; }
+        .question-box { background-color: #f1f8ff; padding: 20px; border-left: 5px solid var(--accent); margin-bottom: 30px; border-radius: 4px; }
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .option-list { list-style-type: none; padding: 0; }
+        .option-list li { padding: 8px 0; border-bottom: 1px solid #eee; }
+        .correct-answer { color: #27ae60; font-weight: bold; font-size: 1.2em; margin: 20px 0; }
+        .step-analysis { margin-bottom: 20px; }
+        .step-title { font-weight: bold; color: var(--accent); display: block; margin-bottom: 5px; }
+        /* PREVENTS ORPHANED SYMBOLS */
+        .no-break { white-space: nowrap; } 
+        .en-text { color: #555; font-style: italic; font-size: 0.95em; display: block; margin-top: 5px; margin-bottom: 15px; }
+        .highlight { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header-info">
+        <span>Date: 2026-01-24</span>
+        <span>Topic: Firm Objectives & Cost Structure (廠商目標與成本結構)</span>
+        <span>Difficulty: ★★★☆☆</span>
+    </div>
+
+    <h1>DSE 2015 Paper 1 Q5 Analysis</h1>
+
+    <!-- The Question -->
+    <div class="question-box">
+        <h3>題目 (The Question)</h3>
+        <p>下表顯示在完全競爭市場內某廠商的邊際成本。</p>
+        <span class="en-text">The schedule below shows the marginal cost of a firm in a perfectly competitive market.</span>
+
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>產量 (單位) / Output (units)</th>
+                    <td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td>
+                </tr>
+                <tr>
+                    <th>邊際成本 ($) / Marginal Cost ($)</th>
+                    <td>5</td><td>5.5</td><td>6</td><td>6.5</td><td>7</td><td>8</td><td>9.5</td>
+                </tr>
+            </table>
+        </div>
+
+        <p>假設租用機器的租金（屬固定成本）上升了 $2，而每單位產出的邊際成本減少了 $0.5。該廠商利潤極大化的產量因此__________，而利潤__________。</p>
+        <span class="en-text">Suppose the rental of the machine hired, a fixed cost, increases by $2 while the marginal cost for each unit of the output is reduced by $0.5. As a result, the profit-maximising output of the firm __________ while the profit of the firm __________.</span>
+
+        <ul class="option-list">
+            <li>A. 上升 … 下跌 (increases … decreases)</li>
+            <li>B. 上升 … 可能上升或下跌 (increases … may increase or decrease)</li>
+            <li>C. 下跌 … 下跌 (decreases … decreases)</li>
+            <li>D. 下跌 … 可能上升或下跌 (decreases … may increase or decrease)</li>
+        </ul>
+    </div>
+
+    <!-- Concept Review -->
+    <div class="concept-box">
+        <span class="concept-title">概念重溫 (Concept Review)</span>
+        
+        <p><strong>1. 利潤極大化條件 (Profit Maximization Condition):</strong><br>
+        在完全競爭市場中，廠商是價格接受者。利潤極大化的條件是：
+        <span class="en-text">In a perfectly competitive market, the firm is a price taker. The condition for profit maximization is:</span>
+        </p>
+        <div class="math-block">
+            $$ MR = MC = P $$
+        </div>
+        <p>若 <span class="no-break">\( MR > MC \)</span>，廠商應增加產量以增加利潤。<br>
+        若 <span class="no-break">\( MR < MC \)</span>，廠商應減少產量以減少虧損。</p>
+        <span class="en-text">If \( MR > MC \), the firm should increase output to increase profit. If \( MR < MC \), the firm should decrease output to reduce loss.</span>
+
+        <p><strong>2. 固定成本與邊際成本 (Fixed Cost vs. Marginal Cost):</strong><br>
+        固定成本 (TFC) 的改變<strong>不會</strong>影響邊際成本 (MC)，因為 MC 只反映生產多一單位所需的額外成本。
+        <span class="en-text">Changes in Total Fixed Cost (TFC) do <strong>not</strong> affect Marginal Cost (MC), as MC only reflects the additional cost of producing one more unit.</span>
+        </p>
+    </div>
+
+    <!-- The Answer -->
+    <div class="correct-answer">
+        正確答案 (Correct Answer): B
+    </div>
+
+    <div class="step-analysis">
+        <span class="step-title">步驟一：分析產量的改變 (Step 1: Analyze the change in Output)</span>
+        <p>題目指出每單位的邊際成本減少了 $0.5。這代表整條 MC 曲線向下移動（或向右移動）。
+        <span class="en-text">The question states that the marginal cost for each unit is reduced by $0.5. This means the entire MC curve shifts downwards (or to the right).</span></p>
+        
+        <p>在完全競爭市場，價格 <span class="no-break">\( P \)</span>（即 <span class="no-break">\( MR \)</span>）由市場決定，保持不變。當 MC 下跌時，在原本的產量水平上，我們會發現：
+        <span class="en-text">In perfect competition, Price \( P \) (which is \( MR \)) is determined by the market and remains constant. When MC falls, at the original output level, we find:</span></p>
+        
+        <div class="math-block">
+            $$ P > New\ MC $$
+        </div>
+
+        <p>根據利潤極大化原則，當 <span class="no-break">\( MR > MC \)</span> 時，廠商應該<strong>增加產量</strong>直到兩者再次相等。因此，產量上升。
+        <span class="en-text">According to the profit maximization principle, when \( MR > MC \), the firm should <strong>increase output</strong> until they are equal again. Therefore, output increases.</span></p>
+        
+        <p><em>結論：排除選項 C 和 D。 (Conclusion: Eliminate options C and D.)</em></p>
+    </div>
+
+    <div class="step-analysis">
+        <span class="step-title">步驟二：分析利潤的改變 (Step 2: Analyze the change in Profit)</span>
+        <p>利潤的改變受兩個因素影響：
+        <span class="en-text">The change in profit is affected by two factors:</span></p>
+        
+        <ol>
+            <li>
+                <strong>固定成本上升 (Increase in Fixed Cost):</strong><br>
+                租金上升 $2。這會直接令總成本上升 $2，對利潤有<strong>負面</strong>影響（利潤 -$2）。
+                <span class="en-text">Rent increases by $2. This directly increases Total Cost by $2, having a <strong>negative</strong> effect on profit (Profit -$2).</span>
+            </li>
+            <li>
+                <strong>邊際成本下降 (Decrease in Marginal Cost):</strong><br>
+                每單位 MC 下降 $0.5，這意味著平均可變成本 (AVC) 也下降 $0.5。總可變成本 (TVC) 節省了 <span class="no-break">\( 0.5 \times Q \)</span>。這對利潤有<strong>正面</strong>影響（利潤 +$0.5Q$）。
+                <span class="en-text">MC decreases by $0.5 per unit, implying Average Variable Cost (AVC) also drops by $0.5. Total Variable Cost (TVC) is saved by \( 0.5 \times Q \). This has a <strong>positive</strong> effect on profit (Profit +$0.5Q$).</span>
+            </li>
+        </ol>
+
+        <p><strong>淨效果 (Net Effect):</strong><br>
+        利潤改變 = 成本節省 - 租金增加
+        <span class="en-text">Change in Profit = Cost Savings - Rent Increase</span>
+        </p>
+        <div class="math-block">
+            $$ \Delta Profit \approx (0.5 \times Q) - 2 $$
+        </div>
+        
+        <p>由於題目沒有提供市場價格 <span class="no-break">\( P \)</span>，我們不知道廠商的均衡產量 <span class="no-break">\( Q \)</span> 是多少。
+        <span class="en-text">Since the question does not provide the market price \( P \), we do not know the firm's equilibrium output \( Q \).</span></p>
+        
+        <ul>
+            <li>如果產量 <span class="no-break">\( Q = 3 \)</span>，節省 = <span class="no-break">\( 3 \times 0.5 = 1.5 \)</span>。因為 <span class="no-break">\( 1.5 < 2 \)</span>，利潤<strong>下跌</strong>。</li>
+            <span class="en-text">If output \( Q = 3 \), savings = \( 3 \times 0.5 = 1.5 \). Since \( 1.5 < 2 \), profit <strong>decreases</strong>.</span>
+            <li>如果產量 <span class="no-break">\( Q = 8 \)</span>，節省 = <span class="no-break">\( 8 \times 0.5 = 4 \)</span>。因為 <span class="no-break">\( 4 > 2 \)</span>，利潤<strong>上升</strong>。</li>
+            <span class="en-text">If output \( Q = 8 \), savings = \( 8 \times 0.5 = 4 \). Since \( 4 > 2 \), profit <strong>increases</strong>.</span>
+        </ul>
+
+        <p>因此，利潤可能上升或下跌，視乎產量水平而定。
+        <span class="en-text">Therefore, profit may increase or decrease, depending on the output level.</span></p>
+    </div>
+
+    <!-- Problem Decomposition -->
+    <div class="concept-box" style="background-color: #e8f4fd; border-color: #b8daff;">
+        <span class="concept-title">題目拆解與陷阱 (Problem Decomposition & Traps)</span>
+        <p><strong>1. 分開處理固定成本與變動成本 (Separate Fixed and Variable Costs):</strong><br>
+        學生常犯錯誤是以為固定成本上升會推高 MC。必須記住：固定成本 (Fixed Cost) <strong>不影響</strong> 利潤極大化的產量決定 (MC 不變)，它只影響最終利潤的數值。
+        <span class="en-text">A common mistake is thinking fixed cost increases push up MC. Remember: Fixed Cost does <strong>not affect</strong> the profit-maximizing output decision (MC stays same); it only affects the final profit figure.</span></p>
+
+        <p><strong>2. 未知數 <span class="no-break">\( P \)</span> 與 <span class="no-break">\( Q \)</span> (Unknown \( P \) and \( Q \)):</strong><br>
+        這類題目如果沒有給出具體的市場價格，我們就不能假設產量是某個特定數字。當變數（產量）未知時，涉及總量（如總成本節省）的比較通常會導致「不確定」的結論。
+        <span class="en-text">In questions where the market price is not given, we cannot assume output is a specific number. When a variable (output) is unknown, comparisons involving totals (like total cost savings) often lead to an "indeterminate" conclusion.</span></p>
+    </div>
+
+</div>
+
+</body>
+</html>
