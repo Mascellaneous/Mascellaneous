@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSE Economics - Money & Banking Analysis</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f8f9fa; --correct: #27ae60; --wrong: #c0392b; }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; line-height: 1.8; color: #333; padding: 20px; background-color: var(--bg); }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        h1 { color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { color: var(--accent); margin-top: 30px; font-size: 1.4em; }
+        h3 { color: var(--primary); font-size: 1.2em; margin-top: 20px; }
+        
+        .meta-info { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; font-size: 0.9em; color: #666; background: #eee; padding: 10px; border-radius: 5px; }
+        .meta-item { display: flex; align-items: center; }
+        .stars { color: #f1c40f; margin-left: 5px; }
+
+        .question-box { border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .balance-sheet { width: 100%; max-width: 500px; margin: 20px auto; border-collapse: collapse; border: 1px solid #333; }
+        .balance-sheet th, .balance-sheet td { border: 1px solid #333; padding: 8px; text-align: center; width: 50%; }
+        .balance-sheet th { background-color: #f2f2f2; }
+
+        .concept-box { background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .math-block { background: #e9ecef; padding: 15px; text-align: center; margin: 15px 0; border-radius: 5px; font-family: 'Times New Roman', serif; }
+        
+        .option-analysis { margin-top: 20px; }
+        .option { padding: 15px; border-left: 4px solid #ddd; margin-bottom: 15px; background: #fafafa; }
+        .option.correct { border-left-color: var(--correct); background-color: #e8f8f5; }
+        .option.incorrect { border-left-color: var(--wrong); }
+        .option-label { font-weight: bold; display: block; margin-bottom: 5px; }
+        
+        /* PREVENTS ORPHANED SYMBOLS */
+        .no-break { white-space: nowrap; } 
+        .en-text { color: #666; font-style: italic; font-size: 0.95em; display: block; margin-top: 5px; margin-bottom: 10px; line-height: 1.5; }
+        
+        .highlight { color: var(--accent); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <h1>貨幣與銀行：存款創造 (Money & Banking: Deposit Creation)</h1>
+    
+    <div class="meta-info">
+        <div class="meta-item"><strong>日期 Date:</strong> 2026-01-24</div>
+        <div class="meta-item"><strong>主題 Topic:</strong> 貨幣供應與資產負債表 (Money Supply & Balance Sheet)</div>
+        <div class="meta-item"><strong>難度 Difficulty:</strong> ★★★☆☆</div>
+    </div>
+
+    <!-- The Question -->
+    <h2>題目 The Question</h2>
+    <div class="question-box">
+        <p>細閱下列某銀行系統的資產負債表。</p>
+        <p class="en-text">Study the following balance sheet of a banking system.</p>
+
+        <table class="balance-sheet">
+            <tr>
+                <th>資產 Assets ($)</th>
+                <th>負債 Liabilities ($)</th>
+            </tr>
+            <tr>
+                <td>儲備 Reserves: 250<br>貸款 Loans: 750</td>
+                <td>存款 Deposits: 1000</td>
+            </tr>
+        </table>
+
+        <p>原初，該銀行系統有 $50 的超額儲備。假設公眾決定將 $100 現金存入該銀行系統以減持現金。當該銀行系統達至最大存款時，下列哪項是其新的資產負債表？</p>
+        <p class="en-text">Initially, the banking system has an excess reserve of $50. Suppose the public decides to reduce cash holdings by depositing $100 cash into the banking system. When the maximum deposit of the banking system is reached, which of the following will be its new balance sheet?</p>
+        
+        <p><strong>選項 Options:</strong> (請參考圖片中的 A, B, C, D 表格 / Please refer to tables A, B, C, D in the image)</p>
+    </div>
+
+    <!-- Concept Review -->
+    <h2>概念重溫 Concept Review</h2>
+    <div class="concept-box">
+        <p>要解決此題，必須掌握以下幾個核心概念：</p>
+        <p class="en-text">To solve this problem, you must master the following core concepts:</p>
+
+        <ol>
+            <li>
+                <strong>法定儲備比率 (Required Reserve Ratio, RRR)</strong>
+                <br>這是銀行必須保留的存款百分比。我們可以透過原初狀態計算出來。
+                <span class="en-text">This is the percentage of deposits that banks must hold. We can calculate this from the initial state.</span>
+                <div class="math-block">
+                    $$ \text{RRR} = \frac{\text{法定儲備 (Required Reserves)}}{\text{存款 (Deposits)}} $$
+                </div>
+            </li>
+            <li>
+                <strong>最大存款額 (Maximum Deposits)</strong>
+                <br>當銀行借出所有超額儲備（即沒有超額儲備）時，存款達到最大值。
+                <span class="en-text">Deposits reach their maximum when banks lend out all excess reserves (i.e., zero excess reserves).</span>
+                <div class="math-block">
+                    $$ \text{Max. Deposits} = \frac{\text{總儲備 (Total Reserves)}}{\text{RRR}} $$
+                </div>
+            </li>
+            <li>
+                <strong>資產負債表平衡 (Balance Sheet Identity)</strong>
+                <br>資產必須永遠等於負債。
+                <span class="en-text">Assets must always equal Liabilities.</span>
+                <div class="math-block">
+                    $$ \text{Reserves} + \text{Loans} = \text{Deposits} $$
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <!-- The Answer & Analysis -->
+    <h2>答案與詳細分析 Answer & Analysis</h2>
+    
+    <div class="option correct">
+        <span class="option-label">正確答案 Correct Answer: D</span>
+        
+        <h3>步驟 1：計算法定儲備比率 (Calculate RRR)</h3>
+        <p>原初實際儲備為 $250，題目指出超額儲備為 $50。</p>
+        <p class="en-text">Initially, actual reserves are $250, and the question states excess reserves are $50.</p>
+        <div class="math-block">
+            $$ \text{法定儲備} = 250 - 50 = 200 $$
+            $$ \text{RRR} = \frac{200}{1000} = 0.2 \quad (20\%) $$
+        </div>
+
+        <h3>步驟 2：計算新的總儲備 (Calculate New Total Reserves)</h3>
+        <p>公眾存入 $100 現金。這筆錢直接進入銀行的金庫，成為新的儲備。</p>
+        <p class="en-text">The public deposits $100 cash. This money goes directly into the bank's vault, becoming new reserves.</p>
+        <div class="math-block">
+            $$ \text{新總儲備 (New Reserves)} = 250 + 100 = 350 $$
+        </div>
+
+        <h3>步驟 3：計算最大存款額 (Calculate Max Deposits)</h3>
+        <p>題目要求「達至最大存款」(Maximum deposit is reached)，這意味著銀行會將所有超額儲備借出，直到實際儲備剛好等於法定儲備。</p>
+        <p class="en-text">The question asks for the state when "maximum deposit is reached", meaning banks lend out all excess reserves until actual reserves equal required reserves.</p>
+        <div class="math-block">
+            $$ \text{新存款 (New Deposits)} = \frac{\text{新總儲備 (350)}}{\text{RRR (0.2)}} = 1750 $$
+        </div>
+
+        <h3>步驟 4：計算貸款額 (Calculate Loans)</h3>
+        <p>利用資產負債表平衡公式：</p>
+        <p class="en-text">Using the balance sheet identity:</p>
+        <div class="math-block">
+            $$ \text{Loans} = \text{Deposits} - \text{Reserves} $$
+            $$ \text{Loans} = 1750 - 350 = 1400 $$
+        </div>
+
+        <p><strong>結論：</strong> 新的資產負債表應顯示：儲備 $350，貸款 $1400，存款 $1750。這與 <strong>選項 D</strong> 吻合。</p>
+        <p class="en-text"><strong>Conclusion:</strong> The new balance sheet should show: Reserves $350, Loans $1400, Deposits $1750. This matches <strong>Option D</strong>.</p>
+    </div>
+
+    <div class="option-analysis">
+        <h3>其他選項分析 Analysis of Other Options</h3>
+        
+        <div class="option incorrect">
+            <span class="option-label">選項 A (Option A)</span>
+            <p><strong>錯誤。</strong> 儲備顯示為 300，這意味著只增加了 $50 儲備，但題目說明存入了 $100。此外，存款 $1200 並未達到最大擴張。</p>
+            <p class="en-text"><strong>Incorrect.</strong> Reserves are shown as 300, implying only $50 was added, but $100 was deposited. Also, deposits of $1200 do not reflect maximum expansion.</p>
+        </div>
+
+        <div class="option incorrect">
+            <span class="option-label">選項 B (Option B)</span>
+            <p><strong>錯誤。</strong> 雖然儲備 $350 是正確的（$250 + $100），但存款只有 $1400。若存款是 $1400，法定儲備只需 \(1400 \times 0.2 = 280\)，銀行仍持有大量超額儲備，未達「最大存款」。</p>
+            <p class="en-text"><strong>Incorrect.</strong> Although reserves of $350 are correct ($250 + $100), deposits are only $1400. If deposits are $1400, required reserves are only \(1400 \times 0.2 = 280\), meaning the bank still holds significant excess reserves and has not reached "maximum deposit".</p>
+        </div>
+
+        <div class="option incorrect">
+            <span class="option-label">選項 C (Option C)</span>
+            <p><strong>錯誤。</strong> 儲備數值 $300 錯誤。存款 $1500 雖然是 $300 的 5 倍（符合 20% RRR），但基於錯誤的儲備基數。</p>
+            <p class="en-text"><strong>Incorrect.</strong> The reserve figure of $300 is wrong. Although deposits of $1500 are 5 times $300 (consistent with 20% RRR), it is based on an incorrect reserve base.</p>
+        </div>
+    </div>
+
+    <!-- Problem Decomposition -->
+    <h2>題目拆解與技巧 Problem Decomposition & Tips</h2>
+    <div class="concept-box" style="background-color: #e8f6f3; border-color: #d1f2eb;">
+        <p><strong>1. 找出隱藏變數 (Find the Hidden Variable):</strong> <br>
+        題目很少直接給你 <span class="no-break">法定儲備比率 \(RRR\)</span>。第一步永遠是利用「原初」狀態和「超額儲備」的數據來計算它。</p>
+        <p class="en-text">The question rarely gives you the <span class="no-break">Required Reserve Ratio \(RRR\)</span> directly. The first step is always to calculate it using the "Initial" state and "Excess Reserve" data.</p>
+
+        <p><strong>2. 分清「現金」與「儲備」 (Distinguish Cash vs. Reserves):</strong> <br>
+        當公眾存入現金，這筆錢<strong>全數</strong>變成銀行的儲備。不要先扣除法定儲備才加進去。先加總數，再算擴張。</p>
+        <p class="en-text">When the public deposits cash, the <strong>entire amount</strong> becomes bank reserves. Do not deduct required reserves before adding it. Add the total first, then calculate expansion.</p>
+
+        <p><strong>3. 檢查「最大」一詞 (Check for "Maximum"):</strong> <br>
+        如果題目沒有說「最大存款」，答案可能是介於中間的任何數字。但一旦看到「最大 (Maximum)」，必須確保 <span class="no-break">\( \text{Total Reserves} = \text{Deposits} \times RRR \)</span>。</p>
+        <p class="en-text">If the question didn't say "maximum deposit", the answer could be any number in between. But once you see "Maximum", you must ensure <span class="no-break">\( \text{Total Reserves} = \text{Deposits} \times RRR \)</span>.</p>
+    </div>
+
+</div>
+
+</body>
+</html>

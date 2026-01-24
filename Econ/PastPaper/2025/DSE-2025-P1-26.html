@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSE Economics - GDP Calculation Guide</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; line-height: 1.8; color: #333; padding: 20px; background-color: var(--bg); }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: var(--primary); }
+        h1 { border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        .concept-box { background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .math-block { background: #e9ecef; padding: 15px; text-align: center; margin: 15px 0; border-radius: 5px; font-family: 'Times New Roman', serif; font-size: 1.1em; }
+        .no-break { white-space: nowrap; } 
+        .en-text { color: #666; font-style: italic; font-size: 0.95em; display: block; margin-top: 5px; margin-bottom: 15px; border-left: 3px solid #ddd; padding-left: 10px; }
+        .option-list { list-style: none; padding: 0; }
+        .option-list li { padding: 10px; border-bottom: 1px solid #eee; }
+        .option-list li:last-child { border-bottom: none; }
+        .correct-answer { color: #27ae60; font-weight: bold; }
+        .wrong-answer { color: #c0392b; }
+        .step-box { background-color: #f0f8ff; border-left: 4px solid var(--accent); padding: 15px; margin: 10px 0; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+        }
+    </style>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header>
+        <h1>經濟學概念解析：生產鏈與 GDP 計算</h1>
+        <span class="en-text">Economics Concept Analysis: Production Chain and GDP Calculation</span>
+        <p><strong>課題 (Topic):</strong> 國民收入會計 (National Income Accounting) - 增值法與要素成本 (Value Added & Factor Cost)</p>
+        <p><strong>難度 (Difficulty):</strong> ★★★☆☆</p>
+    </header>
+
+    <hr>
+
+    <!-- The Question -->
+    <section>
+        <h2>題目 (The Question)</h2>
+        <p>下圖顯示某經濟中咖啡豆研磨機的生產鏈。</p>
+        <span class="en-text">The following diagram shows a production chain of coffee grinders in an economy.</span>
+        
+        <div style="background: #eee; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+            <p><strong>數據摘要 (Data Summary):</strong></p>
+            <ul>
+                <li>外國出口商 (Foreign exporters) $\rightarrow$ 本地零售商 (Local retailers): <strong>$90</strong></li>
+                <li>本地材料 (Local materials): <strong>$70</strong> $\rightarrow$ 本地生產商 (Local manufacturers)</li>
+                <li>本地生產商 (Local manufacturers) $\rightarrow$ 本地零售商 (Local retailers): <strong>$140</strong></li>
+                <li>本地生產商 (Local manufacturers) $\rightarrow$ 外國零售商 (Foreign retailers): <strong>$80</strong></li>
+                <li>本地零售商 (Local retailers) $\rightarrow$ 本地消費者 (Local consumers): <strong>$440</strong> (包含 $60 銷售稅 / sales tax inclusive)</li>
+            </ul>
+        </div>
+
+        <p>以上生產鏈對該經濟本地生產總值（以要素成本計算）的貢獻是多少？</p>
+        <span class="en-text">What is the contribution of the above production chain to the economy's GDP at factor cost?</span>
+
+        <ul class="option-list">
+            <li>A. $370</li>
+            <li>B. $430</li>
+            <li>C. $460</li>
+            <li>D. $490</li>
+        </ul>
+    </section>
+
+    <!-- Concept Review -->
+    <section>
+        <h2>概念重溫 (Concept Review)</h2>
+        
+        <div class="concept-box">
+            <h3>1. 增值法 (Value Added Method)</h3>
+            <p>本地生產總值 (GDP) 是所有常住生產單位的<strong>增值總和</strong>。增值的計算方法是將產出總值減去中間消耗。</p>
+            <span class="en-text">GDP is the sum of value added of all resident producing units. Value added is calculated by subtracting intermediate consumption from gross output.</span>
+            <div class="math-block">
+                $$ \text{增值 (Value Added)} = \text{產出價值 (Gross Output)} - \text{中間消耗 (Intermediate Consumption)} $$
+            </div>
+        </div>
+
+        <div class="concept-box">
+            <h3>2. 市價與要素成本 (Market Price vs. Factor Cost)</h3>
+            <p><strong>市價 (Market Price)</strong> 包含了間接稅（如銷售稅），而<strong>要素成本 (Factor Cost)</strong> 則扣除了間接稅並加上津貼。</p>
+            <span class="en-text">Market price includes indirect taxes (like sales tax), while factor cost excludes indirect taxes and includes subsidies.</span>
+            <div class="math-block">
+                $$ \text{GDP}_{\text{fc}} = \text{GDP}_{\text{mp}} - \text{間接稅 (Indirect Taxes)} + \text{津貼 (Subsidies)} $$
+            </div>
+        </div>
+
+        <div class="concept-box">
+            <h3>3. 進口與出口 (Imports & Exports)</h3>
+            <p>計算 GDP 時，必須扣除進口成分（因為這不是本地生產），並包含出口（這是本地生產但賣給外國）。</p>
+            <span class="en-text">When calculating GDP, imports must be deducted (as they are not locally produced), and exports must be included (as they are locally produced but sold abroad).</span>
+        </div>
+    </section>
+
+    <!-- The Answer -->
+    <section>
+        <h2>答案解析 (Answer Analysis)</h2>
+        <p><strong>正確答案 (Correct Answer): <span style="color: var(--accent); font-size: 1.2em;">A ($370)</span></strong></p>
+
+        <h3>解題方法 (Solution Method)</h3>
+        <p>我們可以使用<strong>支出面法 (Expenditure Approach)</strong> 或 <strong>增值法 (Value Added Approach)</strong> 來計算。這裡用支出面法驗證最為快速，再用增值法詳細拆解。</p>
+        <span class="en-text">We can use either the Expenditure Approach or the Value Added Approach. The Expenditure Approach is faster for verification, while the Value Added Approach provides a detailed breakdown.</span>
+
+        <div class="step-box">
+            <h4>方法一：支出面法 (Method 1: Expenditure Approach)</h4>
+            <p>公式：\( \text{GDP}_{\text{mp}} = C + I + G + (X - M) \)</p>
+            <ul>
+                <li><strong>C (私人消費開支):</strong> 本地消費者支付的金額 = <span class="no-break">$440</span></li>
+                <li><strong>X (出口):</strong> 本地生產商賣給外國零售商 = <span class="no-break">$80</span></li>
+                <li><strong>M (進口):</strong> 外國出口商賣給本地零售商 = <span class="no-break">$90</span></li>
+            </ul>
+            <div class="math-block">
+                $$ \text{GDP}_{\text{mp}} = 440 + 80 - 90 = 430 $$
+            </div>
+            <p>題目要求<strong>以要素成本計算 (at factor cost)</strong>，所以需要扣除銷售稅。</p>
+            <span class="en-text">The question asks for GDP at factor cost, so we need to deduct the sales tax.</span>
+            <div class="math-block">
+                $$ \text{GDP}_{\text{fc}} = \text{GDP}_{\text{mp}} - \text{間接稅 (Indirect Tax)} $$
+                $$ \text{GDP}_{\text{fc}} = 430 - 60 = 370 $$
+            </div>
+        </div>
+
+        <div class="step-box">
+            <h4>方法二：增值法 (Method 2: Value Added Approach)</h4>
+            <p>計算每個本地生產階段的增值：</p>
+            
+            <p><strong>1. 本地材料供應商 (Local Materials Supplier):</strong></p>
+            <ul>
+                <li>產出 (Output): $70</li>
+                <li>投入 (Input): $0 (假設)</li>
+                <li>增值 (VA): $70</li>
+            </ul>
+
+            <p><strong>2. 本地生產商 (Local Manufacturers):</strong></p>
+            <ul>
+                <li>產出 (Output): $140 (賣給本地) + $80 (賣給外國) = $220</li>
+                <li>投入 (Input): $70 (本地材料)</li>
+                <li>增值 (VA): $220 - $70 = $150</li>
+            </ul>
+
+            <p><strong>3. 本地零售商 (Local Retailers):</strong></p>
+            <ul>
+                <li>產出 (Output): $440 (市價)</li>
+                <li>投入 (Input): $140 (本地產品) + $90 (外國進口) = $230</li>
+                <li>增值 (VA at market price): $440 - $230 = $210</li>
+            </ul>
+
+            <p><strong>總和 (Total):</strong></p>
+            <div class="math-block">
+                $$ \text{GDP}_{\text{mp}} = 70 + 150 + 210 = 430 $$
+            </div>
+            <p>最後轉換為要素成本：</p>
+            <div class="math-block">
+                $$ \text{GDP}_{\text{fc}} = 430 - 60 = 370 $$
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Decomposition -->
+    <section>
+        <h2>題目拆解與陷阱 (Problem Decomposition & Traps)</h2>
+        
+        <p>這類題目主要測試學生是否能區分「中間消耗」、「進口」以及「稅項」。</p>
+        <span class="en-text">This type of question tests whether students can distinguish between "intermediate consumption", "imports", and "taxes".</span>
+
+        <ul>
+            <li>
+                <strong>陷阱 1：忽略進口扣除 (Ignoring Import Deduction)</strong><br>
+                有些同學會直接將最終銷售額 $440 加上出口 $80，得出 $520，這是錯誤的，因為 $440 中包含了 $90 的進口貨值，這部分不是本地生產的。
+                <span class="en-text">Some students might simply add final sales $440 and exports $80 to get $520. This is wrong because the $440 includes $90 of import value, which is not locally produced.</span>
+            </li>
+            <li>
+                <strong>陷阱 2：忘記扣除稅項 (Forgetting Tax Deduction)</strong><br>
+                題目明確要求「以要素成本計算」(at factor cost)。如果不扣除 $60 的銷售稅，就會算出 $430 (選項 B)，這是市價計算的 GDP。
+                <span class="en-text">The question explicitly asks for "at factor cost". If you don't deduct the $60 sales tax, you get $430 (Option B), which is GDP at market price.</span>
+            </li>
+            <li>
+                <strong>陷阱 3：重複計算 (Double Counting)</strong><br>
+                如果你將 $70 (材料) + $140 (批發) + $440 (零售) 相加，你就犯了嚴重的重複計算錯誤。必須只計算「增值」部分。
+                <span class="en-text">If you add $70 (materials) + $140 (wholesale) + $440 (retail), you are committing a serious double counting error. You must only count the "value added".</span>
+            </li>
+        </ul>
+    </section>
+
+</div>
+
+</body>
+</html>
