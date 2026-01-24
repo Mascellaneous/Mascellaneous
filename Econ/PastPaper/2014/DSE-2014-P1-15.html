@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics - Market Intervention & Efficiency</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f8f9fa; --correct: #27ae60; --wrong: #c0392b; }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; line-height: 1.8; color: #333; padding: 20px; background-color: var(--bg); }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        h1, h2, h3 { color: var(--primary); }
+        h1 { border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { margin-top: 40px; font-size: 1.5em; display: flex; align-items: center; }
+        h2::before { content: ''; display: inline-block; width: 8px; height: 1.5em; background: var(--accent); margin-right: 10px; border-radius: 2px; }
+        
+        .header-info { display: flex; justify-content: space-between; flex-wrap: wrap; background: #eef2f5; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
+        .header-item { margin-right: 20px; font-weight: bold; color: var(--primary); }
+        
+        .question-box { border: 2px solid #e0e0e0; padding: 25px; border-radius: 8px; margin-bottom: 20px; }
+        .options-list { list-style-type: none; padding: 0; }
+        .options-list li { margin-bottom: 10px; padding: 10px; background: #f9f9f9; border-radius: 5px; }
+        
+        .concept-box { background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .concept-title { font-weight: bold; color: #856404; margin-bottom: 10px; display: block; font-size: 1.1em; }
+        
+        .math-block { background: #e9ecef; padding: 15px; text-align: center; margin: 15px 0; border-radius: 5px; font-family: 'Times New Roman', serif; }
+        
+        .analysis-item { margin-bottom: 25px; border-left: 4px solid #ddd; padding-left: 15px; }
+        .analysis-item.correct { border-left-color: var(--correct); }
+        .analysis-item.wrong { border-left-color: var(--wrong); }
+        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; color: white; font-size: 0.8em; margin-bottom: 5px; font-weight: bold; }
+        .status-correct { background-color: var(--correct); }
+        .status-wrong { background-color: var(--wrong); }
+        
+        .tip-box { background: #d1ecf1; border: 1px solid #bee5eb; padding: 20px; border-radius: 8px; margin-top: 30px; }
+        
+        .no-break { white-space: nowrap; }
+        .en-text { color: #666; font-style: italic; font-size: 0.95em; display: block; margin-top: 5px; margin-bottom: 15px; border-left: 2px solid #eee; padding-left: 10px; }
+        
+        img { max-width: 100%; height: auto; display: block; margin: 20px auto; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-info">
+        <div class="header-item">📅 Date: 2026-01-24</div>
+        <div class="header-item">📝 Title: DSE 2014 Paper 1 Q15</div>
+        <div class="header-item">📚 Topic: Price Mechanism & Efficiency</div>
+        <div class="header-item">⭐ Difficulty: ★★★☆☆</div>
+    </div>
+
+    <h1>市場干預與效率分析 (Market Intervention & Efficiency)</h1>
+
+    <!-- SECTION 2: THE QUESTION -->
+    <h2>題目 (The Question)</h2>
+    <div class="question-box">
+        <p><strong>參閱以下有關海底隧道的供需圖。</strong><br>
+        <span class="en-text">Refer to the following supply-demand diagram for the Cross-Harbour Tunnel.</span></p>
+        
+        <!-- Recreating the graph logic description since image is provided in prompt -->
+        <div style="text-align: center; font-style: italic; color: #777; margin: 10px 0;">
+            [圖表描述：需求曲線 D 向下傾斜，供應曲線 S 是一條垂直線（完全無彈性）。目前的收費 (Existing toll) 低於均衡價格，導致出現超額需求 (Excess Demand)。]<br>
+            <span class="en-text">[Graph Description: Demand curve D is downward sloping. Supply curve S is a vertical line (perfectly inelastic). The existing toll is below the equilibrium price, causing Excess Demand.]</span>
+        </div>
+
+        <p>政府建議提高海底隧道的收費，以減輕繁忙時段的交通擠塞情況。假設隧道最大行車流量是固定的。下列哪些陳述是正確的？<br>
+        <span class="en-text">The government proposed to raise the toll for the Cross-Harbour Tunnel so as to lessen the traffic congestion during rush hours. Suppose the maximum vehicular volume of the tunnel is fixed. Which of the following statements are correct?</span></p>
+
+        <ol>
+            <li>對海底隧道服務的需求會減少。<br><span class="en-text">The demand for the service of the Cross-Harbour Tunnel will decrease.</span></li>
+            <li>海底隧道的總收益會上升。<br><span class="en-text">The total revenue of the Cross-Harbour Tunnel will increase.</span></li>
+            <li>由交通擠塞引起的效率損失會減少。<br><span class="en-text">The deadweight loss caused by traffic congestion will decrease.</span></li>
+            <li>司機使用該隧道的機會成本會上升。<br><span class="en-text">The opportunity cost of the drivers using the tunnel will increase.</span></li>
+        </ol>
+
+        <ul class="options-list">
+            <li>A. 只有(1)、(3) <span class="en-text">(1) and (3) only</span></li>
+            <li>B. 只有(1)、(4) <span class="en-text">(1) and (4) only</span></li>
+            <li>C. 只有(2)、(3) <span class="en-text">(2) and (3) only</span></li>
+            <li>D. 只有(2)、(4) <span class="en-text">(2) and (4) only</span></li>
+        </ul>
+    </div>
+
+    <!-- SECTION 3: CONCEPT REVIEW -->
+    <h2>概念重溫 (Concept Review)</h2>
+    
+    <div class="concept-box">
+        <span class="concept-title">1. 需求量改變 vs 需求改變 (Change in Quantity Demanded vs Change in Demand)</span>
+        <p>當價格改變時，我們是沿著同一條需求曲線移動，這稱為「<span class="no-break">需求量 \(Q_d\)</span>」的改變。只有非價格因素（如收入、偏好）改變時，整條需求曲線才會移動，稱為「需求」的改變。</p>
+        <span class="en-text">When price changes, we move along the same demand curve. This is a change in "Quantity Demanded". Only when non-price factors change (e.g., income, taste) does the curve shift, which is a change in "Demand".</span>
+    </div>
+
+    <div class="concept-box">
+        <span class="concept-title">2. 價格上限與短缺 (Price Ceiling & Shortage)</span>
+        <p>圖中顯示目前的收費低於均衡點（S與D的交點）。這類似於有效的價格上限，導致<span class="no-break">需求量 \(Q_d\)</span> 大於 <span class="no-break">供應量 \(Q_s\)</span>，出現短缺（即交通擠塞）。</p>
+        <span class="en-text">The diagram shows the existing toll is below the equilibrium point. This acts like an effective price ceiling, causing Quantity Demanded to exceed Quantity Supplied, resulting in a shortage (traffic congestion).</span>
+    </div>
+
+    <div class="concept-box">
+        <span class="concept-title">3. 全部成本與非金錢成本 (Full Cost & Non-pecuniary Cost)</span>
+        <p>消費者支付的代價（機會成本）= 金錢價格 + 非金錢成本（例如排隊時間）。<br>
+        在短缺情況下，雖然金錢價格低，但時間成本很高。</p>
+        <div class="math-block">
+            $$ \text{機會成本 (Opportunity Cost)} = \text{Toll} + \text{Time Cost} $$
+        </div>
+        <span class="en-text">The cost paid by consumers (Opportunity Cost) = Money Price + Non-pecuniary Cost (e.g., waiting time). Under shortage, while the money price is low, the time cost is high.</span>
+    </div>
+
+    <!-- SECTION 4: THE ANSWER -->
+    <h2>答案詳解 (The Answer)</h2>
+    
+    <div class="analysis-item correct">
+        <h3>正確答案：C (只有 2、3)</h3>
+        <span class="en-text">Correct Answer: C ((2) and (3) only)</span>
+    </div>
+
+    <div class="analysis-item wrong">
+        <span class="status-badge status-wrong">錯誤 Incorrect</span>
+        <strong>(1) 對海底隧道服務的需求會減少。</strong>
+        <p>這是一個經典的陷阱。題目說明是「提高收費」（價格改變）。根據經濟學定義，價格上升會導致<span class="no-break">需求量 \(Q_d\)</span> 減少（沿著曲線向上移動），而不是「需求」減少（曲線左移）。</p>
+        <span class="en-text">This is a classic trap. The question states "raise the toll" (price change). By definition, an increase in price leads to a decrease in "Quantity Demanded" (movement along the curve), not a decrease in "Demand" (shift of the curve).</span>
+    </div>
+
+    <div class="analysis-item correct">
+        <span class="status-badge status-correct">正確 Correct</span>
+        <strong>(2) 海底隧道的總收益會上升。</strong>
+        <p>圖中的供應曲線 (S) 是垂直的，表示供應量固定（\(Q\) 不變）。目前的收費低於均衡，處於超額需求狀態，實際交易量由供應量 \(Q_s\) 決定（即隧道已飽和）。<br>
+        當收費提高（但仍未超過均衡價格時），通過隧道的車輛數量仍然是最大容量 \(Q_s\)。<br>
+        總收益 \(TR = P \times Q\)。既然 \(Q\) 保持不變（最大流量），而 \(P\) 上升，所以總收益必然上升。</p>
+        <span class="en-text">The supply curve (S) is vertical, meaning quantity supplied is fixed. At the existing toll (below equilibrium), there is excess demand, so the quantity transacted is determined by \(Q_s\) (tunnel is full). When toll increases (but stays below equilibrium), the number of cars is still at max capacity \(Q_s\). Total Revenue \(TR = P \times Q\). Since \(Q\) is constant and \(P\) rises, Total Revenue must increase.</span>
+    </div>
+
+    <div class="analysis-item correct">
+        <span class="status-badge status-correct">正確 Correct</span>
+        <strong>(3) 由交通擠塞引起的效率損失會減少。</strong>
+        <p>交通擠塞代表存在非價格競爭（排隊）。這些排隊時間是資源的浪費，稱為租值消散 (Dissipation of Rent) 或無謂損失 (Deadweight Loss)。<br>
+        提高收費（金錢成本上升）會抑制部分需求量，縮短超額需求的差距（短缺減少）。這意味著司機排隊的時間減少了，原本浪費在排隊上的資源轉化為政府的收費（轉移而非浪費），因此社會的無謂損失減少，效率提升。</p>
+        <span class="en-text">Traffic congestion implies non-price competition (queuing). Waiting time is a waste of resources, known as Dissipation of Rent or Deadweight Loss. Raising the toll reduces the quantity demanded, narrowing the shortage gap. This means less waiting time. Resources previously wasted on queuing are converted into government revenue (transfer, not waste), so deadweight loss decreases and efficiency improves.</span>
+    </div>
+
+    <div class="analysis-item wrong">
+        <span class="status-badge status-wrong">錯誤 Incorrect</span>
+        <strong>(4) 司機使用該隧道的機會成本會上升。</strong>
+        <p>這是一個高階概念。在完全競爭且沒有短缺的市場，價格上升等於機會成本上升。但在有短缺（擠塞）的情況下：<br>
+        <span class="no-break">全部成本 = 金錢價格 + 時間成本</span>。<br>
+        在邊際上（Marginal），對於最後一位使用者來說，他願意支付的最高代價（由需求曲線的高度決定）並沒有改變。提高收費只是改變了成本的「組合」：金錢部分增加，時間部分減少。對於邊際使用者，總機會成本不變（仍等於其邊際利益）。<br>
+        <em>註：如果收費提高到消除所有擠塞，總成本甚至可能對某些人來說是下降的（因為時間極具價值）。但在DSE標準分析中，通常視為總代價（Full Cost）在邊際上不變，或者因為減少了無謂損失，整體社會成本降低。肯定的是，不能斷言機會成本一定上升。</em></p>
+        <span class="en-text">This is an advanced concept. Under shortage: Full Cost = Money Price + Time Cost. At the margin, the willingness to pay (height of demand curve) hasn't changed. Raising the toll just changes the composition: more money, less time. For the marginal user, the total opportunity cost remains unchanged (equal to Marginal Benefit). Therefore, stating it "will increase" is incorrect.</span>
+    </div>
+
+    <!-- SECTION 5: PROBLEM DECOMPOSITION -->
+    <h2>題目拆解與技巧 (Problem Decomposition)</h2>
+    
+    <div class="tip-box">
+        <h3>💡 解題思維 (Thinking Process)</h3>
+        <ol>
+            <li>
+                <strong>識別圖表特徵：</strong> 垂直的 S 曲線代表數量固定（完全無彈性）。虛線代表價格低於均衡，這意味著有「短缺」(Shortage)，現實中表現為「擠塞」。
+                <br><span class="en-text">Identify graph features: Vertical S curve means fixed quantity. The dashed line is below equilibrium, implying a "Shortage" (congestion).</span>
+            </li>
+            <li>
+                <strong>區分字眼：</strong> 看到「需求」(Demand) 與「需求量」(Quantity Demanded) 必須極度敏感。價格變，動的是量。
+                <br><span class="en-text">Distinguish terms: Be extremely sensitive to "Demand" vs "Quantity Demanded". Price changes affect Quantity Demanded.</span>
+            </li>
+            <li>
+                <strong>分析無謂損失 (DWL)：</strong> 擠塞本身就是一種無謂損失（時間被浪費）。將「時間成本」轉化為「金錢收費」，對社會而言是減少浪費（因為錢只是轉手，時間流逝卻無法挽回）。
+                <br><span class="en-text">Analyze DWL: Congestion is a deadweight loss (wasted time). Converting "time cost" to "money toll" reduces waste for society (money is transferred, time is lost forever).</span>
+            </li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>
