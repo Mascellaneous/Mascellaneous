@@ -25,7 +25,7 @@ jobs:
       # This ensures 'HEAD' refers to YOUR commit, not the auto-generated one.
       - name: Notify Google Sheets for Changed Files
         env:
-          GAS_URL: "https://script.google.com/macros/s/AKfycbygTINjYheHXf4a2fgebwc9cQ27UVUJJhGO0l_WF7Y42Ueh7KbWGrp5YD2dIVh0sJPF/exec"
+          GAS_URL: "https://script.google.com/macros/s/AKfycbwKrBf3nRkltBs0M_8SHc0uBgQ2fF58ZFKf_UBhaipK3zn_Hd07hJuAiBCdi9u__9z0/exec"
           SECRET_KEY: ${{ secrets.ACTION_KEY }}
         run: |
           # 1. Get list of added or modified HTML files in the specific folder
