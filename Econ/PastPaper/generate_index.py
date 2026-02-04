@@ -3,7 +3,7 @@ import json
 
 # Configuration
 IGNORE_DIRS = {'.git', '__pycache__'}
-IGNORE_FILES = {'index.html', 'generate_index.py', 'data.json', 'generate_data.py'}
+IGNORE_FILES = {'index.html', 'generate_index.py'}
 
 # This is the HTML template. We will inject the data into the variable __JSON_DATA__
 HTML_TEMPLATE = """

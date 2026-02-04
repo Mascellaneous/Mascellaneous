@@ -20,33 +20,20 @@ jobs:
         with:
           fetch-depth: 0  # Important: Fetch all history to detect changes
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Run generation script
-        working-directory: ./Econ/PastPaper
-        run: python generate_index.py
-
-      - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Auto-generate index.html"
-          file_pattern: "Econ/PastPaper/index.html"
-
-      # === UPDATED STEP ===
+      # === MOVED STEP: Notify Google Sheets FIRST ===
+      # We run this BEFORE generating the index or committing anything new.
+      # This ensures 'HEAD' refers to YOUR commit, not the auto-generated one.
       - name: Notify Google Sheets for Changed Files
         env:
           GAS_URL: "https://script.google.com/macros/s/AKfycbygTINjYheHXf4a2fgebwc9cQ27UVUJJhGO0l_WF7Y42Ueh7KbWGrp5YD2dIVh0sJPF/exec"
           SECRET_KEY: ${{ secrets.ACTION_KEY }}
         run: |
           # 1. Get list of added or modified HTML files in the specific folder
-          # We use git diff to find changes between the previous commit and HEAD
+          # We check the difference between the previous commit (HEAD^) and the current commit (HEAD)
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep "Econ/PastPaper/.*\.html" || true)
 
           if [ -z "$CHANGED_FILES" ]; then
-            echo "No HTML files changed. Skipping Google Sheet update."
+            echo "No HTML files changed in the user commit. Skipping Google Sheet update."
             exit 0
           fi
 
@@ -61,7 +48,7 @@ jobs:
             # Remove extension to get ID (e.g., "DSE-2015-P1-07")
             uniqueId="${filename%.*}"
             
-            # Skip index.html if it was caught
+            # Skip index.html if it was caught (though usually it shouldn't be in your push)
             if [ "$uniqueId" == "index" ]; then
               continue
             fi
@@ -77,3 +64,20 @@ jobs:
             
             echo "Response: $response"
           done
+
+      # === STANDARD STEPS CONTINUE BELOW ===
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run generation script
+        working-directory: ./Econ/PastPaper
+        run: python generate_index.py
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-generate index.html"
+          file_pattern: "Econ/PastPaper/index.html"
