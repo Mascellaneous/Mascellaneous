@@ -37,7 +37,7 @@ jobs:
           # This pulls the URL from your config (if you want to hardcode it) 
           # OR you can store the URL as a secret too.
           # Here I assume you paste your Web App URL directly below.
-          GAS_URL: "https://script.google.com/macros/s/AKfycbwVqCDkG2ceo4fg-0NCgQNt8A3tjw5Vg6KA5WsBbuIQQZ4hYwJwzhRTTee_1EsInw/exec"
+          GAS_URL: "https://script.google.com/macros/s/AKfycbyvAqq8ag-tGB4PTjXXeLzlMtuC9r3FFECOR7387Jcqg5WdY0DSh5XuemNv1nTrL8qR/exec"
           SECRET_KEY: ${{ secrets.ACTION_KEY }}
         run: |
           echo "Triggering Google Sheet Update..."
