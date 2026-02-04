@@ -22,7 +22,6 @@ jobs:
           python-version: '3.x'
 
       - name: Run generation script
-        # CHANGE THIS: Enter the folder name where your python script is
         working-directory: ./Econ/PastPaper
         run: python generate_index.py
 
@@ -30,5 +29,16 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-generate index.html"
-          # CHANGE THIS: Point to the index.html inside that folder
           file_pattern: "Econ/PastPaper/index.html"
+
+      # === NEW STEP HERE ===
+      - name: Notify Google Sheets
+        env:
+          # This pulls the URL from your config (if you want to hardcode it) 
+          # OR you can store the URL as a secret too.
+          # Here I assume you paste your Web App URL directly below.
+          GAS_URL: "https://script.google.com/macros/s/AKfycbwVqCDkG2ceo4fg-0NCgQNt8A3tjw5Vg6KA5WsBbuIQQZ4hYwJwzhRTTee_1EsInw/exec"
+          SECRET_KEY: ${{ secrets.ACTION_KEY }}
+        run: |
+          echo "Triggering Google Sheet Update..."
+          curl -L "${GAS_URL}?action=update_deploy_status&secret=${SECRET_KEY}"
