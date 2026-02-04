@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Analysis - Money & Banking</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --concept-bg: #fff3cd;
+            --concept-border: #ffeeba;
+            --math-bg: #e9ecef;
+            --correct-color: #28a745;
+            --wrong-color: #dc3545;
+            --step-bg: #e8f4f8;
+            --step-border: #b8daff;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .question-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .math-block {
+            background-color: var(--math-bg);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        /* New Logic Step Styles */
+        .logic-step {
+            background-color: var(--step-bg);
+            border: 1px solid var(--step-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .logic-step-number {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .conclusion-box {
+            border: 2px solid var(--correct-color);
+            background-color: #f0fff4;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .bilingual-text {
+            margin-bottom: 10px;
+        }
+
+        .en-trans {
+            color: #555;
+            font-style: italic;
+            font-size: 0.95em;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .stars {
+            color: #f1c40f;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>HKDSE Economics Analysis / 經濟科試題分析</h1>
+        <div class="meta-info">
+            <span><strong>Date:</strong> 2026-02-04</span>
+            <span><strong>Topic:</strong> Money & Banking (貨幣與銀行) - Money Creation (貨幣創造)</span>
+            <span><strong>Difficulty:</strong> <span class="stars">★★★☆☆</span> (3/5)</span>
+        </div>
+    </header>
+
+    <!-- SECTION 2: THE QUESTION -->
+    <div class="section-title">The Question (題目)</div>
+    <div class="question-box">
+        <p><strong>下表顯示某經濟的不同日期的資產負債表。</strong><br>
+        <span class="en-trans">The table below shows the balance sheet of an economy on different dates.</span></p>
+
+        <p><strong>2025年1月1日 (Jan 1, 2025):</strong></p>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>資產 Assets</th>
+                    <th>($)</th>
+                    <th>負債 Liabilities</th>
+                    <th>($)</th>
+                </tr>
+                <tr>
+                    <td>儲備 Reserves</td>
+                    <td>400</td>
+                    <td>存款 Deposits</td>
+                    <td>1,000</td>
+                </tr>
+                <tr>
+                    <td>貸款 Loans</td>
+                    <td>600</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <p><strong>2026年1月1日 (Jan 1, 2026):</strong></p>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>資產 Assets</th>
+                    <th>($)</th>
+                    <th>負債 Liabilities</th>
+                    <th>($)</th>
+                </tr>
+                <tr>
+                    <td>儲備 Reserves</td>
+                    <td>500</td>
+                    <td>存款 Deposits</td>
+                    <td>1,250</td>
+                </tr>
+                <tr>
+                    <td>貸款 Loans</td>
+                    <td>750</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <p><strong>下列哪項／些可以解釋以上數據？</strong><br>
+        <span class="en-trans">Which of the following can explain the above data?</span></p>
+
+        <ol style="list-style-type: decimal;">
+            <li>商業銀行持有較少超額儲備。<br><span class="en-trans">Commercial banks hold fewer excess reserves.</span></li>
+            <li>中央銀行下調法定儲備比率。<br><span class="en-trans">The central bank lowers the required reserve ratio.</span></li>
+            <li>中央銀行在2025年向公眾購買政府債券。<br><span class="en-trans">The central bank bought government bonds from the public in 2025.</span></li>
+        </ol>
+
+        <p>
+            A. 只有 (3) (Only 3)<br>
+            B. 只有 (1)、(2) (Only 1 & 2)<br>
+            C. 只有 (1)、(3) (Only 1 & 3)<br>
+            D. 只有 (2)、(3) (Only 2 & 3)
+        </p>
+    </div>
+
+    <!-- SECTION 3: CONCEPT REVIEW -->
+    <div class="section-title">Concept Review (概念重溫)</div>
+    
+    <div class="concept-box">
+        <h3>1. 實際儲備比率 (Actual Reserve Ratio, ARR)</h3>
+        <p>這是銀行實際持有的儲備佔存款的百分比。</p>
+        <span class="en-trans">This is the percentage of deposits that banks actually hold as reserves.</span>
+        <div class="math-block">
+            $$ \text{ARR} = \frac{\text{Reserves (儲備)}}{\text{Deposits (存款)}} \times 100\% $$
+        </div>
+    </div>
+
+    <div class="concept-box">
+        <h3>2. 貨幣基礎與貨幣供應 (Monetary Base & Money Supply)</h3>
+        <p><strong>儲備 (Reserves):</strong> 屬於貨幣基礎 (Monetary Base) 的一部分。當央行向公眾買債，公眾將款項存入銀行，儲備會增加。</p>
+        <span class="en-trans">Reserves are part of the Monetary Base. When the Central Bank buys bonds from the public, and the public deposits the money, reserves increase.</span>
+    </div>
+
+    <!-- SECTION 4: THE ANSWER (UPDATED) -->
+    <div class="section-title">The Answer (答案)</div>
+    
+    <p><strong>正確答案 (Correct Answer): A</strong></p>
+    <p>我們使用「邏輯推演法」來找出答案，而非盲目猜測。</p>
+    <span class="en-trans">We use "Logical Deduction" to find the answer, rather than guessing blindly.</span>
+
+    <!-- Step 1 -->
+    <div class="logic-step">
+        <div class="logic-step-number">Step 1</div>
+        <h4>計算實際儲備比率 (Calculate the Actual Reserve Ratio)</h4>
+        <p>這類題目的關鍵在於檢查銀行體系的「流動性緊縮程度」是否改變。</p>
+        <span class="en-trans">The key to this type of question is to check if the "liquidity tightness" of the banking system has changed.</span>
+        
+        <div class="math-block">
+            $$ 2025: \frac{400}{1000} = 40\% $$
+            <br>
+            $$ 2026: \frac{500}{1250} = 40\% $$
+        </div>
+        
+        <p><strong>發現：</strong>比率維持 40% 不變。</p>
+        <span class="en-trans"><strong>Finding:</strong> The ratio remained constant at 40%.</span>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="logic-step">
+        <div class="logic-step-number">Step 2</div>
+        <h4>利用比率排除選項 (Eliminate Options using the Ratio)</h4>
+        <p>既然實際儲備比率 (ARR) 維持不變，我們可以排除任何會改變 ARR 的選項。</p>
+        <span class="en-trans">Since the Actual Reserve Ratio (ARR) remained constant, we can eliminate any options that would change the ARR.</span>
+        
+        <ul>
+            <li>
+                <strong>選項 (1) 錯誤：</strong> 如果銀行持有較少超額儲備，ARR 應該會<strong>下降</strong>。
+                <br><span class="en-trans"><strong>Option (1) Incorrect:</strong> If banks hold fewer excess reserves, the ARR should <strong>decrease</strong>.</span>
+            </li>
+            <li>
+                <strong>選項 (2) 錯誤：</strong> 如果央行下調法定儲備比率，銀行會借出更多資金，導致存款增長快於儲備，ARR 應該會<strong>下降</strong>。
+                <br><span class="en-trans"><strong>Option (2) Incorrect:</strong> If the central bank lowers the required reserve ratio, banks lend more, causing deposits to grow faster than reserves, so ARR should <strong>decrease</strong>.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="logic-step">
+        <div class="logic-step-number">Step 3</div>
+        <h4>尋找儲備變化的原因 (Identify the Cause of Reserve Change)</h4>
+        <p>我們看到儲備由 $400 增加至 $500。這代表有新資金注入銀行體系。</p>
+        <span class="en-trans">We see Reserves increased from $400 to $500. This means new funds were injected into the banking system.</span>
+        
+        <ul>
+            <li>
+                <strong>選項 (3) 正確：</strong> 央行向公眾購買債券 $\rightarrow$ 公眾收到支票並存入銀行 $\rightarrow$ 銀行儲備增加。
+                <br><span class="en-trans"><strong>Option (3) Correct:</strong> Central Bank buys bonds from public $\rightarrow$ Public receives checks and deposits them $\rightarrow$ Bank reserves increase.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="logic-step">
+        <div class="logic-step-number">Step 4</div>
+        <h4>驗證數字 (Verify the Numbers)</h4>
+        <p>假設法定儲備比率維持 40%，當儲備增加 $100 (500-400)，存款會增加多少？</p>
+        <span class="en-trans">Assuming RRR stays at 40%, when reserves increase by $100, how much do deposits increase?</span>
+        
+        <div class="math-block">
+            $$ \Delta D = \frac{\Delta R}{40\%} = \frac{100}{0.4} = 250 $$
+        </div>
+        
+        <p>數據顯示存款確實增加了 $250 (1250-1000)。計算吻合！</p>
+        <span class="en-trans">The data shows deposits indeed increased by $250. The calculation matches!</span>
+    </div>
+
+    <div class="conclusion-box">
+        <h3>結論 (Conclusion)</h3>
+        <p>由於只有選項 (3) 能解釋儲備的增加，且符合數據的變化，而選項 (1) 和 (2) 均與不變的儲備比率相矛盾。</p>
+        <p><strong>因此，答案是 A。</strong></p>
+        <span class="en-trans">Since only option (3) explains the increase in reserves and fits the data changes, while options (1) and (2) contradict the constant reserve ratio.<br><strong>Therefore, the answer is A.</strong></span>
+    </div>
+
+    <!-- SECTION 5: PROBLEM DECOMPOSITION -->
+    <div class="section-title">Problem Decomposition (題目拆解)</div>
+    
+    <div class="concept-box">
+        <h3>考試技巧 (Exam Tips)</h3>
+        <p>在處理資產負債表的題目時，請緊記以下順序：</p>
+        <span class="en-trans">When dealing with balance sheet questions, remember this order:</span>
+        <ol>
+            <li><strong>先算比率 (Calculate Ratio First):</strong> 這是最快排除錯誤選項的方法。 <span class="en-trans">(Fastest way to eliminate wrong options)</span></li>
+            <li><strong>看絕對值變化 (Look at Absolute Changes):</strong> 儲備增加了還是減少了？這決定了是擴張性還是緊縮性政策。 <span class="en-trans">(Did reserves go up or down? This determines if it's expansionary or contractionary.)</span></li>
+            <li><strong>驗證乘數效應 (Verify Multiplier):</strong> 確保 $\Delta D$ 與 $\Delta R$ 的比例符合計算出的比率。 <span class="en-trans">(Ensure the ratio of change in deposits to change in reserves matches the calculated ratio.)</span></li>
+        </ol>
+    </div>
+
+</div>
+
+</body>
+</html>
