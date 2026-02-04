@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'Econ/PastPaper/**/*.html' # Only run if HTML files change
   workflow_dispatch:
 
 permissions:
@@ -15,6 +17,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important: Fetch all history to detect changes
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -31,14 +35,45 @@ jobs:
           commit_message: "Auto-generate index.html"
           file_pattern: "Econ/PastPaper/index.html"
 
-      # === NEW STEP HERE ===
-      - name: Notify Google Sheets
+      # === UPDATED STEP ===
+      - name: Notify Google Sheets for Changed Files
         env:
-          # This pulls the URL from your config (if you want to hardcode it) 
-          # OR you can store the URL as a secret too.
-          # Here I assume you paste your Web App URL directly below.
           GAS_URL: "https://script.google.com/macros/s/AKfycbygTINjYheHXf4a2fgebwc9cQ27UVUJJhGO0l_WF7Y42Ueh7KbWGrp5YD2dIVh0sJPF/exec"
           SECRET_KEY: ${{ secrets.ACTION_KEY }}
         run: |
-          echo "Triggering Google Sheet Update..."
-          curl -L "${GAS_URL}?action=update_deploy_status&secret=${SECRET_KEY}"
+          # 1. Get list of added or modified HTML files in the specific folder
+          # We use git diff to find changes between the previous commit and HEAD
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep "Econ/PastPaper/.*\.html" || true)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No HTML files changed. Skipping Google Sheet update."
+            exit 0
+          fi
+
+          echo "Found changed files:"
+          echo "$CHANGED_FILES"
+
+          # 2. Loop through each file
+          for file in $CHANGED_FILES; do
+            # Extract filename (e.g., "DSE-2015-P1-07.html")
+            filename=$(basename "$file")
+            
+            # Remove extension to get ID (e.g., "DSE-2015-P1-07")
+            uniqueId="${filename%.*}"
+            
+            # Skip index.html if it was caught
+            if [ "$uniqueId" == "index" ]; then
+              continue
+            fi
+
+            echo "Updating Sheet for ID: $uniqueId"
+            
+            # 3. Send Request to Google Apps Script
+            # We use curl -G (GET) with --data-urlencode to handle special characters safely
+            response=$(curl -s -L -G "${GAS_URL}" \
+              --data-urlencode "action=update_deploy_status" \
+              --data-urlencode "secret=${SECRET_KEY}" \
+              --data-urlencode "uniqueId=${uniqueId}")
+            
+            echo "Response: $response"
+          done
