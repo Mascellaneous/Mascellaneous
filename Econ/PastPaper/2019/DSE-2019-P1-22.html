@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Analysis: Supply Shock & Exchange Value</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Royal Blue */
+            --secondary-color: #1e40af; /* Darker Blue */
+            --accent-bg: #eff6ff; /* Light Blue Background */
+            --text-color: #334155; /* Slate 700 */
+            --correct-color: #16a34a; /* Green */
+            --wrong-color: #dc2626; /* Red */
+            --warning-bg: #fff7ed; /* Orange tint */
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5em;
+        }
+
+        h1 { margin-top: 0; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
+        
+        .header-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            background-color: var(--accent-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .header-item { font-weight: bold; margin-right: 5px; }
+        
+        .question-box {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+        }
+
+        .options-list { list-style-type: none; padding: 0; }
+        .options-list li { padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
+        
+        .concept-box {
+            background-color: var(--accent-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .zh { display: block; margin-bottom: 5px; font-weight: 500; }
+        .en { display: block; color: #64748b; font-size: 0.95em; margin-bottom: 15px; }
+
+        .analysis-step {
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid #cbd5e1;
+        }
+
+        .correct-option {
+            font-size: 1.2em;
+            color: var(--correct-color);
+            font-weight: bold;
+            background-color: #dcfce7;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .trap-box {
+            background-color: var(--warning-bg);
+            border: 1px solid #fed7aa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+        }
+
+        .math-block {
+            background: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 1. Header -->
+    <header>
+        <h1>HKDSE Economics Analysis</h1>
+        <div class="header-info">
+            <div><span class="header-item">Topic (課題):</span> Demand & Supply, Elasticity (需求與供應、彈性)</div>
+            <div><span class="header-item">Difficulty (難度):</span> ★★★☆☆</div>
+            <div><span class="header-item">Key Concepts (核心概念):</span> Supply Shift (供應改變), Marginal Benefit (邊際利益), Total Expenditure (總支出)</div>
+        </div>
+    </header>
+
+    <!-- 2. The Question -->
+    <section>
+        <h2>The Question (題目)</h2>
+        <div class="question-box">
+            <p><strong>中文：</strong>假設全球暖化導致鮮花收成欠佳。鮮花的邊際利益會___________，而總交易價值 ______________。</p>
+            <p><strong>English:</strong> Suppose there is a bad harvest of flowers due to global warming. The marginal benefit of flowers will ___________ and the total exchange value ______________.</p>
+            
+            <ul class="options-list">
+                <li>A. 減少 …… 會減少 (decrease …… will decrease)</li>
+                <li>B. 增加 …… 會增加 (increase …… will increase)</li>
+                <li>C. 減少 …… 可能減少或增加 (decrease …… may decrease or increase)</li>
+                <li>D. 增加 …… 可能減少或增加 (increase …… may decrease or increase)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 3. Concept Review -->
+    <section>
+        <h2>Concept Review (概念重溫)</h2>
+        <div class="concept-box">
+            
+            <h3>1. Supply Shift (供應改變)</h3>
+            <p class="zh">「收成欠佳」代表供應減少，供應曲線向左移動。</p>
+            <p class="en">"Bad harvest" implies a decrease in supply. The supply curve shifts to the left.</p>
+            <div class="math-block">
+                $$ S \downarrow \rightarrow P \uparrow, Q \downarrow $$
+            </div>
+
+            <h3>2. Marginal Benefit (邊際利益 - MB)</h3>
+            <p class="zh">需求曲線 (Demand Curve) 反映了邊際利益。根據邊際利益遞減定律，當數量 (Q) 減少時，消費者願意為「最後一單位」支付的最高價格（即 MB）會上升。</p>
+            <p class="en">The Demand Curve reflects Marginal Benefit. According to the Law of Diminishing Marginal Benefit, when Quantity (Q) decreases, the highest price consumers are willing to pay for the "last unit" (which is MB) increases.</p>
+            <div class="math-block">
+                $$ Q \downarrow \rightarrow MB \uparrow $$
+            </div>
+
+            <h3>3. Total Exchange Value (總交易價值)</h3>
+            <p class="zh">總交易價值 = 價格 × 交易量。這相等於買家的總支出 (Total Expenditure) 或賣家的總收入 (Total Revenue)。</p>
+            <p class="en">Total Exchange Value = Price × Quantity. This is equivalent to Total Expenditure for buyers or Total Revenue for sellers.</p>
+            <div class="math-block">
+                $$ TEV = P \times Q $$
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Answer & Detailed Analysis -->
+    <section>
+        <h2>Answer & Detailed Analysis (答案與詳細分析)</h2>
+        
+        <div class="correct-option">Correct Option: D</div>
+
+        <div class="analysis-step">
+            <h3>Step 1: Analyze the Supply Shock (分析供應震盪)</h3>
+            <p class="zh">全球暖化導致收成欠佳，這是一個負面的供應震盪。供應曲線向左移，導致均衡價格 ($P$) 上升，均衡數量 ($Q$) 下降。</p>
+            <p class="en">Global warming causing a bad harvest is a negative supply shock. The supply curve shifts left, causing Equilibrium Price ($P$) to rise and Equilibrium Quantity ($Q$) to fall.</p>
+        </div>
+
+        <div class="analysis-step">
+            <h3>Step 2: Analyze Marginal Benefit (分析邊際利益)</h3>
+            <p class="zh">由於均衡數量 ($Q$) 減少，我們沿著需求曲線向左上方移動。物品變得更稀缺，消費者對現存最後一單位的鮮花評價（邊際利益）會較高。因此，<strong>邊際利益增加</strong>。</p>
+            <p class="en">Since Equilibrium Quantity ($Q$) decreases, we move upward along the demand curve. The good becomes scarcer, and consumers' valuation of the last available unit (Marginal Benefit) becomes higher. Therefore, <strong>Marginal Benefit increases</strong>.</p>
+        </div>
+
+        <div class="analysis-step">
+            <h3>Step 3: Analyze Total Exchange Value (分析總交易價值)</h3>
+            <p class="zh">總交易價值 ($TEV = P \times Q$) 的變動取決於需求價格彈性 ($E_d$)。題目<strong>沒有提供</strong>關於鮮花彈性的資訊。</p>
+            <p class="en">The change in Total Exchange Value ($TEV = P \times Q$) depends on the Price Elasticity of Demand ($E_d$). The question <strong>does not provide</strong> information about the elasticity of flowers.</p>
+            
+            <ul>
+                <li><span class="zh">若需求由彈性 ($E_d > 1$)：$Q$ 下跌幅度 > $P$ 上升幅度 $\rightarrow$ TEV 減少。</span></li>
+                <li><span class="zh">若需求低彈性 ($E_d < 1$)：$Q$ 下跌幅度 < $P$ 上升幅度 $\rightarrow$ TEV 增加。</span></li>
+            </ul>
+            
+            <p class="zh">因為我們不知道彈性，所以總交易價值的變動是<strong>不確定的 (Uncertain)</strong>。</p>
+            <p class="en">Since we do not know the elasticity, the change in Total Exchange Value is <strong>uncertain</strong> (may increase or decrease).</p>
+        </div>
+    </section>
+
+    <!-- 5. Problem Decomposition -->
+    <section>
+        <h2>Problem Decomposition (題目拆解)</h2>
+        <p class="zh">這類題目可以拆解為三個邏輯樞紐 (Pivot Points)：</p>
+        <p class="en">This type of question can be broken down into three logical Pivot Points:</p>
+
+        <ol>
+            <li>
+                <strong>Trigger (起因):</strong> Bad Harvest $\rightarrow$ Supply $\downarrow$.
+            </li>
+            <li>
+                <strong>Effect on MB (對 MB 的影響):</strong> 
+                <br>Logic: Supply $\downarrow \rightarrow$ Quantity $\downarrow \rightarrow$ Scarcity $\uparrow \rightarrow$ MB $\uparrow$.
+            </li>
+            <li>
+                <strong>Effect on Revenue (對收入的影響):</strong> 
+                <br>Logic: Price $\uparrow$ but Quantity $\downarrow$. Without Elasticity info, the net effect is Unknown.
+            </li>
+        </ol>
+    </section>
+
+    <!-- 6. Common Mistakes & Traps -->
+    <section>
+        <h2>Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+        <div class="trap-box">
+            <h3>Trap 1: Assuming Elasticity (假設了彈性)</h3>
+            <p class="zh"><strong>錯誤觀念：</strong>學生常主觀認為「鮮花是必需品（例如節日用），所以是低彈性」，或者「鮮花非必需，所以是高彈性」。</p>
+            <p class="en"><strong>Misconception:</strong> Students often subjectively assume "flowers are necessities (e.g., for festivals), so they are inelastic," or "flowers are not necessities, so they are elastic."</p>
+            <p class="zh"><strong>修正：</strong>在 DSE 經濟學中，除非題目明確指出（或暗示沒有替代品），否則不能假設彈性。必須選擇「可能增加或減少」。</p>
+            <p class="en"><strong>Correction:</strong> In HKDSE Economics, unless the question explicitly states it (or implies no substitutes), you cannot assume elasticity. You must choose "may increase or decrease."</p>
+
+            <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+
+            <h3>Trap 2: Confusing MB with Total Benefit (混淆邊際利益與總利益)</h3>
+            <p class="zh"><strong>錯誤觀念：</strong>因為鮮花少了，大家覺得「總享受」少了，所以誤以為邊際利益也減少。</p>
+            <p class="en"><strong>Misconception:</strong> Because there are fewer flowers, students feel the "total enjoyment" is less, mistakenly thinking Marginal Benefit also decreases.</p>
+            <p class="zh"><strong>修正：</strong>總利益 (Total Benefit) 確實減少了（因為消費量少了），但邊際利益 (Marginal Benefit) 看的是「最後一單位」的價值，它是上升的。</p>
+            <p class="en"><strong>Correction:</strong> Total Benefit indeed decreases (because consumption drops), but Marginal Benefit looks at the value of the "last unit," which rises.</p>
+        </div>
+    </section>
+
+    <!-- 7. Exam Tricks -->
+    <section>
+        <h2>Exam Tricks (考試技巧)</h2>
+        <p class="zh"><strong>快速刪去法 (Elimination Method)：</strong></p>
+        <ol>
+            <li>看到「收成欠佳」($Q \downarrow$) $\rightarrow$ 立即聯想 MB 必定上升 (沿著需求曲線往上移)。
+                <br>$\rightarrow$ 刪除選項 A 和 C。</li>
+            <li>剩下 B 和 D。檢查題目有無提及「彈性」、「替代品」或「必需品」。
+                <br>$\rightarrow$ 完全沒有提及 $\rightarrow$ 收入變動必定是「不確定」。
+                <br>$\rightarrow$ 選擇 D。</li>
+        </ol>
+    </section>
+
+</div>
+
+</body>
+</html>
