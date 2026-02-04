@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Analysis: Opportunity Cost</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --box-bg: #ffffff;
+            --concept-bg: #fff3cd;
+            --concept-border: #ffeeba;
+            --math-bg: #e9ecef;
+            --correct-color: #28a745;
+            --wrong-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--box-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-top: 1.5em;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .question-box {
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            background-color: #f1f8ff;
+            margin-bottom: 30px;
+        }
+
+        .concept-box {
+            background-color: var(--concept-bg);
+            border: 1px solid var(--concept-border);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .math-block {
+            background-color: var(--math-bg);
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+            font-family: 'Times New Roman', serif;
+            margin: 15px 0;
+        }
+
+        .option-analysis {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .option-analysis.correct {
+            border-color: var(--correct-color);
+            background-color: #e8f5e9;
+        }
+
+        .option-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 30px;
+        }
+
+        .bilingual-text {
+            margin-bottom: 10px;
+        }
+        
+        .eng-trans {
+            color: #555;
+            font-style: italic;
+            font-size: 0.95em;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .stars {
+            color: #f1c40f;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .header-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <div class="header-info">
+        <div><strong>Date:</strong> 2026-01-31</div>
+        <div><strong>Topic:</strong> Opportunity Cost (機會成本)</div>
+        <div><strong>Difficulty:</strong> <span class="stars">★★☆☆☆</span> (Level 2)</div>
+    </div>
+
+    <h1>HKDSE Economics Analysis</h1>
+
+    <!-- 2. The Question -->
+    <h2>The Question (題目)</h2>
+    <div class="question-box">
+        <p><strong>湯美中六畢業，正計劃將來。他有數個選項，其優先次序如下：</strong><br>
+        第一選項：在咖啡店當一名咖啡師<br>
+        第二選項：當一名數碼市場推廣業的實習生<br>
+        第三選項：當一名初級消防員</p>
+
+        <p><strong>在湯美的就業選擇中，下列哪項因素最不可能影響他的成本效益分析？</strong></p>
+
+        <p>A. 咖啡文化愈趨普及。<br>
+        B. 更多公司擴張其數碼市場推廣部。<br>
+        C. 初級消防員的薪金下降。<br>
+        D. 救火的安全措施大幅改善。</p>
+
+        <hr style="border-top: 1px dashed #ccc; margin: 20px 0;">
+
+        <p><strong>Tommy is planning for his future after his S.6 graduation. He has several options and his order of preference is as follows:</strong><br>
+        First option: Being a barista in a café<br>
+        Second option: Being a trainee in digital marketing<br>
+        Third option: Being a junior fireman</p>
+
+        <p><strong>Which of the following factors would LEAST likely affect the cost-benefit analysis for Tommy’s career choice?</strong></p>
+
+        <p>A. Coffee culture becomes more popular.<br>
+        B. More companies expand their digital marketing departments.<br>
+        C. The remuneration of junior firemen worsens.<br>
+        D. Safety measures of fire-fighting are improved drastically.</p>
+    </div>
+
+    <!-- 3. Concept Review -->
+    <h2>Concept Review (概念重溫)</h2>
+    <div class="concept-box">
+        <h3>機會成本 (Opportunity Cost)</h3>
+        <p class="bilingual-text">
+            機會成本是指在作出選擇時，被放棄的選項中<strong>價值最高</strong>的那一個。
+            <span class="eng-trans">Opportunity cost is the <strong>highest-valued option forgone</strong> when a choice is made.</span>
+        </p>
+
+        <div class="math-block">
+            $$ \text{Opportunity Cost} = \text{Value of the highest-valued alternative forgone} $$
+            $$ \text{機會成本} = \text{被放棄而價值最高的選擇之價值} $$
+        </div>
+
+        <p class="bilingual-text">
+            <strong>全盤成本 (Full Cost) / 成本效益分析 (Cost-Benefit Analysis):</strong><br>
+            當一個人做決定（例如選擇第一選項）時，他會考慮：
+            <ol>
+                <li><strong>得益 (Benefit):</strong> 選擇該選項所帶來的好處（例如：咖啡師的薪金、樂趣）。</li>
+                <li><strong>成本 (Cost):</strong> 放棄了的最高價值選項（即第二選項的價值）。</li>
+            </ol>
+            <span class="eng-trans">
+            <strong>Full Cost / Cost-Benefit Analysis:</strong><br>
+            When a person makes a decision (e.g., choosing the 1st option), they consider:
+            <ol>
+                <li><strong>Benefit:</strong> The utility gained from that choice (e.g., salary, enjoyment of being a barista).</li>
+                <li><strong>Cost:</strong> The value of the highest-valued option forgone (i.e., the value of the 2nd option).</li>
+            </ol>
+            </span>
+        </p>
+
+        <p class="bilingual-text">
+            <strong>關鍵規則 (Key Rule):</strong><br>
+            只有<strong>被選中的選項（第一選項）</strong>的價值改變，或者<strong>最高價值的放棄選項（第二選項）</strong>的價值改變，才會影響成本效益分析。<strong>第三選項或之後的選項</strong>，因為不是「最高價值的放棄選項」，所以與機會成本無關。
+            <span class="eng-trans">
+            <strong>Key Rule:</strong><br>
+            Only changes in the value of the <strong>chosen option (1st option)</strong> or the <strong>highest-valued forgone option (2nd option)</strong> will affect the cost-benefit analysis. The <strong>3rd option or beyond</strong> is irrelevant to opportunity cost because it is not the "highest-valued" alternative.
+            </span>
+        </p>
+    </div>
+
+    <!-- 4. The Answer -->
+    <h2>The Answer (答案)</h2>
+    
+    <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 1.2em; text-align: center;">
+        <strong>正確答案 (Correct Answer): C / D</strong>
+        <br>
+        <span style="font-size: 0.8em; color: #666;">(視乎題目設計，C和D均指向第三選項，兩者皆正確。通常此類題目只有一個關於第三選項的選擇。在此題中，C和D均涉及第三選項，故兩者皆為正確答案。) <br> (Depending on the question design, both C and D point to the 3rd option. Usually, there is only one choice regarding the 3rd option. Here, both C and D involve the 3rd option, making them both correct answers.)</span>
+    </div>
+
+    <p><strong>詳細分析 (Detailed Analysis):</strong></p>
+    <p>湯美的選擇次序 (Tommy's Order of Preference):</p>
+    <ol>
+        <li>咖啡師 (Barista) -> <strong>被選中的選項 (Chosen Option)</strong></li>
+        <li>數碼市場推廣 (Digital Marketing) -> <strong>被放棄而價值最高的選項 (Highest-valued Option Forgone)</strong></li>
+        <li>初級消防員 (Junior Fireman) -> <strong>被放棄但非價值最高的選項 (Not the Highest-valued Option Forgone)</strong></li>
+    </ol>
+
+    <div class="option-analysis">
+        <span class="option-label">A</span>
+        <strong>咖啡文化愈趨普及 (Coffee culture becomes more popular)</strong>
+        <p class="bilingual-text">
+            這會增加當咖啡師（第一選項）的吸引力或價值（得益）。這直接影響他選擇第一選項的動機（得益上升）。
+            <span class="eng-trans">This increases the attractiveness or value (benefit) of being a barista (1st option). This directly affects his incentive to choose the 1st option (Benefit increases).</span>
+        </p>
+        <p style="color: var(--wrong-color);"><strong>結果：會影響 (Result: Affects)</strong></p>
+    </div>
+
+    <div class="option-analysis">
+        <span class="option-label">B</span>
+        <strong>更多公司擴張其數碼市場推廣部 (More companies expand their digital marketing departments)</strong>
+        <p class="bilingual-text">
+            這會增加當實習生（第二選項）的價值。由於第二選項是機會成本，這代表湯美選擇當咖啡師的<strong>機會成本上升</strong>。
+            <span class="eng-trans">This increases the value of being a trainee (2nd option). Since the 2nd option is the opportunity cost, this means the <strong>opportunity cost</strong> of choosing to be a barista <strong>increases</strong>.</span>
+        </p>
+        <p style="color: var(--wrong-color);"><strong>結果：會影響 (Result: Affects)</strong></p>
+    </div>
+
+    <div class="option-analysis correct">
+        <span class="option-label">C</span>
+        <strong>初級消防員的薪金下降 (The remuneration of junior firemen worsens)</strong>
+        <p class="bilingual-text">
+            這改變了第三選項的價值。然而，機會成本只由<strong>被放棄而價值最高</strong>的選項（即第二選項）決定。只要第三選項的價值仍然低於第二選項，第三選項價值的改變<strong>不會</strong>影響機會成本，也不會影響第一選項的得益。
+            <span class="eng-trans">This changes the value of the 3rd option. However, opportunity cost is determined ONLY by the <strong>highest-valued option forgone</strong> (the 2nd option). As long as the value of the 3rd option remains lower than the 2nd, changes in the 3rd option's value do <strong>NOT</strong> affect opportunity cost, nor do they affect the benefit of the 1st option.</span>
+        </p>
+        <p style="color: var(--correct-color);"><strong>結果：最不可能影響 (Result: Least likely to affect)</strong></p>
+    </div>
+
+    <div class="option-analysis correct">
+        <span class="option-label">D</span>
+        <strong>救火的安全措施大幅改善 (Safety measures of fire-fighting are improved drastically)</strong>
+        <p class="bilingual-text">
+            這增加了第三選項的價值。同樣地，除非改善幅度大到令第三選項的價值超越了第二選項（題目暗示次序未變），否則第三選項的變化與當前的決策無關。
+            <span class="eng-trans">This increases the value of the 3rd option. Similarly, unless the improvement is so drastic that the 3rd option becomes more valuable than the 2nd (the question implies the order hasn't changed), changes in the 3rd option are irrelevant to the current decision.</span>
+        </p>
+        <p style="color: var(--correct-color);"><strong>結果：最不可能影響 (Result: Least likely to affect)</strong></p>
+    </div>
+
+    <!-- 5. Problem Decomposition -->
+    <h2>Problem Decomposition (題目拆解)</h2>
+    <div class="concept-box" style="background-color: #e3f2fd; border-color: #b3d7ff;">
+        <h3>解題思維 (Thinking Process)</h3>
+        <p class="bilingual-text">
+            這類題目是 DSE 經濟科有關「機會成本」的經典題型。解題時，請遵循以下步驟：
+            <span class="eng-trans">This is a classic HKDSE Economics question type regarding "Opportunity Cost". Follow these steps to solve it:</span>
+        </p>
+        
+        <ol>
+            <li>
+                <strong>排列次序 (Rank the options):</strong> <br>
+                1. Barista (Chosen)<br>
+                2. Marketing (Highest Forgone = Cost)<br>
+                3. Fireman (Irrelevant)
+            </li>
+            <li>
+                <strong>識別定義 (Identify the definition):</strong> <br>
+                成本效益分析 = (選項 1 的價值) vs (選項 2 的價值)。
+                <span class="eng-trans">Cost-Benefit Analysis = (Value of Option 1) vs (Value of Option 2).</span>
+            </li>
+            <li>
+                <strong>尋找干擾項 (Find the distractor):</strong> <br>
+                任何影響<strong>選項 3, 4, 5...</strong> 的因素，只要不足以改變它們的排名使其超越選項 2，都是干擾項，不會影響決策。
+                <span class="eng-trans">Any factor affecting <strong>Option 3, 4, 5...</strong> is a distractor and will not affect the decision, provided it doesn't raise their rank above Option 2.</span>
+            </li>
+        </ol>
+
+        <p class="bilingual-text">
+            <strong>常見陷阱 (Common Trap):</strong><br>
+            學生常誤以為所有選項的變化都會影響決定。記住：<strong>「沈沒成本」不是成本，「第三選項」也不是成本。</strong>
+            <span class="eng-trans">Students often mistakenly think changes in all options affect the decision. Remember: <strong>"Sunk cost" is not cost, and the "3rd option" is not cost either.</strong></span>
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>
