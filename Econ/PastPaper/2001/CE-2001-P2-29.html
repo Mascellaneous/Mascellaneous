@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics: GDP & Imports Analysis</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Navy Blue */
+            --accent-color: #0ea5e9; /* Sky Blue */
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-secondary: #4b5563;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --code-bg: #f3f4f6;
+            --concept-bg: #f0f9ff;
+            --concept-border: #0ea5e9;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        header {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .meta-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .tag {
+            background: var(--code-bg);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid #e5e7eb;
+        }
+
+        .difficulty {
+            color: var(--warning);
+            border-color: var(--warning);
+            background: #fffbeb;
+        }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        /* Question Box */
+        .question-box {
+            background-color: #fff;
+            border: 2px solid #e5e7eb;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .q-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options li {
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            background: #f9fafb;
+            border-radius: 6px;
+            border: 1px solid #f3f4f6;
+            transition: all 0.2s;
+        }
+
+        .options li:hover {
+            background-color: #eff6ff;
+            border-color: var(--accent-color);
+        }
+
+        /* Concept Box */
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid var(--concept-border);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+        }
+
+        /* Answer Reveal */
+        .answer-reveal {
+            background-color: #ecfdf5;
+            border: 2px solid var(--success);
+            color: #065f46;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Analysis Cards */
+        .analysis-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: white;
+        }
+
+        .card-header {
+            padding: 12px 20px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-method-1 { background: #eff6ff; color: #1e40af; border-bottom: 1px solid #dbeafe; }
+        .header-method-2 { background: #fdf4ff; color: #86198f; border-bottom: 1px solid #f0abfc; }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Math Blocks */
+        .math-block {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        /* Bilingual Text Styling */
+        .zh-text {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+        .en-text {
+            display: block;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            font-style: italic;
+        }
+
+        /* Comparison Table */
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .comparison-table th {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* Trap Box */
+        .trap-box {
+            background-color: #fef2f2;
+            border: 1px solid #fee2e2;
+            border-left: 5px solid var(--danger);
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.5rem; }
+            .section-title { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <header>
+        <h1>HKDSE Economics Analysis</h1>
+        <div class="meta-tags">
+            <span class="tag">Topic: National Income (國民收入)</span>
+            <span class="tag difficulty">Difficulty: ★★★★☆ (Level 4)</span>
+            <span class="tag">Key Concepts: GDP, Imports, Retail Margin</span>
+        </div>
+    </header>
+
+    <!-- 2. The Question -->
+    <div class="section-title">The Question (題目)</div>
+    <div class="question-box">
+        <div class="q-text">
+            <span class="zh-text">假設某經濟減少在進口貨物方面的消費開支共達 10 百萬元，而這筆款項改而消費在全部由該經濟常住生產單位所生產的貨品上。這兩種改變會令該經濟的本地生產總值：</span>
+            <span class="en-text" style="font-style: normal;">Suppose an economy reduces its consumption expenditure on imported goods by $10 million and the whole amount is instead spent on goods wholly produced by its resident producing units. Because of these two changes, the GDP of this economy will:</span>
+        </div>
+        <ul class="options">
+            <li>
+                <span class="zh-text">A. 維持不變。</span>
+                <span class="en-text" style="margin-bottom:0;">A. remain unchanged.</span>
+            </li>
+            <li>
+                <span class="zh-text">B. 增加 10 百萬元。</span>
+                <span class="en-text" style="margin-bottom:0;">B. increase by $10 million.</span>
+            </li>
+            <li>
+                <span class="zh-text">C. 增加多於 10 百萬元。</span>
+                <span class="en-text" style="margin-bottom:0;">C. increase by more than $10 million.</span>
+            </li>
+            <li>
+                <span class="zh-text">D. 增加少於 10 百萬元。</span>
+                <span class="en-text" style="margin-bottom:0;">D. increase by less than $10 million.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 3. Concept Review -->
+    <div class="section-title">Concept Review (概念重溫)</div>
+    <div class="concept-box">
+        <h3 style="margin-top:0; color:var(--primary-color);">1. GDP Expenditure Approach (支出面計算法)</h3>
+        <div class="math-block">
+            $$ GDP = C + I + G + (X - M) $$
+        </div>
+        <span class="zh-text"><strong>C (私人消費開支):</strong> 包括所有最終產品的消費，不論產地來源。</span>
+        <span class="en-text"><strong>C (Private Consumption Expenditure):</strong> Includes consumption of all final goods, regardless of their origin.</span>
+        
+        <span class="zh-text"><strong>M (進口):</strong> 為了計算本地生產總值，我們必須扣除進口成分，因為這些價值不是由本地常住生產單位創造的。</span>
+        <span class="en-text"><strong>M (Imports):</strong> To calculate GDP, we must subtract the import content because this value was not created by resident producing units.</span>
+
+        <h3 style="color:var(--primary-color);">2. Retail Price vs Import Price (零售價與進口價)</h3>
+        <span class="zh-text">消費開支是按<strong>市價 (Market Price)</strong> 計算的，這包含了進口成本加上本地的零售服務增值。</span>
+        <span class="en-text">Consumption expenditure is calculated at <strong>Market Price</strong>, which includes the import cost plus the local retail service value added.</span>
+    </div>
+
+    <!-- 4. Answer & Detailed Analysis -->
+    <div class="section-title">Answer & Detailed Analysis (答案與詳細分析)</div>
+    
+    <div class="answer-reveal">
+        Correct Option: D (增加少於 10 百萬元)
+    </div>
+
+    <p>
+        <span class="zh-text">這道題目可以通過兩種不同的經濟邏輯來分析。兩者都會得出相同的結論。</span>
+        <span class="en-text">This question can be analyzed using two different economic logics. Both lead to the same conclusion.</span>
+    </p>
+
+    <!-- Method 1: Value Added -->
+    <div class="analysis-card">
+        <div class="card-header header-method-1">
+            <span>Method 1: Value Added Approach (價值增值法)</span>
+        </div>
+        <div class="card-body">
+            <span class="zh-text"><strong>核心邏輯：</strong> 「消費開支」 (10M) 並不完全等於「進口值」。</span>
+            <span class="en-text"><strong>Core Logic:</strong> "Consumption Expenditure" ($10M) is not equal to "Import Value".</span>
+
+            <div class="math-block">
+                $$ \text{Retail Price} = \text{Import Cost} + \text{Local Value Added (Margin)} $$
+                $$ 10 = V_{import} + V_{local} $$
+            </div>
+
+            <span class="zh-text"><strong>舊情況 (Old Scenario):</strong> 買進口貨。</span>
+            <span class="en-text"><strong>Old Scenario:</strong> Buying imported goods.</span>
+            <ul>
+                <li><span class="zh-text">GDP 貢獻 = 本地零售商的服務價值 ($V_{local}$)。</span></li>
+                <li><span class="en-text">Contribution to GDP = Value of local retail services ($V_{local}$).</span></li>
+                <li><span class="zh-text">注意：進口成本 ($V_{import}$) 會被扣除。</span></li>
+                <li><span class="en-text">Note: Import cost ($V_{import}$) is subtracted.</span></li>
+            </ul>
+
+            <span class="zh-text"><strong>新情況 (New Scenario):</strong> 買本地貨。</span>
+            <span class="en-text"><strong>New Scenario:</strong> Buying local goods.</span>
+            <ul>
+                <li><span class="zh-text">GDP 貢獻 = 10 (因為全部由本地生產)。</span></li>
+                <li><span class="en-text">Contribution to GDP = 10 (Since wholly produced locally).</span></li>
+            </ul>
+
+            <span class="zh-text"><strong>GDP 變動 (Change):</strong></span>
+            <div class="math-block">
+                $$ \Delta GDP = \text{New} - \text{Old} $$
+                $$ \Delta GDP = 10 - V_{local} $$
+            </div>
+
+            <span class="zh-text">由於 $10 = V_{import} + V_{local}$，所以 $10 - V_{local} = V_{import}$。</span>
+            <span class="zh-text">因為進口成本必定小於零售價 ($V_{import} < 10$)，所以 GDP 增加少於 10。</span>
+            <span class="en-text">Since $10 = V_{import} + V_{local}$, then $10 - V_{local} = V_{import}$. Because Import Cost must be less than Retail Price ($V_{import} < 10$), the GDP increase is less than 10.</span>
+        </div>
+    </div>
+
+    <!-- Method 2: Inventory/Accounting -->
+    <div class="analysis-card">
+        <div class="card-header header-method-2">
+            <span>Method 2: Accounting Identity Approach (會計恆等式法)</span>
+        </div>
+        <div class="card-body">
+            <span class="zh-text"><strong>核心邏輯：</strong> 使用 $GDP = C + I - M$ 公式。</span>
+            <span class="en-text"><strong>Core Logic:</strong> Using the $GDP = C + I - M$ formula.</span>
+
+            <span class="zh-text"><strong>原本情況 (Original):</strong> 消費者花 10M 買進口貨。</span>
+            <span class="en-text"><strong>Original:</strong> Consumers spend 10M on imports.</span>
+            <ul>
+                <li>$C \uparrow 10$</li>
+                <li><span class="zh-text">但這貨品來源有兩個可能：</span><span class="en-text">The good came from two possible sources:</span>
+                    <ol>
+                        <li><span class="zh-text">本年進口： $M \uparrow \text{Cost}$</span></li>
+                        <li><span class="zh-text">存貨提取： $I \downarrow \text{Cost}$ (減存貨視為負投資)</span></li>
+                    </ol>
+                </li>
+                <li><span class="zh-text">無論哪種情況，都要扣除成本 (Cost)。</span></li>
+                <li><span class="en-text">In either case, the Cost is subtracted.</span></li>
+                <li><strong>Old Contribution = $10 - \text{Cost}$</strong></li>
+            </ul>
+
+            <span class="zh-text"><strong>新情況 (New):</strong> 消費者花 10M 買本地貨。</span>
+            <span class="en-text"><strong>New:</strong> Consumers spend 10M on local goods.</span>
+            <ul>
+                <li>$C \uparrow 10$</li>
+                <li><span class="zh-text">沒有進口漏損 ($M=0$)，也沒有存貨減少。</span></li>
+                <li><span class="en-text">No import leakage ($M=0$), no inventory reduction.</span></li>
+                <li><strong>New Contribution = $10$</strong></li>
+            </ul>
+
+            <span class="zh-text"><strong>結論 (Conclusion):</strong></span>
+            <div class="math-block">
+                $$ \Delta GDP = 10 - (10 - \text{Cost}) = \text{Cost} $$
+            </div>
+            <span class="zh-text">增加量等於該貨品的進口成本。由於成本必定小於售價 (10)，故選 D。</span>
+            <span class="en-text">The increase equals the import cost of the good. Since Cost must be less than Price (10), choose D.</span>
+        </div>
+    </div>
+
+    <!-- 5. Problem Decomposition & Comparison -->
+    <div class="section-title">Logic Comparison (邏輯比較)</div>
+    <div class="table-container">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th width="20%">Aspect / 範疇</th>
+                    <th width="40%">Method 1 (Value Added)<br>價值增值法</th>
+                    <th width="40%">Method 2 (Accounting)<br>會計恆等式法</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Focus</strong><br>焦點</td>
+                    <td>
+                        <span class="zh-text">拆解 10M 的價格組成。</span>
+                        <span class="en-text">Decomposing the $10m price tag.</span>
+                    </td>
+                    <td>
+                        <span class="zh-text">使用支出面公式計算淨值。</span>
+                        <span class="en-text">Using the expenditure formula for net value.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Key Variable</strong><br>關鍵變量</td>
+                    <td>
+                        <span class="zh-text">$V_{local}$ (本地服務價值/毛利)</span>
+                        <span class="en-text">$V_{local}$ (Local Service Value/Margin)</span>
+                    </td>
+                    <td>
+                        <span class="zh-text">$Cost$ (進口成本/存貨價值)</span>
+                        <span class="en-text">$Cost$ (Import/Inventory Cost)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Result</strong><br>結果</td>
+                    <td>
+                        <span class="zh-text">GDP 增加量 = $10 - V_{local}$</span>
+                        <span class="en-text">GDP Gain = $10 - V_{local}$</span>
+                    </td>
+                    <td>
+                        <span class="zh-text">GDP 增加量 = $Cost$</span>
+                        <span class="en-text">GDP Gain = $Cost$</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Equivalence</strong><br>等價關係</td>
+                    <td colspan="2" style="text-align: center; background-color: #fffbeb;">
+                        <span class="zh-text">注意：數學上兩者相等，因為 <strong>零售價 - 毛利 = 成本</strong>。</span>
+                        <span class="en-text">Note: Mathematically equivalent, as <strong>Retail Price - Margin = Cost</strong>.</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 6. Common Mistakes -->
+    <div class="section-title">Common Mistakes & Traps (常犯錯誤與陷阱)</div>
+    <div class="trap-box">
+        <h4 style="margin-top:0; color:var(--danger);">Trap: Confusing Spending with Import Value (混淆消費開支與進口值)</h4>
+        <span class="zh-text"><strong>錯誤觀念：</strong> 學生常以為「在進口貨消費 10M」等於「進口值 (M) 增加了 10M」。</span>
+        <span class="en-text"><strong>Misconception:</strong> Students often think "Spending $10M on imports" means "Import Value (M) increases by $10M".</span>
+        <br><br>
+        <span class="zh-text"><strong>正確觀念：</strong> 消費開支 (C) 是 10M，但進口值 (M) 只是當中的成本部分（例如 6M）。剩下的 4M 是本地零售商賺取的，已經計入當年的 GDP。</span>
+        <span class="en-text"><strong>Correction:</strong> Consumption (C) is $10M, but Import Value (M) is only the cost portion (e.g., $6M). The remaining $4M is earned by local retailers and is already counted in GDP.</span>
+    </div>
+
+    <!-- 7. Exam Tricks -->
+    <div class="section-title">Exam Tricks (考試技巧)</div>
+    <ul>
+        <li>
+            <span class="zh-text"><strong>極端例子思考法 (Extreme Case Thinking)：</strong></span>
+            <span class="en-text"><strong>Extreme Case Thinking:</strong></span>
+            <br>
+            <span class="zh-text">試想像如果進口貨的成本是 0 元（雖然不可能，但有助思考）。那麼原本買進口貨就等於全數貢獻本地 GDP (100% 利潤)。轉買本地貨就沒有分別。</span>
+            <br>
+            <span class="zh-text">試想像進口貨成本是 9.9 元。原本只貢獻 0.1 元。轉買本地貨貢獻 10 元。GDP 增加了 9.9 元（即是省回來的進口成本）。</span>
+        </li>
+    </ul>
+
+</div>
+
+</body>
+</html>

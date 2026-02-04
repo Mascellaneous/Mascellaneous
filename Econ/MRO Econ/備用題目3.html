@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Analysis: Money & Banking</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Blue */
+            --secondary-color: #1e40af; /* Darker Blue */
+            --accent-color: #f59e0b; /* Amber */
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --box-bg: #ffffff;
+            --concept-bg: #eff6ff;
+            --concept-border: #3b82f6;
+            --correct-bg: #dcfce7;
+            --correct-text: #166534;
+            --wrong-bg: #fee2e2;
+            --wrong-text: #991b1b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--box-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin-top: 30px;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .meta-item {
+            background: #f1f5f9;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        .question-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #e2e8f0;
+        }
+
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid var(--concept-border);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .analysis-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .analysis-item.correct {
+            background-color: var(--correct-bg);
+            border-color: #86efac;
+        }
+
+        .analysis-item.wrong {
+            background-color: var(--wrong-bg);
+            border-color: #fca5a5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .badge-correct {
+            background-color: #166534;
+            color: white;
+        }
+
+        .badge-wrong {
+            background-color: #991b1b;
+            color: white;
+        }
+
+        .math-block {
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .tips-box {
+            background-color: #fffbeb;
+            border: 1px solid #fcd34d;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .bilingual-text p {
+            margin-bottom: 5px;
+        }
+        
+        .en-text {
+            color: #475569;
+            font-style: italic;
+            font-size: 0.95em;
+            margin-top: 4px;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>HKDSE Economics Analysis</h1>
+        <div class="meta-info">
+            <span class="meta-item">📅 Date: 2026-02-04</span>
+            <span class="meta-item">📚 Topic: Money & Banking (貨幣與銀行)</span>
+            <span class="meta-item">⭐ Difficulty: ★★★★☆</span>
+        </div>
+        <div class="meta-info">
+            <span class="meta-item">🔑 Keywords: Money Multiplier, Balance Sheet, Reserves, Deposits</span>
+        </div>
+    </header>
+
+    <!-- Question Section -->
+    <section>
+        <h2>The Question (題目)</h2>
+        <div class="question-box">
+            <p><strong>中文：</strong>下表顯示某經濟的不同日期的資產負債表。</p>
+            <p><strong>English:</strong> The table below shows the balance sheet of a certain economy on different dates.</p>
+
+            <div class="table-container">
+                <p><strong>2025年1月1日 (Jan 1, 2025):</strong></p>
+                <table>
+                    <tr>
+                        <th colspan="2">資產 Assets</th>
+                        <th colspan="2">負債 Liabilities</th>
+                    </tr>
+                    <tr>
+                        <td>儲備 Reserves</td>
+                        <td>$400</td>
+                        <td>存款 Deposits</td>
+                        <td>$1,000</td>
+                    </tr>
+                    <tr>
+                        <td>貸款 Loans</td>
+                        <td>$600</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <p><strong>2026年1月1日 (Jan 1, 2026):</strong></p>
+                <table>
+                    <tr>
+                        <th colspan="2">資產 Assets</th>
+                        <th colspan="2">負債 Liabilities</th>
+                    </tr>
+                    <tr>
+                        <td>儲備 Reserves</td>
+                        <td>$500</td>
+                        <td>存款 Deposits</td>
+                        <td>$1,500</td>
+                    </tr>
+                    <tr>
+                        <td>貸款 Loans</td>
+                        <td>$1,000</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <p><strong>中文：</strong>下列哪項／些事件可以解釋以上數據？</p>
+            <p><strong>English:</strong> Which of the following could explain the above data?</p>
+
+            <ol>
+                <li>
+                    中央銀行在2025年下調法定儲備比率。<br>
+                    <span class="en-text">The central bank lowered the required reserve ratio in 2025.</span>
+                </li>
+                <li>
+                    中央銀行在2025年調低貼現率且商業銀行持有較多的超額儲備。<br>
+                    <span class="en-text">The central bank lowered the discount rate and commercial banks held more excess reserves in 2025.</span>
+                </li>
+                <li>
+                    中央銀行在2025年向公眾購買政府債券且人們對貸款的需求增加。<br>
+                    <span class="en-text">The central bank purchased government bonds from the public in 2025 and the demand for loans increased.</span>
+                </li>
+            </ol>
+
+            <ul style="list-style-type: none; padding-left: 0;">
+                <li>A. 只有 (1) / (1) only</li>
+                <li>B. 只有 (2) / (2) only</li>
+                <li>C. 只有 (3) / (3) only</li>
+                <li>D. 只有 (2)、(3) / (2) and (3) only</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Concept Review -->
+    <section>
+        <h2>Concept Review (概念重溫)</h2>
+        <div class="concept-box">
+            <h3>1. 實際儲備比率 (Actual Reserve Ratio)</h3>
+            <p>這是銀行持有的儲備佔存款的百分比。</p>
+            <span class="en-text">This is the percentage of deposits that banks hold as reserves.</span>
+            <div class="math-block">
+                $$ \text{Actual Reserve Ratio (ARR)} = \frac{\text{Reserves}}{\text{Deposits}} \times 100\% $$
+            </div>
+
+            <h3>2. 貨幣創造與存款擴張 (Money Creation & Deposit Expansion)</h3>
+            <p>當銀行系統擁有超額儲備 (Excess Reserves) 時，它們可以借出更多貸款，從而創造更多存款。</p>
+            <span class="en-text">When the banking system has excess reserves, they can lend out more loans, thereby creating more deposits.</span>
+            <div class="math-block">
+                $$ \text{Max. Deposits} = \frac{\text{Total Reserves}}{\text{Required Reserve Ratio (RRR)}} $$
+            </div>
+
+            <h3>3. 中央銀行政策 (Central Bank Policies)</h3>
+            <ul>
+                <li><strong>法定儲備比率 (RRR):</strong> 降低 RRR 會增加貨幣乘數，使銀行能創造更多存款。<br><span class="en-text">Lowering RRR increases the money multiplier, allowing banks to create more deposits.</span></li>
+                <li><strong>公開市場操作 (Open Market Operations):</strong> 央行向公眾<strong>購買</strong>債券 $\rightarrow$ 貨幣基礎增加 $\rightarrow$ 儲備增加。<br><span class="en-text">Central bank <strong>buys</strong> bonds from public $\rightarrow$ Monetary Base increases $\rightarrow$ Reserves increase.</span></li>
+                <li><strong>貼現率 (Discount Rate):</strong> 銀行向央行借錢的利息。調低貼現率鼓勵銀行借入儲備。<br><span class="en-text">Interest rate charged to commercial banks for loans from the central bank. Lowering it encourages banks to borrow reserves.</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Answer & Analysis -->
+    <section>
+        <h2>The Answer & Detailed Analysis (答案與詳細分析)</h2>
+        
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h3>Correct Option: <strong>C</strong></h3>
+        </div>
+
+        <div class="analysis-item">
+            <h4>Data Analysis (數據分析)</h4>
+            <p>首先，讓我們計算兩年的實際儲備比率 (ARR)。</p>
+            <span class="en-text">First, let's calculate the Actual Reserve Ratio (ARR) for both years.</span>
+            
+            <p><strong>2025:</strong></p>
+            <div class="math-block">
+                $$ ARR_{2025} = \frac{400}{1000} = 40\% $$
+            </div>
+            
+            <p><strong>2026:</strong></p>
+            <div class="math-block">
+                $$ ARR_{2026} = \frac{500}{1500} = 33.3\% $$
+            </div>
+
+            <p><strong>觀察 (Observations):</strong></p>
+            <ol>
+                <li>儲備 (Reserves) 增加了 ($400 \rightarrow 500$)。<br><span class="en-text">Reserves increased ($400 \rightarrow 500$).</span></li>
+                <li>存款 (Deposits) 增加了 ($1000 \rightarrow 1500$)。<br><span class="en-text">Deposits increased ($1000 \rightarrow 1500$).</span></li>
+                <li>實際儲備比率 (ARR) 下降了 ($40\% \rightarrow 33.3\%$)。<br><span class="en-text">Actual Reserve Ratio (ARR) decreased ($40\% \rightarrow 33.3\%$).</span></li>
+            </ol>
+        </div>
+
+        <div class="analysis-item wrong">
+            <span class="badge badge-wrong">Statement (1) Incorrect</span>
+            <h4>(1) 中央銀行在2025年下調法定儲備比率。</h4>
+            <span class="en-text">The central bank lowered the required reserve ratio in 2025.</span>
+            
+            <p><strong>分析：</strong>雖然下調法定儲備比率 (RRR) 可能導致銀行借出更多貸款從而降低實際儲備比率，但單純改變 RRR <strong>不會改變系統的總儲備金額</strong> (除非銀行向央行借款，但題目未提及)。數據顯示儲備從 $400 增加到 $500。僅僅下調 RRR 無法解釋儲備金額的上升。</p>
+            <span class="en-text"><strong>Analysis:</strong> While lowering the RRR might lead banks to lend more and lower the actual reserve ratio, changing the RRR alone <strong>does not change the total amount of reserves</strong> in the system (unless banks borrow from the central bank, which isn't implied). The data shows reserves increased from $400 to $500. Merely lowering RRR cannot explain the increase in the reserve amount.</span>
+        </div>
+
+        <div class="analysis-item wrong">
+            <span class="badge badge-wrong">Statement (2) Incorrect</span>
+            <h4>(2) 中央銀行在2025年調低貼現率且商業銀行持有較多的超額儲備。</h4>
+            <span class="en-text">The central bank lowered the discount rate and commercial banks held more excess reserves in 2025.</span>
+            
+            <p><strong>分析：</strong>調低貼現率可能會鼓勵銀行借入儲備（解釋了儲備增加），但是如果銀行決定持有<strong>較多</strong>的超額儲備 (More Excess Reserves)，這意味著它們不願意放貸。如果它們持有更多超額儲備，實際儲備比率 (ARR) 應該會<strong>上升</strong>或維持高位，而不是像數據中那樣從 40% 下降到 33.3%。</p>
+            <span class="en-text"><strong>Analysis:</strong> Lowering the discount rate might encourage banks to borrow reserves (explaining the increase in reserves). However, if banks decide to hold <strong>more</strong> excess reserves, it means they are reluctant to lend. If they hold more excess reserves, the Actual Reserve Ratio (ARR) should likely <strong>increase</strong> or stay high, rather than decreasing from 40% to 33.3% as shown in the data.</span>
+        </div>
+
+        <div class="analysis-item correct">
+            <span class="badge badge-correct">Statement (3) Correct</span>
+            <h4>(3) 中央銀行在2025年向公眾購買政府債券且人們對貸款的需求增加。</h4>
+            <span class="en-text">The central bank purchased government bonds from the public in 2025 and the demand for loans increased.</span>
+            
+            <p><strong>分析：</strong>這解釋了所有數據變化：</p>
+            <ul>
+                <li><strong>央行購買債券：</strong>這是一個向銀行體系注入資金的過程。當央行向公眾買債，公眾將收到的支票存入銀行，銀行的<strong>儲備 (Reserves) 增加</strong> ($400 \rightarrow 500$)。</li>
+                <li><strong>貸款需求增加：</strong>這鼓勵銀行將新增的儲備借出去。當貸款增加 ($600 \rightarrow 1000$)，存款也會透過乘數效應大幅增加 ($1000 \rightarrow 1500$)。</li>
+                <li><strong>結果：</strong>因為貸款大幅增加，銀行持有的儲備佔存款的比例 (ARR) 自然下降 ($40\% \rightarrow 33.3\%$)。</li>
+            </ul>
+            <span class="en-text"><strong>Analysis:</strong> This explains all data changes:
+            <ul>
+                <li><strong>Central bank buys bonds:</strong> This injects money into the banking system. When the public sells bonds and deposits the proceeds, bank <strong>Reserves increase</strong> ($400 \rightarrow 500$).</li>
+                <li><strong>Increased demand for loans:</strong> This encourages banks to lend out the new reserves. As loans increase ($600 \rightarrow 1000$), deposits expand significantly via the multiplier effect ($1000 \rightarrow 1500$).</li>
+                <li><strong>Result:</strong> Because lending increased aggressively, the ratio of reserves to deposits (ARR) naturally decreased ($40\% \rightarrow 33.3\%$).</li>
+            </ul>
+            </span>
+        </div>
+    </section>
+
+    <!-- Problem Decomposition -->
+    <section>
+        <h2>Problem Decomposition (題目拆解)</h2>
+        <div class="tips-box">
+            <h3>🔍 The Pivot Point (關鍵點)</h3>
+            <p>這類題目的關鍵在於同時觀察兩個變量：<strong>儲備總額 (Total Reserves)</strong> 和 <strong>儲備比率 (Reserve Ratio)</strong>。</p>
+            <span class="en-text">The key to this type of question is to observe two variables simultaneously: <strong>Total Reserves</strong> and the <strong>Reserve Ratio</strong>.</span>
+
+            <ol>
+                <li>
+                    <strong>檢查儲備金額 (Check Reserve Amount):</strong> <br>
+                    $400 \rightarrow 500$ (增加 / Increase)。<br>
+                    這意味著必須有資金<strong>注入</strong>銀行體系 (例如：央行買債、降低貼現率導致借款增加)。單純改變 RRR 不能做到這一點。<br>
+                    <span class="en-text">This implies money must be <strong>injected</strong> into the banking system (e.g., Central bank buying bonds, lower discount rate leading to borrowing). Changing RRR alone cannot do this.</span>
+                </li>
+                <li>
+                    <strong>檢查比率變化 (Check Ratio Change):</strong> <br>
+                    $40\% \rightarrow 33.3\%$ (下降 / Decrease)。<br>
+                    這意味著銀行放貸的意願或能力增加了，存款增長速度快於儲備增長速度。<br>
+                    <span class="en-text">This implies banks' willingness or ability to lend increased; deposits grew faster than reserves.</span>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Common Mistakes -->
+    <section>
+        <h2>Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+        <ul>
+            <li>
+                <strong>誤解法定儲備比率 (RRR) 的作用：</strong> <br>
+                學生常以為降低 RRR 會自動增加儲備金額。記住：RRR 改變的是「最大存款額」或「超額儲備」，而不是「實際持有的總儲備現金」。<br>
+                <span class="en-text"><strong>Misunderstanding RRR:</strong> Students often think lowering RRR automatically increases the reserve amount. Remember: RRR changes "Max Deposits" or "Excess Reserves", not the "Total Actual Reserves" held.</span>
+            </li>
+            <li>
+                <strong>忽略貸款需求：</strong> <br>
+                即使銀行有錢可借，如果沒有人想借錢 (貸款需求低)，存款創造過程也不會發生。選項 (3) 提到「貸款需求增加」是關鍵補充條件。<br>
+                <span class="en-text"><strong>Ignoring Loan Demand:</strong> Even if banks have money to lend, if no one wants to borrow (low loan demand), the deposit creation process won't happen. Option (3) mentioning "demand for loans increased" is a crucial condition.</span>
+            </li>
+        </ul>
+    </section>
+
+</div>
+
+</body>
+</html>
