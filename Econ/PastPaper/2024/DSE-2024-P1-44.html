@@ -158,6 +158,15 @@
             color: #991b1b;
         }
 
+        .example-box {
+            background-color: white;
+            border: 1px dashed #9ca3af;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
         @media (max-width: 600px) {
             .container { padding: 15px; }
             .header-info { flex-direction: column; gap: 5px; }
@@ -226,8 +235,8 @@
         </div>
         
         <div class="formula-box">
-            $$ \text{Balance} = \text{Value of Exports} - \text{Value of Imports} $$
-            $$ \text{差額} = \text{出口總值} - \text{進口總值} $$
+            $$ \text{Balance} = \text{Exports} - \text{Imports} $$
+            $$ \text{差額} = \text{出口} - \text{進口} $$
         </div>
 
         <div class="bilingual-text">
@@ -241,12 +250,6 @@
             <p class="en-text">Current Account mainly includes: Balance on goods + Balance on services + Net factor income from abroad + Net current transfers.</p>
             <p><em>注意：題目只提供了物品和服務差額，我們無法得知經常帳的完整數據。</em></p>
             <p class="en-text"><em>Note: The question only provides balances on goods and services. We do not have full data for the Current Account.</em></p>
-
-            <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
-
-            <p><strong>3. 國際收支平衡 (Balance of Payments)</strong></p>
-            <p>國際收支平衡 = 經常帳 + 資本及金融帳 + 儲備資產變動 = 0 (會計上永遠平衡)。</p>
-            <p class="en-text">Balance of Payments = Current Account + Capital and Financial Account + Change in Reserve Assets = 0 (Always balances in accounting).</p>
         </div>
     </div>
 
@@ -259,10 +262,24 @@
         <div class="option-analysis wrong">
             <span class="badge badge-wrong">錯誤 Wrong</span> <strong>選項 A (Option A)</strong>
             <div class="bilingual-text">
-                <p><strong>分析：</strong>題目只給了「差額」(Net value)，沒有給出「總值」(Gross value)。</p>
-                <p>物品差額 = 物品出口 - 物品進口。雖然2021年的差額由負轉正，但這可能是因為進口大幅減少，而不一定是出口增加。我們無法單憑差額得知出口總值的變化。</p>
-                <p class="en-text"><strong>Analysis:</strong> The question only provides the "Balance" (Net value), not the "Total Value" (Gross value).</p>
-                <p class="en-text">Balance on goods = Exports of goods - Imports of goods. Although the balance turned from negative to positive in 2021, this could be due to a significant drop in imports rather than an increase in exports. We cannot determine the change in total export value based solely on the balance.</p>
+                <p><strong>分析：</strong>我們不能單憑差額的改善來斷定出口增加。</p>
+                <p>物品差額由 2020 年的 -41,135 變為 2021 年的 24,671。這表示 $E - M$ 的數值變大了，但這不一定是因為 $E$ (出口) 變大。</p>
+                <p class="en-text"><strong>Analysis:</strong> We cannot conclude that exports increased solely based on the improvement in the balance.</p>
+                <p class="en-text">The balance on goods improved from -41,135 in 2020 to 24,671 in 2021. This means the value of $E - M$ increased, but this is not necessarily because $E$ (Exports) increased.</p>
+                
+                <div class="example-box">
+                    <p><strong>反證例子 (Counter-example):</strong></p>
+                    <p>假設 2020 年：<br>
+                    $$ E_{2020} = 100,000, \quad M_{2020} = 141,135 $$
+                    $$ \text{Balance} = 100,000 - 141,135 = -41,135 $$</p>
+                    
+                    <p>假設 2021 年 (出口保持不變，進口大幅下跌)：<br>
+                    $$ E_{2021} = 100,000, \quad M_{2021} = 75,329 $$
+                    $$ \text{Balance} = 100,000 - 75,329 = 24,671 $$</p>
+                    
+                    <p>在這個情況下，差額雖然改善了，但<strong>出口並沒有增加</strong> ($E_{2021} = E_{2020}$)。因此選項 A 不一定正確。</p>
+                    <p class="en-text">In this scenario, although the balance improved, <strong>exports did not increase</strong> ($E_{2021} = E_{2020}$). Therefore, Option A is not necessarily true.</p>
+                </div>
             </div>
         </div>
 
@@ -271,9 +288,9 @@
             <span class="badge badge-wrong">錯誤 Wrong</span> <strong>選項 B (Option B)</strong>
             <div class="bilingual-text">
                 <p><strong>分析：</strong>經常帳不僅包括物品和服務差額，還包括「要素收益流動」和「經常轉移」。</p>
-                <p>雖然 2020 年的物品和服務總差額為 \(-41,135 + 92,948 = +51,813\) 百萬元，但若該年的「要素收益淨流出」極大（例如大於 51,813），經常帳仍可能是逆差。資料不足，無法下定論。</p>
+                <p>雖然 2020 年的物品和服務總差額為 $-41,135 + 92,948 = +51,813$ 百萬元，但若該年的「要素收益淨流出」極大（例如大於 51,813），經常帳仍可能是逆差。資料不足，無法下定論。</p>
                 <p class="en-text"><strong>Analysis:</strong> The Current Account includes not only goods and services balances but also "Factor income flows" and "Current transfers".</p>
-                <p class="en-text">Although the combined balance of goods and services in 2020 is \(-41,135 + 92,948 = +51,813\) million, if the "Net factor income outflow" was huge (e.g., greater than 51,813), the Current Account could still be in deficit. Insufficient data to conclude.</p>
+                <p class="en-text">Although the combined balance of goods and services in 2020 is $-41,135 + 92,948 = +51,813$ million, if the "Net factor income outflow" was huge (e.g., greater than 51,813), the Current Account could still be in deficit. Insufficient data to conclude.</p>
             </div>
         </div>
 
@@ -317,17 +334,14 @@
             
             <p><strong>解題步驟 (Steps)：</strong></p>
             <ol>
-                <li><strong>檢查數據性質：</strong>題目只給了「差額」(Balance)。
-                    <br><span class="en-text"><strong>Check Data Nature:</strong> The question only provides "Balance".</span>
+                <li><strong>檢查數據性質：</strong>題目只給了「差額」(Balance)，即 $E - M$ 的結果。
+                    <br><span class="en-text"><strong>Check Data Nature:</strong> The question only provides "Balance", which is the result of $E - M$.</span>
                 </li>
-                <li><strong>排除「總值」選項：</strong>任何關於出口總值增加或減少的選項 (如 A) 通常都無法單憑差額證實，除非有額外資訊。
-                    <br><span class="en-text"><strong>Eliminate "Gross Value" Options:</strong> Any option about the increase/decrease of total export value (like A) usually cannot be verified by balance alone without extra info.</span>
+                <li><strong>代數思維 (Algebraic Thinking)：</strong>對於選項 A，問自己：如果 $E - M$ 變大，是否代表 $E$ 一定變大？(答案是否定的，因為 $M$ 變小也可以)。
+                    <br><span class="en-text"><strong>Algebraic Thinking:</strong> For Option A, ask yourself: If $E - M$ increases, does it imply $E$ must increase? (The answer is no, because $M$ decreasing also works).</span>
                 </li>
-                <li><strong>排除「更大範圍」選項：</strong>題目只給了貿易數據，任何關於「經常帳」(B) 或「國際收支」(C) 的結論都因為資料不全而無法成立。
-                    <br><span class="en-text"><strong>Eliminate "Broader Scope" Options:</strong> The question only gives trade data. Any conclusion about "Current Account" (B) or "Balance of Payments" (C) is invalid due to incomplete data.</span>
-                </li>
-                <li><strong>驗證定義：</strong>選項 D 只是在問正數差額的定義 (出口 > 進口)，這是唯一可以從數據直接確認的事實。
-                    <br><span class="en-text"><strong>Verify Definition:</strong> Option D simply asks for the definition of a positive balance (Exports > Imports), which is the only fact directly confirmable from the data.</span>
+                <li><strong>排除「資料不足」選項：</strong>題目只給了貿易數據，任何關於「經常帳」(B) 或「國際收支」(C) 的結論都因為缺乏其他組成部分數據而無法成立。
+                    <br><span class="en-text"><strong>Eliminate "Insufficient Data" Options:</strong> The question only gives trade data. Any conclusion about "Current Account" (B) or "Balance of Payments" (C) is invalid due to missing data on other components.</span>
                 </li>
             </ol>
         </div>
@@ -338,8 +352,8 @@
         <h3>⚠️ 常犯錯誤與陷阱 (Common Mistakes & Traps)</h3>
         <div class="bilingual-text">
             <p><strong>1. 混淆差額變動與總值變動：</strong></p>
-            <p>學生常誤以為差額上升代表出口上升。其實，進口大幅下降也能導致差額上升。</p>
-            <p class="en-text"><strong>Confusing change in balance with change in gross value:</strong> Students often mistakenly think an increase in balance means an increase in exports. In reality, a significant drop in imports can also lead to an increased balance.</p>
+            <p>學生常誤以為差額由負轉正（或數值變大）一定代表出口表現好轉。其實，經濟衰退導致進口需求大幅下降，也會令差額數值「改善」。</p>
+            <p class="en-text"><strong>Confusing change in balance with change in gross value:</strong> Students often mistakenly think an improvement in balance (or turning from negative to positive) implies better export performance. In reality, an economic recession causing a sharp drop in import demand can also "improve" the balance figure.</p>
 
             <p><strong>2. 忽略經常帳的其他組成部分：</strong></p>
             <p>看到物品和服務加起來是正數，就以為經常帳是順差，忘記了還有「要素收益」和「轉移」可能導致逆差。</p>
