@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics - Quantity Theory of Money</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Royal Blue */
+            --secondary-color: #1e40af; /* Darker Blue */
+            --accent-color: #f59e0b; /* Amber for highlights */
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --concept-bg: #e0f2fe;
+            --concept-border: #0ea5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Header Section */
+        header {
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .badge {
+            background-color: var(--bg-light);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-weight: 600;
+        }
+
+        .difficulty {
+            color: var(--accent-color);
+        }
+
+        /* Question Section */
+        .question-box {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .options-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        /* Concept Review */
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid var(--concept-border);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .concept-title {
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .math-block {
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Analysis Section */
+        .analysis-section h3 {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            color: var(--primary-color);
+        }
+
+        .option-analysis {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .correct-option {
+            background-color: var(--success-bg);
+            border: 1px solid var(--success-text);
+        }
+
+        .incorrect-option {
+            background-color: var(--bg-light);
+            border: 1px solid #e2e8f0;
+        }
+
+        .status-icon {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .status-correct { color: var(--success-text); }
+        .status-incorrect { color: var(--error-text); }
+
+        /* Bilingual Styling */
+        .en-text {
+            color: #475569;
+            font-size: 0.95em;
+            margin-top: 4px;
+            display: block;
+            font-style: italic;
+        }
+
+        /* Decomposition & Tricks */
+        .strategy-box {
+            background-color: #fff7ed; /* Orange tint */
+            border: 1px solid #fdba74;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.5rem; }
+            .math-block { font-size: 0.9rem; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <header>
+        <h1>HKDSE Economics Analysis</h1>
+        <div class="meta-info">
+            <span class="badge">Topic: Money & Banking (貨幣與銀行)</span>
+            <span class="badge">Sub-topic: Quantity Theory of Money (貨幣數量論)</span>
+            <span class="badge difficulty">Difficulty: ★★★☆☆</span>
+        </div>
+        <p style="margin-top: 10px; color: #64748b;">
+            <strong>Key Concepts:</strong> Equation of Exchange (交易方程式), Velocity of Money (貨幣流通速度), Nominal vs Real Output (名義與實質產出)
+        </p>
+    </header>
+
+    <!-- 2. The Question -->
+    <div class="question-box">
+        <div class="question-text">
+            下列哪些有關貨幣數量理論的陳述是正確的？<br>
+            <span class="en-text">Which of the following statements about quantity theory of money are correct?</span>
+        </div>
+        
+        <div style="margin-left: 20px; margin-bottom: 20px;">
+            (1) 若某經濟的貨幣供應相對於物品供應增長得太快，通脹便會出現。<br>
+            <span class="en-text">If money supply is growing too fast relative to the supply of goods in the economy, inflation will occur.</span><br><br>
+            
+            (2) 若貨幣供應增加，名義產出便會以相同的百分率增加。<br>
+            <span class="en-text">If money supply increases, nominal output will increase by the same percentage.</span><br><br>
+            
+            (3) 若通脹率是固定的，實質產出和貨幣供應會以相同的百分率增長。<br>
+            <span class="en-text">If inflation rate is constant, real output will grow at the same percentage as money supply.</span>
+        </div>
+
+        <ul class="options-list">
+            <li>A. 只有 (1)、(2) <span class="en-text" style="display:inline; margin-left:10px;">(1) and (2) only</span></li>
+            <li>B. 只有 (1)、(3) <span class="en-text" style="display:inline; margin-left:10px;">(1) and (3) only</span></li>
+            <li>C. 只有 (2)、(3) <span class="en-text" style="display:inline; margin-left:10px;">(2) and (3) only</span></li>
+            <li>D. (1)、(2) 及 (3) <span class="en-text" style="display:inline; margin-left:10px;">(1), (2) and (3)</span></li>
+        </ul>
+    </div>
+
+    <!-- 3. Concept Review -->
+    <div class="concept-box">
+        <div class="concept-title">
+            📚 概念重溫 Concept Review
+        </div>
+        <p>
+            要解答此題，必須掌握<strong>貨幣數量論 (Quantity Theory of Money, QTM)</strong> 的核心公式：
+            <span class="en-text">To solve this, you must master the core formula of the Quantity Theory of Money (QTM):</span>
+        </p>
+
+        <div class="math-block">
+            $$ MV = PY $$
+        </div>
+        
+        <p>
+            <strong>變數定義 Definitions:</strong><br>
+            \( M \): 貨幣供應 Money Supply<br>
+            \( V \): 貨幣流通速度 Velocity of Circulation<br>
+            \( P \): 物價水平 Price Level<br>
+            \( Y \): 實質產出 Real Output (Real GDP)<br>
+            \( PY \): 名義產出 Nominal Output (Nominal GDP)
+        </p>
+
+        <p>
+            <strong>百分變動公式 Percentage Change Formula:</strong>
+        </p>
+        <div class="math-block">
+            $$ \%\Delta M + \%\Delta V = \%\Delta P + \%\Delta Y $$
+        </div>
+
+        <p>
+            <strong>QTM 的關鍵假設 Key Assumption of QTM:</strong><br>
+            貨幣數量論假設 \( V \) 是常數 (即 \(\%\Delta V = 0\))。
+            <span class="en-text">The Quantity Theory of Money assumes that \( V \) is constant (i.e., \(\%\Delta V = 0\)).</span>
+        </p>
+    </div>
+
+    <!-- 4. Answer & Detailed Analysis -->
+    <div class="analysis-section">
+        <h3>✅ 答案與詳細分析 Answer & Analysis</h3>
+        <p style="font-size: 1.2rem; font-weight: bold; color: var(--success-text);">
+            正確答案 Correct Answer: A
+        </p>
+
+        <!-- Statement 1 Analysis -->
+        <div class="option-analysis correct-option">
+            <div>
+                <span class="status-icon status-correct">✔ 陳述 (1) 正確 Statement (1) is Correct</span>
+            </div>
+            <p>
+                <strong>分析：</strong> 這是貨幣學派對通脹的經典定義：「過多的貨幣追逐過少的物品」。
+                根據公式 \(\%\Delta P \approx \%\Delta M - \%\Delta Y\) (假設 \(V\) 不變)，若貨幣供應增長 (\(\%\Delta M\)) 快於物品供應增長 (\(\%\Delta Y\))，則 \(\%\Delta P\) 必為正數，即出現通脹。
+            </p>
+            <span class="en-text"><strong>Analysis:</strong> This is the classic Monetarist definition of inflation: "Too much money chasing too few goods." According to the formula \(\%\Delta P \approx \%\Delta M - \%\Delta Y\) (assuming constant \(V\)), if money supply growth (\(\%\Delta M\)) is faster than goods supply growth (\(\%\Delta Y\)), then \(\%\Delta P\) must be positive, meaning inflation occurs.</span>
+        </div>
+
+        <!-- Statement 2 Analysis -->
+        <div class="option-analysis correct-option">
+            <div>
+                <span class="status-icon status-correct">✔ 陳述 (2) 正確 Statement (2) is Correct</span>
+            </div>
+            <p>
+                <strong>分析：</strong> 根據公式 \(MV = PY\)，若轉換為百分比變動形式：
+                \[ \%\Delta M + \%\Delta V = \%\Delta (PY) \]
+                貨幣數量論 (QTM) 假設 \(V\) 是固定的 (\(\%\Delta V = 0\))。因此，\(\%\Delta M = \%\Delta (PY)\)。
+                這意味著貨幣供應的增長率等於<strong>名義產出 (Nominal Output)</strong> 的增長率。
+            </p>
+            <span class="en-text"><strong>Analysis:</strong> Based on \(MV = PY\), in percentage change form: \(\%\Delta M + \%\Delta V = \%\Delta (PY)\). The Quantity Theory of Money (QTM) assumes \(V\) is constant (\(\%\Delta V = 0\)). Therefore, \(\%\Delta M = \%\Delta (PY)\). This means the growth rate of money supply equals the growth rate of <strong>Nominal Output</strong>.</span>
+        </div>
+
+        <!-- Statement 3 Analysis -->
+        <div class="option-analysis incorrect-option">
+            <div>
+                <span class="status-icon status-incorrect">✘ 陳述 (3) 錯誤 Statement (3) is Incorrect</span>
+            </div>
+            <p>
+                <strong>分析：</strong> 讓我們重寫公式：\(\%\Delta M = \%\Delta P + \%\Delta Y\) (假設 \(\%\Delta V=0\))。
+                題目指出通脹率 (\(\%\Delta P\)) 是「固定的」(constant)，例如固定為 3%。
+                公式變成：\(\%\Delta M = 3\% + \%\Delta Y\)。
+                除非通脹率剛好是 <strong>0%</strong>，否則 \(\%\Delta M\) 不會等於 \(\%\Delta Y\)。題目只說通脹率固定，沒說它是零，所以兩者的增長率通常不相等。
+            </p>
+            <span class="en-text"><strong>Analysis:</strong> Let's rewrite the formula: \(\%\Delta M = \%\Delta P + \%\Delta Y\) (assuming \(\%\Delta V=0\)). The statement says inflation rate (\(\%\Delta P\)) is "constant", for example, fixed at 3%. The formula becomes: \(\%\Delta M = 3\% + \%\Delta Y\). Unless the inflation rate is exactly <strong>0%</strong>, \(\%\Delta M\) will not equal \(\%\Delta Y\). The question only says inflation is constant, not zero, so their growth rates are usually not the same.</span>
+        </div>
+    </div>
+
+    <!-- 5. Problem Decomposition -->
+    <div class="strategy-box">
+        <h3 style="margin-top:0; color: #b45309;">🧠 題目拆解 Problem Decomposition</h3>
+        
+        <p><strong>1. 尋找「關鍵字」 Pivot Point:</strong></p>
+        <ul>
+            <li>看到「貨幣數量論」(Quantity Theory of Money) $\rightarrow$ 立即聯想 <strong>\(V\) 是常數 (Constant V)</strong>。</li>
+            <li>分辨「名義產出」(\(PY\)) 與「實質產出」(\(Y\))。</li>
+        </ul>
+
+        <p><strong>2. 破解陳述 (3) 的邏輯 Logic Check for (3):</strong></p>
+        <p>
+            很多學生誤以為「固定」等於「沒有影響」。
+            <br>
+            <span class="en-text">Many students mistakenly think "constant" means "no effect".</span>
+            <br>
+            數學上：\( A = B + C \)。若 \(B\) 是常數 (例如 5)，\(A\) 等於 \(C\) 嗎？不，\(A\) 比 \(C\) 大 5。只有當 \(B=0\) 時，\(A\) 才等於 \(C\)。
+            <br>
+            <span class="en-text">Mathematically: \( A = B + C \). If \(B\) is a constant (e.g., 5), does \(A\) equal \(C\)? No, \(A\) is larger than \(C\) by 5. Only if \(B=0\) does \(A\) equal \(C\).</span>
+        </p>
+    </div>
+
+    <!-- 6. Common Mistakes -->
+    <div style="margin-top: 30px; background-color: #fee2e2; padding: 20px; border-radius: 8px; border-left: 5px solid #ef4444;">
+        <h3 style="margin-top:0; color: #991b1b;">⚠️ 常犯錯誤 Common Mistakes</h3>
+        <ul>
+            <li>
+                <strong>混淆名義與實質變數 Confusing Nominal vs Real variables:</strong><br>
+                陳述 (2) 說的是名義產出 (\(PY\))，這是正確的。若它說「實質產出 (\(Y\)) 會以相同百分率增加」，那就是錯的（因為貨幣中性 Money Neutrality 認為 \(M\) 不影響長期的 \(Y\)）。
+            </li>
+            <li>
+                <strong>忽略前提 Ignoring Assumptions:</strong><br>
+                忘記 QTM 假設 \(V\) 不變。如果沒有這個假設，上述推論都不成立。
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
