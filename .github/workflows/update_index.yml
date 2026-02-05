@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      # === 1. Notify Google Sheets (Kept exactly as original) ===
+      # === 1. Notify Google Sheets ===
       - name: Notify Google Sheets for Changed Files
         env:
           GAS_URL: "https://script.google.com/macros/s/AKfycbwpiS1BSv_qaCTmkdxyiSMwbGUojXFug-DIVIxeyUSMnUMz8lAZtM9CqM-beuEJt6IM/exec"
@@ -60,7 +60,6 @@ jobs:
           python-version: '3.x'
 
       # === 2. Run generation script ===
-      # This ensures the index.html is built with the correct links first
       - name: Run generation script
         working-directory: ./Econ/PastPaper
         run: python generate_index.py
@@ -69,7 +68,7 @@ jobs:
       - name: Inject Protection Script
         working-directory: ./Econ/PastPaper
         run: |
-          # URL to the separate JS file you created in step 1
+          # The exact URL you want to inject
           PROTECT_JS="https://mas-repo.github.io/econ-database/projects/protect.js"
           SCRIPT_TAG="<script src=\"$PROTECT_JS\"></script>"
           
@@ -78,9 +77,9 @@ jobs:
           # Find all .html files in current folder and subfolders
           find . -type f -name "*.html" | while read file; do
             
-            # Check if the file already has the protection script
-            # We grep for the specific JS filename to avoid adding it twice
-            if ! grep -q "js/protect.js" "$file"; then
+            # FIX: We now grep for 'protect.js' generically to catch any path variation
+            # This prevents adding it if 'projects/protect.js' OR 'js/protect.js' exists
+            if ! grep -q "protect.js" "$file"; then
               echo "Protecting: $file"
               
               # Append a newline and then the script tag to the end of the file
@@ -96,5 +95,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-generate index and protect all HTML files"
-          # IMPORTANT: This pattern now includes ALL html files in the folder
           file_pattern: "Econ/PastPaper/**/*.html"
