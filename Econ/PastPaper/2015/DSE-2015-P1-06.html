@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics: Labour Productivity Analysis</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Royal Blue */
+            --secondary-color: #1e40af; /* Darker Blue */
+            --accent-color: #f59e0b; /* Amber */
+            --bg-light: #f3f4f6;
+            --bg-concept: #e0f2fe; /* Light Blue */
+            --border-concept: #0ea5e9;
+            --bg-answer: #dcfce7; /* Light Green */
+            --border-answer: #22c55e;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5em;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background-color: var(--bg-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .header-item {
+            margin: 5px 10px;
+            font-weight: 600;
+        }
+
+        .stars { color: var(--accent-color); }
+
+        .question-box {
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: var(--bg-light);
+            font-weight: bold;
+        }
+
+        .concept-box {
+            background-color: var(--bg-concept);
+            border-left: 5px solid var(--border-concept);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .answer-section {
+            background-color: var(--bg-answer);
+            border-left: 5px solid var(--border-answer);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .option-analysis {
+            margin-top: 15px;
+        }
+
+        .option-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+
+        .option-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+
+        .bilingual-text {
+            margin-bottom: 8px;
+        }
+
+        .en-text {
+            color: var(--text-light);
+            font-size: 0.95em;
+            font-style: italic;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .math-block {
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #dc2626; /* Red for emphasis */
+        }
+
+        .pivot-point {
+            background-color: #fff7ed; /* Light Orange */
+            border: 1px solid #fdba74;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            table { font-size: 0.8em; }
+            th, td { padding: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 1. Header -->
+    <h1>HKDSE Economics Analysis</h1>
+    <div class="header-info">
+        <div class="header-item">Topic: Firms and Production (廠商與生產)</div>
+        <div class="header-item">Difficulty: <span class="stars">★★★☆☆</span></div>
+        <div class="header-item">Key Concepts: Labour Productivity, Average Product</div>
+    </div>
+
+    <!-- 2. The Question -->
+    <section class="question-box">
+        <h2>題目 (The Question)</h2>
+        <p>細閱下表。<br>Refer to the following table.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>項目 / Item</th>
+                    <th>工廠甲 / Factory A</th>
+                    <th>工廠乙 / Factory B</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>全職工人的人數<br>Number of full-time workers</td>
+                    <td>25</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>兼職工人的人數<br>Number of part-time workers</td>
+                    <td>0</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td>全職工人的平均工作時數<br>Average working hours of full-time workers</td>
+                    <td>8</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>兼職工人的平均工作時數<br>Average working hours of part-time workers</td>
+                    <td>0</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td>總產出（單位）<br>Total output (units)</td>
+                    <td>12 000</td>
+                    <td>15 000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>下列哪項是工廠甲和工廠乙在勞工生產力上有差異的一個可能原因？<br>
+        Which of the following is a possible reason for the difference between the labour productivity of Factory A and Factory B?</p>
+
+        <div class="options">
+            <p>A. 工廠甲以時薪支付工資，工廠乙則以件工計算。<br>
+            <span class="en-text">Factory A uses time rate while Factory B uses piece rate to pay its workers.</span></p>
+            
+            <p>B. 工廠甲向工人提供較多的訓練。<br>
+            <span class="en-text">Factory A provides more training for its workers.</span></p>
+            
+            <p>C. 工廠乙聘請的兼職工人有較高技術。<br>
+            <span class="en-text">The part-time workers employed by Factory B are more skilled.</span></p>
+            
+            <p>D. 工廠乙運用較多資本物品。<br>
+            <span class="en-text">Factory B uses more capital goods.</span></p>
+        </div>
+    </section>
+
+    <!-- 3. Concept Review -->
+    <section class="concept-box">
+        <h2>概念重溫 (Concept Review)</h2>
+        
+        <div class="bilingual-text">
+            <strong>1. 勞工生產力 (Labour Productivity)</strong><br>
+            勞工生產力通常以「每工時平均產量」來量度。它反映了勞工的效率。
+            <span class="en-text">Labour productivity is usually measured by "average output per man-hour". It reflects the efficiency of labour.</span>
+        </div>
+
+        <div class="math-block">
+            $$ \text{勞工生產力} = \frac{\text{總產出}}{\text{總工時}} $$
+            $$ \text{Labour Productivity} = \frac{\text{Total Output}}{\text{Total Man-hours}} $$
+        </div>
+
+        <div class="bilingual-text">
+            <strong>2. 影響勞工生產力的因素 (Factors affecting Labour Productivity)</strong><br>
+            <ul>
+                <li><strong>人力資本 (Human Capital):</strong> 教育、訓練、健康、工作態度。<br><span class="en-text">Education, training, health, working attitude.</span></li>
+                <li><strong>資本物品的數量與質素 (Quantity and Quality of Capital):</strong> 機器越先進，工人生產力越高。<br><span class="en-text">More advanced machinery leads to higher worker productivity.</span></li>
+                <li><strong>生產技術 (Technology):</strong> 更佳的技術。<br><span class="en-text">Better technology.</span></li>
+                <li><strong>管理 (Management):</strong> 分工、激勵制度。<br><span class="en-text">Division of labour, incentive systems.</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 5. Problem Decomposition (Moved up for logical flow) -->
+    <section class="pivot-point">
+        <h2>題目拆解 (Problem Decomposition)</h2>
+        
+        <p><strong>第一步：計算勞工生產力 (Step 1: Calculate Labour Productivity)</strong></p>
+        <p>在回答「為什麼有差異」之前，我們必須先算出兩間工廠的實際生產力，看看誰高誰低。</p>
+        <p class="en-text">Before answering "why there is a difference", we must first calculate the actual productivity of both factories to see which one is higher.</p>
+
+        <div class="math-block">
+            $$ \text{總工時 (Total Man-hours)} = \text{工人人數 (Workers)} \times \text{平均工時 (Avg Hours)} $$
+        </div>
+
+        <p><strong>工廠甲 (Factory A):</strong></p>
+        <ul>
+            <li>總工時 = \( 25 \times 8 = 200 \) 小時 (hours)</li>
+            <li>勞工生產力 = \( \frac{12,000}{200} = \mathbf{60} \) 單位/小時 (units/hour)</li>
+        </ul>
+
+        <p><strong>工廠乙 (Factory B):</strong></p>
+        <ul>
+            <li>總工時 = \( 50 \times 6 = 300 \) 小時 (hours)</li>
+            <li>勞工生產力 = \( \frac{15,000}{300} = \mathbf{50} \) 單位/小時 (units/hour)</li>
+        </ul>
+
+        <p class="highlight">結論：工廠甲的生產力 (60) 高於 工廠乙 (50)。</p>
+        <p class="en-text highlight">Conclusion: Productivity of Factory A (60) is higher than Factory B (50).</p>
+
+        <p><strong>第二步：尋找原因 (Step 2: Find the Reason)</strong></p>
+        <p>題目問的是差異的原因。既然我們知道<strong>甲比乙好</strong>，我們需要找一個選項能解釋「為什麼甲的效率較高」或者「為什麼乙的效率較低」。</p>
+        <p class="en-text">The question asks for the reason for the difference. Since we know <strong>A is better than B</strong>, we need to find an option that explains "why A is more efficient" or "why B is less efficient".</p>
+    </section>
+
+    <!-- 4. The Answer & Detailed Analysis -->
+    <section class="answer-section">
+        <h2>答案與詳細分析 (Answer & Detailed Analysis)</h2>
+        <p><strong>正確答案： B (Correct Option: B)</strong></p>
+
+        <div class="option-analysis">
+            <div class="option-item">
+                <span class="option-label">A.</span>
+                <span class="bilingual-text">
+                    工廠甲以時薪支付工資，工廠乙則以件工計算。<br>
+                    <span class="en-text">Factory A uses time rate while Factory B uses piece rate to pay its workers.</span>
+                </span>
+                <p>
+                    <strong>分析：</strong> 一般而言，件薪制（Piece rate）更能提升工人的生產動機，從而提高生產力；而計時制（Time rate）可能導致工人怠工。如果甲用計時，乙用件薪，理論上乙的生產力應該較高。這與我們的計算結果（甲 > 乙）<strong>相反</strong>。<br>
+                    <span class="en-text"><strong>Analysis:</strong> Generally, piece rate motivates workers to produce more, increasing productivity, while time rate might lead to shirking. If A uses time rate and B uses piece rate, theoretically B's productivity should be higher. This contradicts our calculation (A > B).</span>
+                </p>
+            </div>
+
+            <div class="option-item">
+                <span class="option-label">B.</span>
+                <span class="bilingual-text">
+                    工廠甲向工人提供較多的訓練。<br>
+                    <span class="en-text">Factory A provides more training for its workers.</span>
+                </span>
+                <p>
+                    <strong>分析：</strong> 訓練能提升人力資本，增加工人的技能和效率。如果甲提供較多訓練，甲的工人生產力理應較高。這與我們的計算結果（甲 > 乙）<strong>吻合</strong>。<br>
+                    <span class="en-text"><strong>Analysis:</strong> Training improves human capital, increasing workers' skills and efficiency. If A provides more training, A's workers should be more productive. This is <strong>consistent</strong> with our calculation (A > B).</span>
+                </p>
+            </div>
+
+            <div class="option-item">
+                <span class="option-label">C.</span>
+                <span class="bilingual-text">
+                    工廠乙聘請的兼職工人有較高技術。<br>
+                    <span class="en-text">The part-time workers employed by Factory B are more skilled.</span>
+                </span>
+                <p>
+                    <strong>分析：</strong> 技術較高的工人通常生產力較高。如果乙的工人技術較高，乙的生產力應該比甲高。這與我們的計算結果（甲 > 乙）<strong>相反</strong>。<br>
+                    <span class="en-text"><strong>Analysis:</strong> Higher-skilled workers usually have higher productivity. If B's workers are more skilled, B's productivity should be higher than A's. This contradicts our calculation (A > B).</span>
+                </p>
+            </div>
+
+            <div class="option-item">
+                <span class="option-label">D.</span>
+                <span class="bilingual-text">
+                    工廠乙運用較多資本物品。<br>
+                    <span class="en-text">Factory B uses more capital goods.</span>
+                </span>
+                <p>
+                    <strong>分析：</strong> 資本物品（如機器）能協助工人提升產量。如果乙運用較多資本，乙的勞工生產力應該較高。這與我們的計算結果（甲 > 乙）<strong>相反</strong>。<br>
+                    <span class="en-text"><strong>Analysis:</strong> Capital goods (like machinery) assist workers in increasing output. If B uses more capital, B's labour productivity should be higher. This contradicts our calculation (A > B).</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Common Mistakes & Traps -->
+    <section class="concept-box" style="background-color: #fff1f2; border-left-color: #f43f5e;">
+        <h2>常犯錯誤與陷阱 (Common Mistakes & Traps)</h2>
+        
+        <div class="bilingual-text">
+            <strong>1. 混淆「總產出」與「生產力」 (Confusing Total Output with Productivity)</strong><br>
+            學生常看到工廠乙的總產出 (15,000) 高於工廠甲 (12,000)，就誤以為乙的生產力較高，從而選擇了 C 或 D。這是錯誤的！必須除以總工時。<br>
+            <span class="en-text">Students often see that Factory B's total output (15,000) is higher than Factory A's (12,000) and mistakenly assume B has higher productivity, leading them to choose C or D. This is wrong! You must divide by total man-hours.</span>
+        </div>
+
+        <div class="bilingual-text" style="margin-top: 15px;">
+            <strong>2. 忽略計算步驟 (Skipping the Calculation)</strong><br>
+            這類題目不能單憑直覺。如果不先算出 60 和 50 這兩個數字，你根本無法判斷哪個選項是正確的解釋。<br>
+            <span class="en-text">You cannot rely on intuition for this type of question. If you don't calculate the numbers 60 and 50 first, you simply cannot judge which option is the correct explanation.</span>
+        </div>
+    </section>
+
+    <!-- 7. Exam Tricks -->
+    <section class="concept-box" style="background-color: #f0fdf4; border-left-color: #22c55e;">
+        <h2>考試技巧 (Exam Tricks)</h2>
+        <p>
+            <strong>「先算後找」 (Calculate First, Match Later)</strong><br>
+            遇到這類數據表題目：
+            <ol>
+                <li><strong>算：</strong> 快速計算兩者的每小時產量 (A=60, B=50)。</li>
+                <li><strong>定：</strong> 確定方向 -> A 比 B 強。</li>
+                <li><strong>找：</strong> 掃描選項，找出「對 A 有利」或「對 B 不利」的因素。</li>
+            </ol>
+            <span class="en-text">
+            When facing this type of data table question:
+            <ol>
+                <li><strong>Calculate:</strong> Quickly calculate the output per hour for both (A=60, B=50).</li>
+                <li><strong>Determine:</strong> Set the direction -> A is better than B.</li>
+                <li><strong>Match:</strong> Scan the options to find a factor that is "favourable to A" or "unfavourable to B".</li>
+            </ol>
+            </span>
+        </p>
+    </section>
+
+</div>
+
+</body>
+</html>

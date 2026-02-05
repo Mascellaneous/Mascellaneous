@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Tutor - Arc Elasticity</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Royal Blue */
+            --secondary-color: #1e40af; /* Darker Blue */
+            --accent-color: #f59e0b; /* Amber */
+            --bg-color: #f3f4f6;
+            --text-color: #1f2937;
+            --light-text: #6b7280;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --concept-bg: #eff6ff;
+            --concept-border: #3b82f6;
+            --trap-bg: #fef2f2;
+            --trap-border: #ef4444;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.25rem;
+            margin-top: 0;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bilingual-text {
+            margin-bottom: 16px;
+        }
+
+        .en-text {
+            color: var(--light-text);
+            font-size: 0.95em;
+            margin-top: 4px;
+            display: block;
+            font-style: italic;
+        }
+
+        /* Question Box */
+        .question-box {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options-list li {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        /* Concept Box */
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid var(--concept-border);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        /* Answer Box */
+        .answer-box {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Trap Box */
+        .trap-box {
+            background-color: var(--trap-bg);
+            border-left: 5px solid var(--trap-border);
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        /* Math Blocks */
+        .math-block {
+            background-color: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.2rem; }
+            section { padding: 16px; }
+            .meta-info { flex-direction: column; gap: 8px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <header>
+        <h1>HKDSE Economics Analysis</h1>
+        <div class="meta-info">
+            <span class="badge">Topic: Price Elasticity of Demand (需求價格彈性)</span>
+            <span class="badge">Difficulty: ★★☆☆☆</span>
+            <span class="badge">Key: Arc Elasticity (弧彈性)</span>
+        </div>
+    </header>
+
+    <!-- 2. The Question -->
+    <section>
+        <h2>📝 The Question (題目)</h2>
+        <div class="question-box">
+            <p class="bilingual-text">
+                當澳洲紅酒的價格由$70下降至$50，其需求量自100單位上升至122單位。在上述的價格範圍內，澳洲紅酒需求的弧彈性是多少？
+                <span class="en-text">When the price of Australia's red wine decreases from $70 to $50, the quantity demanded increases from 100 units to 122 units. What is the arc elasticity of demand for Australia's red wine within the above price range?</span>
+            </p>
+            <ul class="options-list">
+                <li>A. 0.59</li>
+                <li>B. 0.77</li>
+                <li>C. 1.30</li>
+                <li>D. 1.68</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 3. Concept Review -->
+    <section>
+        <h2>📚 Concept Review (概念重溫)</h2>
+        <div class="concept-box">
+            <p class="bilingual-text">
+                <strong>弧彈性 (Arc Elasticity)</strong>：
+                當我們需要計算價格在「一段範圍」內的彈性，而不是某個特定點的彈性時，我們使用弧彈性公式。這需要使用價格和數量的<strong>平均值 (Midpoint/Average)</strong> 作為分母。
+                <span class="en-text"><strong>Arc Elasticity</strong>: When we need to calculate elasticity over a "range" of prices rather than at a specific point, we use the Arc Elasticity formula. This involves using the <strong>average (midpoint)</strong> of prices and quantities as the denominator.</span>
+            </p>
+            
+            <p><strong>公式 (Formula):</strong></p>
+            <div class="math-block">
+                $$ E_d = \frac{\% \Delta Q}{\% \Delta P} = \frac{\frac{Q_2 - Q_1}{(Q_1 + Q_2) / 2}}{\frac{P_2 - P_1}{(P_1 + P_2) / 2}} $$
+            </div>
+            <p class="bilingual-text" style="font-size: 0.9em; color: #555;">
+                注意：在 DSE 經濟科中，價格彈性通常取絕對值（正數）。
+                <span class="en-text">Note: In HKDSE Economics, price elasticity is usually expressed as an absolute value (positive number).</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- 4. Answer & Analysis -->
+    <section>
+        <h2>✅ Answer & Detailed Analysis (答案與詳細分析)</h2>
+        
+        <div class="answer-box">Correct Option: A (0.59)</div>
+
+        <h3>Step-by-Step Calculation (逐步計算):</h3>
+        
+        <p><strong>1. Identify the values (確認數值):</strong></p>
+        <ul>
+            <li>\( P_1 = 70 \), \( P_2 = 50 \)</li>
+            <li>\( Q_1 = 100 \), \( Q_2 = 122 \)</li>
+        </ul>
+
+        <p><strong>2. Calculate Changes and Averages (計算變動與平均值):</strong></p>
+        <div class="math-block">
+            $$ \Delta Q = 122 - 100 = 22 $$
+            $$ \text{Average } Q = \frac{100 + 122}{2} = 111 $$
+            $$ \Delta P = 50 - 70 = -20 $$
+            $$ \text{Average } P = \frac{70 + 50}{2} = 60 $$
+        </div>
+
+        <p><strong>3. Apply Formula (應用公式):</strong></p>
+        <div class="math-block">
+            $$ E_d = \frac{\frac{22}{111}}{\frac{20}{60}} $$
+            $$ E_d = \frac{22}{111} \times \frac{60}{20} $$
+            $$ E_d = \frac{22}{111} \times 3 $$
+            $$ E_d = \frac{66}{111} \approx 0.5946 $$
+        </div>
+
+        <p><strong>4. Conclusion (結論):</strong></p>
+        <p class="bilingual-text">
+            計算結果約為 0.59。因此，選項 A 是正確的。
+            <span class="en-text">The calculated result is approximately 0.59. Therefore, Option A is correct.</span>
+        </p>
+
+        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+        <h3>Why other options are wrong (為何其他選項錯誤):</h3>
+        <ul>
+            <li>
+                <strong>Option B (0.77):</strong> 
+                這是<strong>點彈性 (Point Elasticity)</strong> 的計算結果，使用了初始值 ($P_1, Q_1$) 作為分母。
+                <br><span class="en-text">This is the result of <strong>Point Elasticity</strong>, using initial values ($P_1, Q_1$) as the denominator.</span>
+                $$ \frac{22/100}{20/70} = 0.77 $$
+            </li>
+            <li>
+                <strong>Option D (1.68):</strong> 
+                這是正確答案的倒數 (Reciprocal)，或者是將公式中的 P 和 Q 倒置了。
+                <br><span class="en-text">This is the reciprocal of the correct answer, or the result of inverting P and Q in the formula.</span>
+                $$ 1 / 0.5946 \approx 1.68 $$
+            </li>
+        </ul>
+    </section>
+
+    <!-- 5. Problem Decomposition -->
+    <section>
+        <h2>🔍 Problem Decomposition (題目拆解)</h2>
+        <p class="bilingual-text">
+            <strong>關鍵字 (Pivot Point):</strong> 題目明確問的是「<strong>弧彈性 (Arc Elasticity)</strong>」。
+            <span class="en-text"><strong>Pivot Point:</strong> The question explicitly asks for "<strong>Arc Elasticity</strong>".</span>
+        </p>
+        <p class="bilingual-text">
+            這意味著你<strong>必須</strong>使用平均價格和平均數量來計算百分比變動。如果你只使用起始價格 ($70) 或 結束價格 ($50)，你就會掉入陷阱。
+            <span class="en-text">This means you <strong>MUST</strong> use the average price and average quantity to calculate the percentage changes. If you use only the starting price ($70) or ending price ($50), you will fall into a trap.</span>
+        </p>
+    </section>
+
+    <!-- 6. Common Mistakes -->
+    <section>
+        <h2>⚠️ Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+        <div class="trap-box">
+            <h4 style="margin-top:0;">混淆點彈性與弧彈性 (Confusing Point vs. Arc Elasticity)</h4>
+            <p class="bilingual-text">
+                學生最常犯的錯誤是直接使用公式 \( \frac{\%\Delta Q}{\%\Delta P} \) 時，分母使用了原價 ($70) 和原數量 ($100)。這會算出選項 B (0.77)。
+                <span class="en-text">The most common mistake is using the original price ($70) and original quantity ($100) as the base when calculating percentage changes. This leads to Option B (0.77).</span>
+            </p>
+            <p class="bilingual-text">
+                <strong>記住：</strong> 看到「價格範圍」(Price range) 或「弧彈性」(Arc elasticity) 字眼，一定要用<strong>平均值</strong>！
+                <span class="en-text"><strong>Remember:</strong> Whenever you see "Price range" or "Arc elasticity", you MUST use the <strong>average values</strong>!</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- 7. Exam Tricks -->
+    <section>
+        <h2>⚡ Exam Tricks (考試技巧)</h2>
+        <p class="bilingual-text">
+            <strong>快速估算法 (Estimation Method):</strong>
+            <span class="en-text"><strong>Estimation Method:</strong></span>
+        </p>
+        <ul>
+            <li>
+                \( \Delta P \) 是 20，平均價格是 60。變動比例是 \( 20/60 = 1/3 \) (約 33%)。
+                <span class="en-text">\( \Delta P \) is 20, average price is 60. The change is \( 20/60 = 1/3 \) (approx 33%).</span>
+            </li>
+            <li>
+                \( \Delta Q \) 是 22，平均數量是 111。變動比例約為 \( 20/110 \approx 18\% \)。
+                <span class="en-text">\( \Delta Q \) is 22, average quantity is 111. The change is approx \( 20/110 \approx 18\% \).</span>
+            </li>
+            <li>
+                分子 (18%) 小於 分母 (33%)。
+                <span class="en-text">The numerator (18%) is smaller than the denominator (33%).</span>
+            </li>
+            <li>
+                因此，答案必定小於 1 (Inelastic)。
+                <span class="en-text">Therefore, the answer must be less than 1 (Inelastic).</span>
+            </li>
+            <li>
+                <strong>排除法：</strong> 選項 C (1.30) 和 D (1.68) 都大於 1，直接刪除。剩下 A 和 B。由於 18% 大約是 33% 的一半多一點，0.59 比 0.77 更合理。
+                <span class="en-text"><strong>Elimination:</strong> Options C (1.30) and D (1.68) are greater than 1, eliminate them. Between A and B, since 18% is a bit more than half of 33%, 0.59 is a more reasonable estimate than 0.77.</span>
+            </li>
+        </ul>
+    </section>
+
+</div>
+
+</body>
+</html>

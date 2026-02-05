@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'Econ/PastPaper/**/*.html' # Only run if HTML files change
   workflow_dispatch:
 
 permissions:
@@ -15,6 +17,55 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important: Fetch all history to detect changes
+
+      # === MOVED STEP: Notify Google Sheets FIRST ===
+      # We run this BEFORE generating the index or committing anything new.
+      # This ensures 'HEAD' refers to YOUR commit, not the auto-generated one.
+      - name: Notify Google Sheets for Changed Files
+        env:
+          GAS_URL: "https://script.google.com/macros/s/AKfycbwKrBf3nRkltBs0M_8SHc0uBgQ2fF58ZFKf_UBhaipK3zn_Hd07hJuAiBCdi9u__9z0/exec"
+          SECRET_KEY: ${{ secrets.ACTION_KEY }}
+        run: |
+          # 1. Get list of added or modified HTML files in the specific folder
+          # We check the difference between the previous commit (HEAD^) and the current commit (HEAD)
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep "Econ/PastPaper/.*\.html" || true)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No HTML files changed in the user commit. Skipping Google Sheet update."
+            exit 0
+          fi
+
+          echo "Found changed files:"
+          echo "$CHANGED_FILES"
+
+          # 2. Loop through each file
+          for file in $CHANGED_FILES; do
+            # Extract filename (e.g., "DSE-2015-P1-07.html")
+            filename=$(basename "$file")
+            
+            # Remove extension to get ID (e.g., "DSE-2015-P1-07")
+            uniqueId="${filename%.*}"
+            
+            # Skip index.html if it was caught (though usually it shouldn't be in your push)
+            if [ "$uniqueId" == "index" ]; then
+              continue
+            fi
+
+            echo "Updating Sheet for ID: $uniqueId"
+            
+            # 3. Send Request to Google Apps Script
+            # We use curl -G (GET) with --data-urlencode to handle special characters safely
+            response=$(curl -s -L -G "${GAS_URL}" \
+              --data-urlencode "action=update_deploy_status" \
+              --data-urlencode "secret=${SECRET_KEY}" \
+              --data-urlencode "uniqueId=${uniqueId}")
+            
+            echo "Response: $response"
+          done
+
+      # === STANDARD STEPS CONTINUE BELOW ===
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -22,7 +73,6 @@ jobs:
           python-version: '3.x'
 
       - name: Run generation script
-        # CHANGE THIS: Enter the folder name where your python script is
         working-directory: ./Econ/PastPaper
         run: python generate_index.py
 
@@ -30,5 +80,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-generate index.html"
-          # CHANGE THIS: Point to the index.html inside that folder
           file_pattern: "Econ/PastPaper/index.html"
