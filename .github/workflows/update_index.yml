@@ -30,7 +30,6 @@ jobs:
 
           if [ -z "$CHANGED_FILES" ]; then
             echo "No HTML files changed in the user commit. Skipping Google Sheet update."
-            # We do NOT exit here, so the index generation still runs on manual dispatch
           else
             echo "Found changed files:"
             echo "$CHANGED_FILES"
@@ -59,12 +58,12 @@ jobs:
         with:
           python-version: '3.x'
 
-      # === 2. Remove Broken Polyfill Links (Fixes Console Error) ===
+      # === 2. Remove Broken Polyfill Links ===
       - name: Remove Polyfill.io Links
         working-directory: ./Econ/PastPaper
         run: |
           echo "Removing broken polyfill.io links from HTML files..."
-          # This finds all HTML files and deletes lines containing 'polyfill'
+          # Deletes any line containing 'polyfill' to fix the console error
           find . -type f -name "*.html" -exec sed -i '/polyfill/d' {} +
           echo "Polyfill links removed."
 
@@ -78,6 +77,7 @@ jobs:
         working-directory: ./Econ/PastPaper
         run: |
           PROTECT_JS="https://mas-repo.github.io/econ-database/projects/protect.js"
+          # We escape the quotes for the sed command
           SCRIPT_TAG="<script src=\"$PROTECT_JS\"></script>"
           
           echo "Starting injection process..."
@@ -86,8 +86,10 @@ jobs:
             # Check generically for 'protect.js' to avoid duplicates
             if ! grep -q "protect.js" "$file"; then
               echo "Protecting: $file"
-              echo "" >> "$file"
-              echo "$SCRIPT_TAG" >> "$file"
+              
+              # FIX: Use 'sed' to insert at Line 1 (Top of file)
+              # This prevents the 'flash' of content before the login screen appears
+              sed -i "1i $SCRIPT_TAG" "$file"
             else
               echo "Skipping: $file (Already protected)"
             fi
@@ -98,5 +100,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-generate index, remove polyfill, and protect files"
-          # This pattern ensures we pick up the index AND the modified past papers
           file_pattern: "Econ/PastPaper/**/*.html"

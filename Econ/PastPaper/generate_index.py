@@ -2,8 +2,8 @@ import os
 import json
 
 # Configuration
-IGNORE_DIRS = {'.git', '__pycache__', '.github', 'js', 'css', 'img'} # Added common non-paper folders
-IGNORE_FILES = {'index.html', 'generate_index.py'}
+IGNORE_DIRS = {'.git', '__pycache__', '.github', 'js', 'css', 'img', 'projects'}
+IGNORE_FILES = {'index.html', 'generate_index.py', 'protect.js'}
 
 # HTML Template
 HTML_TEMPLATE = """
@@ -80,7 +80,7 @@ HTML_TEMPLATE = """
 
 def generate_site():
     data = {}
-    # FIX: Use the directory where this script is located, not the generic 'cwd'
+    # FIX: Use absolute path of the script location
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
     print(f"Scanning directory: {base_dir}")
@@ -88,7 +88,6 @@ def generate_site():
     for item in os.listdir(base_dir):
         item_path = os.path.join(base_dir, item)
         
-        # We only want directories (Years)
         if os.path.isdir(item_path) and item not in IGNORE_DIRS:
             folder_name = item
             html_files = []
@@ -104,7 +103,6 @@ def generate_site():
                 data[folder_name] = html_files
 
     sorted_data = dict(sorted(data.items()))
-
     json_string = json.dumps(sorted_data)
     final_html = HTML_TEMPLATE.replace('__JSON_DATA__', json_string)
 
