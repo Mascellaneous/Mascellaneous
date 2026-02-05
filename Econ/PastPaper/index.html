@@ -1,25 +1,58 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSE Question Bank</title>
+    <title>DSE Past Paper Index (Protected)</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; --border: #e2e8f0; }
-        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 30px; }
-        .search-box { width: 100%; max-width: 500px; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 16px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-        .card-header { background: var(--primary); color: white; padding: 10px 15px; font-weight: bold; display: flex; justify-content: space-between; }
-        .file-list { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
-        .file-list li a { display: block; padding: 10px 15px; text-decoration: none; color: var(--text); border-bottom: 1px solid var(--border); }
-        .file-list li a:hover { background: #eff6ff; color: var(--primary); padding-left: 20px; transition: 0.2s; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f8; margin: 0; padding: 20px; color: #2c3e50; }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        /* States */
+        #loading-state { text-align: center; padding-top: 50px; }
+        #denied-state { display: none; text-align: center; padding-top: 50px; }
+        #protected-content { display: none; } /* Hidden by default */
+        
+        /* UI Elements */
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; margin-top: 15px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Style the injected content slightly */
+        #injected-list ul { list-style: none; padding: 0; }
+        #injected-list li { padding: 10px 0; border-bottom: 1px solid #eee; }
+        #injected-list a { color: #2980b9; text-decoration: none; }
+        #injected-list a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
+    <div class="container">
+        
+        <!-- Loading -->
+        <div id="loading-state">
+            <div class="spinner"></div>
+            <h3>Verifying Access...</h3>
+        </div>
+
+        <!-- Denied -->
+        <div id="denied-state">
+            <div class="card">
+                <h2>🔒 Access Denied</h2>
+                <p>You must be logged into the Question Bank to view this index.</p>
+                <a href="https://mas-repo.github.io/econ-database/" class="btn">Go to Login</a>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div id="protected-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h1 style="margin:0;">Past Paper Index</h1>
+                <span id="user-badge" style="background:#e3f2fd; color:#1565c0; padding:5px 10px; border-radius:15px; font-size:12px; font-weight:bold;"></span>
+            </div>
+            
+            <div class="card" id="injected-list">
+                
 <div class="container">
     <header>
         <h1 style="color: var(--primary)">DSE Question Bank</h1>
@@ -71,5 +104,39 @@
     // Search listener
     search.addEventListener('input', (e) => render(e.target.value));
 </script>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- The Bridge Iframe -->
+    <iframe id="auth-bridge" src="https://mas-repo.github.io/econ-database//auth-bridge.html" style="display:none; width:0; height:0; border:0;"></iframe>
+
+    <script>
+        const authTimeout = setTimeout(() => {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('denied-state').style.display = 'block';
+        }, 5000);
+
+        window.addEventListener('message', function(event) {
+            // Optional: Check event.origin here for security
+            try {
+                const data = JSON.parse(event.data);
+                if (data.status === 'authorized') {
+                    clearTimeout(authTimeout);
+                    document.getElementById('loading-state').style.display = 'none';
+                    document.getElementById('protected-content').style.display = 'block';
+                    
+                    const name = data.user.displayName || 'User';
+                    document.getElementById('user-badge').textContent = '👤 ' + name;
+                } else {
+                    clearTimeout(authTimeout);
+                    document.getElementById('loading-state').style.display = 'none';
+                    document.getElementById('denied-state').style.display = 'block';
+                }
+            } catch (e) {}
+        });
+    </script>
 </body>
 </html>
