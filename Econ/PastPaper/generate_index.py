@@ -2,10 +2,10 @@ import os
 import json
 
 # Configuration
-IGNORE_DIRS = {'.git', '__pycache__'}
+IGNORE_DIRS = {'.git', '__pycache__', '.github', 'js', 'css', 'img'} # Added common non-paper folders
 IGNORE_FILES = {'index.html', 'generate_index.py'}
 
-# This is the HTML template. We will inject the data into the variable __JSON_DATA__
+# HTML Template
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +48,6 @@ HTML_TEMPLATE = """
         const term = filter.toLowerCase();
         
         for (const [year, files] of Object.entries(db)) {
-            // Filter logic
             const matches = files.filter(f => f.toLowerCase().includes(term) || year.includes(term));
             
             if (matches.length > 0) {
@@ -57,7 +56,6 @@ HTML_TEMPLATE = """
                 
                 let listHtml = '';
                 matches.forEach(f => {
-                    // Link construction
                     listHtml += `<li><a href="./${year}/${f}" target="_blank">${f.replace('.html','')}</a></li>`;
                 });
 
@@ -73,10 +71,7 @@ HTML_TEMPLATE = """
         }
     }
 
-    // Initial render
     render();
-    
-    // Search listener
     search.addEventListener('input', (e) => render(e.target.value));
 </script>
 </body>
@@ -85,15 +80,20 @@ HTML_TEMPLATE = """
 
 def generate_site():
     data = {}
-    root_dir = os.getcwd()
+    # FIX: Use the directory where this script is located, not the generic 'cwd'
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # 1. Scan the folders (Same logic as your original script)
-    for item in os.listdir(root_dir):
-        if os.path.isdir(item) and item not in IGNORE_DIRS:
+    print(f"Scanning directory: {base_dir}")
+
+    for item in os.listdir(base_dir):
+        item_path = os.path.join(base_dir, item)
+        
+        # We only want directories (Years)
+        if os.path.isdir(item_path) and item not in IGNORE_DIRS:
             folder_name = item
             html_files = []
             try:
-                for file in os.listdir(os.path.join(root_dir, folder_name)):
+                for file in os.listdir(item_path):
                     if file.endswith('.html') and file not in IGNORE_FILES:
                         html_files.append(file)
             except OSError:
@@ -103,19 +103,15 @@ def generate_site():
                 html_files.sort()
                 data[folder_name] = html_files
 
-    # 2. Sort the data
     sorted_data = dict(sorted(data.items()))
 
-    # 3. Inject JSON directly into HTML string
-    # This replaces the placeholder __JSON_DATA__ with the actual JSON text
     json_string = json.dumps(sorted_data)
     final_html = HTML_TEMPLATE.replace('__JSON_DATA__', json_string)
 
-    # 4. Write the index.html file
-    with open('index.html', 'w', encoding='utf-8') as f:
+    output_path = os.path.join(base_dir, 'index.html')
+    with open(output_path, 'w', encoding='utf-8') as f:
         f.write(final_html)
-        print(f"Success! Generated index.html with {len(sorted_data)} folders.")
-        print("You can now double-click index.html to open it.")
+        print(f"Success! Generated index.html at {output_path}")
 
 if __name__ == "__main__":
     generate_site()

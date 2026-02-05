@@ -30,59 +30,62 @@ jobs:
 
           if [ -z "$CHANGED_FILES" ]; then
             echo "No HTML files changed in the user commit. Skipping Google Sheet update."
-            exit 0
+            # We do NOT exit here, so the index generation still runs on manual dispatch
+          else
+            echo "Found changed files:"
+            echo "$CHANGED_FILES"
+
+            for file in $CHANGED_FILES; do
+              filename=$(basename "$file")
+              uniqueId="${filename%.*}"
+              
+              if [ "$uniqueId" == "index" ]; then
+                continue
+              fi
+
+              echo "Updating Sheet for ID: $uniqueId"
+              
+              response=$(curl -s -L -G "${GAS_URL}" \
+                --data-urlencode "action=update_deploy_status" \
+                --data-urlencode "secret=${SECRET_KEY}" \
+                --data-urlencode "uniqueId=${uniqueId}")
+              
+              echo "Response: $response"
+            done
           fi
-
-          echo "Found changed files:"
-          echo "$CHANGED_FILES"
-
-          for file in $CHANGED_FILES; do
-            filename=$(basename "$file")
-            uniqueId="${filename%.*}"
-            
-            if [ "$uniqueId" == "index" ]; then
-              continue
-            fi
-
-            echo "Updating Sheet for ID: $uniqueId"
-            
-            response=$(curl -s -L -G "${GAS_URL}" \
-              --data-urlencode "action=update_deploy_status" \
-              --data-urlencode "secret=${SECRET_KEY}" \
-              --data-urlencode "uniqueId=${uniqueId}")
-            
-            echo "Response: $response"
-          done
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      # === 2. Run generation script ===
+      # === 2. Remove Broken Polyfill Links (Fixes Console Error) ===
+      - name: Remove Polyfill.io Links
+        working-directory: ./Econ/PastPaper
+        run: |
+          echo "Removing broken polyfill.io links from HTML files..."
+          # This finds all HTML files and deletes lines containing 'polyfill'
+          find . -type f -name "*.html" -exec sed -i '/polyfill/d' {} +
+          echo "Polyfill links removed."
+
+      # === 3. Run generation script ===
       - name: Run generation script
         working-directory: ./Econ/PastPaper
         run: python generate_index.py
 
-      # === 3. Inject Protection into ALL HTML Files ===
+      # === 4. Inject Protection into ALL HTML Files ===
       - name: Inject Protection Script
         working-directory: ./Econ/PastPaper
         run: |
-          # The exact URL you want to inject
           PROTECT_JS="https://mas-repo.github.io/econ-database/projects/protect.js"
           SCRIPT_TAG="<script src=\"$PROTECT_JS\"></script>"
           
           echo "Starting injection process..."
 
-          # Find all .html files in current folder and subfolders
           find . -type f -name "*.html" | while read file; do
-            
-            # FIX: We now grep for 'protect.js' generically to catch any path variation
-            # This prevents adding it if 'projects/protect.js' OR 'js/protect.js' exists
+            # Check generically for 'protect.js' to avoid duplicates
             if ! grep -q "protect.js" "$file"; then
               echo "Protecting: $file"
-              
-              # Append a newline and then the script tag to the end of the file
               echo "" >> "$file"
               echo "$SCRIPT_TAG" >> "$file"
             else
@@ -90,9 +93,10 @@ jobs:
             fi
           done
 
-      # === 4. Commit and Push ALL changes ===
+      # === 5. Commit and Push ALL changes ===
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Auto-generate index and protect all HTML files"
+          commit_message: "Auto-generate index, remove polyfill, and protect files"
+          # This pattern ensures we pick up the index AND the modified past papers
           file_pattern: "Econ/PastPaper/**/*.html"
