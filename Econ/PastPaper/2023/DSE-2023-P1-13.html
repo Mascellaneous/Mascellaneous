@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Analysis: Elasticity</title>
+    <!-- MathJax for LaTeX Rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Royal Blue */
+            --secondary-color: #1e40af; /* Darker Blue */
+            --accent-bg: #eff6ff; /* Light Blue Bg */
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+        .meta-info { margin-top: 10px; font-size: 0.9rem; opacity: 0.9; }
+        .stars { color: #fbbf24; }
+
+        /* Content Sections */
+        .section {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background-color: var(--warning);
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        /* Question Box */
+        .question-box {
+            background-color: #fff;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .option-list { list-style-type: none; padding: 0; }
+        .option-list li { margin-bottom: 8px; padding-left: 10px; }
+
+        /* Bilingual Styling */
+        .zh { font-weight: 500; margin-bottom: 4px; display: block; }
+        .en { color: var(--text-muted); font-size: 0.95em; display: block; margin-bottom: 12px; }
+        
+        /* Concept Box */
+        .concept-box {
+            background-color: var(--accent-bg);
+            border-left: 5px solid var(--primary-color);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .formula-block {
+            background-color: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px solid #dbeafe;
+        }
+
+        /* Answer Section */
+        .correct-answer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 16px;
+        }
+
+        .analysis-item { margin-bottom: 20px; }
+        .analysis-label { font-weight: bold; display: inline-block; width: 30px; }
+        .analysis-content { display: inline; }
+        
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        .tag.correct { background-color: #d1fae5; color: #065f46; }
+        .tag.wrong { background-color: #fee2e2; color: #991b1b; }
+
+        /* Decomposition & Tips */
+        .pivot-point {
+            background-color: #fffbeb; /* Amber */
+            border: 1px solid #fcd34d;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header { padding: 16px; }
+            .section { padding: 16px; }
+            h1 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- 1. Header -->
+    <header>
+        <h1>HKDSE Economics Analysis</h1>
+        <div class="meta-info">
+            <strong>Topic:</strong> Price Elasticity of Demand (需求價格彈性)<br>
+            <strong>Difficulty:</strong> <span class="stars">★★★☆☆</span> (3/5)<br>
+            <strong>Keywords:</strong> Elasticity (彈性), Supply Shock (供應震盪), Substitutes (替代品)
+        </div>
+    </header>
+
+    <!-- 2. The Question -->
+    <div class="section">
+        <div class="section-title">The Question (題目)</div>
+        <div class="question-box">
+            <p>
+                <span class="zh">半導體晶片是生產智能電話的關鍵組件。由於全球半導體晶片短缺，智能電話的銷售量有10%的變動，而智能電話的價格則上升了20%。下列哪項最能解釋上述智能電話價格與銷售量的轉變？</span>
+                <span class="en">Semiconductor chips are key components for producing smartphones. Due to a global shortage of semiconductor chips, the quantity of smartphones sold has changed by 10% whereas the price of smartphones has increased by 20%. Which of the following best explains the above changes in the price and quantity sold of smartphones?</span>
+            </p>
+            <ul class="option-list">
+                <li>
+                    <span class="zh">A. 智能電話沒有接近的替代品。</span>
+                    <span class="en">A. Smartphones have no close substitutes.</span>
+                </li>
+                <li>
+                    <span class="zh">B. 智能電話生產商有剩餘的產能。</span>
+                    <span class="en">B. Smartphone manufacturers have excess capacity in production.</span>
+                </li>
+                <li>
+                    <span class="zh">C. 消費者在智能電話的開支佔其總開支的比例高。</span>
+                    <span class="en">C. Consumers expenditure on smartphones takes up a large proportion of their total expenditure.</span>
+                </li>
+                <li>
+                    <span class="zh">D. 生產智能電話的工人不容易招聘。</span>
+                    <span class="en">D. The workers for producing smartphones cannot be easily recruited.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 3. Concept Review -->
+    <div class="section">
+        <div class="section-title">Concept Review (概念重溫)</div>
+        <div class="concept-box">
+            <p>
+                <span class="zh">要解答此題，我們需要運用<strong>需求價格彈性 (Price Elasticity of Demand, \(E_d\))</strong> 的概念。</span>
+                <span class="en">To solve this problem, we need to apply the concept of <strong>Price Elasticity of Demand (\(E_d\))</strong>.</span>
+            </p>
+
+            <div class="formula-block">
+                $$ E_d = \frac{\% \Delta Q_d}{\% \Delta P} $$
+            </div>
+
+            <p>
+                <span class="zh"><strong>定義：</strong> 衡量需求量對價格改變的敏感程度。</span>
+                <span class="en"><strong>Definition:</strong> A measure of the responsiveness of quantity demanded to a change in price.</span>
+            </p>
+            <ul>
+                <li>
+                    <span class="zh">若 \( \% \Delta Q_d < \% \Delta P \)，即 \( E_d < 1 \)，需求屬<strong>低彈性 (Inelastic)</strong>。</span>
+                    <span class="en">If \( \% \Delta Q_d < \% \Delta P \), i.e., \( E_d < 1 \), demand is <strong>Inelastic</strong>.</span>
+                </li>
+                <li>
+                    <span class="zh">若 \( \% \Delta Q_d > \% \Delta P \)，即 \( E_d > 1 \)，需求屬<strong>高彈性 (Elastic)</strong>。</span>
+                    <span class="en">If \( \% \Delta Q_d > \% \Delta P \), i.e., \( E_d > 1 \), demand is <strong>Elastic</strong>.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 4. Answer & Detailed Analysis -->
+    <div class="section">
+        <div class="section-title">Answer & Analysis (答案與詳細分析)</div>
+        
+        <div class="correct-answer">Correct Option: A (選項 A)</div>
+
+        <div class="analysis-item">
+            <p><strong>Step 1: Calculate Elasticity (計算彈性)</strong></p>
+            <p>
+                <span class="zh">題目指出價格上升 20%，而銷售量變動（下降）10%。</span>
+                <span class="en">The question states price increased by 20% and quantity changed (decreased) by 10%.</span>
+            </p>
+            <div class="formula-block">
+                $$ \frac{\% \Delta Q}{\% \Delta P} = \frac{10\%}{20\%} = 0.5 $$
+            </div>
+            <p>
+                <span class="zh">由於 \( 0.5 < 1 \)，這表示智能電話的需求是<strong>低彈性 (Inelastic)</strong>。我們需要找出導致需求低彈性的原因。</span>
+                <span class="en">Since \( 0.5 < 1 \), this indicates that the demand for smartphones is <strong>Inelastic</strong>. We need to find a factor that causes inelastic demand.</span>
+            </p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+        <div class="analysis-item">
+            <span class="analysis-label">A.</span>
+            <span class="tag correct">Correct 正確</span>
+            <p>
+                <span class="zh"><strong>沒有接近的替代品 (No close substitutes)：</strong> 當一種產品缺乏替代品時，消費者難以轉購其他產品，即使價格上升，需求量的跌幅也會較小（低彈性）。這解釋了為何價格大幅上升 20% 但數量只微跌 10%。</span>
+                <span class="en"><strong>No close substitutes:</strong> When a product lacks substitutes, consumers cannot easily switch to other products. Even if the price rises, the drop in quantity demanded is small (inelastic). This explains why a large 20% price hike caused only a small 10% drop in quantity.</span>
+            </p>
+        </div>
+
+        <div class="analysis-item">
+            <span class="analysis-label">B.</span>
+            <span class="tag wrong">Wrong 錯誤</span>
+            <p>
+                <span class="zh"><strong>剩餘產能 (Excess capacity)：</strong> 這是<strong>供應彈性 (Elasticity of Supply)</strong> 的決定因素。題目發生的是「晶片短缺」（供應減少），我們觀察的是消費者沿著需求曲線的反應，與生產商的產能無關。</span>
+                <span class="en"><strong>Excess capacity:</strong> This is a determinant of <strong>Elasticity of Supply</strong>. The scenario involves a "chip shortage" (Supply decrease). We are observing the consumers' reaction along the Demand curve, which is unrelated to the producers' capacity in this context.</span>
+            </p>
+        </div>
+
+        <div class="analysis-item">
+            <span class="analysis-label">C.</span>
+            <span class="tag wrong">Wrong 錯誤</span>
+            <p>
+                <span class="zh"><strong>開支佔比例高 (Large proportion of expenditure)：</strong> 如果產品佔消費者開支比例很高，消費者會對價格變動非常敏感，需求通常會是<strong>高彈性 (Elastic)</strong>。這與題目數據 (低彈性) 相反。</span>
+                <span class="en"><strong>Large proportion of expenditure:</strong> If a product takes up a large share of income, consumers are very sensitive to price changes, making demand <strong>Elastic</strong>. This contradicts the data (Inelastic).</span>
+            </p>
+        </div>
+
+        <div class="analysis-item">
+            <span class="analysis-label">D.</span>
+            <span class="tag wrong">Wrong 錯誤</span>
+            <p>
+                <span class="zh"><strong>工人不易招聘 (Workers cannot be easily recruited)：</strong> 這是<strong>供應彈性</strong>的決定因素。雖然這會令供應曲線較斜，但題目問的是價格與數量變動的結果（即需求線上的移動）。</span>
+                <span class="en"><strong>Workers cannot be easily recruited:</strong> This is a determinant of <strong>Supply Elasticity</strong>. While this makes the supply curve steeper, the question asks about the resulting change in price and quantity (a movement along the demand curve).</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- 5. Problem Decomposition -->
+    <div class="section">
+        <div class="section-title">Problem Decomposition (題目拆解)</div>
+        <div class="pivot-point">
+            <h3 style="margin-top:0; color: #b45309;">🔑 The Pivot Point (解題關鍵)</h3>
+            <p>
+                <span class="zh"><strong>分辨「移動」與「沿線移動」：</strong></span>
+                <span class="en"><strong>Distinguish "Shift" vs. "Movement along":</strong></span>
+            </p>
+            <ol>
+                <li>
+                    <span class="zh"><strong>衝擊 (Shock):</strong> 晶片短缺 \(\rightarrow\) <strong>供應減少 (Supply Shifts Left)</strong>。</span>
+                    <span class="en"><strong>Shock:</strong> Chip shortage \(\rightarrow\) <strong>Supply Shifts Left</strong>.</span>
+                </li>
+                <li>
+                    <span class="zh"><strong>結果 (Result):</strong> 均衡點沿著<strong>需求曲線 (Demand Curve)</strong> 向上移動。</span>
+                    <span class="en"><strong>Result:</strong> Equilibrium moves up along the <strong>Demand Curve</strong>.</span>
+                </li>
+                <li>
+                    <span class="zh"><strong>結論 (Conclusion):</strong> 價格變動幅度 > 數量變動幅度 \(\rightarrow\) 反映<strong>需求彈性 (Demand Elasticity)</strong> 低。</span>
+                    <span class="en"><strong>Conclusion:</strong> Price change > Quantity change \(\rightarrow\) Reflects low <strong>Demand Elasticity</strong>.</span>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- 6. Common Mistakes -->
+    <div class="section" style="border-bottom: none;">
+        <div class="section-title">Common Mistakes (常犯錯誤)</div>
+        <ul>
+            <li>
+                <span class="zh"><strong>混淆供需彈性的決定因素：</strong> 學生常誤選 B 或 D。請記住，當供應移動時，價格與數量的變化幅度取決於<strong>需求</strong>彈性。反之亦然。</span>
+                <span class="en"><strong>Confusing determinants of Supply vs. Demand Elasticity:</strong> Students often wrongly pick B or D. Remember, when Supply shifts, the magnitude of price/quantity changes depends on <strong>Demand</strong> elasticity. And vice versa.</span>
+            </li>
+            <li>
+                <span class="zh"><strong>忽略數值大小：</strong> 沒有計算 \(10\% / 20\% = 0.5\)，誤以為價格上升就是高彈性，從而選錯 C。</span>
+                <span class="en"><strong>Ignoring the magnitude of numbers:</strong> Failing to calculate \(10\% / 20\% = 0.5\), and mistakenly assuming price increase implies high elasticity, leading to choosing C.</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
