@@ -63,7 +63,6 @@ jobs:
         working-directory: ./Econ/PastPaper
         run: |
           echo "Removing broken polyfill.io links from HTML files..."
-          # Deletes any line containing 'polyfill' to fix the console error
           find . -type f -name "*.html" -exec sed -i '/polyfill/d' {} +
           echo "Polyfill links removed."
 
@@ -77,21 +76,18 @@ jobs:
         working-directory: ./Econ/PastPaper
         run: |
           PROTECT_JS="https://mas-repo.github.io/econ-database/projects/protect.js"
-          # We escape the quotes for the sed command
           SCRIPT_TAG="<script src=\"$PROTECT_JS\"></script>"
           
           echo "Starting injection process..."
 
           find . -type f -name "*.html" | while read file; do
-            # Check generically for 'protect.js' to avoid duplicates
-            if ! grep -q "protect.js" "$file"; then
-              echo "Protecting: $file"
-              
-              # FIX: Use 'sed' to insert at Line 1 (Top of file)
-              # This prevents the 'flash' of content before the login screen appears
-              sed -i "1i $SCRIPT_TAG" "$file"
-            else
+            # STRICT CHECK: Only inject if 'protect.js' is NOT found in the file
+            if grep -Fq "protect.js" "$file"; then
               echo "Skipping: $file (Already protected)"
+            else
+              echo "Protecting: $file"
+              # Insert at Line 1 (Top of file) to prevent content flash
+              sed -i "1i $SCRIPT_TAG" "$file"
             fi
           done
 
