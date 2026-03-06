@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics - Tricky Production Classifications</title>
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Royal Blue */
+            --secondary-color: #10b981; /* Emerald Green */
+            --danger-color: #ef4444;    /* Red */
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .intro-text {
+            background-color: #eff6ff;
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+
+        .comparison-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #f1f5f9;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .wrong-concept {
+            color: #991b1b;
+            background-color: #fef2f2;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .right-concept {
+            color: #065f46;
+            background-color: #ecfdf5;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .explanation {
+            font-size: 0.95em;
+            color: #475569;
+            margin-top: 5px;
+        }
+
+        .en-text {
+            display: block;
+            color: #64748b;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        .key-rule {
+            background-color: #fff7ed;
+            border: 2px dashed #f97316;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>常見誤解：看似生產，實為服務<br><span style="font-size:0.7em; color:#64748b;">Common Misconceptions: Looks like Production, Actually Services</span></h2>
+
+    <div class="intro-text">
+        <p>
+            這是一個非常好的問題！在 DSE 經濟學中，區分「第二級生產」（製造）與「第三級生產」（服務）的關鍵，往往在於產品是<strong>「標準化的大量生產」</strong>還是<strong>「個人化的服務」</strong>。<br>
+            <span class="en-text">This is an excellent question! In HKDSE Economics, the key to distinguishing between "Secondary Production" (Manufacturing) and "Tertiary Production" (Services) often lies in whether the product is <strong>"standardized mass production"</strong> or a <strong>"personalized service"</strong>.</span>
+        </p>
+    </div>
+
+    <!-- Example 1: Tailor -->
+    <div class="comparison-card">
+        <div class="card-header">
+            <span>1. 裁縫 / 度身訂造 (Tailoring)</span>
+            <span>👕</span>
+        </div>
+        <div class="card-body">
+            <div class="wrong-concept">
+                ❌ 誤解：裁縫剪布、車衣，造出一件衣服，所以是第二級生產。<br>
+                <span class="en-text">Misconception: Tailors cut fabric and sew to make clothes, so it's Secondary production.</span>
+            </div>
+            <div class="right-concept">
+                ✅ 正解：第三級生產 (Tertiary Production)<br>
+                <span class="en-text">Correct: Tertiary Production</span>
+            </div>
+            <div class="explanation">
+                <strong>原因：</strong>裁縫提供的是<strong>個人化服務</strong>。雖然有實物產出，但顧客購買的是師傅的技術和量身定做的服務。相反，工廠大量生產成衣（Garment Factory）才是第二級生產。<br>
+                <span class="en-text"><strong>Reason:</strong> Tailors provide a <strong>personalized service</strong>. Although there is a physical output, the customer is buying the skill and customization. In contrast, mass-producing clothes in a factory is Secondary production.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example 2: Repairs -->
+    <div class="comparison-card">
+        <div class="card-header">
+            <span>2. 維修業 (Repair Services)</span>
+            <span>🔧</span>
+        </div>
+        <div class="card-body">
+            <div class="wrong-concept">
+                ❌ 誤解：修車師傅更換零件，把壞車變好車，是「再製造」，所以是第二級。<br>
+                <span class="en-text">Misconception: Mechanics replace parts and fix cars, which is "re-manufacturing", so it's Secondary.</span>
+            </div>
+            <div class="right-concept">
+                ✅ 正解：第三級生產 (Tertiary Production)<br>
+                <span class="en-text">Correct: Tertiary Production</span>
+            </div>
+            <div class="explanation">
+                <strong>原因：</strong>維修是為了恢復產品的功能，屬於<strong>支援服務</strong>。汽車製造廠（Car Manufacturer）是第二級，但車房（Garage）是第三級。<br>
+                <span class="en-text"><strong>Reason:</strong> Repairing is about restoring functionality, which is a <strong>support service</strong>. A car manufacturer is Secondary, but a garage is Tertiary.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example 3: Publishing -->
+    <div class="comparison-card">
+        <div class="card-header">
+            <span>3. 出版業 (Publishing)</span>
+            <span>📚</span>
+        </div>
+        <div class="card-body">
+            <div class="wrong-concept">
+                ❌ 誤解：出版社造書出來賣，書是實物，所以是第二級。<br>
+                <span class="en-text">Misconception: Publishers make books to sell. Books are physical objects, so it's Secondary.</span>
+            </div>
+            <div class="right-concept">
+                ✅ 正解：第三級生產 (Tertiary Production)<br>
+                <span class="en-text">Correct: Tertiary Production</span>
+            </div>
+            <div class="explanation">
+                <strong>原因：</strong>這裡要分得很細：<br>
+                1. <strong>印刷廠 (Printing Press):</strong> 負責印書、釘裝 ➝ <strong>第二級 (Secondary)</strong>。<br>
+                2. <strong>出版社 (Publisher):</strong> 負責策劃、編輯、版權交易、發行 ➝ <strong>第三級 (Tertiary)</strong>。<br>
+                <span class="en-text"><strong>Reason:</strong> We must distinguish carefully: <br>1. <strong>Printing Press:</strong> Prints and binds books ➝ <strong>Secondary</strong>.<br>2. <strong>Publisher:</strong> Handles editing, copyright, distribution ➝ <strong>Tertiary</strong>.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example 4: Decoration -->
+    <div class="comparison-card">
+        <div class="card-header">
+            <span>4. 室內設計 (Interior Design)</span>
+            <span>🎨</span>
+        </div>
+        <div class="card-body">
+            <div class="wrong-concept">
+                ❌ 誤解：設計師畫圖則，也是在「建造」房子的一部分。<br>
+                <span class="en-text">Misconception: Designers draw plans, which is part of "building" the house.</span>
+            </div>
+            <div class="right-concept">
+                ✅ 正解：第三級生產 (Tertiary Production)<br>
+                <span class="en-text">Correct: Tertiary Production</span>
+            </div>
+            <div class="explanation">
+                <strong>原因：</strong><strong>建造業 (Construction)</strong> 本身是第二級生產（蓋樓宇、橋樑）。但單純提供<strong>設計意念</strong>或顧問服務的公司，屬於商業服務（第三級）。<br>
+                <span class="en-text"><strong>Reason:</strong> <strong>Construction</strong> itself is Secondary production (building flats, bridges). However, companies providing only <strong>design concepts</strong> or consultancy are Business Services (Tertiary).</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="key-rule">
+        💡 考試黃金法則 (Golden Rule for Exams)<br>
+        <span style="font-weight:normal; font-size: 0.9em; display:block; margin-top:5px;">
+            問自己：這個行業的主要產出是<strong>「標準化的實物」</strong> (Standardized Good) 還是<strong>「無形的服務/體驗」</strong> (Intangible Service/Experience)？<br>
+            <span class="en-text">Ask yourself: Is the main output of this industry a <strong>"Standardized Good"</strong> or an <strong>"Intangible Service/Experience"</strong>?</span>
+        </span>
+    </div>
+
+</div>
+
+</body>
+</html>
