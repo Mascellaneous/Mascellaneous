@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Tutor - Factor Income & Interest</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #f0f9ff;
+            --text-color: #333;
+            --bg-color: #fafafa;
+            --box-border: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        h1, h2, h3 {
+            color: #1e293b;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .header-section {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #3b82f6;
+            margin-bottom: 20px;
+        }
+        .concept-box {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .lang-en {
+            color: #475569;
+            font-size: 0.95em;
+            margin-top: 8px;
+            font-style: italic;
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: bold;
+        }
+        .status-yes {
+            color: #16a34a;
+            font-weight: bold;
+        }
+        .status-no {
+            color: #dc2626;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr { border: 1px solid #ccc; margin-bottom: 15px; }
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+            td:before {
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                content: attr(data-label);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <div class="header-section">
+        <strong>📚 課題 (Topic):</strong> 國民收入會計：要素收益與利息 (National Income Accounting: Factor Income & Interest)<br>
+        <strong>⭐ 難度 (Difficulty):</strong> ★★★★☆<br>
+        <strong>🔑 關鍵概念 (Key Concepts):</strong> 要素收益 (Factor Income), 轉移支付 (Transfer Payment), 生產性用途 (Productive Purposes)
+    </div>
+
+    <!-- 3. Concept Review -->
+    <h2>🧠 概念重溫：利息是要素收益嗎？ (Concept Review: Is Interest a Factor Income?)</h2>
+    <div class="concept-box">
+        <p>在經濟學中，<strong>利息 (Interest)</strong> 通常是提供「資本 (Capital)」這種生產要素所獲得的回報。但是，在計算本地生產總值 (GDP) 或本地居民總收入 (GNI) 時，<strong>並非所有利息都計算在內</strong>。</p>
+        <span class="lang-en">In economics, <strong>Interest</strong> is generally the return for providing the factor of production known as "Capital". However, when calculating Gross Domestic Product (GDP) or Gross National Income (GNI), <strong>NOT all interest is included</strong>.</span>
+        
+        <p><strong>核心原則 (Core Principle)：</strong> 只有用於<strong>生產性用途 (Productive Purposes)</strong>（即協助生產物品和服務）的借貸所產生的利息，才算作要素收益並計入國民收入。如果借貸是用於消費（如個人消費貸款）或政府開支（如政府發行債券），這些利息通常被視為<strong>轉移支付 (Transfer Payments)</strong>，不計入要素收益。</p>
+        <span class="lang-en"><strong>Core Principle:</strong> Only interest arising from loans used for <strong>productive purposes</strong> (i.e., assisting in the production of goods and services) is considered factor income and included in national income. If the loan is for consumption (e.g., personal consumption loans) or government spending (e.g., government bonds), the interest is generally treated as a <strong>Transfer Payment</strong> and is excluded from factor income.</span>
+    </div>
+
+    <!-- 4. Detailed Analysis Table -->
+    <h2>📊 各類利息/收益詳細分析 (Detailed Analysis of Various Interests/Incomes)</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>項目 (Item)</th>
+                <th>是否屬於要素收益？ (Is it Factor Income?)</th>
+                <th>詳細解釋 (Detailed Explanation)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="項目 (Item)">
+                    <strong>1. 銀行發放貸款收到的利息</strong><br>
+                    <span class="lang-en">Interest received by banks from issuing loans</span>
+                </td>
+                <td data-label="是否屬於要素收益？ (Is it Factor Income?)">
+                    <span class="status-yes">✅ 是 (Yes)</span><br>
+                    <span class="lang-en">(視乎貸款用途 / Depends on loan purpose)</span>
+                </td>
+                <td data-label="詳細解釋 (Detailed Explanation)">
+                    <p>如果貸款是發放給<strong>企業</strong>用於投資和生產（例如購買機器、擴充業務），這筆利息是資本的回報，屬於要素收益。但如果是純粹的個人消費貸款，則在嚴格的國民收入會計中可能被視為轉移支付。在 HKDSE 考試中，銀行作為金融中介的淨利息收入（服務費）會計入 GDP。</p>
+                    <span class="lang-en">If the loan is granted to <strong>firms</strong> for investment and production (e.g., buying machinery), the interest is a return on capital and is a factor income. However, pure personal consumption loans might be treated as transfer payments. In HKDSE, the net interest income of banks (acting as financial intermediaries) is counted in GDP as service output.</span>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="項目 (Item)">
+                    <strong>2. 香港政府發行的外匯基金票據所支付的利息</strong><br>
+                    <span class="lang-en">Interest paid by the HK Government on Exchange Fund Bills</span>
+                </td>
+                <td data-label="是否屬於要素收益？ (Is it Factor Income?)">
+                    <span class="status-no">❌ 否 (No)</span>
+                </td>
+                <td data-label="詳細解釋 (Detailed Explanation)">
+                    <p>政府發行的債券或票據，其利息通常被視為<strong>轉移支付 (Transfer Payment)</strong>。因為政府借款往往不是直接用於當期的生產性活動（而是用於彌補赤字或貨幣政策操作），所以不計入要素收益和 GDP。</p>
+                    <span class="lang-en">Interest on government bonds or bills is generally treated as a <strong>Transfer Payment</strong>. Since government borrowing is often not directly used for current productive activities (but rather for funding deficits or monetary policy operations), it is excluded from factor income and GDP.</span>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="項目 (Item)">
+                    <strong>3. 企業發行債券所支付的利息</strong><br>
+                    <span class="lang-en">Interest paid by enterprises on issued bonds</span>
+                </td>
+                <td data-label="是否屬於要素收益？ (Is it Factor Income?)">
+                    <span class="status-yes">✅ 是 (Yes)</span>
+                </td>
+                <td data-label="詳細解釋 (Detailed Explanation)">
+                    <p>企業發行債券是為了籌集資金進行生產和投資。因此，支付給債券持有人的利息是對「資本」這種生產要素的回報，絕對屬於要素收益。</p>
+                    <span class="lang-en">Enterprises issue bonds to raise funds for production and investment. Therefore, the interest paid to bondholders is a return on the factor of production "Capital" and is definitely considered factor income.</span>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="項目 (Item)">
+                    <strong>4. 持有股票收取的股息 / 持有企業債券收到的利息</strong><br>
+                    <span class="lang-en">Dividends from holding stocks / Interest from holding corporate bonds</span>
+                </td>
+                <td data-label="是否屬於要素收益？ (Is it Factor Income?)">
+                    <span class="status-yes">✅ 是 (Yes)</span>
+                </td>
+                <td data-label="詳細解釋 (Detailed Explanation)">
+                    <p><strong>股息 (Dividends)</strong> 是企業利潤的一部分，是提供「企業家職能」或股權資本的回報。<strong>企業債券利息</strong>則是提供債務資本的回報。兩者皆源於企業的生產活動，因此都是要素收益。</p>
+                    <span class="lang-en"><strong>Dividends</strong> are a part of corporate profits, representing the return for providing "Entrepreneurship" or equity capital. <strong>Corporate bond interest</strong> is the return for providing debt capital. Both originate from the productive activities of firms and are therefore factor incomes.</span>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="項目 (Item)">
+                    <strong>5. 人們從定期存款收到的利息</strong><br>
+                    <span class="lang-en">Interest received by individuals from time deposits</span>
+                </td>
+                <td data-label="是否屬於要素收益？ (Is it Factor Income?)">
+                    <span class="status-yes">✅ 是 (Yes)</span>
+                </td>
+                <td data-label="詳細解釋 (Detailed Explanation)">
+                    <p>市民將錢存入銀行，銀行再將這些資金借給企業進行生產。存款人收到的利息本質上是他們提供資金（資本）參與經濟生產所獲得的回報，因此屬於要素收益。</p>
+                    <span class="lang-en">Individuals deposit money into banks, which then lend these funds to businesses for production. The interest received by depositors is essentially the return for providing funds (capital) to participate in economic production, making it a factor income.</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 6. Common Mistakes & Traps -->
+    <h2>⚠️ 考試陷阱提醒 (Exam Trap Warning)</h2>
+    <div class="concept-box" style="background-color: #fdf2f8; border-left-color: #ec4899;">
+        <p>在 HKDSE 考試中，最常出現的陷阱就是<strong>「政府債券利息」 (Government Bond Interest)</strong>（例如 iBond、銀色債券、外匯基金票據）。請緊記：<strong>政府支付的利息 = 轉移支付 = 不計入 GDP / GNI</strong>。</p>
+        <span class="lang-en">In the HKDSE exam, the most common trap is <strong>"Government Bond Interest"</strong> (e.g., iBonds, Silver Bonds, Exchange Fund Bills). Always remember: <strong>Interest paid by the government = Transfer Payment = NOT included in GDP / GNI</strong>.</span>
+    </div>
+
+</div>
+
+</body>
+</html>
