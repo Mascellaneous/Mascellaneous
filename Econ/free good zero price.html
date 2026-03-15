@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Tutor - The "Zero Price" Condition</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --bg-color: #f8fafc;
+            --text-color: #334155;
+            --concept-bg: #f0f9ff;
+            --math-bg: #f3f4f6;
+            --example-bg: #ecfdf5;
+            --example-border: #10b981;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-top: 30px;
+            color: #0f172a;
+        }
+        .en-text {
+            color: #475569;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .zh-text {
+            margin-bottom: 5px;
+        }
+        .question-header {
+            background-color: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .question-header h1 {
+            color: white;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .example-box {
+            background-color: var(--example-bg);
+            border-left: 5px solid var(--example-border);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-block {
+            background-color: var(--math-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Student's Question -->
+    <div class="question-header">
+        <h1>學生提問 (Student's Question):</h1>
+        <p style="margin-top: 10px; font-size: 1.1em;">為甚麼免費物品的定義要特別強調「價格為零時」？</p>
+        <p style="color: #cbd5e1; font-style: italic;">Why does the definition of free goods specifically emphasize "when the price is zero"?</p>
+    </div>
+
+    <!-- Core Explanation -->
+    <h2>1. 移除「價格」這個限制 (Removing the "Price" Barrier)</h2>
+    <div class="concept-box">
+        <p class="zh-text">在現實世界中，<strong>價格 (Price)</strong> 是一種分配資源的機制。當一件物品有價格（即 \(P > 0\)）時，人們的「需求量」會因為需要付錢而被壓抑或限制。</p>
+        <p class="en-text">In the real world, <strong>Price</strong> acts as a mechanism to allocate resources. When a good has a price (i.e., \(P > 0\)), people's "quantity demanded" is suppressed or restricted because they have to pay for it.</p>
+        
+        <p class="zh-text">要真正測試一件物品是否「稀少 (Scarce)」，我們必須移除價格這個障礙。我們假設這件物品是完全免費任拿的（即<strong>價格為零</strong>）。如果在這種極端情況下，現有數量依然足夠滿足所有人的慾望，這件物品才是真正的「免費物品 (Free Good)」。</p>
+        <p class="en-text">To truly test whether a good is "scarce", we must remove the price barrier. We assume the good is completely free for anyone to take as much as they want (i.e., <strong>at zero price</strong>). If, under this extreme condition, the available quantity is still sufficient to satisfy everyone's wants, only then is the good a true "Free Good".</p>
+    </div>
+
+    <!-- Mathematical Logic -->
+    <h2>2. 經濟學的邏輯推演 (Economic Logic Deduction)</h2>
+    <p class="zh-text">我們用需求量 \(Q_d\) (Quantity Demanded) 和現有數量 \(Q_s\) (Quantity Available/Supplied) 來表達：</p>
+    <p class="en-text">We express this using Quantity Demanded \(Q_d\) and Quantity Available/Supplied \(Q_s\):</p>
+
+    <div class="math-block">
+        <strong>測試條件：當 \(P = 0\) 時 (Test Condition: When \(P = 0\))</strong>
+        $$ \text{If } Q_d > Q_s \implies \text{Economic Good (經濟物品)} $$
+        $$ \text{If } Q_d \le Q_s \implies \text{Free Good (免費物品)} $$
+    </div>
+
+    <!-- Real-world Examples -->
+    <h2>3. 生活例子對比 (Real-world Examples)</h2>
+    <div class="example-box">
+        <p class="zh-text"><strong>例子一：空氣 (Air) - 免費物品</strong><br>
+        當空氣的價格為零（\(P=0\)），每個人都可以盡情呼吸。即使大家拼命吸氣（極大的 \(Q_d\)），地球上的空氣總量（\(Q_s\)）依然綽綽有餘。因為 \(Q_s > Q_d\)，所以空氣是免費物品。</p>
+        <p class="en-text"><strong>Example 1: Air - Free Good</strong><br>
+        When the price of air is zero (\(P=0\)), everyone can breathe as much as they want. Even if everyone breathes heavily (huge \(Q_d\)), the total amount of air on Earth (\(Q_s\)) is still more than enough. Because \(Q_s > Q_d\), air is a free good.</p>
+        
+        <hr style="border: 0; border-top: 1px solid #10b981; margin: 15px 0;">
+
+        <p class="zh-text"><strong>例子二：最新款 iPhone - 經濟物品</strong><br>
+        假設蘋果公司今天宣佈 iPhone「價格為零」（免費派發）。你可以想像，全世界的人都會去排隊，想要拿10部、100部（\(Q_d\) 趨近無限大）。但蘋果的庫存（\(Q_s\)）是有限的。因為在 \(P=0\) 時，\(Q_d > Q_s\)，這證明了 iPhone 具有稀少性，是經濟物品。</p>
+        <p class="en-text"><strong>Example 2: The latest iPhone - Economic Good</strong><br>
+        Suppose Apple announces today that iPhones are "at zero price" (given away for free). You can imagine everyone in the world queuing up, wanting 10 or 100 phones (\(Q_d\) approaches infinity). But Apple's inventory (\(Q_s\)) is limited. Because at \(P=0\), \(Q_d > Q_s\), this proves the iPhone is scarce and is an economic good.</p>
+    </div>
+
+    <!-- Conclusion -->
+    <h2>總結 (Conclusion)</h2>
+    <p class="zh-text">強調「當價格為零時」，是為了創造一個<strong>沒有金錢限制的測試環境</strong>，從而暴露出該物品是否真正具有「稀少性 (Scarcity)」。</p>
+    <p class="en-text">Emphasizing "at zero price" is to create a <strong>test environment without financial constraints</strong>, thereby exposing whether the good truly possesses "Scarcity".</p>
+
+</div>
+
+</body>
+</html>
