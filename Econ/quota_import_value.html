@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Tutor - Import Quota Analysis</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #f0f9ff;
+            --text-color: #333;
+            --bg-color: #fafafa;
+            --danger-color: #ef4444;
+            --danger-bg: #fef2f2;
+            --warning-color: #f59e0b;
+            --warning-bg: #fffbeb;
+            --success-color: #10b981;
+            --success-bg: #ecfdf5;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        h1, h2, h3 {
+            color: #1e293b;
+        }
+        h2 {
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        .header-box {
+            background-color: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .header-box h1 {
+            color: white;
+            margin-top: 0;
+        }
+        .tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        .question-box {
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #f8fafc;
+        }
+        .concept-box {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-block {
+            background-color: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .answer-box {
+            background-color: var(--success-bg);
+            border-left: 5px solid var(--success-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .mistake-box {
+            background-color: var(--danger-bg);
+            border-left: 5px solid var(--danger-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .trick-box {
+            background-color: var(--warning-bg);
+            border-left: 5px solid var(--warning-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .qa-box {
+            margin-bottom: 15px;
+        }
+        .qa-q {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .en-translation {
+            color: #475569;
+            font-style: italic;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        .zh-text {
+            margin-bottom: 5px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <div class="header-box">
+        <h1>HKDSE Economics Tutor</h1>
+        <div>
+            <span class="tag">📚 Topic: Market Intervention (市場干預)</span>
+            <span class="tag">⭐ Difficulty: 3/5</span>
+            <span class="tag">🔑 Keywords: Import Quota, World Price, Import Value</span>
+        </div>
+    </div>
+
+    <!-- 2. The Question -->
+    <h2>1. The Question (題目)</h2>
+    <div class="question-box">
+        <p class="zh-text"><strong>圖表描述：</strong> 以下是某小型開放經濟中物品 X 的供需圖。原初該經濟以國際價格 (\(P_w\)) 進口物品 X，而政府實施的進口配額為 (\(Q_2 - Q_1\)) 單位。假設物品 X 的國際價格下降，進口總值會上升、下降還是維持不變？</p>
+        <p class="en-translation"><strong>Graph Description:</strong> The following is the supply and demand diagram of Good X in a small open economy. Initially, the economy imports Good X at the world price (\(P_w\)), and the government imposes an import quota of (\(Q_2 - Q_1\)) units. Suppose the world price of Good X decreases. Will the total import value increase, decrease, or remain unchanged?</p>
+    </div>
+
+    <!-- 3. Concept Review -->
+    <h2>2. Concept Review (概念重溫)</h2>
+    <div class="concept-box">
+        <p class="zh-text"><strong>進口配額 (Import Quota):</strong> 政府對某段時期內可進口物品的最高數量所設定的限制。在圖中，配額數量被設定為 \(Q_2 - Q_1\)。</p>
+        <p class="en-translation"><strong>Import Quota:</strong> A physical limit set by the government on the maximum quantity of a good that can be imported during a specific period. In the graph, the quota amount is set at \(Q_2 - Q_1\).</p>
+
+        <p class="zh-text"><strong>進口總值 (Total Import Value):</strong> 本國購買進口物品支付給外國出口商的總金額。計算公式為：</p>
+        <p class="en-translation"><strong>Total Import Value:</strong> The total amount of money paid by the domestic country to foreign exporters for imported goods. The formula is:</p>
+        
+        <div class="math-block">
+            $$ \text{Total Import Value (進口總值)} = P_w \times Q_m $$
+        </div>
+        <p class="zh-text">當中 \(P_w\) 是<strong>國際價格 (World Price)</strong>，而 \(Q_m\) 是<strong>實際進口量 (Actual Import Quantity)</strong>。</p>
+        <p class="en-translation">Where \(P_w\) is the <strong>World Price</strong>, and \(Q_m\) is the <strong>Actual Import Quantity</strong>.</p>
+    </div>
+
+    <!-- 4. The Answer & Detailed Analysis -->
+    <h2>3. The Answer & Detailed Analysis (答案與詳細分析)</h2>
+    <div class="answer-box">
+        <h3 style="margin-top: 0;">最終答案 (Final Answer): 下降 (Decrease)</h3>
+        
+        <p class="zh-text"><strong>詳細分析：</strong></p>
+        <p class="zh-text">1. <strong>找出原初狀態：</strong> 在原初的國際價格 \(P_w\) 下，本地需求量是 \(Q_2\)，本地供應量是 \(Q_1\)。原初的進口量剛好等於配額數量，即 \(Q_2 - Q_1\)。</p>
+        <p class="en-translation">1. <strong>Identify the initial state:</strong> At the initial world price \(P_w\), domestic quantity demanded is \(Q_2\) and domestic quantity supplied is \(Q_1\). The initial import quantity is exactly equal to the quota amount, which is \(Q_2 - Q_1\).</p>
+
+        <p class="zh-text">2. <strong>分析價格下降的影響：</strong> 當國際價格下降（低於 \(P_w\)），本地消費者會想購買更多，本地生產商會減少生產，導致「潛在的」進口需求增加（大於 \(Q_2 - Q_1\)）。</p>
+        <p class="en-translation">2. <strong>Analyze the effect of a price drop:</strong> When the world price decreases (below \(P_w\)), domestic consumers want to buy more and domestic producers will produce less, leading to an increase in "potential" import demand (greater than \(Q_2 - Q_1\)).</p>
+
+        <p class="zh-text">3. <strong>配額的限制作用：</strong> 由於政府實施了進口配額，實際進口量被<strong>鎖死</strong>在最高 \(Q_2 - Q_1\) 單位。因此，即使國際價格下降，實際進口量 \(Q_m\) 依然<strong>維持不變</strong>。</p>
+        <p class="en-translation">3. <strong>The constraining effect of the quota:</strong> Because the government has imposed an import quota, the actual import quantity is <strong>locked</strong> at a maximum of \(Q_2 - Q_1\) units. Therefore, even though the world price drops, the actual import quantity \(Q_m\) <strong>remains unchanged</strong>.</p>
+
+        <p class="zh-text">4. <strong>計算進口總值：</strong> 根據公式 \(\text{進口總值} = P_w \times Q_m\)。現在 \(P_w\) 下降，而 \(Q_m\) 維持不變。一個較小的數字乘上一個不變的數字，結果必然是變小。因此，進口總值下降。</p>
+        <p class="en-translation">4. <strong>Calculate Total Import Value:</strong> According to the formula \(\text{Import Value} = P_w \times Q_m\). Now \(P_w\) decreases, while \(Q_m\) remains unchanged. A smaller number multiplied by an unchanged number must result in a smaller product. Thus, the total import value decreases.</p>
+    </div>
+
+    <!-- 5. Problem Decomposition -->
+    <h2>4. Problem Decomposition (題目拆解)</h2>
+    <p class="zh-text">這類題目的<strong>「破題關鍵 (Pivot Point)」</strong>在於認清配額 (Quota) 對數量的絕對限制。</p>
+    <p class="en-translation">The <strong>"Pivot Point"</strong> of this type of question lies in recognizing the absolute restriction that a quota places on quantity.</p>
+    <ul>
+        <li><span class="zh-text"><strong>干擾資訊：</strong> 學生可能會去思考本地價格會如何變動。實際上，本地價格會維持在 \(P_w\)（因為在 \(P_w\) 下，短缺剛好等於配額數量）。但這對計算「進口總值」是無關的干擾資訊！</span>
+        <br><span class="en-translation"><strong>Distractor:</strong> Students might try to figure out how the domestic price changes. Actually, the domestic price will remain at \(P_w\) (because at \(P_w\), the shortage exactly equals the quota). But this is irrelevant information for calculating "Total Import Value"!</span></li>
+        <li><span class="zh-text"><strong>關鍵資訊：</strong> 進口總值是付給外國人的錢，所以必須使用<strong>國際價格 (World Price)</strong> 來計算，而不是本地價格。</span>
+        <br><span class="en-translation"><strong>Crucial Info:</strong> Total import value is the money paid to foreigners, so it MUST be calculated using the <strong>World Price</strong>, not the domestic price.</span></li>
+    </ul>
+
+    <!-- 6. Common Mistakes & Traps -->
+    <h2>5. Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+    <div class="mistake-box">
+        <p class="zh-text">❌ <strong>陷阱一：混淆「本地價格」與「國際價格」</strong><br>
+        很多學生以為進口總值是 \(\text{本地價格} \times \text{進口量}\)。在有配額的情況下，進口商以較低的國際價格買入，以較高的本地價格賣出，賺取了「配額租金 (Quota Rent)」。計算進口總值時，只能看付給外國的「國際價格」。</p>
+        <p class="en-translation">❌ <strong>Trap 1: Confusing "Domestic Price" with "World Price"</strong><br>
+        Many students think import value is \(\text{Domestic Price} \times \text{Import Quantity}\). Under a quota, importers buy at the lower world price and sell at the higher domestic price, earning "Quota Rent". When calculating import value, you must only look at the "World Price" paid to foreign countries.</p>
+
+        <p class="zh-text">❌ <strong>陷阱二：忘記配額的限制</strong><br>
+        學生可能會畫圖發現價格下降後，供需缺口變大，就誤以為進口量會增加。請緊記：配額是一道「硬牆」，進口量絕對不能超過配額上限。</p>
+        <p class="en-translation">❌ <strong>Trap 2: Forgetting the quota restriction</strong><br>
+        Students might draw a graph, see that the supply-demand gap widens as price falls, and mistakenly assume import quantity will increase. Remember: A quota is a "hard wall"; import quantity can NEVER exceed the quota limit.</p>
+    </div>
+
+    <!-- 7. Student Q&A -->
+    <h2>6. Student Q&A (學生常見疑問)</h2>
+    <div class="qa-box">
+        <div class="qa-q">Q: 既然國際價格下降了，為什麼本地的市場價格沒有跟著下降？</div>
+        <div class="en-translation">Q: Since the world price decreased, why didn't the domestic market price decrease as well?</div>
+        <div class="zh-text"><strong>A:</strong> 因為進口量被配額限制住了！如果沒有配額，平價的舶來品湧入，本地價格確實會跌。但現在最多只能進口 \(Q_2 - Q_1\) 單位。在本地價格為 \(P_w\) 時，市場的超額需求剛好是 \(Q_2 - Q_1\)，剛好被進口填補。所以本地價格會企穩在 \(P_w\)，不會下跌。</div>
+        <div class="en-translation"><strong>A:</strong> Because the import quantity is restricted by the quota! Without a quota, cheap imports would flood in and the domestic price would indeed fall. But now, a maximum of only \(Q_2 - Q_1\) units can be imported. At the domestic price of \(P_w\), the market's excess demand is exactly \(Q_2 - Q_1\), which is perfectly filled by the imports. Therefore, the domestic price stays firm at \(P_w\) and will not drop.</div>
+    </div>
+
+    <!-- 8. Exam Tricks & Shortcuts -->
+    <h2>7. Exam Tricks & Shortcuts (考試技巧與速解)</h2>
+    <div class="trick-box">
+        <p class="zh-text">💡 <strong>五秒速解法 (5-Second Shortcut):</strong></p>
+        <p class="zh-text">遇到「配額 (Quota)」+「求進口總值 (Import Value)」的題目，直接寫出公式：</p>
+        <p class="en-translation">When encountering a question with "Quota" + "Find Import Value", immediately write down the formula:</p>
+        <div class="math-block">
+            $$ V = P \times Q $$
+        </div>
+        <p class="zh-text">
+            1. 看到「配額」而且原本已經用盡 \(\rightarrow\) \(Q\) 必定不變 (Constant)。<br>
+            2. 題目說「國際價格下降」 \(\rightarrow\) \(P\) 下降 (\(\downarrow\))。<br>
+            3. 結論：\(V = P(\downarrow) \times Q(\text{不變}) \rightarrow V\) 必定下降 (\(\downarrow\))。連圖都不用重新畫！
+        </p>
+        <p class="en-translation">
+            1. See "Quota" and it's already fully utilized \(\rightarrow\) \(Q\) must be constant.<br>
+            2. Question says "world price decreases" \(\rightarrow\) \(P\) decreases (\(\downarrow\)).<br>
+            3. Conclusion: \(V = P(\downarrow) \times Q(\text{constant}) \rightarrow V\) must decrease (\(\downarrow\)). You don't even need to redraw the graph!
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>

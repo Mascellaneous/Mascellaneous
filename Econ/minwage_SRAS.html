@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Tutor - Minimum Wage & Macroeconomics</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #f0f9ff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --correct-color: #10b981;
+            --wrong-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Microsoft JhengHei';
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .section {
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .concept-box {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 15px;
+        }
+
+        .math-block {
+            background-color: #ffffff;
+            border: 1px dashed #cbd5e1;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .analysis-box {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--bg-light);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .zh {
+            font-weight: 500;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .en {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .qa-box {
+            background-color: #fffbeb;
+            border-left: 5px solid var(--warning-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .qa-question {
+            font-weight: bold;
+            color: #b45309;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #fde68a;
+        }
+
+        .trick-box {
+            background-color: #fdf2f8;
+            border: 1px solid #fbcfe8;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        @media (max-width: 600px) {
+            .section { padding: 15px 20px; }
+            .header { padding: 15px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <div class="header">
+        <h1>HKDSE Economics Tutor</h1>
+        <div class="tags">
+            <span class="tag">Topic: 最低工資的宏觀經濟影響 (Macroeconomic Impacts of Minimum Wage)</span>
+            <span class="tag">Difficulty: ★★★☆☆</span>
+            <span class="tag">Key Concepts: Disposable Income, SRAS, Consumption, AD Curve Shift</span>
+        </div>
+    </div>
+
+    <!-- 2. Concept Review -->
+    <div class="section">
+        <h2 class="section-title">🧠 概念重溫 (Concept Review)</h2>
+        <div class="concept-box">
+            <div class="zh"><strong>1. 可支配收入 (Disposable Income, \(Y_d\))：</strong><br>指家庭在繳納入息稅後，實際可用於消費或儲蓄的收入。</div>
+            <div class="en"><strong>1. Disposable Income (\(Y_d\)):</strong><br>The income available to households for consumption or saving after paying income taxes.</div>
+            
+            <div class="math-block">
+                $$ Y_d = Y - T + TR $$
+            </div>
+            <div class="zh" style="font-size: 0.9rem;">當中 \(Y\) = 國民收入，\(T\) = 稅款，\(TR\) = 轉移支付。私人消費支出 \(C\) 是可支配收入的函數。</div>
+            <div class="en" style="font-size: 0.9rem; margin-bottom: 10px;">Where \(Y\) = National Income, \(T\) = Taxes, \(TR\) = Transfer Payments. Private consumption expenditure \(C\) is a function of disposable income.</div>
+
+            <div class="zh"><strong>2. 宏觀經濟中的「工資」(Wages in Macroeconomics)：</strong><br>在 AD-AS 模型中，工資率主要被視為<strong>生產要素價格 (Price of factors of production)</strong>，直接影響企業的生產成本。</div>
+            <div class="en"><strong>2. Wages in Macroeconomics:</strong><br>In the AD-AS model, the wage rate is primarily viewed as the <strong>price of factors of production</strong>, which directly affects the production costs of firms.</div>
+        </div>
+    </div>
+
+    <!-- 3. Detailed Analysis -->
+    <div class="section">
+        <h2 class="section-title">📊 深度分析：工資上升與總需求的關係 (In-depth Analysis)</h2>
+        
+        <div class="analysis-box">
+            <div class="zh"><strong>第一層影響：部分工人收入增加，但伴隨失業效應 (Income increase vs. Unemployment effect)</strong><br>當最低工資提高時，成功保住工作的低技術工人確實會獲得較高的工資，他們的可支配收入上升。然而，工資上升會導致勞工需求量下降，部分工人會被解僱而失去收入。因此，整體勞工階層的「總可支配收入」是否增加，取決於勞工需求的彈性，其淨效應是不確定的 (Ambiguous)。</div>
+            <div class="en"><strong>Level 1: Income increase vs. Unemployment effect</strong><br>When the minimum wage increases, low-skilled workers who keep their jobs do receive higher wages, increasing their disposable income. However, higher wages reduce the quantity demanded for labor, leading to layoffs. Therefore, whether the "total disposable income" of the working class increases depends on the elasticity of demand for labor, making the net effect ambiguous.</div>
+        </div>
+
+        <div class="analysis-box">
+            <div class="zh"><strong>第二層影響：財富轉移效應 (Wealth Transfer Effect)</strong><br>即使工人的總收入增加，這筆錢是從哪裡來的？是從企業的利潤中扣除的。工資成本上升會導致企業擁有者（僱主、股東）的利潤下降，從而減少了他們的可支配收入和消費。這本質上是一種財富轉移（從僱主轉移到僱員），整個經濟體系的「總收入」並沒有憑空增加。因此，對整體私人消費 \(C\) 的刺激作用非常微弱，甚至互相抵消。</div>
+            <div class="en"><strong>Level 2: Wealth Transfer Effect</strong><br>Even if total worker income increases, where does this money come from? It is deducted from firms' profits. Higher wage costs reduce the profits of business owners and shareholders, thereby reducing their disposable income and consumption. This is essentially a wealth transfer (from employers to employees). The "total income" of the entire economy does not magically increase. Thus, the stimulating effect on aggregate private consumption \(C\) is very weak or cancels out.</div>
+        </div>
+
+        <div class="analysis-box">
+            <div class="zh"><strong>第三層影響：DSE 課程的核心設定 (The Core Assumption in DSE Syllabus)</strong><br>在香港中學文憑試 (HKDSE) 的宏觀經濟學框架下，我們必須區分「主要影響」和「次要/不確定影響」。工資率改變的<strong>絕對主要影響</strong>是改變生產成本 (Cost of production)。因此，最低工資上升必定會令短期總供應 (SRAS) 曲線向左移。至於它對總需求 (AD) 的影響，由於上述的抵消效應，在考試中通常被視為微不足道或不予考慮。</div>
+            <div class="en"><strong>Level 3: The Core Assumption in DSE Syllabus</strong><br>Under the HKDSE Macroeconomics framework, we must distinguish between "primary effects" and "secondary/ambiguous effects." The <strong>absolute primary effect</strong> of a change in wage rates is the change in the cost of production. Therefore, an increase in the minimum wage will definitely shift the Short-Run Aggregate Supply (SRAS) curve to the left. As for its effect on Aggregate Demand (AD), due to the offsetting effects mentioned above, it is generally considered negligible or ignored in exams.</div>
+        </div>
+    </div>
+
+    <!-- 4. NEW Q&A Section -->
+    <div class="section">
+        <h2 class="section-title">🗣️ 學生疑問解答 (Student Q&A)</h2>
+        <div class="qa-box">
+            <div class="qa-question">
+                <div class="zh">🤔 疑問：「有人提出，最低工資率令私人消費支出增加，這只是沿著總需求曲線 (AD) 移動，而不會令 AD 曲線移動。這說法正確嗎？」</div>
+                <div class="en">🤔 Query: "Someone suggested that an increase in private consumption due to the minimum wage rate is just a movement along the AD curve, not a shift of the AD curve. Is this correct?"</div>
+            </div>
+            
+            <div class="zh">
+                <p><span style="color: var(--wrong-color); font-weight: bold; font-size: 1.2rem;">❌ 絕對錯誤 (Absolutely Incorrect)</span></p>
+                <p>這個說法犯了兩個嚴重的宏觀經濟學概念錯誤：</p>
+                <ol>
+                    <li><strong>沿著曲線移動的唯一原因 (The ONLY cause for movement along AD)：</strong><br>
+                    在 AD-AS 模型中，<strong>只有「一般物價水平 (General Price Level)」的改變</strong>才會導致沿著總需求曲線移動（例如：財富效應、利率效應）。工資率屬於「非物價因素 (Non-price determinant)」。</li>
+                    <li><strong>消費支出 \(C\) 改變的幾何意義 (Geometric meaning of a change in C)：</strong><br>
+                    總需求 \(AD = C + I + G + NX\)。如果私人消費支出 \(C\) 真的因為工資上升而增加（假設我們忽略了財富轉移的抵消效應），這代表在<strong>同一個物價水平下</strong>，整體的總需求增加了。這必定會導致 <strong>AD 曲線向右平移 (Shift to the right)</strong>，而絕對不是沿著曲線移動。</li>
+                </ol>
+                <p><strong>總結：</strong>最低工資上升本身不會令整體 \(C\) 顯著增加（如前文所述）；但退一萬步說，<strong>如果</strong>它真的令 \(C\) 增加了，它必定是令 AD 曲線<strong>平移 (Shift)</strong>，而非沿著曲線移動 (Movement along)。</p>
+            </div>
+            
+            <div class="en" style="margin-top: 20px; border-top: 1px dashed #fcd34d; padding-top: 15px;">
+                <p><span style="color: var(--wrong-color); font-weight: bold; font-size: 1.2rem;">❌ Absolutely Incorrect</span></p>
+                <p>This statement commits two serious conceptual errors in macroeconomics:</p>
+                <ol>
+                    <li><strong>The ONLY cause for a movement along the curve:</strong><br>
+                    In the AD-AS model, <strong>ONLY a change in the "General Price Level"</strong> can cause a movement along the AD curve (e.g., wealth effect, interest rate effect). The wage rate is a "non-price determinant."</li>
+                    <li><strong>The geometric meaning of a change in \(C\):</strong><br>
+                    Aggregate Demand \(AD = C + I + G + NX\). If private consumption \(C\) truly increased due to higher wages (assuming we ignore the offsetting wealth transfer effect), it means that at the <strong>same price level</strong>, aggregate demand has increased. This would definitively cause the <strong>AD curve to shift to the right</strong>, NOT a movement along the curve.</li>
+                </ol>
+                <p><strong>Conclusion:</strong> An increase in minimum wage doesn't significantly increase aggregate \(C\) in the first place; but even if we assume it did, it would cause a <strong>shift</strong> in the AD curve, not a movement along it.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Common Mistakes -->
+    <div class="section">
+        <h2 class="section-title">⚠️ 常犯錯誤與陷阱 (Common Mistakes & Traps)</h2>
+        <div class="zh">
+            <p><strong>陷阱：將「個人微觀視角」套用於「宏觀經濟」</strong><br>學生常犯的錯誤是從個人的角度思考：「如果我的工資增加了，我就會買更多東西，所以總消費會增加。」但在宏觀經濟中，必須考慮到「有人賺多了，就必定有人（老闆）賺少了，或者有人（失業者）失去收入」。</p>
+        </div>
+        <div class="en">
+            <p><strong>Trap: Applying "Micro-perspective" to "Macroeconomics"</strong><br>A common mistake is thinking from an individual's perspective: "If my wage increases, I will buy more things, so total consumption increases." But in macroeconomics, you must consider that "if someone earns more, someone else (the boss) earns less, or someone (the unemployed) loses their income."</p>
+        </div>
+    </div>
+
+    <!-- 6. Exam Tricks -->
+    <div class="section">
+        <h2 class="section-title">⚡ 考試技巧與速解 (Exam Tricks & Shortcuts)</h2>
+        <div class="trick-box">
+            <div class="zh">
+                <strong>DSE 選擇題黃金法則：</strong>
+                <ul>
+                    <li>看到 <strong>「工資 (Wages)」、「原材料價格 (Raw material prices)」、「生產成本 (Cost of production)」</strong> ➡️ 100% 優先考慮 <strong>短期總供應 (SRAS)</strong> 的移動。</li>
+                    <li>看到 <strong>「入息稅 (Income tax)」、「轉移支付 (Transfer payments如消費券)」</strong> ➡️ 這些才是真正直接改變整體可支配收入的因素，會影響 <strong>總需求 (AD)</strong>。</li>
+                    <li>看到 <strong>「物價水平改變 (Change in price level)」</strong> ➡️ 只有這個才會導致 <strong>沿著 AD/AS 曲線移動 (Movement along the curve)</strong>。</li>
+                </ul>
+            </div>
+            <div class="en" style="margin-top: 15px;">
+                <strong>DSE MC Golden Rules:</strong>
+                <ul>
+                    <li>See <strong>"Wages", "Raw material prices", "Cost of production"</strong> ➡️ 100% prioritize the shift of <strong>Short-Run Aggregate Supply (SRAS)</strong>.</li>
+                    <li>See <strong>"Income tax", "Transfer payments (e.g., consumption vouchers)"</strong> ➡️ These are the factors that truly and directly change aggregate disposable income, affecting <strong>Aggregate Demand (AD)</strong>.</li>
+                    <li>See <strong>"Change in general price level"</strong> ➡️ ONLY this causes a <strong>movement along the AD/AS curves</strong>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
