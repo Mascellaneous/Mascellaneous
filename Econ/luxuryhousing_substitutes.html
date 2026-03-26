@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics Guide: Substitutes and Effective Demand</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Deep blue */
+            --secondary-color: #0ea5e9; /* Light blue */
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --text-heading: #0f172a;
+            --concept-bg: #f0f9ff;
+            --math-bg: #f3f4f6;
+            --warning-bg: #fffbeb;
+            --warning-border: #f59e0b;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        h1, h2, h3 {
+            color: var(--text-heading);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        h1 {
+            font-size: 2.2em;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.6em;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 10px;
+        }
+        p {
+            margin-bottom: 1.2em;
+        }
+        .bilingual-en {
+            color: #475569;
+            font-style: italic;
+            margin-bottom: 1.5em;
+            padding-left: 15px;
+            border-left: 3px solid #cbd5e1;
+        }
+        .header-section {
+            background-color: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-block {
+            background-color: var(--math-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .warning-box {
+            background-color: var(--warning-bg);
+            border-left: 5px solid var(--warning-border);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .qa-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .qa-q {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .qa-a {
+            margin-bottom: 0;
+        }
+        .tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 1. Header -->
+    <div class="header-section">
+        <h1>經濟學深度解析：代替品與有效需求<br><span style="font-size: 0.7em; color: #64748b;">Economic Analysis: Substitutes and Effective Demand</span></h1>
+        <p><strong>主題 (Topic):</strong> 需求與供應、交叉彈性、有效需求 (Demand & Supply, Cross Elasticity, Effective Demand)</p>
+        <p><strong>難度 (Difficulty):</strong> ★★★☆☆</p>
+        <p><strong>關鍵字 (Key Concepts):</strong> 
+            <span class="tag">Effective Demand (有效需求)</span>
+            <span class="tag">Substitutes (代替品)</span>
+            <span class="tag">Purchasing Power (購買力)</span>
+            <span class="tag">Market Segmentation (市場區隔)</span>
+        </p>
+    </div>
+
+    <!-- 2. The Question -->
+    <h2>1. 題目 (The Question)</h2>
+    <div class="qa-box" style="border-left: 5px solid #64748b;">
+        <p>在經濟學上，代替品是指能夠滿足消費者相同或類似慾望的物品。當物品X的價格上升時，消費者會減少購買X，轉而購買物品Y，導致Y的需求增加。</p>
+        <p><strong>豪宅和公屋是否代替品？對於低收入人士而言，他們無論如何也買不起豪宅。當豪宅的價格上升，他們對公屋的需求會上升嗎？為甚麼？</strong></p>
+        
+        <div class="bilingual-en">
+            <p>In economics, substitutes are goods that can satisfy the same or similar wants of consumers. When the price of Good X increases, consumers will buy less of X and turn to buy Good Y, leading to an increase in the demand for Y.</p>
+            <p><strong>Are luxury mansions and public housing substitutes? For low-income individuals who can never afford luxury mansions, if the price of luxury mansions increases, will their demand for public housing increase? Why?</strong></p>
+        </div>
+    </div>
+
+    <!-- 3. Concept Review -->
+    <h2>2. 概念重溫 (Concept Review)</h2>
+    <div class="concept-box">
+        <h3>有效需求 (Effective Demand)</h3>
+        <p>在經濟學中，「需求」(Demand) 並不單單指慾望 (Wants/Desires)。需求必須具備兩個條件：(1) 購買的意慾 (Willingness to buy)；(2) <strong>購買力 (Purchasing power / Ability to pay)</strong>。缺乏購買力的慾望不能構成經濟學上的需求。</p>
+        <p class="bilingual-en">In economics, "Demand" does not merely refer to wants or desires. Demand must satisfy two conditions: (1) Willingness to buy; and (2) <strong>Purchasing power (Ability to pay)</strong>. A desire without purchasing power does not constitute economic demand.</p>
+
+        <h3>交叉需求價格彈性 (Cross-Price Elasticity of Demand)</h3>
+        <p>這是量度物品Y的需求量對物品X價格變動的反應程度。對於代替品 (Substitutes)，其交叉彈性為正數 \( (E_{xy} > 0) \)。</p>
+        <p class="bilingual-en">This measures the responsiveness of the quantity demanded for Good Y to a change in the price of Good X. For substitutes, the cross-price elasticity is positive \( (E_{xy} > 0) \).</p>
+        
+        <div class="math-block">
+            \[ E_{xy} = \frac{\% \Delta Q_d^y}{\% \Delta P_x} > 0 \]
+        </div>
+    </div>
+
+    <!-- 4. The Answer & Detailed Analysis -->
+    <h2>3. 答案與詳細分析 (The Answer & Detailed Analysis)</h2>
+    <p><strong>結論：</strong>對於低收入人士而言，豪宅和公屋<strong>不是</strong>代替品。當豪宅價格上升，他們對公屋的需求<strong>不會</strong>上升。</p>
+    <p class="bilingual-en"><strong>Conclusion:</strong> For low-income individuals, luxury mansions and public housing are <strong>NOT</strong> substitutes. When the price of luxury mansions increases, their demand for public housing will <strong>NOT</strong> increase.</p>
+
+    <h3>詳細分析 (Detailed Analysis)</h3>
+    <p>根據經濟學定義，需求必須由購買力支持（即有效需求）。低收入人士根本沒有足夠的購買力購買豪宅，因此他們對豪宅的有效需求量原本就是<strong>零</strong>。</p>
+    <p class="bilingual-en">According to the economic definition, demand must be backed by purchasing power (i.e., effective demand). Low-income individuals do not have sufficient purchasing power to buy luxury mansions; therefore, their effective quantity demanded for luxury mansions is initially <strong>zero</strong>.</p>
+
+    <p>既然他們一開始就沒有購買豪宅，當豪宅的價格上升（例如由一億元升至一億二千萬元），這對他們的消費選擇沒有任何實質影響。他們無法「減少購買豪宅」（因為本來就買不起），自然也不會因為豪宅加價而「轉而」增加對公屋的需求。</p>
+    <p class="bilingual-en">Since they are not buying luxury mansions in the first place, when the price of luxury mansions increases (e.g., from $100 million to $120 million), it has no real impact on their consumption choices. They cannot "reduce the purchase of luxury mansions" (as they couldn't afford them anyway), and naturally, they will not "turn to" increase their demand for public housing due to the price hike of luxury mansions.</p>
+
+    <p>因此，豪宅價格的變動 \( (\Delta P_x > 0) \) 無法引起低收入人士對公屋需求量的變動 \( (\Delta Q_d^y = 0) \)。兩者之間的交叉彈性為零，對這群消費者而言，兩者並非代替品。</p>
+    <p class="bilingual-en">Therefore, a change in the price of luxury mansions \( (\Delta P_x > 0) \) cannot induce a change in the quantity demanded for public housing by low-income earners \( (\Delta Q_d^y = 0) \). The cross elasticity between the two is zero, meaning they are not substitutes for this group of consumers.</p>
+
+    <!-- 5. Problem Decomposition -->
+    <h2>4. 題目拆解 (Problem Decomposition)</h2>
+    <p><strong>解題樞紐 (The Pivot Point)：</strong>本題的核心在於區分「日常用語中的代替」與「經濟學上的代替品」。日常生活中，我們可能認為所有房屋都能提供「居住」的功能，看似是代替品。但經濟學的樞紐在於<strong>「有效需求」(Effective Demand)</strong>。</p>
+    <p class="bilingual-en"><strong>The Pivot Point:</strong> The core of this question lies in distinguishing between "substitution in daily language" and "substitutes in economics". In daily life, we might think all housing provides the function of "shelter" and thus seem like substitutes. But the economic pivot is <strong>Effective Demand</strong>.</p>
+
+    <p><strong>干擾資訊 (Distractors)：</strong>題目開首給出了代替品的標準定義（滿足相同慾望）。這是一個誘餌，引導學生只從「慾望」(Wants) 的角度思考，而忽略了預算限制 (Budget constraint) 和購買力。</p>
+    <p class="bilingual-en"><strong>Distractors:</strong> The prompt begins with the standard definition of substitutes (satisfying similar wants). This is a bait, guiding students to think solely from the perspective of "Wants", while ignoring the budget constraint and purchasing power.</p>
+
+    <!-- 6. Deep Dive -->
+    <h2>5. 深度探討與盲點分析 (Deep Dive & Underlying Confusion)</h2>
+    <p><strong>為何這條題目容易答錯？ (Why is this hard?)</strong><br>
+    學生常犯的認知陷阱是混淆了「慾望」(Desire) 與「需求」(Demand)。低收入人士絕對有居住在豪宅的「慾望」，但缺乏購買力。在繪畫需求曲線時，對於價格極高的物品，低收入人士的需求曲線實際上是貼著縱軸的（數量為零）。</p>
+    <p class="bilingual-en"><strong>Why is this hard?</strong><br>
+    The common cognitive trap for students is confusing "Desire" with "Demand". Low-income earners absolutely have the "desire" to live in luxury mansions, but they lack purchasing power. When drawing a demand curve, for extremely high-priced goods, the demand curve for low-income earners is essentially stuck to the vertical axis (quantity is zero).</p>
+
+    <p><strong>進階概念：市場區隔 (Advanced Concept: Market Segmentation)</strong><br>
+    在現實的房地產市場中，市場是高度區隔的 (Highly segmented)。豪宅市場（針對高收入群體）與公營房屋市場（針對低收入群體）屬於兩個完全不同的子市場 (Sub-markets)。這兩個市場的消費者群體幾乎沒有重疊。因此，豪宅的價格波動通常只會影響其他高端私人住宅的需求，而不會傳導至公屋市場。</p>
+    <p class="bilingual-en"><strong>Advanced Concept: Market Segmentation</strong><br>
+    In the real estate market, the market is highly segmented. The luxury mansion market (targeting high-income groups) and the public housing market (targeting low-income groups) belong to two completely different sub-markets. There is almost no overlap in the consumer groups of these two markets. Therefore, price fluctuations in luxury mansions typically only affect the demand for other high-end private housing, and will not transmit to the public housing market.</p>
+
+    <!-- 7. Common Mistakes & Traps -->
+    <h2>6. 常犯錯誤與陷阱 (Common Mistakes & Traps)</h2>
+    <div class="warning-box">
+        <p><strong>陷阱一：忽略了「轉而購買」的前提</strong><br>
+        要發生替代效應 (Substitution effect)，消費者必須原本在兩者之間作選擇。如果消費者原本就只買得起Y，買不起X，X加價就不會引發替代效應。</p>
+        <p class="bilingual-en"><strong>Trap 1: Ignoring the prerequisite of "turning to buy"</strong><br>
+        For the substitution effect to occur, the consumer must originally be making a choice between the two. If the consumer could originally only afford Y and not X, a price increase in X will not trigger a substitution effect.</p>
+
+        <p><strong>陷阱二：將整體市場與個別消費者混為一談</strong><br>
+        題目特別指明是「對於低收入人士而言」。即使在宏觀層面上，某些房屋類型之間可能存在微弱的替代關係，但針對特定收入群體，這種關係可能不存在。</p>
+        <p class="bilingual-en"><strong>Trap 2: Confusing the overall market with individual consumers</strong><br>
+        The question specifically states "For low-income individuals". Even if there might be a weak substitution relationship between certain housing types at a macroeconomic level, this relationship may not exist for a specific income group.</p>
+    </div>
+
+    <!-- 8. Student Q&A -->
+    <h2>7. 學生常見疑問 (Student Q&A)</h2>
+    <div class="qa-box">
+        <div class="qa-q">Q: 如果題目改為「中產階級」，普通私人住宅和豪宅會是代替品嗎？</div>
+        <div class="qa-a">
+            <p><strong>A:</strong> 有可能。對於部分較富裕的中產階級（處於邊際上的消費者 Marginal consumers），他們可能剛好負擔得起較便宜的豪宅或優質的普通私樓。如果豪宅大幅加價，超出了他們的預算，他們就會放棄購買豪宅，轉而購買普通私樓。在這種情況下，兩者對這群人來說就是代替品。</p>
+            <p class="bilingual-en"><strong>A:</strong> Possibly. For some wealthier middle-class individuals (marginal consumers), they might just be able to afford a cheaper luxury mansion or a premium regular private flat. If luxury mansions experience a significant price hike, exceeding their budget, they will give up buying luxury mansions and turn to regular private flats. In this scenario, the two are substitutes for this group.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

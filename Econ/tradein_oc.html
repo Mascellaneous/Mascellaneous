@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics Tutor: Opportunity Cost Analysis</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --primary-dark: #0369a1;
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --box-bg-concept: #f0f9ff;
+            --box-bg-math: #f3f4f6;
+            --box-bg-warning: #fffbeb;
+            --warning-border: #f59e0b;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        h1, h2, h3 {
+            color: var(--primary-dark);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        h1 {
+            font-size: 2.2em;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: "✦";
+            color: var(--primary-color);
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .bilingual-en {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-top: -0.5em;
+            margin-bottom: 1.5em;
+            border-left: 3px solid #cbd5e1;
+            padding-left: 10px;
+            font-style: italic;
+        }
+        .header-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: var(--text-main);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        .question-box {
+            background: #ffffff;
+            border: 2px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(14, 165, 233, 0.1);
+        }
+        .concept-box {
+            background-color: var(--box-bg-concept);
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-block {
+            background-color: var(--box-bg-math);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .warning-box {
+            background-color: var(--box-bg-warning);
+            border-left: 5px solid var(--warning-border);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .qa-item {
+            margin-bottom: 20px;
+        }
+        .qa-q {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+        .qa-a {
+            margin-top: 5px;
+            padding-left: 20px;
+            border-left: 2px solid var(--primary-color);
+        }
+        .highlight {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <h1>經濟學深度解析：機會成本與決策</h1>
+    <div class="header-stats">
+        <div class="stat-item"><strong>Topic:</strong> Opportunity Cost (機會成本)</div>
+        <div class="stat-item"><strong>Difficulty:</strong> ★★★☆☆</div>
+        <div class="stat-item"><strong>Key Concepts:</strong> Monetary Cost, Non-monetary Cost, Full Cost</div>
+    </div>
+
+    <!-- 2. The Question -->
+    <h2>The Question (題目)</h2>
+    <div class="question-box">
+        <p><strong>假設有兩個選項：</strong><br>
+        選項1：以 \(\$a\) 賣出舊電話，再以 \(\$b\) 買一部新電話<br>
+        選項2：繼續使用舊電話</p>
+        <p><strong>問題：</strong>選擇以舊換新(選項1)的金錢成本、非金錢成本、全成本是多少？</p>
+        
+        <div class="bilingual-en">
+            <strong>Suppose there are two options:</strong><br>
+            Option 1: Sell the old phone for \(\$a\), and buy a new phone for \(\$b\).<br>
+            Option 2: Continue using the old phone.<br>
+            <strong>Question:</strong> What is the monetary cost, non-monetary cost, and full cost of choosing Option 1 (trade-in)?
+        </div>
+    </div>
+
+    <!-- 3. Concept Review -->
+    <h2>Concept Review (概念重溫)</h2>
+    <div class="concept-box">
+        <p>在經濟學中，<strong>機會成本 (Opportunity Cost)</strong> 被定義為「被放棄的選項中價值最高者」(The highest-valued option forgone)。當我們作出選擇時，必須考慮所有付出的代價，這包括實際支付的金錢，以及放棄的其他非金錢價值。</p>
+        <div class="bilingual-en">
+            In economics, <strong>Opportunity Cost</strong> is defined as "the highest-valued option forgone." When making a choice, we must consider all sacrifices made, which include both the actual money paid and the non-monetary value given up.
+        </div>
+
+        <ul>
+            <li><strong>金錢成本 (Monetary Cost / Explicit Cost):</strong> 決策中涉及的實際淨現金流出。</li>
+            <li><strong>非金錢成本 (Non-monetary Cost / Implicit Cost):</strong> 決策中放棄的非金錢價值（例如時間、物品的使用價值）。</li>
+        </ul>
+        <div class="bilingual-en">
+            <ul>
+                <li><strong>Monetary Cost:</strong> The actual net cash outflow involved in a decision.</li>
+                <li><strong>Non-monetary Cost:</strong> The non-monetary value given up in a decision (e.g., time, use value of a good).</li>
+            </ul>
+        </div>
+
+        <div class="math-block">
+            $$ \text{Full Cost (全成本)} = \text{Monetary Cost (金錢成本)} + \text{Non-monetary Cost (非金錢成本)} $$
+        </div>
+    </div>
+
+    <!-- 4. The Answer & Detailed Analysis -->
+    <h2>The Answer & Detailed Analysis (答案與詳細分析)</h2>
+    <p>要計算選擇「選項1」的成本，我們必須比較「選項1」與「選項2」之間的差異。選擇選項1意味著你放棄了選項2。</p>
+    <div class="bilingual-en">
+        To calculate the cost of choosing "Option 1", we must compare the differences between "Option 1" and "Option 2". Choosing Option 1 means you give up Option 2.
+    </div>
+
+    <h3>1. 金錢成本 (Monetary Cost) = \(\$(b - a)\)</h3>
+    <p><strong>分析：</strong>當你選擇選項1時，你需要支付 \(\$b\) 來購買新電話。然而，這個行動同時包含了「賣出舊電話」這個動作，為你帶來了 \(\$a\) 的現金收入。因此，你的<strong>淨現金流出</strong>是 \(\$(b - a)\)。這 \(\$a\) 抵銷了部分買新電話的支出。</p>
+    <div class="bilingual-en">
+        <strong>Analysis:</strong> When you choose Option 1, you need to pay \(\$b\) to buy the new phone. However, this action inherently includes "selling the old phone," which brings you a cash inflow of \(\$a\). Therefore, your <strong>net cash outflow</strong> is \(\$(b - a)\). This \(\$a\) offsets part of the expenditure for the new phone.
+    </div>
+
+    <h3>2. 非金錢成本 (Non-monetary Cost) = 繼續使用舊電話的價值 (Use value of the old phone)</h3>
+    <p><strong>分析：</strong>選擇選項1的代價不僅僅是金錢。因為你賣掉了舊電話，你失去了原本可以「繼續使用舊電話」所帶來的效用（Utility）或享受。這是一個非金錢的犧牲。</p>
+    <div class="bilingual-en">
+        <strong>Analysis:</strong> The sacrifice of choosing Option 1 is not just monetary. Because you sold the old phone, you lose the utility or enjoyment that would have come from "continuing to use the old phone." This is a non-monetary sacrifice.
+    </div>
+
+    <h3>3. 全成本 (Full Cost) = \(\$(b - a)\) + 繼續使用舊電話的價值</h3>
+    <p><strong>分析：</strong>將上述兩者相加，就是選擇以舊換新的全部機會成本。</p>
+    <div class="bilingual-en">
+        <strong>Analysis:</strong> Adding the two components above gives the total opportunity cost of choosing the trade-in option.
+    </div>
+
+    <!-- 5. Problem Decomposition -->
+    <h2>Problem Decomposition (題目拆解)</h2>
+    <p>這類題目的<strong>關鍵轉折點 (Pivot Point)</strong> 在於如何處理 \(\$a\)（賣出舊電話的收入）。</p>
+    <p>很多學生會把 \(\$a\) 視為「放棄的收入」，但請仔細看題目：選項1是「賣出舊電話並買新電話」。這意味著如果你選擇選項1，你<strong>確實會收到</strong> \(\$a\)。因此，\(\$a\) 不是你放棄的東西，而是你獲得的補償，它會<strong>降低</strong>你的金錢成本。</p>
+    <div class="bilingual-en">
+        The <strong>Pivot Point</strong> of this type of question lies in how to handle \(\$a\) (the revenue from selling the old phone).<br>
+        Many students might treat \(\$a\) as "forgone income", but look closely at the question: Option 1 is "Sell the old phone AND buy a new phone". This means if you choose Option 1, you <strong>actually receive</strong> \(\$a\). Therefore, \(\$a\) is not something you give up; it is a compensation you receive, which <strong>reduces</strong> your monetary cost.
+    </div>
+
+    <!-- 6. Deep Dive & Underlying Confusion -->
+    <h2>Deep Dive & Underlying Confusion (深度探討與盲點分析)</h2>
+    <p><strong>為什麼這題容易讓人混淆？</strong><br>
+    這題觸及了經濟學中一個非常核心的認知陷阱：<strong>將「資產的市場價值」與「資產的使用價值」混為一談。</strong></p>
+    <p>在選項2（繼續使用舊電話）中，舊電話有兩個潛在價值：
+    <ol>
+        <li>把它賣掉能換取的金錢 (\(\$a\))</li>
+        <li>自己使用的效用 (Use value)</li>
+    </ol>
+    你不能同時擁有兩者。當你選擇選項1時，你選擇了獲取 \(\$a\)（這降低了買新機的成本），但你必須放棄「自己使用的效用」。這就是為什麼非金錢成本是「使用舊電話的價值」，而不是 \(\$a\)。</p>
+    
+    <div class="bilingual-en">
+        <strong>Why is this confusing?</strong><br>
+        This question touches upon a core cognitive trap in economics: <strong>confusing the "market value of an asset" with the "use value of an asset."</strong><br>
+        In Option 2 (keeping the old phone), the old phone has two potential values:
+        <ol>
+            <li>The money it can be sold for (\(\$a\))</li>
+            <li>The utility of using it yourself (Use value)</li>
+        </ol>
+        You cannot have both simultaneously. When you choose Option 1, you choose to acquire \(\$a\) (which lowers the cost of buying the new phone), but you must give up the "utility of using it yourself." This is why the non-monetary cost is the "use value of the old phone," not \(\$a\).
+    </div>
+
+    <!-- 7. Common Mistakes & Traps -->
+    <h2>Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+    <div class="warning-box">
+        <p><span class="highlight">陷阱 1：認為金錢成本是 \(\$b\)。</span><br>
+        錯誤原因：忽略了賣出舊電話帶來的現金回流。在經濟學中，我們計算的是「淨」金錢代價 (Net monetary cost)。</p>
+        <div class="bilingual-en">
+            <span class="highlight">Trap 1: Thinking the monetary cost is \(\$b\).</span><br>
+            Reason for error: Ignoring the cash inflow from selling the old phone. In economics, we calculate the "net" monetary cost.
+        </div>
+
+        <p><span class="highlight">陷阱 2：加入舊電話當初的買入價 (Historical Cost)。</span><br>
+        錯誤原因：舊電話當初買入的價格是<strong>沉沒成本 (Sunk Cost)</strong>。無論你現在選擇選項1還是選項2，這筆錢都無法收回，因此不應計入機會成本中。</p>
+        <div class="bilingual-en">
+            <span class="highlight">Trap 2: Including the original purchase price of the old phone.</span><br>
+            Reason for error: The original purchase price is a <strong>Sunk Cost</strong>. Whether you choose Option 1 or Option 2 now, this money cannot be recovered, so it should not be included in the opportunity cost.
+        </div>
+    </div>
+
+    <!-- 8. Student Q&A -->
+    <h2>Student Q&A (學生常見疑問)</h2>
+    
+    <div class="qa-item">
+        <div class="qa-q">Q1: 如果題目沒有說「賣出舊電話」，只是說「買一部新電話」，成本會有什麼不同？</div>
+        <div class="qa-a">
+            <p>A: 如果選項1只是「買一部新電話」（而你保留舊電話），那麼金錢成本就是 \(\$b\)。因為你沒有賣出舊電話，所以沒有 \(\$a\) 來抵銷支出。同時，你也沒有放棄舊電話的使用價值（因為你保留了它），所以非金錢成本中不會包含「放棄使用舊電話的價值」。</p>
+            <div class="bilingual-en">
+                A: If Option 1 was simply "buy a new phone" (and you keep the old one), the monetary cost would be \(\$b\). Since you didn't sell the old phone, there is no \(\$a\) to offset the expenditure. Also, you haven't given up the use value of the old phone (since you kept it), so the non-monetary cost would not include "the forgone use value of the old phone."
+            </div>
+        </div>
+    </div>
+
+    <div class="qa-item">
+        <div class="qa-q">Q2: 我們怎麼知道「繼續使用舊電話的價值」大於還是小於 \(\$a\)？</div>
+        <div class="qa-a">
+            <p>A: 題目並沒有提供足夠數據來比較兩者。但在現實決策中，如果消費者認為「新電話的效用」大於「\(\$(b - a)\) 加上舊電話的使用價值」，他就會選擇以舊換新。這屬於邊際分析與理性選擇的範疇。</p>
+            <div class="bilingual-en">
+                A: The question doesn't provide enough data to compare the two. But in real-world decision-making, if a consumer believes the "utility of the new phone" is greater than "\(\$(b - a)\) plus the use value of the old phone," they will choose to trade in. This falls under marginal analysis and rational choice.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
