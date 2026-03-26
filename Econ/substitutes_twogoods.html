@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics Tutor: Substitutes and Demand Shocks</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #334155;
+            --accent-blue: #0284c7;
+            --bg-blue: #f0f9ff;
+            --accent-orange: #ea580c;
+            --bg-orange: #fff7ed;
+            --bg-gray: #f8fafc;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1, h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        .header-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .header-section h1 {
+            border-bottom: none;
+            margin-top: 0;
+            color: white;
+        }
+        .tag {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .bilingual-zh {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .bilingual-en {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #cbd5e1;
+        }
+        .concept-box {
+            background-color: var(--bg-blue);
+            border-left: 5px solid var(--accent-blue);
+            padding: 15px 20px;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-block {
+            background-color: var(--bg-gray);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .trap-box {
+            background-color: var(--bg-orange);
+            border-left: 5px solid var(--accent-orange);
+            padding: 15px 20px;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .qa-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 1rem;
+        }
+        .qa-q {
+            font-weight: bold;
+            color: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <h1>Economics Analysis: Substitutes & Demand Shocks</h1>
+        <div>
+            <span class="tag">Topic: 需求與供應 (Demand & Supply)</span>
+            <span class="tag">Difficulty: ★★★★☆</span>
+            <span class="tag">Key Concepts: 代替品 (Substitutes), 需求改變 (Change in Demand), 其他因素不變 (Ceteris Paribus)</span>
+        </div>
+    </div>
+
+    <h2>1. The Question (題目)</h2>
+    <div class="bilingual-zh">
+        假設物品X和物品Y是代替品。當物品X的價格上升，物品Y的需求會上升。<br>
+        可是，我想到一個例子。假設有兩間麵包店：麵包店A和麵包店B。<br>
+        由於麵包店A聘請了一名英俊的麵包師傅，所以人們對麵包店A的麵包的需求會上升，均衡價格會上升。<br>
+        這會導致物品Y（麵包店B的麵包）的需求也上升嗎？
+    </div>
+    <div class="bilingual-en">
+        Assume Good X and Good Y are substitutes. When the price of Good X increases, the demand for Good Y increases.<br>
+        However, I thought of an example. Suppose there are two bakeries: Bakery A and Bakery B.<br>
+        Because Bakery A hires a handsome baker, people's demand for Bakery A's bread increases, and its equilibrium price increases.<br>
+        Will this lead to an increase in the demand for Good Y (Bakery B's bread) as well?
+    </div>
+
+    <h2>2. Concept Review (概念重溫)</h2>
+    <div class="concept-box">
+        <div class="bilingual-zh">
+            <strong>1. 代替品 (Substitutes):</strong> 兩種物品可以互相替代以滿足同一慾望。在交叉需求彈性 (Cross-price elasticity of demand) 中，兩者的關係為正數。
+        </div>
+        <div class="bilingual-en">
+            <strong>1. Substitutes:</strong> Two goods that can replace each other to satisfy the same want. The cross-price elasticity of demand between them is positive.
+        </div>
+        
+        <div class="math-block">
+            \[ E_{xy} = \frac{\% \Delta Q_d^Y}{\% \Delta P^X} > 0 \]
+        </div>
+
+        <div class="bilingual-zh">
+            <strong>2. 其他因素不變 (Ceteris Paribus):</strong> 經濟學分析中極為重要的假設。「物品X價格上升導致物品Y需求上升」這一定律，必須建基於「消費者對兩者的偏好 (Preferences) 沒有改變」的前提下。
+        </div>
+        <div class="bilingual-en">
+            <strong>2. Ceteris Paribus (All other things being equal):</strong> A crucial assumption in economic analysis. The law "an increase in the price of Good X leads to an increase in demand for Good Y" must be based on the premise that "consumer preferences for both goods remain unchanged."
+        </div>
+    </div>
+
+    <h2>3. The Answer & Detailed Analysis (答案與詳細分析)</h2>
+    <div class="bilingual-zh">
+        <strong>答案：不會。麵包店B（物品Y）的需求通常會下降，而不是上升。</strong><br><br>
+        <strong>詳細分析：</strong><br>
+        這個問題非常精彩，它點出了教科書定律與現實應用之間常見的矛盾。你所描述的「物品X價格上升導致物品Y需求上升」，其實隱含了一個前提：<strong>物品X的價格上升是由「供應減少」（Supply Shock）引起的</strong>。<br><br>
+        在你的例子中，物品X（麵包店A）的價格上升，是因為<strong>需求增加</strong>（聘請了英俊的麵包師傅改變了消費者的偏好）。當消費者的偏好轉向麵包店A時，這意味著他們對麵包店B的相對偏好下降了。因此，消費者會從麵包店B流失到麵包店A，導致麵包店B的需求<strong>下降</strong>，整條需求曲線向左移。
+    </div>
+    <div class="bilingual-en">
+        <strong>Answer: No. The demand for Bakery B (Good Y) will generally decrease, not increase.</strong><br><br>
+        <strong>Detailed Analysis:</strong><br>
+        This is an excellent question that highlights a common contradiction between textbook laws and real-world applications. The rule you described, "an increase in the price of Good X leads to an increase in the demand for Good Y," actually implies a prerequisite: <strong>the price increase of Good X is caused by a decrease in supply (Supply Shock)</strong>.<br><br>
+        In your example, the price of Good X (Bakery A) increases because of an <strong>increase in demand</strong> (hiring a handsome baker changed consumer preferences). When consumer preferences shift towards Bakery A, it means their relative preference for Bakery B decreases. Therefore, consumers will flow from Bakery B to Bakery A, causing the demand for Bakery B to <strong>decrease</strong>, shifting its entire demand curve to the left.
+    </div>
+
+    <h2>4. Problem Decomposition (題目拆解)</h2>
+    <div class="bilingual-zh">
+        <strong>破局點 (Pivot Point)：價格變動的「原因」</strong><br>
+        這條題目的關鍵在於區分「內生變數」(Endogenous variable) 和「外生衝擊」(Exogenous shock)。價格 \(P\) 是一個結果。我們不能單看「價格上升」就套用公式，必須追溯是甚麼導致價格上升。
+        <ul>
+            <li><strong>情況一（教科書標準情況）：</strong> 麵粉價格上升 \(\rightarrow\) 麵包店A供應減少 \(\rightarrow\) 麵包店A價格上升 \(\rightarrow\) 顧客覺得A太貴，轉買B \(\rightarrow\) 麵包店B需求上升。</li>
+            <li><strong>情況二（你的例子）：</strong> 英俊師傅出現 \(\rightarrow\) 顧客偏好改變，湧向A \(\rightarrow\) 麵包店A需求上升，價格被推高 \(\rightarrow\) 由於顧客已經去了A，麵包店B的顧客減少 \(\rightarrow\) 麵包店B需求下降。</li>
+        </ul>
+    </div>
+    <div class="bilingual-en">
+        <strong>Pivot Point: The "Cause" of the Price Change</strong><br>
+        The key to this problem lies in distinguishing between an endogenous variable and an exogenous shock. Price \(P\) is a result. We cannot simply look at "price increases" and apply a formula; we must trace back to what caused the price to rise.
+        <ul>
+            <li><strong>Scenario 1 (Standard Textbook Case):</strong> Flour price rises \(\rightarrow\) Supply of Bakery A decreases \(\rightarrow\) Price of Bakery A increases \(\rightarrow\) Customers find A too expensive and switch to B \(\rightarrow\) Demand for Bakery B increases.</li>
+            <li><strong>Scenario 2 (Your Example):</strong> Handsome baker appears \(\rightarrow\) Consumer preferences change, flocking to A \(\rightarrow\) Demand for Bakery A increases, pushing up the price \(\rightarrow\) Since customers have already gone to A, Bakery B loses customers \(\rightarrow\) Demand for Bakery B decreases.</li>
+        </ul>
+    </div>
+
+    <h2>5. Deep Dive & Underlying Confusion (深度探討與盲點分析)</h2>
+    <div class="bilingual-zh">
+        <strong>為何這會令人混淆？</strong><br>
+        這是因為初學者往往將「價格」視為獨立的起因（Independent variable）。在局部均衡分析 (Partial Equilibrium) 中，我們常說「若價格上升...」，但現實中價格不會無故上升。價格是需求和供應互動的結果。<br><br>
+        當你說「物品X和物品Y是代替品」時，這意味著在<strong>其他因素不變 (Ceteris Paribus)</strong> 的情況下，兩者有替代關係。但「聘請英俊師傅」這個動作，直接打破了「其他因素不變」的假設——消費者的品味 (Tastes and Preferences) 已經改變了。這個品味的改變同時影響了兩個市場，其直接影響（偏好A多於B）凌駕了價格變動帶來的間接影響。
+    </div>
+    <div class="bilingual-en">
+        <strong>Why is this confusing?</strong><br>
+        This is because beginners often treat "price" as an independent variable. In partial equilibrium analysis, we often say "if price increases...", but in reality, prices don't rise for no reason. Price is the result of the interaction between demand and supply.<br><br>
+        When you say "Good X and Good Y are substitutes," it implies a substitution relationship under the condition of <strong>Ceteris Paribus (all other things being equal)</strong>. However, the act of "hiring a handsome baker" directly breaks this assumption—consumer tastes and preferences have changed. This change in taste affects both markets simultaneously, and its direct effect (preferring A over B) overrides the indirect effect brought by the price change.
+    </div>
+
+    <h2>6. Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+    <div class="trap-box">
+        <div class="bilingual-zh">
+            <strong>陷阱：死記硬背交叉彈性公式</strong><br>
+            學生常犯的錯誤是看到 \(P_X \uparrow \implies D_Y \uparrow\) 就直接套用，而忽略了背後的前提。記住：只有當 \(P_X\) 的變動是沿著需求曲線移動 (Movement along the demand curve) 時，這個代替品定律才完美適用。如果是整條需求曲線移動 (Shift in the demand curve)，則需要分析移動的原因。
+        </div>
+        <div class="bilingual-en">
+            <strong>Trap: Rote memorization of the cross-elasticity formula</strong><br>
+            A common mistake students make is blindly applying \(P_X \uparrow \implies D_Y \uparrow\) without considering the underlying premises. Remember: this substitute law works perfectly only when the change in \(P_X\) is a movement along the demand curve. If it is a shift in the demand curve, you must analyze the cause of the shift.
+        </div>
+    </div>
+
+    <h2>7. Student Q&A (學生常見疑問)</h2>
+    <div class="qa-box">
+        <div class="qa-q">Q: 那麼，麵包店A的價格上升，完全不會把一些顧客推回給麵包店B嗎？</div>
+        <div class="bilingual-zh">
+            A: 會的，這是一個「二次效應」(Secondary effect)。首先，偏好改變令大量顧客從B流向A（B的需求大幅下降）。然後，A的價格被推高，這高昂的價格會令<strong>小部分</strong>原本想去A的顧客覺得太貴，從而退而求其次回到B（這會令B的需求稍微回升一點）。但是，整體的淨效應 (Net effect) 依然是B的需求下降了，因為最初導致價格上升的原因就是大家更喜歡A。
+        </div>
+        <div class="bilingual-en">
+            A: It will, this is a "secondary effect". First, the change in preference causes a large number of customers to flow from B to A (Demand for B drops significantly). Then, A's price is pushed up. This higher price will make a <strong>small portion</strong> of customers who originally wanted to go to A feel it's too expensive, so they settle for B (this causes B's demand to recover slightly). However, the overall net effect is still a decrease in B's demand, because the initial reason for the price increase was that everyone preferred A more.
+        </div>
+    </div>
+
+</body>
+</html>
