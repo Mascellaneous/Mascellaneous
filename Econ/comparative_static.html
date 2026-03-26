@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics Guide: Comparative Statics vs Market Dynamics</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #f0f9ff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1, h2, h3 {
+            color: #111827;
+            margin-top: 1.5em;
+        }
+        h1 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        .header-section {
+            background-color: var(--bg-light);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        .concept-box {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-box {
+            background-color: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .deep-dive-box {
+            background-color: #fdf2f8;
+            border-left: 5px solid #db2777;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .question-box {
+            background-color: #fffbeb;
+            border: 1px solid #fcd34d;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .bilingual-en {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border-color);
+        }
+        .tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .qa-item {
+            margin-bottom: 20px;
+        }
+        .qa-q {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .concept-box, .deep-dive-box, .question-box {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <h2>Economics Analytical Guide 經濟學分析指南</h2>
+        <p><strong>Topic (主題):</strong> Market Equilibrium, Comparative Statics vs. Market Dynamics (市場均衡、比較靜態分析與市場動態)</p>
+        <p><strong>Difficulty (難度):</strong> ★★★★☆ (4/5 Stars)</p>
+        <p><strong>Key Concepts (核心概念):</strong> 
+            <span class="tag">Comparative Statics</span>
+            <span class="tag">Walrasian Adjustment</span>
+            <span class="tag">Excess Demand</span>
+            <span class="tag">Price Mechanism</span>
+        </p>
+    </div>
+
+    <h2>1. The Question (題目)</h2>
+    <div class="question-box">
+        <p><strong>學生提問：</strong><br>
+        當物品X的需求上升，物品X的均衡價格和交易量會上升。這結論本身沒有問題，但一些老師會強調當物品X的需求上升，會出現超額需求，然後價格會上升。<br>
+        我認為這個過程沒有必要。根據 comparative static analysis (比較靜態分析)，我們只關心均衡點之間的變動，不會探討從一個均衡點移向另一個均衡點的過程。老師強調需求上升後出現超額需求只是為了照顧程度較低的同學，但這做法本身是不必要，而且不符合 comparative static analysis。</p>
+        
+        <div class="bilingual-en">
+            <strong>Student's Query:</strong><br>
+            When the demand for Good X increases, its equilibrium price and quantity will increase. This conclusion is fine, but some teachers emphasize that when demand increases, an "excess demand" (shortage) occurs, which then drives up the price.<br>
+            I believe this intermediate process is unnecessary. According to comparative static analysis, we only care about the changes between equilibrium points and do not explore the transition process from one equilibrium to another. The teacher's emphasis on excess demand is just to cater to weaker students; it is fundamentally unnecessary and inconsistent with comparative static analysis.
+        </div>
+    </div>
+
+    <h2>2. Concept Review (概念重溫)</h2>
+    <div class="concept-box">
+        <h3>Comparative Statics (比較靜態分析)</h3>
+        <p>比較靜態分析是一種經濟學方法，用於比較兩個不同靜態均衡狀態的差異，而不考慮從一個狀態過渡到另一個狀態所需的時間或路徑。</p>
+        <div class="bilingual-en">Comparative statics is an economic method used to compare two different static equilibrium states without considering the time or path required to transition from one state to the other.</div>
+        
+        <div class="math-box">
+            \[ Q_d(P, \alpha) = Q_s(P) \]
+            <p style="font-size: 0.9em; margin-top: 5px;">Where \( \alpha \) is an exogenous demand shifter (e.g., income). Comparative statics finds the new \( P^* \) and \( Q^* \) after \( \alpha \) changes.</p>
+        </div>
+
+        <h3>Walrasian Price Adjustment Mechanism (瓦爾拉斯價格調整機制)</h3>
+        <p>這是解釋市場如何達致新均衡的動態過程。當市場出現超額需求（\( Q_d > Q_s \)）時，消費者會互相競爭，推高價格；價格上升會導致需求量減少及供給量增加，直至市場重新均衡。</p>
+        <div class="bilingual-en">This is the dynamic process explaining how a market reaches a new equilibrium. When there is excess demand (\( Q_d > Q_s \)), consumers compete and bid up the price. The rising price decreases quantity demanded and increases quantity supplied until the market clears.</div>
+        
+        <div class="math-box">
+            \[ \frac{dP}{dt} = f(Q_d - Q_s) \]
+            <p style="font-size: 0.9em; margin-top: 5px;">If \( Q_d - Q_s > 0 \) (Excess Demand), then \( \frac{dP}{dt} > 0 \) (Price rises over time \( t \)).</p>
+        </div>
+    </div>
+
+    <h2>3. The Answer & Detailed Analysis (答案與詳細分析)</h2>
+    <p><strong>結論：學生的觀點是「部分正確，但概念上不完整」(Partially Correct but Conceptually Incomplete)。</strong></p>
+    
+    <p>你的觀察非常敏銳。從純粹的數學模型來看，比較靜態分析確實只比較初始均衡點 \( E_1 \) 和新均衡點 \( E_2 \)。在數學推導上，我們只需解出新的聯立方程，確實不需要提及「超額需求」。</p>
+    <div class="bilingual-en">Your observation is very sharp. From a purely mathematical modeling perspective, comparative statics indeed only compares the initial equilibrium \( E_1 \) and the new equilibrium \( E_2 \). In mathematical derivation, we just solve the new simultaneous equations, and there is strictly no need to mention "excess demand".</div>
+
+    <p>然而，經濟學不僅僅是數學，它是一門解釋人類行為的社會科學。我們必須解釋<strong>「價格為什麼會改變」(Why prices change)</strong>。如果沒有超額需求作為驅動力，價格是不會自動跳躍到新均衡點的。這被稱為「價格機制」(Price Mechanism) 或「無形之手」(Invisible Hand)。</p>
+    <div class="bilingual-en">However, economics is not just mathematics; it is a social science that explains human behavior. We must explain <strong>"why prices change"</strong>. Without excess demand acting as the driving force, prices do not automatically jump to the new equilibrium. This is known as the Price Mechanism or the Invisible Hand.</div>
+
+    <p>老師強調超額需求，並非單純為了「照顧程度較低的同學」，而是為了補充比較靜態分析的盲點——<strong>市場動態 (Market Dynamics)</strong>。在 HKDSE 及基礎經濟學中，理解價格調整的「微觀動機」(Microfoundations) 比單純背誦均衡結果更為重要。消費者因為買不到物品而願意出更高價（Bidding up the price），這才是經濟學的核心邏輯。</p>
+    <div class="bilingual-en">Teachers emphasize excess demand not merely to "cater to weaker students," but to fill the blind spot of comparative statics—<strong>Market Dynamics</strong>. In HKDSE and foundational economics, understanding the "microfoundations" of price adjustment is more important than memorizing equilibrium results. Consumers bidding up the price because they cannot purchase the good is the core logic of economics.</div>
+
+    <h2>4. Problem Decomposition (題目拆解)</h2>
+    <ul>
+        <li><strong>Pivot Point (關鍵點):</strong> 區分「分析工具」(Analytical Tool) 與「經濟現實」(Economic Reality)。比較靜態分析是工具，而價格調整機制是現實中發生的行為。</li>
+        <li class="bilingual-en">Distinguish between the "Analytical Tool" and "Economic Reality". Comparative statics is a tool, while the price adjustment mechanism is the actual behavior occurring in reality.</li>
+        <li><strong>Distractor (思維陷阱):</strong> 學生誤將「比較靜態分析的限制」(不考慮過程) 當作了「經濟學不需要解釋過程」。</li>
+        <li class="bilingual-en">The student mistakenly equated the "limitations of comparative statics" (ignoring the process) with "economics does not need to explain the process."</li>
+    </ul>
+
+    <h2>5. Deep Dive & Underlying Confusion (深度探討與盲點分析)</h2>
+    <div class="deep-dive-box">
+        <h3>Why is this hard? (為什麼這容易混淆？)</h3>
+        <p>這觸及了經濟學方法論的深層次問題：<strong>靜態模型 vs. 動態模型 (Static vs. Dynamic Models)</strong>。在初級微觀經濟學中，我們經常把動態過程（瓦爾拉斯拍賣人 Walrasian Auctioneer 喊價的過程）壓縮在一瞬間完成，這讓學生產生了「過程不存在」的錯覺。</p>
+        <div class="bilingual-en">This touches upon a deep methodological issue in economics: <strong>Static vs. Dynamic Models</strong>. In introductory microeconomics, we often compress the dynamic process (the Walrasian Auctioneer calling out prices) into an instant, giving students the illusion that the process doesn't exist.</div>
+
+        <h3>Advanced Connections (進階連結：均衡的穩定性)</h3>
+        <p>在進階經濟學中，我們必須探討<strong>均衡的穩定性 (Stability of Equilibrium)</strong>。如果我們不知道價格是如何調整的（即沒有超額需求帶動價格上升的假設），我們根本無法證明新的均衡點是穩定的！如果價格調整機制不同（例如馬歇爾調整機制 Marshallian adjustment，側重於數量的調整而非價格），市場的反應可能會完全不同。因此，探討過程絕對是經濟學不可或缺的一部分。</p>
+        <div class="bilingual-en">In advanced economics, we must explore the <strong>Stability of Equilibrium</strong>. If we don't know how prices adjust (i.e., the assumption that excess demand drives up prices), we cannot mathematically prove that the new equilibrium is stable! If the adjustment mechanism were different (e.g., Marshallian adjustment, which focuses on quantity rather than price), market reactions could be entirely different. Therefore, exploring the process is an indispensable part of economics.</div>
+    </div>
+
+    <h2>6. Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+    <ul>
+        <li><strong>混淆需求變動與需求量變動：</strong> 學生常忘記在超額需求推高價格的過程中，沿著原來的供給曲線發生的是「供給量上升」(Increase in quantity supplied)，沿著新的需求曲線發生的是「需求量下降」(Decrease in quantity demanded)，直至兩者相等。</li>
+        <li class="bilingual-en"><strong>Confusing shifts with movements along the curve:</strong> Students often forget that during the process where excess demand drives up the price, there is an "increase in quantity supplied" along the original supply curve, and a "decrease in quantity demanded" along the new demand curve, until they equalize.</li>
+    </ul>
+
+    <h2>7. Student Q&A (學生常見疑問)</h2>
+    <div class="qa-item">
+        <div class="qa-q">Q: 在 HKDSE 考試中，如果題目只問「對價格和數量的影響」，我需要寫出「超額需求」這個過程嗎？</div>
+        <div class="bilingual-en">Q: In the HKDSE exam, if the question only asks for the "effect on price and quantity," do I need to write out the "excess demand" process?</div>
+        <div><strong>A:</strong> 必須寫！在 HKDSE 的評分準則 (Marking Scheme) 中，解釋價格調整機制通常佔有分數。標準答題結構應為：1. 點出需求/供給的移動；2. 指出在原價格下出現超額需求/超額供給；3. 說明價格被推高/壓低；4. 帶出新的均衡價格和交易量。</div>
+        <div class="bilingual-en"><strong>A:</strong> Yes, you must! In the HKDSE Marking Scheme, explaining the price adjustment mechanism usually carries marks. The standard answering structure should be: 1. Identify the shift in demand/supply; 2. State that at the original price, there is excess demand/supply; 3. Explain that the price is bid up/driven down; 4. Conclude with the new equilibrium price and quantity.</div>
+    </div>
+
+</body>
+</html>

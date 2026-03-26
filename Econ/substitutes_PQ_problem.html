@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics Guide: Substitutes, Prices, and Quantities</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0284c7;
+            --secondary-color: #f0f9ff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --accent-color: #f59e0b;
+        }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1, h2, h3 {
+            color: #111827;
+            margin-top: 1.5em;
+        }
+        h1 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+        .header-section {
+            background-color: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        .concept-box {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-box {
+            background-color: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 1.1em;
+        }
+        .deep-dive-box {
+            background-color: #fdf2f8;
+            border-left: 5px solid #db2777;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .question-box {
+            background-color: #fffbeb;
+            border: 1px solid #fcd34d;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .bilingual-en {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border-color);
+        }
+        .tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .qa-item {
+            margin-bottom: 25px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .qa-q {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            .concept-box, .deep-dive-box, .question-box {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <h1>Economics Analytical Guide 經濟學分析指南</h1>
+        <p><strong>Topic (主題):</strong> Demand Theory, Substitutes & Cross-Price Elasticity (需求理論、代替品與交叉價格彈性)</p>
+        <p><strong>Difficulty (難度):</strong> ★★★★☆ (4.5/5 Stars)</p>
+        <p><strong>Key Concepts (核心概念):</strong> 
+            <span class="tag">Substitutes (代替品)</span>
+            <span class="tag">Relative Price (相對價格)</span>
+            <span class="tag">Cross-Price Elasticity (交叉價格彈性)</span>
+            <span class="tag">Utility Maximization (效用極大化)</span>
+        </p>
+    </div>
+
+    <h2>1. The Question (題目)</h2>
+    <div class="question-box">
+        <p><strong>學生提問：</strong><br>
+        假設物品X和物品Y是代替品。<br>
+        物品X和物品Y的關係應該用「數量」還是「價格」去聯繫？<br>
+        例如當物品Y的價格上升，物品X的需求會上升。在這中間有沒有額外的步驟（物品Y的交易量下降），才能推導出物品X的需求上升嗎？抑或可以直接從物品Y的價格推斷物品X的需求上升？<br>
+        如果物品Y的供應是完全無彈性，物品Y的價格上升不會導致物品Y的交易量轉變，物品X的需求仍會上升嗎？</p>
+        
+        <div class="bilingual-en">
+            <strong>Student's Query:</strong><br>
+            Assume Good X and Good Y are substitutes.<br>
+            Should the relationship between Good X and Good Y be linked by "quantity" or "price"?<br>
+            For example, when the price of Good Y increases, the demand for Good X increases. Is there an intermediate step (a decrease in the transaction volume of Good Y) required to deduce the increase in demand for Good X? Or can we directly infer the increase in demand for Good X from the price of Good Y?<br>
+            If the supply of Good Y is perfectly inelastic, an increase in the price of Good Y will not lead to a change in its transaction volume. Will the demand for Good X still increase?
+        </div>
+    </div>
+
+    <h2>2. Concept Review (概念重溫)</h2>
+    <div class="concept-box">
+        <h3>Substitutes and Cross-Price Elasticity (代替品與交叉價格彈性)</h3>
+        <p>在經濟學中，兩種物品是否為代替品，是嚴格根據<strong>交叉價格彈性 (Cross-Price Elasticity of Demand, \( E_{xy} \))</strong> 來定義的。它衡量的是當物品Y的「價格」變動時，物品X的「需求量」會作何反應。</p>
+        <div class="bilingual-en">In economics, whether two goods are substitutes is strictly defined by the <strong>Cross-Price Elasticity of Demand (\( E_{xy} \))</strong>. It measures how the "quantity demanded" of Good X responds to a change in the "price" of Good Y.</div>
+        
+        <div class="math-box">
+            $$ E_{xy} = \frac{\% \Delta Q_d^x}{\% \Delta P_y} > 0 $$
+        </div>
+        <p>對於代替品而言，\( E_{xy} \) 必須大於零。這意味著定義本身就是建立在「Y的價格」與「X的需求」之間的直接數學關係上。</p>
+        <div class="bilingual-en">For substitutes, \( E_{xy} \) must be greater than zero. This means the definition itself is built on a direct mathematical relationship between the "price of Y" and the "demand for X".</div>
+
+        <h3>Relative Price and Utility Maximization (相對價格與效用極大化)</h3>
+        <p>消費者選擇的基礎是邊際效用與價格的比例（Marginal Utility per dollar）。當消費者達到均衡時：</p>
+        <div class="bilingual-en">Consumer choice is based on the marginal utility per dollar. When a consumer reaches equilibrium:</div>
+        <div class="math-box">
+            $$ \frac{MU_x}{P_x} = \frac{MU_y}{P_y} $$
+        </div>
+    </div>
+
+    <h2>3. The Answer & Detailed Analysis (答案與詳細分析)</h2>
+    <p><strong>核心結論：物品X和物品Y的關係是直接由「價格（相對價格）」聯繫的，不需要經過「Y的交易量下降」這個額外步驟。即使Y的交易量不變，X的需求依然會上升。</strong></p>
+    <div class="bilingual-en"><strong>Core Conclusion: The relationship between Good X and Good Y is directly linked by "price (relative price)", without the need for an intermediate step of "a decrease in the transaction volume of Y". Even if the transaction volume of Y remains unchanged, the demand for X will still increase.</strong></div>
+    
+    <p><strong>詳細分析：</strong></p>
+    <p>首先，需求函數 \( D_x = f(P_x, P_y, I, ...) \) 告訴我們，物品X的需求是由其自身價格 \( P_x \)、相關物品價格 \( P_y \)、收入 \( I \) 等外生變數決定的。這裡的輸入變數是<strong>價格</strong>，而不是另一種物品的數量。</p>
+    <div class="bilingual-en">First, the demand function \( D_x = f(P_x, P_y, I, ...) \) tells us that the demand for Good X is determined by its own price \( P_x \), the price of related goods \( P_y \), income \( I \), and other exogenous variables. The input variable here is <strong>price</strong>, not the quantity of another good.</div>
+
+    <p>當物品Y的價格 \( P_y \) 上升時，物品X的<strong>相對價格 (Relative Price)</strong> \( \frac{P_x}{P_y} \) 就會下降。這使得物品X在消費者眼中變得「相對便宜」。根據效用極大化法則，因為 \( P_y \) 上升導致 \( \frac{MU_y}{P_y} < \frac{MU_x}{P_x} \)，消費者為了重新達到均衡，會增加對物品X的消費。這個「替代效應 (Substitution Effect)」是直接由價格變動驅動的。</p>
+    <div class="bilingual-en">When the price of Good Y (\( P_y \)) increases, the <strong>relative price</strong> of Good X (\( \frac{P_x}{P_y} \)) decreases. This makes Good X appear "relatively cheaper" to consumers. According to the rule of utility maximization, because the increase in \( P_y \) causes \( \frac{MU_y}{P_y} < \frac{MU_x}{P_x} \), consumers will increase their consumption of Good X to restore equilibrium. This "Substitution Effect" is driven directly by the price change.</div>
+
+    <p><strong>關於完全無彈性供應的極端情況：</strong></p>
+    <p>你提出了一個非常精彩的思想實驗！如果物品Y的供應 (\( S_y \)) 是完全無彈性（垂直線），當物品Y的需求 (\( D_y \)) 增加時，\( P_y \) 會上升，但均衡交易量 \( Q_y \) 保持不變。在這種情況下，物品X的需求會上升嗎？<br>
+    <strong>答案是：會的。</strong></p>
+    <div class="bilingual-en"><strong>Regarding the extreme case of perfectly inelastic supply:</strong><br>
+    You proposed a brilliant thought experiment! If the supply of Good Y (\( S_y \)) is perfectly inelastic (a vertical line), when the demand for Good Y (\( D_y \)) increases, \( P_y \) will rise, but the equilibrium transaction volume \( Q_y \) remains unchanged. In this scenario, will the demand for Good X increase?<br>
+    <strong>The answer is: Yes.</strong></div>
+
+    <p>為什麼？因為市場上消費者的組成或他們的支付意願發生了改變。雖然Y的總交易量沒變，但面對更高的 \( P_y \)，那些覺得「不值得花這麼多錢買Y」的邊際消費者（Marginal Consumers）會被擠出Y市場，他們會轉向購買代替品X。而那些留在Y市場的人，可能因為對Y的偏好極強而願意支付高價。無論如何，對於整個市場而言，較高的 \( P_y \) 促使部分購買力流向了物品X，導致物品X的需求曲線向右移動。</p>
+    <div class="bilingual-en">Why? Because the composition of consumers in the market or their willingness to pay has changed. Although the total transaction volume of Y hasn't changed, facing a higher \( P_y \), the marginal consumers who feel "it's not worth spending this much on Y" will be priced out of the Y market and turn to the substitute X. Those who remain in the Y market might do so because of a very strong preference for Y. Regardless, for the market as a whole, the higher \( P_y \) drives some purchasing power towards Good X, causing the demand curve for Good X to shift to the right.</div>
+
+    <h2>4. Problem Decomposition (題目拆解)</h2>
+    <ul>
+        <li><strong>Pivot Point (關鍵點):</strong> 釐清「需求函數的自變數 (Independent Variables)」。在微觀經濟學模型中，消費者的選擇是基於市場價格信號，而非市場整體的交易數量。價格是因，數量是果。</li>
+        <li class="bilingual-en">Clarify the "Independent Variables of the Demand Function". In microeconomic models, consumer choices are based on market price signals, not the overall transaction volume in the market. Price is the cause; quantity is the effect.</li>
+        <li><strong>Distractor (思維陷阱):</strong> 學生常將「個人層面的替代行為（買少一點Y，買多一點X）」與「市場整體的均衡結果」混淆。個人確實可能因為Y變貴而減少買Y，但市場總交易量是由供求共同決定的（如完全無彈性供應的情況）。</li>
+        <li class="bilingual-en">Students often confuse "individual-level substitution behavior (buying less Y, buying more X)" with "market-wide equilibrium outcomes". An individual may indeed buy less Y because it's more expensive, but the total market transaction volume is determined jointly by supply and demand (as in the case of perfectly inelastic supply).</li>
+    </ul>
+
+    <h2>5. Deep Dive & Underlying Confusion (深度探討與盲點分析)</h2>
+    <div class="deep-dive-box">
+        <h3>Why is this hard? (為什麼這容易混淆？)</h3>
+        <p>這個問題觸及了經濟學中非常深刻的「一般均衡 (General Equilibrium)」與「局部均衡 (Partial Equilibrium)」的思維差異。在日常直覺中，我們認為「代替」是一個物理動作：我放下了蘋果（數量減少），拿起了橙（數量增加）。因此，直覺上會覺得必須要有「Y數量的減少」才能有「X數量的增加」。</p>
+        <div class="bilingual-en">This question touches upon the profound difference between "General Equilibrium" and "Partial Equilibrium" thinking in economics. In everyday intuition, we think of "substitution" as a physical action: I put down an apple (quantity decreases) and pick up an orange (quantity increases). Therefore, intuitively, it feels like there must be a "decrease in the quantity of Y" to have an "increase in the quantity of X".</div>
+
+        <h3>Advanced Connections (進階連結：替代效應與價格信號)</h3>
+        <p>在嚴謹的微觀經濟學中，<strong>價格是資源配置的唯一信號 (Price as a signal)</strong>。哈耶克 (F.A. Hayek) 曾強調，價格機制傳遞了所有必要的資訊。消費者不需要知道Y的供應量是否減少，他們只需要看到Y的價格牌變貴了，他們大腦中的效用計算機就會自動調整，增加對X的需求。因此，邏輯鏈條是：\( \text{Shock} \rightarrow P_y \uparrow \rightarrow \text{Relative Price of X} \downarrow \rightarrow D_x \uparrow \)。中間絕對不需要 \( Q_y \downarrow \) 作為橋樑。</p>
+        <div class="bilingual-en">In rigorous microeconomics, <strong>price is the sole signal for resource allocation</strong>. F.A. Hayek emphasized that the price mechanism transmits all necessary information. Consumers don't need to know if the supply of Y has decreased; they only need to see the price tag of Y go up, and the utility calculator in their brains will automatically adjust, increasing the demand for X. Thus, the logical chain is: \( \text{Shock} \rightarrow P_y \uparrow \rightarrow \text{Relative Price of X} \downarrow \rightarrow D_x \uparrow \). There is absolutely no need for \( Q_y \downarrow \) as a bridge.</div>
+    </div>
+
+    <h2>6. Student Q&A (學生常見疑問)</h2>
+    <div class="qa-item">
+        <div class="qa-q">Q: 如果物品Y的價格上升是因為政府向生產者徵收從量稅 (Per-unit tax)，而物品Y的供應是完全無彈性，物品X的需求還會上升嗎？</div>
+        <div class="bilingual-en">Q: If the price of Good Y increases because the government imposes a per-unit tax on producers, and the supply of Good Y is perfectly inelastic, will the demand for Good X still increase?</div>
+        <div><strong>A:</strong> 這是一個極佳的延伸問題！如果供應完全無彈性，向生產者徵稅時，稅務負擔將 100% 由生產者承擔。這意味著消費者面對的市場價格 \( P_y \) <strong>根本不會改變</strong>。既然 \( P_y \) 沒有改變，相對價格沒有變動，物品X的需求 \( D_x \) 就不會改變。這再次證明了，推動代替品需求變化的核心樞紐是「消費者面對的價格」，而非其他因素。</div>
+        <div class="bilingual-en"><strong>A:</strong> This is an excellent extension question! If supply is perfectly inelastic, when a tax is imposed on producers, the tax burden falls 100% on the producers. This means the market price \( P_y \) faced by consumers <strong>will not change at all</strong>. Since \( P_y \) hasn't changed, the relative price remains the same, and the demand for Good X (\( D_x \)) will not change. This proves once again that the core pivot driving the change in demand for substitutes is the "price faced by consumers," not other factors.</div>
+    </div>
+
+</body>
+</html>
