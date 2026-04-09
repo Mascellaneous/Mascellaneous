@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics - Money Supply (M2) Analysis</title>
+    
+    <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']]
+      }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-blue: #0ea5e9;
+            --light-blue: #f0f9ff;
+            --math-bg: #f3f4f6;
+            --text-dark: #1e293b;
+            --text-muted: #475569;
+            --trap-red: #ef4444;
+            --trap-bg: #fef2f2;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1, h2, h3 {
+            color: var(--primary-blue);
+            margin-top: 1.5em;
+        }
+        h1 {
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 10px;
+        }
+        .header-box {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .header-box h2 {
+            color: white;
+            margin: 0 0 10px 0;
+        }
+        .bilingual-block {
+            margin-bottom: 20px;
+        }
+        .eng-translation {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-top: 5px;
+            border-left: 3px solid #cbd5e1;
+            padding-left: 10px;
+        }
+        .concept-box {
+            background-color: var(--light-blue);
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .trap-box {
+            background-color: var(--trap-bg);
+            border-left: 5px solid var(--trap-red);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .math-block {
+            background-color: var(--math-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--light-blue);
+        }
+        .option-analysis {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+        .correct-option {
+            background-color: #ecfdf5;
+            border-color: #10b981;
+        }
+        .pivot-point {
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+        @media (max-width: 600px) {
+            body { padding: 15px; }
+            .header-box { padding: 10px; }
+            table { font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <h2>📝 HKDSE Exam Highlight: 搶分大解密</h2>
+        <strong>Topic (課題):</strong> Money Supply Definitions (貨幣供應定義 M1, M2, M3)<br>
+        <strong>Difficulty (難度):</strong> ⭐⭐⭐⭐ (4/5 Stars)<br>
+        <strong>Key Concepts (關鍵字):</strong> Public Cash (Cp), Authorized Institutions (AIs), Money Supply M2 vs M3
+    </div>
+
+    <h2>1. The Question (題目)</h2>
+    <div class="bilingual-block">
+        <p>參閱以下有關香港貨幣供應的資料。</p>
+        <div class="eng-translation">Refer to the following data regarding Hong Kong's money supply.</div>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>組成部分 (Components)</th>
+                <th>十億元 ($ Billion)</th>
+            </tr>
+            <tr>
+                <td>法定貨幣的總發行量 (Total issue of legal tender)</td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td>全部認可機構持有的法定貨幣 (Legal tender held by all authorized institutions)</td>
+                <td>120</td>
+            </tr>
+            <tr>
+                <td>活期存款 (Demand deposits)</td>
+                <td>300</td>
+            </tr>
+            <tr>
+                <td>儲蓄存款 (Savings deposits)</td>
+                <td>700</td>
+            </tr>
+            <tr>
+                <td>存於有限制持牌銀行及接受存款公司的定期存款 (Time deposits with RLBs and DTCs)</td>
+                <td>1,200</td>
+            </tr>
+            <tr>
+                <td>有限制持牌銀行及接受存款公司所發出由公眾人士持有的可轉讓存款證 (NCDs issued by RLBs and DTCs held by the public)</td>
+                <td>1,500</td>
+            </tr>
+            <tr>
+                <td>認可機構所有種類的存款及認可機構發行的可轉讓存款證(而非由認可機構持有) (All types of deposits with AIs and NCDs issued by AIs not held by AIs)</td>
+                <td>6,000</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="bilingual-block">
+        <p>根據以上資料，香港的貨幣供應定義二 (M2) 是 __________。</p>
+        <div class="eng-translation">Based on the above data, Hong Kong's money supply definition 2 (M2) is __________.</div>
+    </div>
+    
+    <p><strong>Options (選項) [Added for Analysis]:</strong></p>
+    <ul>
+        <li>A. 3,680</li>
+        <li>B. 3,800</li>
+        <li>C. 6,380</li>
+        <li>D. 6,500</li>
+    </ul>
+
+    <div class="concept-box">
+        <h2>2. Concept Review (概念重溫)</h2>
+        <div class="bilingual-block">
+            <p>要拆解這類題目，必須清楚明白香港貨幣供應的三大定義以及公眾持有的法定貨幣 (Cp) 的計算方法。</p>
+            <div class="eng-translation">To dismantle this type of question, you must clearly understand the three definitions of Hong Kong's money supply and the calculation for cash held by the public (Cp).</div>
+        </div>
+
+        <strong>Definitions & Formulas (定義與公式):</strong>
+        <div class="math-block">
+            $$ \text{Cp} = \text{Total Legal Tender} - \text{Legal Tender held by AIs} $$
+        </div>
+        <div class="math-block">
+            $$ M3 = \text{Cp} + \text{All types of deposits with AIs} + \text{NCDs issued by AIs} $$
+        </div>
+        <div class="math-block">
+            $$ M2 = M3 - (\text{Time deposits with RLBs & DTCs}) - (\text{NCDs issued by RLBs & DTCs}) $$
+        </div>
+    </div>
+
+    <h2>3. The Answer & Detailed Analysis (答案與詳細分析)</h2>
+    <div class="bilingual-block">
+        <p><strong>正確答案是：Option A (3,680)</strong></p>
+        <div class="eng-translation"><strong>The correct answer is: Option A (3,680)</strong></div>
+    </div>
+
+    <div class="option-analysis correct-option">
+        <strong>Option A (3,680) - Correct (正確)</strong>
+        <div class="bilingual-block">
+            <p>步驟一：先計算公眾持有的法定貨幣 (Cp)。Cp = $500 - 120 = 380$。<br>
+            步驟二：利用最後一項資料計算 M3。M3 = Cp + 認可機構所有存款及 NCDs = $380 + 6000 = 6380$。<br>
+            步驟三：將 M3 減去 RLBs 及 DTCs 的定期存款和 NCDs 以求得 M2。M2 = $6380 - 1200 - 1500 = 3680$。</p>
+            <div class="eng-translation">Step 1: Calculate Cash in public hands (Cp). Cp = $500 - 120 = 380$.<br>
+            Step 2: Calculate M3 using the final data row. M3 = Cp + All deposits and NCDs at AIs = $380 + 6000 = 6380$.<br>
+            Step 3: Deduct RLB & DTC time deposits and NCDs from M3 to find M2. M2 = $6380 - 1200 - 1500 = 3680$.</div>
+        </div>
+    </div>
+
+    <div class="option-analysis">
+        <strong>Option B (3,800) - Distractor (干擾項)</strong>
+        <div class="bilingual-block">
+            <p>錯誤原因：忘記扣減銀行庫存現金。考生錯誤地使用「法定貨幣的總發行量 ($500$)」代替 Cp 來計算 M2 ($500 + 3300 = 3800$)。</p>
+            <div class="eng-translation">Error: Forgot to deduct cash held by banks. The student incorrectly used "Total issue of legal tender ($500$)" instead of Cp to calculate M2 ($500 + 3300 = 3800$).</div>
+        </div>
+    </div>
+
+    <div class="option-analysis">
+        <strong>Option C (6,380) - Distractor (干擾項)</strong>
+        <div class="bilingual-block">
+            <p>錯誤原因：未能區分 M2 和 M3。這個數字實際上是 M3 的數值 ($380 + 6000 = 6380$)。</p>
+            <div class="eng-translation">Error: Failed to differentiate between M2 and M3. This number is actually the value of M3 ($380 + 6000 = 6380$).</div>
+        </div>
+    </div>
+
+    <div class="option-analysis">
+        <strong>Option D (6,500) - Distractor (干擾項)</strong>
+        <div class="bilingual-block">
+            <p>錯誤原因：雙重錯誤。既錯誤計算了 M3，又忘記了扣減銀行持有的現金 ($500 + 6000 = 6500$)。</p>
+            <div class="eng-translation">Error: Double penalty. Incorrectly calculated M3 AND forgot to deduct the cash held by AIs ($500 + 6000 = 6500$).</div>
+        </div>
+    </div>
+
+    <h2>4. Problem Decomposition (題目拆解)</h2>
+    <div class="bilingual-block">
+        <p>這題是 DSE 的經典題型！<span class="pivot-point">Pivot Point (破題關鍵)</span> 在於認清「資料不足」。題目給了活期存款 (300) 和儲蓄存款 (700)，但卻<strong>沒有</strong>給予持牌銀行 (Licensed Banks) 的定期存款數據。因此，你無法從 M1 順向加總計算 M2 (即無法使用 $M2 = M1 + \text{Savings} + \text{LB Time Deposits} + \text{LB NCDs}$)。</p>
+        <p><strong>必須使用「逆向扣減法」！</strong> 活期及儲蓄存款在這裡完全是<strong>干擾數據 (Red Herrings)</strong>！</p>
+        <div class="eng-translation">This is a classic DSE trap type! The <span class="pivot-point">Pivot Point</span> is recognizing "insufficient data". The question provides Demand deposits (300) and Savings deposits (700), but <strong>omits</strong> Time deposits with Licensed Banks. Therefore, you cannot calculate M2 via the forward-addition method (i.e., you cannot use $M2 = M1 + \text{Savings} + \text{LB Time Deposits} + \text{LB NCDs}$). <br><br>
+        <strong>You MUST use the "Reverse Deduction Method"!</strong> Demand and Savings deposits are pure <strong>Red Herrings</strong> here!</div>
+    </div>
+
+    <div class="trap-box">
+        <h2>5. Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+        <div class="bilingual-block">
+            <p>🚨 <strong>致命陷阱 1：</strong> 直接將「總發行量」當作公眾持有的現金。記住，印出來的錢有一部分放在銀行的夾萬裡 (銀行儲備)，這部分不計入貨幣供應！必須計算 $Cp = 500 - 120$。</p>
+            <p>🚨 <strong>致命陷阱 2：</strong> 見到數字就想加。很多同學會盲目將 300 和 700 算進去，導致計算混亂。考試時，先寫下公式，盤點手頭有什麼積木，再決定用「加法」還是「減法」來砌出答案。</p>
+            <div class="eng-translation">🚨 <strong>Fatal Trap 1:</strong> Treating "Total Issue" directly as cash in public hands. Remember, part of the printed money sits in bank vaults (bank reserves), which is NOT counted in the money supply! You must calculate $Cp = 500 - 120$.<br><br>
+            🚨 <strong>Fatal Trap 2:</strong> Adding numbers just because they are there. Many students blindly add 300 and 700, leading to a mess. In exams, write down the formula first, inventory your data "building blocks", and then decide whether to "add up" or "deduct down" to reach the answer.</div>
+        </div>
+    </div>
+
+    <h2>6. Student Q&A (學生常見疑問)</h2>
+    <div class="bilingual-block">
+        <p><strong>Q: 點解 M3 包含了所有認可機構 (AIs) 的存款，但 M2 卻要扣減 RLBs 同 DTCs 的存款？</strong></p>
+        <p><strong>A:</strong> 因為流動性 (Liquidity)！持牌銀行 (LBs) 的存款流動性最高，構成 M2 的核心。而有限制持牌銀行 (RLBs) 和接受存款公司 (DTCs) 的存款門檻高且流動性較低，所以只會被歸類在最廣義的 M3，而不會放入 M2。所以由 M3 找 M2，就要把這兩間機構的數據「踢走」。</p>
+        <div class="eng-translation"><strong>Q: Why does M3 include deposits of all AIs, but M2 deducts deposits from RLBs and DTCs?</strong><br>
+        <strong>A:</strong> Because of Liquidity! Deposits at Licensed Banks (LBs) are highly liquid and form the core of M2. Deposits at RLBs and DTCs have high minimum thresholds and lower liquidity, so they are only included in the broadest measure (M3) and not M2. Therefore, to find M2 from M3, you must "kick out" the data from these two types of institutions.</div>
+    </div>
+
+    <h2>7. Exam Tricks & Shortcuts (考試技巧與速解)</h2>
+    <div class="bilingual-block">
+        <p>⚡ <strong>速解法 (The Shortcut):</strong><br>
+        一看到題目給了「所有種類存款 (6,000)」，即刻條件反射：這題要考 $M3$！<br>
+        1. 快速心算 Cp = $500 - 120 = 380$。<br>
+        2. M3 = $6000 + 380 = 6380$。<br>
+        3. 尋找題目中有沒有 RLB & DTC 的字眼，直接由 M3 減去它們：$6380 - 1200 - 1500 = 3680$。15秒內鎖定答案，直接無視活期和儲蓄存款！</p>
+        <div class="eng-translation">⚡ <strong>The Shortcut:</strong><br>
+        The moment you see "All types of deposits (6,000)" in the table, your reflex should be: This tests $M3$!<br>
+        1. Quick mental math for Cp = $500 - 120 = 380$.<br>
+        2. M3 = $6000 + 380 = 6380$.<br>
+        3. Scan for "RLB & DTC" in the data and deduct them directly from M3: $6380 - 1200 - 1500 = 3680$. Lock in the answer within 15 seconds, totally ignoring demand and savings deposits!</div>
+    </div>
+
+</body>
+</html>
