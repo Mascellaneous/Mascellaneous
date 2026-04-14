@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Math Tutor: Permutations & Combinations</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #f0f9ff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
+            --danger-bg: #fef2f2;
+            --danger-border: #ef4444;
+            --success-color: #22c55e;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0f172a;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        h1 { margin-top: 0; border-bottom: none; }
+        .header-card {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .header-card h1 { color: white; margin: 0 0 10px 0; }
+        .tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .bilingual {
+            margin-bottom: 15px;
+        }
+        .eng-text {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-top: 4px;
+        }
+        .concept-box {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .math-block {
+            background-color: var(--bg-light);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            margin: 15px 0;
+        }
+        .mistake-box {
+            background-color: var(--danger-bg);
+            border-left: 5px solid var(--danger-border);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: var(--bg-light);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .correct-option {
+            background-color: #dcfce7 !important;
+            border-color: var(--success-color) !important;
+            font-weight: bold;
+        }
+        .qa-box {
+            background-color: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .qa-q { font-weight: bold; color: #b45309; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. Header -->
+    <div class="header-card">
+        <h1>HKDSE Math Tutor</h1>
+        <div>
+            <span class="tag">Topic: Permutations & Combinations (排列與組合)</span>
+            <span class="tag">Difficulty: ★★★★☆</span>
+        </div>
+        <div style="margin-top: 10px;">
+            <strong>Key Concepts:</strong> Gap Method (插空法), Case Splitting (分情況討論), \( P_r^n \) vs \( C_r^n \)
+        </div>
+    </div>
+
+    <!-- 2. The Question -->
+    <h2>1. The Question (題目)</h2>
+    <div class="bilingual">
+        <p><strong>中文：</strong>某公司有 5 名全職僱員及 3 名兼職僱員。現從該公司中選出 7 名僱員排成一隊。若沒有兼職僱員排在一起，可排成多少個不同的隊列？</p>
+        <p class="eng-text"><strong>English:</strong> There are 5 full-time employees and 3 part-time employees in a company. From the company, 7 employees are selected to form a queue. If no part-time employees are next to each other, how many different queues can be formed?</p>
+    </div>
+    <ul class="options-list">
+        <li>A. 5 040</li>
+        <li>B. 14 400</li>
+        <li class="correct-option">C. 18 000 (Correct Answer)</li>
+        <li>D. 32 400</li>
+    </ul>
+
+    <!-- 3. Concept Review -->
+    <h2>2. Concept Review (概念重溫)</h2>
+    <div class="concept-box">
+        <div class="bilingual">
+            <p><strong>插空法 (Gap Method)：</strong>當題目要求某些元素「不相鄰 (not next to each other)」時，我們通常先排列其他沒有限制的元素，然後將受限制的元素放入它們之間或兩端的「空隙 (gaps)」中。</p>
+            <p class="eng-text"><strong>Gap Method:</strong> When a question specifies that certain items must "not be adjacent", we first arrange the unrestricted items. Then, we place the restricted items into the gaps created between and at the ends of the unrestricted items.</p>
+        </div>
+        <div class="bilingual">
+            <p><strong>排列與組合公式 (Formulas)：</strong></p>
+            <ul>
+                <li>排列 (Permutation - order matters): \( P_r^n = \frac{n!}{(n-r)!} \)</li>
+                <li>組合 (Combination - order doesn't matter): \( C_r^n = \frac{n!}{r!(n-r)!} \)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 4. The Answer & Detailed Analysis -->
+    <h2>3. The Answer & Detailed Analysis (答案與詳細分析)</h2>
+    <div class="bilingual">
+        <p><strong>正確答案是 C (Option C is correct)。</strong></p>
+        <p>公司共有 8 名員工（5名全職 + 3名兼職）。我們需要選出 7 人，這意味著必定有 <strong>1 人落選</strong>。我們需要分兩種情況討論：</p>
+        <p class="eng-text">There are 8 employees in total (5 Full-time + 3 Part-time). We need to select 7, which means exactly <strong>1 person is left out</strong>. We must split this into two cases:</p>
+    </div>
+
+    <div class="math-block">
+        <p><strong>情況 1 (Case 1)：1 名全職僱員落選 (選出 4 名全職，3 名兼職)</strong><br>
+        <em>1 Full-time employee is left out (Select 4 Full-time, 3 Part-time)</em></p>
+        <ol>
+            <li>選出並排列 4 名全職 (Select & arrange 4 Full-time): \( P_4^5 = 120 \)</li>
+            <li>4 名全職會產生 5 個空隙 (4 Full-time create 5 gaps): _ F _ F _ F _ F _</li>
+            <li>將 3 名兼職放入 5 個空隙中 (Place 3 Part-time in 5 gaps): \( P_3^5 = 60 \)</li>
+            <li>情況 1 總數 (Case 1 Total) = \( 120 \times 60 = 7200 \)</li>
+        </ol>
+
+        <p><strong>情況 2 (Case 2)：1 名兼職僱員落選 (選出 5 名全職，2 名兼職)</strong><br>
+        <em>1 Part-time employee is left out (Select 5 Full-time, 2 Part-time)</em></p>
+        <ol>
+            <li>選出並排列 5 名全職 (Select & arrange 5 Full-time): \( P_5^5 = 120 \)</li>
+            <li>5 名全職會產生 6 個空隙 (5 Full-time create 6 gaps): _ F _ F _ F _ F _ F _</li>
+            <li>從 3 名兼職中選出 2 名，並放入 6 個空隙中 (Select 2 from 3 Part-time, place in 6 gaps): \( C_2^3 \times P_2^6 = 3 \times 30 = 90 \)</li>
+            <li>情況 2 總數 (Case 2 Total) = \( 120 \times 90 = 10800 \)</li>
+        </ol>
+        
+        <p><strong>總數 (Total)</strong> = \( 7200 + 10800 = 18000 \)</p>
+    </div>
+
+    <div class="bilingual">
+        <h3>選項拆解 (Option Breakdown)</h3>
+        <ul>
+            <li><strong>A (5 040):</strong> 錯誤。僅僅計算了 \( 7! = 5040 \)，忽略了從 8 人中選擇以及不相鄰的條件。(Calculated only \( 7! \), ignoring the selection from 8 and the non-adjacent restriction.)</li>
+            <li><strong>B (14 400):</strong> 錯誤。計算了 \( P_5^5 \times P_3^6 = 14400 \)。這是將所有 8 人排隊且兼職不相鄰的排列數，忽略了題目要求只選 7 人。(This is the arrangement of ALL 8 people with no part-timers adjacent, ignoring the constraint to select only 7.)</li>
+            <li><strong>C (18 000):</strong> 正確。(Correct.)</li>
+        </ul>
+    </div>
+
+    <!-- 5. Problem Decomposition -->
+    <h2>4. Problem Decomposition (題目拆解)</h2>
+    <div class="bilingual">
+        <p><strong>關鍵點 1 (Pivot 1)：</strong>「從 8 人中選出 7 人」。很多學生會直接忽略這一步，以為是 8 人全部排隊。選 7 人意味著要分情況討論誰被留下了。</p>
+        <p class="eng-text"><strong>Pivot 1:</strong> "Select 7 out of 8". Many students ignore this and assume all 8 are queuing. Selecting 7 means you must use case splitting to determine who is left behind.</p>
+        
+        <p><strong>關鍵點 2 (Pivot 2)：</strong>「沒有兼職僱員排在一起」。這是一個強烈信號，提示必須使用<strong>插空法 (Gap Method)</strong>。</p>
+        <p class="eng-text"><strong>Pivot 2:</strong> "No part-time employees next to each other". This is a strong signal that you MUST use the <strong>Gap Method</strong>.</p>
+    </div>
+
+    <!-- 6. Common Mistakes & Traps -->
+    <h2>5. Common Mistakes & Traps (常犯錯誤與陷阱)</h2>
+    <div class="mistake-box">
+        <div class="bilingual">
+            <p><strong>忘記選擇組合 (Forgetting to Select):</strong> 在情況 2 中，我們只需要 2 名兼職僱員。很多學生會直接寫 \( P_2^6 \)，而忘記了我們需要先從 3 名兼職中選出 2 名，即 \( C_2^3 \)。正確的做法是 \( C_2^3 \times P_2^6 \)。</p>
+            <p class="eng-text"><strong>Forgetting to Select:</strong> In Case 2, we only need 2 part-time employees. Students often just write \( P_2^6 \), forgetting that we must first choose WHICH 2 part-timers out of the 3 will join the queue (\( C_2^3 \)). The correct calculation is \( C_2^3 \times P_2^6 \).</p>
+        </div>
+    </div>
+
+    <!-- 7. Student Q&A -->
+    <h2>6. Student Q&A (學生常見疑問)</h2>
+    <div class="qa-box">
+        <p class="qa-q">Q: 為什麼不能用「總排列數」減去「兼職僱員排在一起的排列數」？<br>
+        <span class="eng-text">Why can't we use "Total Arrangements" minus "Arrangements where part-timers are together"?</span></p>
+        <p><strong>A:</strong> 理論上可以，但非常容易出錯！因為「兼職僱員排在一起」包含了「3人全部排在一起」和「只有2人排在一起」兩種複雜情況。使用插空法 (Gap Method) 直接計算符合條件的情況，既快捷又準確。<br>
+        <span class="eng-text">Theoretically you can, but it's highly prone to errors! "Part-timers together" includes cases where exactly 2 are together AND cases where all 3 are together. The Gap Method is much more direct and accurate.</span></p>
+    </div>
+
+    <!-- 8. Exam Tricks & Shortcuts -->
+    <h2>7. Exam Tricks & Shortcuts (考試技巧與速解)</h2>
+    <div class="bilingual">
+        <p><strong>關鍵字反射 (Keyword Reflex):</strong> 在 DSE 考試中，一看到「不相鄰 / not next to each other / separated」，請立即在草稿紙上畫底線，並寫上 <strong>Gap Method</strong>。先排沒有限制的人，畫出底線代表空隙，再把受限制的人填入空隙中。</p>
+        <p class="eng-text"><strong>Keyword Reflex:</strong> In the DSE exam, whenever you see "not next to each other" or "separated", immediately underline it and write <strong>Gap Method</strong>. Arrange the unrestricted items first, draw dashes for the gaps, and fill the restricted items into those gaps.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
