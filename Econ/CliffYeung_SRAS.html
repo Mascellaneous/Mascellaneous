@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics Tutor: Short-Run Aggregate Supply</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-blue: #0ea5e9;
+            --light-blue: #f0f9ff;
+            --gray-bg: #f3f4f6;
+            --text-dark: #1f2937;
+            --text-gray: #4b5563;
+            --danger-red: #ef4444;
+            --success-green: #10b981;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1, h2, h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        .header-box {
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .question-box {
+            background-color: var(--light-blue);
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        .concept-box {
+            background-color: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-block {
+            background-color: var(--gray-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .analysis-box {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .option-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .option-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .correct-ans {
+            color: var(--success-green);
+            font-weight: bold;
+        }
+        .wrong-ans {
+            color: var(--danger-red);
+            font-weight: bold;
+        }
+        .en-text {
+            color: var(--text-gray);
+            font-size: 0.95em;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .zh-text {
+            font-weight: 500;
+        }
+        .qa-box {
+            background-color: #ecfdf5;
+            border-left: 5px solid var(--success-green);
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        .tricks-box {
+            background-color: #fdf2f8;
+            border-left: 5px solid #db2777;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        @media (max-width: 600px) {
+            body { padding: 15px; }
+            h1 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <h1>HKDSE Economics Tutor: Question Analysis</h1>
+        <div class="zh-text"><strong>主題 (Topic):</strong> 宏觀經濟學 - 總供應 (Macroeconomics - Aggregate Supply)</div>
+        <div class="zh-text"><strong>難度 (Difficulty):</strong> ★★★☆☆</div>
+        <div class="zh-text" style="margin-top: 10px;">
+            <strong>關鍵字 (Key Concepts):</strong> 
+            <span class="tag">短期總供應 (SRAS)</span>
+            <span class="tag">沿曲線移動 (Movement along curve)</span>
+            <span class="tag">通脹預期 (Inflation Expectations)</span>
+        </div>
+    </div>
+
+    <div class="question-box">
+        <h2>1. 題目 (The Question)</h2>
+        <p class="zh-text">在一條短期總供應曲線上，</p>
+        <p class="en-text">Along a short-run aggregate supply (SRAS) curve,</p>
+        
+        <div style="margin-top: 15px;">
+            <p class="zh-text">A. 物價水平不變。</p>
+            <p class="en-text">A. the price level is constant.</p>
+            
+            <p class="zh-text">B. 僱用的生產要素不變。</p>
+            <p class="en-text">B. the employed factors of production are constant.</p>
+            
+            <p class="zh-text">C. 生產要素成本並非不變。</p>
+            <p class="en-text">C. the costs of factors of production are not constant.</p>
+            
+            <p class="zh-text">D. 通脹預期不變。</p>
+            <p class="en-text">D. inflation expectations are constant.</p>
+        </div>
+    </div>
+
+    <div class="concept-box">
+        <h2>2. 概念重溫 (Concept Review)</h2>
+        <p class="zh-text">在宏觀經濟學中，<strong>短期總供應曲線 (SRAS)</strong> 顯示了在其他因素不變的情況下，一般物價水平 \(P\) 與實質產出 \(Y\) 之間的正向關係。當我們說「在一條曲線上」(along a curve)，意味著我們只考慮座標軸上兩個變數的改變，而假設所有「移動因素」(shift factors) 保持不變。</p>
+        <p class="en-text">In macroeconomics, the <strong>Short-Run Aggregate Supply (SRAS) curve</strong> shows the positive relationship between the general price level \(P\) and real output \(Y\), ceteris paribus. When we say "along a curve", it means we are only considering the changes in the variables on the axes, assuming all "shift factors" are held constant.</p>
+
+        <div class="math-block">
+            $$ Y = Y^* + \alpha (P - P^e) $$
+        </div>
+        <p class="zh-text" style="font-size: 0.9em; text-align: center;">\(Y\): 實質產出 (Real Output), \(Y^*\): 潛在產出 (Potential Output), \(P\): 實際物價水平 (Actual Price Level), \(P^e\): 預期物價水平/通脹預期 (Expected Price Level / Inflation Expectations)</p>
+
+        <ul>
+            <li class="zh-text"><strong>沿著曲線移動 (Movement along the curve):</strong> 只有物價水平 \(P\) 和實質產出 \(Y\) 改變。
+                <div class="en-text">Changes only in Price Level \(P\) and Real Output \(Y\).</div>
+            </li>
+            <li class="zh-text"><strong>保持不變的因素 (Factors held constant):</strong> 名義工資 (Nominal wages)、其他生產要素價格 (Prices of other factor inputs)、技術水平 (Technology)、<strong>通脹預期 (Inflation expectations \(P^e\))</strong>。
+                <div class="en-text">Nominal wages, prices of other factor inputs, technology, and <strong>inflation expectations \(P^e\)</strong>.</div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="analysis-box">
+        <h2>3. 答案與詳細分析 (The Answer & Detailed Analysis)</h2>
+        <p class="zh-text" style="font-size: 1.2em;">正確答案 (Correct Option): <span class="correct-ans">Option D</span></p>
+
+        <div class="option-item">
+            <p class="zh-text"><span class="wrong-ans">選項 A (錯):</span> SRAS 曲線的 Y 軸是「物價水平」。沿著曲線移動，即代表物價水平正在改變（上升或下降），所以物價水平不可能不變。</p>
+            <p class="en-text">Option A (Incorrect): The Y-axis of the SRAS curve is the "Price Level". Moving along the curve means the price level is changing (rising or falling), so it cannot be constant.</p>
+        </div>
+
+        <div class="option-item">
+            <p class="zh-text"><span class="wrong-ans">選項 B (錯):</span> 沿著 SRAS 曲線向右上方移動時，實質產出 \(Y\) 增加。為了生產更多的產品，廠商必須僱用更多的可變生產要素（如勞工）。因此，僱用的生產要素數量會改變。</p>
+            <p class="en-text">Option B (Incorrect): Moving upwards along the SRAS curve, real output \(Y\) increases. To produce more output, firms must employ more variable factors of production (like labor). Thus, the quantity of employed factors changes.</p>
+        </div>
+
+        <div class="option-item">
+            <p class="zh-text"><span class="wrong-ans">選項 C (錯 / 具誤導性):</span> 在構建 SRAS 曲線時，我們假設「生產要素價格」（如名義工資）是僵固不變的 (sticky/constant)。如果這裡的「成本」是指要素的單價 (unit cost / factor price)，那麼它應該是不變的。雖然如果指「總成本」(Total Cost)，它會隨產量增加而上升，但在 DSE 的語境中，此選項通常指代投入價格，而投入價格是不變的。</p>
+            <p class="en-text">Option C (Incorrect / Misleading): When constructing the SRAS curve, we assume "factor prices" (like nominal wages) are sticky/constant. If "costs" here means unit costs or factor prices, they should be constant. While "Total Cost" would indeed change as production increases, in the DSE context, this phrasing usually refers to input prices, which are held constant.</p>
+        </div>
+
+        <div class="option-item">
+            <p class="zh-text"><span class="correct-ans">選項 D (正確):</span> 預期物價水平或通脹預期 (Inflation expectations) 是導致 SRAS 曲線「移動」(shift) 的因素。因此，當我們只分析「沿著同一條曲線」的狀況時，通脹預期必定是保持不變的 (ceteris paribus)。</p>
+            <p class="en-text">Option D (Correct): The expected price level or inflation expectations is a shift factor for the SRAS curve. Therefore, when we are analyzing a movement "along the same curve", inflation expectations must be held constant (ceteris paribus).</p>
+        </div>
+    </div>
+
+    <div class="concept-box" style="background-color: #f3e8ff; border-left-color: #a855f7;">
+        <h2>4. 題目拆解 (Problem Decomposition)</h2>
+        <p class="zh-text"><strong>解題樞紐 (Pivot Point):</strong> 釐清「沿著曲線移動」與「曲線移動」的分別。</p>
+        <p class="en-text"><strong>Pivot Point:</strong> Distinguish between "movement along the curve" and "shift of the curve".</p>
+        
+        <p class="zh-text"><strong>思考步驟 (Thought Process):</strong></p>
+        <ol>
+            <li class="zh-text">題目問「在一條曲線上」(Along a curve)。這意味著我們尋找的是 <strong>Shift factors (導致整條曲線移動的因素)</strong>，因為在同一條曲線上，這些 shift factors 必須被假定為 <strong>不變 (constant)</strong>。
+                <div class="en-text">The question asks "Along a curve". This means we are looking for <strong>shift factors</strong>, because along the same curve, these shift factors must be assumed to be <strong>constant</strong>.</div>
+            </li>
+            <li class="zh-text">看坐標軸：Y軸是物價水平 (P)，X軸是產出 (Y)。這兩者在曲線上都會變，所以 A 和 B 錯。
+                <div class="en-text">Look at axes: Y-axis is Price Level (P), X-axis is Output (Y). Both change along the curve, so A and B are wrong.</div>
+            </li>
+            <li class="zh-text">找出 Shift factor：通脹預期改變會令 SRAS 移動，所以在「同一條」曲線上，它必須不變。選 D。
+                <div class="en-text">Identify Shift factor: A change in inflation expectations shifts SRAS, so on the "same" curve, it must be constant. Choose D.</div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="qa-box">
+        <h2>5. 學生常見疑問 (Student Q&A)</h2>
+        <p class="zh-text"><strong>Q: 為什麼產出增加時，生產要素不變是錯的 (選項B)？不是說短期內資本 (Capital) 不變嗎？</strong></p>
+        <p class="en-text"><strong>Q: Why is it wrong to say employed factors are constant when output increases (Option B)? Isn't capital fixed in the short run?</strong></p>
+        
+        <p class="zh-text"><strong>A:</strong> 你說得對，短期內「固定生產要素」(Fixed factors, 如機器、廠房) 的確是不變的。但是，要增加產出 \(Y\)，廠商必須增加僱用「可變生產要素」(Variable factors, 如勞工或原材料)。因此，整體「僱用的生產要素」數量是增加了，並非不變。</p>
+        <p class="en-text"><strong>A:</strong> You are right that "fixed factors" (like machinery, factories) are constant in the short run. However, to increase output \(Y\), firms MUST employ more "variable factors" (like labor or raw materials). Therefore, the overall quantity of "employed factors" increases; it is not constant.</p>
+    </div>
+
+    <div class="tricks-box">
+        <h2>6. 考試技巧與速解 (Exam Tricks & Shortcuts)</h2>
+        <p class="zh-text"><strong>「軸上變，軸外不變」法則：</strong></p>
+        <p class="zh-text">任何經濟學圖表題，只要見到「沿著曲線 (Along a curve)」：</p>
+        <ul>
+            <li class="zh-text">坐標軸上的變數 (例如 \(P\) 和 \(Y\)) <strong>一定會改變</strong>。馬上剔除說它們「不變」的選項 (秒殺選項 A)。</li>
+            <li class="zh-text">坐標軸以外、會影響這條曲線的因素 (例如預期、科技、生產要素價格) <strong>一定是不變的</strong>。直接尋找這些 Shift factors 作為答案。</li>
+        </ul>
+        
+        <p class="en-text"><strong>"On-axis changes, Off-axis constant" Rule:</strong></p>
+        <p class="en-text">For any economics graph question, if you see "Along a curve":</p>
+        <ul>
+            <li class="en-text">Variables on the axes (like \(P\) and \(Y\)) <strong>must change</strong>. Immediately eliminate options saying they are constant (eliminates Option A instantly).</li>
+            <li class="en-text">Factors not on the axes that influence the curve (like expectations, technology, input prices) <strong>must be constant</strong>. Look directly for these shift factors as the answer.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

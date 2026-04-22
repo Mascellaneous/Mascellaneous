@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Economics Tutor: Functions of Money</title>
+    
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']]
+      }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #0284c7;
+            --bg-color: #ffffff;
+            --text-color: #334155;
+            --concept-bg: #f0f9ff;
+            --concept-border: #0ea5e9;
+            --math-bg: #f8fafc;
+            --math-border: #cbd5e1;
+            --trap-bg: #fef2f2;
+            --trap-border: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Microsoft JhengHei';
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-color);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h1 { font-size: 1.8rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
+        h2 { font-size: 1.5rem; }
+        h3 { font-size: 1.2rem; }
+
+        .bilingual {
+            margin-bottom: 15px;
+        }
+        .zh { font-weight: 500; color: #1e293b; }
+        .en { color: #64748b; font-size: 0.95em; margin-top: 4px;}
+
+        /* Sections Styling */
+        .header-section {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .question-box {
+            background-color: #fffbeb;
+            border: 1px solid #fde68a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: center;
+        }
+        th { background-color: #f1f5f9; }
+
+        .concept-box {
+            background-color: var(--concept-bg);
+            border-left: 5px solid var(--concept-border);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .math-block {
+            background-color: var(--math-bg);
+            border: 1px solid var(--math-border);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .analysis-box {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .trap-box {
+            background-color: var(--trap-bg);
+            border-left: 5px solid var(--trap-border);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .correct-ans {
+            color: #16a34a;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            table { font-size: 0.9em; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header-section">
+        <div class="bilingual">
+            <div class="zh"><strong>課題 (Topic):</strong> 貨幣的功能 (Functions of Money)</div>
+            <div class="en"><strong>難度 (Difficulty):</strong> ★★★☆☆ (3/5)</div>
+            <div class="zh"><strong>核心概念 (Key Concepts):</strong> 計價單位 (Unit of Account), 延期支付標準 (Standard of Deferred Payment), 價值儲藏 (Store of Value)</div>
+        </div>
+    </div>
+
+    <h2>1. 題目 (The Question)</h2>
+    <div class="question-box">
+        <div class="bilingual">
+            <div class="zh">參考以下 X 國雲端服務的訂閱計劃。</div>
+            <div class="en">Refer to the following subscription plan for a cloud service in Country X.</div>
+        </div>
+        
+        <table>
+            <tr>
+                <th>計劃 (Plan)</th>
+                <th>基本 (Basic)</th>
+                <th>專業 (Pro)</th>
+            </tr>
+            <tr>
+                <td><strong>功能 (Features)</strong></td>
+                <td>50GB 儲存空間 (Storage)</td>
+                <td>1TB 儲存空間 (Storage)</td>
+            </tr>
+            <tr>
+                <td><strong>費用 (Payment)</strong></td>
+                <td>每月 US$10（自動扣款）<br>US$10 per month (automatically charged)</td>
+                <td>每月 US$20（自動扣款）<br>US$20 per month (automatically charged)</td>
+            </tr>
+            <tr>
+                <td><strong>最少訂閱期 (Minimum Subscription Period)</strong></td>
+                <td>12個月 (12 months)</td>
+                <td>12個月 (12 months)</td>
+            </tr>
+        </table>
+
+        <div class="bilingual">
+            <div class="zh">在上述情況下，美元發揮了什麼功能？</div>
+            <div class="en">In the above case, US dollar performed as a</div>
+        </div>
+        <div class="bilingual" style="margin-left: 20px;">
+            <div class="zh">
+                (1) 計價單位<br>
+                (2) 延期支付標準<br>
+                (3) 價值儲藏
+            </div>
+            <div class="en" style="margin-top: 10px;">
+                (1) unit of account<br>
+                (2) standard of deferred payment<br>
+                (3) store of value
+            </div>
+        </div>
+        <div class="bilingual" style="margin-top: 15px; font-weight: bold;">
+            A. 只有 (1) / (1) only<br>
+            B. 只有 (2) / (2) only<br>
+            C. 只有 (1) 及 (2) / (1) and (2) only<br>
+            D. (1)、(2) 及 (3) / (1), (2) and (3)
+        </div>
+    </div>
+
+    <h2>2. 概念重溫 (Concept Review)</h2>
+    <div class="concept-box">
+        <div class="bilingual">
+            <div class="zh"><strong>1. 計價單位 (Unit of Account):</strong> 貨幣被用作衡量和標示物品及服務價值的共同單位。當你看到價格標籤或價目表時，這就是計價單位的功能。</div>
+            <div class="en"><strong>1. Unit of Account:</strong> Money is used as a common yardstick to measure and quote the value of goods and services. When you see a price tag or menu, this function is at work.</div>
+        </div>
+        <div class="bilingual" style="margin-top: 10px;">
+            <div class="zh"><strong>2. 延期支付標準 (Standard of Deferred Payment):</strong> 貨幣被用作結算未來債務或付款的單位。任何涉及未來付款承諾的合約（如貸款、分期付款、長期訂閱）都體現了此功能。</div>
+            <div class="en"><strong>2. Standard of Deferred Payment:</strong> Money is used as a unit to settle future debts or payments. Contracts involving future payment commitments (e.g., loans, installments, long-term subscriptions) illustrate this.</div>
+        </div>
+        <div class="bilingual" style="margin-top: 10px;">
+            <div class="zh"><strong>3. 價值儲藏 (Store of Value):</strong> 貨幣能隨時間保留其購買力，讓人們可以儲蓄並在未來消費。</div>
+            <div class="en"><strong>3. Store of Value:</strong> Money retains its purchasing power over time, allowing individuals to save wealth and consume in the future.</div>
+        </div>
+        
+        <div class="math-block">
+            <div class="bilingual">
+                <div class="zh">貨幣的價值 $V$ 與一般物價水平 $P$ 呈反比關係。公式如下：</div>
+                <div class="en">The value of money $V$ is inversely related to the general price level $P$. The formula is:</div>
+                $$V = \frac{1}{P}$$
+            </div>
+        </div>
+    </div>
+
+    <h2>3. 答案與詳細分析 (Answer & Detailed Analysis)</h2>
+    <div class="bilingual">
+        <div class="zh">正確答案 (Correct Option): <span class="correct-ans">C. 只有 (1) 及 (2) / (1) and (2) only</span></div>
+    </div>
+
+    <div class="analysis-box">
+        <div class="bilingual">
+            <div class="zh"><strong>分析 句子 (1) - 正確：</strong> 案例中的雲端服務月費標示為 $US\$10$ 及 $US\$20$。這清楚顯示美元被用作表達服務價值的單位（標價），因此發揮了「計價單位」的功能。</div>
+            <div class="en"><strong>Analysis of Statement (1) - Correct:</strong> The monthly fees are quoted at $US\$10$ and $US\$20$. This clearly shows USD is being used as a unit to express the value of the services (quoting prices), thus performing as a "unit of account".</div>
+        </div>
+    </div>
+
+    <div class="analysis-box">
+        <div class="bilingual">
+            <div class="zh"><strong>分析 句子 (2) - 正確：</strong> 訂閱計劃規定了「最少訂閱期為12個月」並會「自動扣款」。這意味著顧客承諾在未來（接下來的12個月）以美元結算這筆債務。因為涉及未來的付款條款，所以美元發揮了「延期支付標準」的功能。</div>
+            <div class="en"><strong>Analysis of Statement (2) - Correct:</strong> The plan specifies a "Minimum Subscription Period of 12 months" with "automatic charges". This means customers are committing to settle future debts in USD over the next 12 months. Because it involves future payment terms, USD performs as a "standard of deferred payment".</div>
+        </div>
+    </div>
+
+    <div class="analysis-box">
+        <div class="bilingual">
+            <div class="zh"><strong>分析 句子 (3) - 錯誤：</strong> 雖然貨幣本身具有儲藏價值的功能，但在「上述情況下」，並沒有提及任何人（消費者或企業）將美元儲蓄起來以備將來使用。此案例僅說明了交易的定價和付款方式，因此未能體現「價值儲藏」的功能。</div>
+            <div class="en"><strong>Analysis of Statement (3) - Incorrect:</strong> Although money inherently serves as a store of value, in "the above case", there is no mention of anyone (consumers or the firm) saving or holding USD to preserve wealth for future use. The scenario only describes pricing and payment terms for a transaction, so the "store of value" function is not demonstrated.</div>
+        </div>
+    </div>
+
+    <h2>4. 題目拆解 (Problem Decomposition)</h2>
+    <div class="bilingual">
+        <div class="zh">
+            <ul>
+                <li><strong>拆題關鍵 (Pivot Point):</strong> 留意題目問的是「在上述情況下 (In the above case)」。你必須嚴格根據表格提供的資訊來判斷，而不能僅憑貨幣的一般性質作答。</li>
+                <li><strong>干擾資訊 (Distractors):</strong> 「X國 (Country X)」、「50GB / 1TB 儲存空間」均為無關重要的資訊，不影響判斷貨幣的功能。</li>
+                <li><strong>破題字眼:</strong> 「每月 US$10」對應計價；「12個月 (自動扣款)」對應未來債務結算 (延期支付)。</li>
+            </ul>
+        </div>
+        <div class="en">
+            <ul>
+                <li><strong>Pivot Point:</strong> Note that the question asks "In the above case". You must judge strictly based on the information provided in the table, not just on the general properties of money.</li>
+                <li><strong>Distractors:</strong> "Country X" and "50GB / 1TB Storage" are irrelevant details that do not affect identifying the functions of money.</li>
+                <li><strong>Key Phrases:</strong> "US$10 per month" corresponds to pricing (unit of account); "12 months (automatically charged)" corresponds to settling future debts (deferred payment).</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>5. 常犯錯誤與陷阱 (Common Mistakes & Traps)</h2>
+    <div class="trap-box">
+        <div class="bilingual">
+            <div class="zh"><strong>陷阱：過度推論 (Over-inference)</strong><br>很多學生會選擇 D，因為他們認為「美元是貨幣，貨幣當然可以儲藏價值」。這是一個致命的常犯錯誤。HKDSE 經濟科非常強調「情境對應」。如果題目情境中沒有明確出現「把錢存入銀行」、「把錢放入保險箱」或「持有現金以備將來使用」的動作，我們就不能說在該情況下發揮了「價值儲藏」的功能。</div>
+            <div class="en"><strong>Trap: Over-inference</strong><br>Many students will choose Option D because they think, "USD is money, and money naturally stores value." This is a fatal and common mistake. HKDSE Economics heavily emphasizes "context matching." If the scenario doesn't explicitly describe actions like "depositing money in a bank," "putting money in a safe," or "holding cash for future use," we cannot conclude that the "store of value" function is performed in that specific case.</div>
+        </div>
+    </div>
+
+    <h2>6. 學生常見疑問 (Student Q&A)</h2>
+    <div class="bilingual">
+        <div class="zh"><strong>問 (Q)：為什麼簽訂合約不等於價值儲藏？公司收到錢後不是會儲存起來嗎？</strong></div>
+        <div class="en"><strong>Q: Why doesn't signing a contract count as a store of value? Won't the company store the money after receiving it?</strong></div>
+    </div>
+    <div class="bilingual">
+        <div class="zh"><strong>答 (A)：</strong> 這是合理的猜測，但在多項選擇題中，我們只能依賴題目「已知」的資訊。表格只展示了收費標準和訂閱期，沒有任何字眼提及公司如何處置這些收入 $V$。我們不能將未發生的假設加入題目中。</div>
+        <div class="en"><strong>A:</strong> That's a reasonable guess, but in MCQs, we must rely solely on the "known" information provided. The table only shows the pricing and subscription period; there are no words mentioning how the company handles this revenue $V$. We cannot inject unstated assumptions into the question.</div>
+    </div>
+
+    <h2>7. 考試技巧與速解 (Exam Tricks & Shortcuts)</h2>
+    <div class="bilingual">
+        <div class="zh">
+            <strong>排除法 (Elimination Method):</strong>
+            <ol>
+                <li>看到有價錢牌 ($10, $20) ➡️ (1) 必定正確。</li>
+                <li>看到有「12個月」、「未來付款」的字眼 ➡️ (2) 必定正確。</li>
+                <li>此時只剩下選項 C 和 D。</li>
+                <li>快速掃描全題，尋找有沒有「儲蓄 (save)」、「存款 (deposit)」等字眼。沒有發現 ➡️ 剔除 (3)。</li>
+                <li>秒殺答案：<strong>C</strong>。</li>
+            </ol>
+        </div>
+        <div class="en">
+            <strong>Elimination Method:</strong>
+            <ol>
+                <li>See price tags ($10, $20) ➡️ (1) is definitely correct.</li>
+                <li>See keywords like "12 months", "future payment" ➡️ (2) is definitely correct.</li>
+                <li>Now you are left with only Options C and D.</li>
+                <li>Quickly scan the text for keywords like "save" or "deposit". None found ➡️ Eliminate (3).</li>
+                <li>Instant Answer: <strong>C</strong>.</li>
+            </ol>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
