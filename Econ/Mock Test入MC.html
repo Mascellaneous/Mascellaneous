@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Formatter (Single Question)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        textarea { white-space: pre-wrap; }
+    </style>
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-6 text-blue-700">經濟科 MCQ 格式轉換工具 (單題轉換版)</h1>
+        
+        <!-- ID 設定區塊 -->
+        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
+            <h2 class="text-lg font-semibold text-blue-800 mb-3">題目 ID 設定 (ID Settings)</h2>
+            <div class="flex flex-wrap items-center gap-2 text-gray-700 font-mono text-lg">
+                <span>3e</span>
+                
+                <select id="id-part1" class="p-1 border border-gray-300 rounded bg-white focus:ring-blue-500 focus:border-blue-500">
+                    <option value="M" selected>M</option>
+                    <option value="S">S</option>
+                    <option value="L">L</option>
+                </select>
+                
+                <select id="id-part2" class="p-1 border border-gray-300 rounded bg-white focus:ring-blue-500 focus:border-blue-500">
+                    <option value="A">A</option>
+                    <option value="B" selected>B</option>
+                    <option value="C">C</option>
+                </select>
+                
+                <span>MT</span>
+                
+                <input type="number" id="id-part3" value="44" min="0" max="99" class="w-16 p-1 border border-gray-300 rounded text-center focus:ring-blue-500 focus:border-blue-500" title="Two-digit number after MT">
+                
+                <span>000</span>
+                
+                <input type="number" id="id-counter" value="1" min="1" class="w-20 p-1 border border-gray-300 rounded text-center focus:ring-blue-500 focus:border-blue-500" title="Question Counter">
+                
+                <span class="ml-4 text-sm text-gray-500 font-sans">(預覽: <span id="id-preview" class="font-mono font-bold text-blue-600">3eMBMT4400001</span>)</span>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">貼上單一題目 (Question):</label>
+                <textarea id="questions" class="w-full h-64 p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500" placeholder="下列哪些情況...&#10;A. ...&#10;B. ..."></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">貼上單一答案 (Answer):</label>
+                <textarea id="answers" class="w-full h-64 p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500" placeholder="答案：D&#10;(1)是正確的..."></textarea>
+            </div>
+        </div>
+        
+        <button onclick="processText()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded mb-6 transition duration-200 shadow">
+            轉換格式 (Generate Output)
+        </button>
+        
+        <div class="relative">
+            <div class="flex justify-between items-end mb-1">
+                <label class="block text-sm font-medium text-gray-700">輸出結果 (Output):</label>
+                <button onclick="copyToClipboard()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-4 rounded transition duration-200 flex items-center gap-2 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    複製並準備下一題 (Copy & Next)
+                </button>
+            </div>
+            <textarea id="output" class="w-full h-80 p-3 border border-gray-300 rounded bg-gray-50 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        // 即時更新 ID 預覽
+        function updatePreview() {
+            const p1 = document.getElementById('id-part1').value;
+            const p2 = document.getElementById('id-part2').value;
+            const p3 = document.getElementById('id-part3').value.padStart(2, '0');
+            const counter = document.getElementById('id-counter').value.padStart(2, '0');
+            document.getElementById('id-preview').textContent = `3e${p1}${p2}MT${p3}000${counter}`;
+        }
+
+        document.getElementById('id-part1').addEventListener('change', updatePreview);
+        document.getElementById('id-part2').addEventListener('change', updatePreview);
+        document.getElementById('id-part3').addEventListener('input', updatePreview);
+        document.getElementById('id-counter').addEventListener('input', updatePreview);
+
+        function processText() {
+            let qText = document.getElementById('questions').value.trim();
+            let aText = document.getElementById('answers').value.trim();
+
+            if (!qText && !aText) {
+                alert("請輸入題目與答案！");
+                return;
+            }
+
+            // 處理題目：自動移除開頭的題號
+            qText = qText.replace(/^[0-9]+\.\s*/, '');
+            
+            // 在 A. 前面加上 @O，並移除 @O 前面的空白行
+            let parts = qText.split(/^A\./m);
+            if (parts.length > 1) {
+                let beforeA = parts[0].trimEnd(); // 移除 A. 前面的所有空白與換行
+                let afterA = parts.slice(1).join('A.'); // 重新組合剩餘部分
+                
+                if (beforeA) {
+                    qText = beforeA + '\n@O\nA.' + afterA;
+                } else {
+                    // 如果題目一開頭就是 A.
+                    qText = '@O\nA.' + afterA;
+                }
+            }
+
+            let letter = '';
+            let explanation = '';
+            
+            // 支援各種冒號 (半形 :、全形 ：、特殊 ︰) 以及忽略開頭的空白或換行
+            const ansMatch = aText.match(/^\s*(?:[0-9]+\.\s*)?(?:答案\s*[:：︰]?\s*)?([A-D])/i);
+            
+            if (ansMatch) {
+                letter = ansMatch[1].toUpperCase();
+                // 擷取選項之後的文字作為解釋
+                explanation = aText.substring(ansMatch[0].length).trim();
+            } else {
+                alert("無法在答案區找到選項 (A, B, C, D)！請確保格式正確。");
+                return;
+            }
+
+            // 取得 ID 設定
+            const p1 = document.getElementById('id-part1').value;
+            const p2 = document.getElementById('id-part2').value;
+            const p3 = document.getElementById('id-part3').value.padStart(2, '0');
+            const counter = document.getElementById('id-counter').value.padStart(2, '0');
+            const id = `3e${p1}${p2}MT${p3}000${counter}`;
+
+            // 組合輸出結果
+            let outputText = `[[${id}\n`;
+            outputText += `${qText}\n`;
+            outputText += `##\n`;
+            outputText += `${letter}\n`;
+            if (explanation) {
+                outputText += `${explanation}\n`;
+            }
+            outputText += `@@\n{{}}\nd:2;\nt:mc;nil:1\n]]\n\n \n`;
+
+            document.getElementById('output').value = outputText.trim();
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('output').value;
+            if (!outputText) {
+                alert("沒有可複製的內容！請先點擊「轉換格式」。");
+                return;
+            }
+
+            navigator.clipboard.writeText(outputText).then(() => {
+                const counterInput = document.getElementById('id-counter');
+                let currentVal = parseInt(counterInput.value, 10) || 1;
+                counterInput.value = currentVal + 1;
+                
+                updatePreview();
+                
+                document.getElementById('questions').value = '';
+                document.getElementById('answers').value = '';
+                document.getElementById('output').value = '';
+
+                const btn = document.querySelector('button[onclick="copyToClipboard()"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ 已複製並更新 ID！';
+                btn.classList.replace('bg-green-600', 'bg-teal-600');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.replace('bg-teal-600', 'bg-green-600');
+                }, 2000);
+
+            }).catch(err => {
+                alert('複製失敗 (Copy failed): ' + err);
+            });
+        }
+        
+        updatePreview();
+    </script>
+</body>
+</html>
