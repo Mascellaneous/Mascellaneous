@@ -13,33 +13,48 @@
     <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <h1 class="text-2xl font-bold mb-6 text-blue-700">經濟科 MCQ 格式轉換工具 (單題轉換版)</h1>
         
-        <!-- ID 設定區塊 -->
+        <!-- 設定區塊 -->
         <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
-            <h2 class="text-lg font-semibold text-blue-800 mb-3">題目 ID 設定 (ID Settings)</h2>
-            <div class="flex flex-wrap items-center gap-2 text-gray-700 font-mono text-lg">
-                <span>3e</span>
-                
-                <select id="id-part1" class="p-1 border border-gray-300 rounded bg-white focus:ring-blue-500 focus:border-blue-500">
-                    <option value="M" selected>M</option>
-                    <option value="S">S</option>
-                    <option value="L">L</option>
-                </select>
-                
-                <select id="id-part2" class="p-1 border border-gray-300 rounded bg-white focus:ring-blue-500 focus:border-blue-500">
-                    <option value="A">A</option>
-                    <option value="B" selected>B</option>
-                    <option value="C">C</option>
-                </select>
-                
-                <span>MT</span>
-                
-                <input type="number" id="id-part3" value="44" min="0" max="99" class="w-16 p-1 border border-gray-300 rounded text-center focus:ring-blue-500 focus:border-blue-500" title="Two-digit number after MT">
-                
-                <span>000</span>
-                
-                <input type="number" id="id-counter" value="1" min="1" class="w-20 p-1 border border-gray-300 rounded text-center focus:ring-blue-500 focus:border-blue-500" title="Question Counter">
-                
-                <span class="ml-4 text-sm text-gray-500 font-sans">(預覽: <span id="id-preview" class="font-mono font-bold text-blue-600">3eMBMT4400001</span>)</span>
+            <h2 class="text-lg font-semibold text-blue-800 mb-3">設定 (Settings)</h2>
+            
+            <div class="flex flex-col gap-4">
+                <!-- ID 設定 -->
+                <div class="flex flex-wrap items-center gap-2 text-gray-700 font-mono text-lg">
+                    <span class="text-sm font-bold text-gray-700 font-sans mr-2">題目 ID:</span>
+                    <span>3e</span>
+                    
+                    <select id="id-part1" class="p-1 border border-gray-300 rounded bg-white focus:ring-blue-500 focus:border-blue-500">
+                        <option value="M" selected>M</option>
+                        <option value="S">S</option>
+                        <option value="L">L</option>
+                    </select>
+                    
+                    <select id="id-part2" class="p-1 border border-gray-300 rounded bg-white focus:ring-blue-500 focus:border-blue-500">
+                        <option value="A">A</option>
+                        <option value="B" selected>B</option>
+                        <option value="C">C</option>
+                    </select>
+                    
+                    <span>MT</span>
+                    
+                    <input type="number" id="id-part3" value="44" min="0" max="99" class="w-16 p-1 border border-gray-300 rounded text-center focus:ring-blue-500 focus:border-blue-500" title="Two-digit number after MT">
+                    
+                    <span>000</span>
+                    
+                    <input type="number" id="id-counter" value="1" min="1" class="w-20 p-1 border border-gray-300 rounded text-center focus:ring-blue-500 focus:border-blue-500" title="Question Counter">
+                    
+                    <span class="ml-4 text-sm text-gray-500 font-sans">(預覽: <span id="id-preview" class="font-mono font-bold text-blue-600">3eMBMT4400001</span>)</span>
+                </div>
+
+                <!-- 標籤設定 -->
+                <div class="flex flex-wrap items-center gap-2 text-gray-700 text-lg">
+                    <span class="text-sm font-bold text-gray-700 font-sans mr-2">標籤 (Tag):</span>
+                    <select id="tag-select" class="p-1 border border-gray-300 rounded bg-white focus:ring-blue-500 focus:border-blue-500 font-mono text-base">
+                        <option value="nil" selected>nil</option>
+                        <option value="cal">cal</option>
+                        <option value="crot">crot</option>
+                    </select>
+                </div>
             </div>
         </div>
         
@@ -135,6 +150,9 @@
             const counter = document.getElementById('id-counter').value.padStart(2, '0');
             const id = `3e${p1}${p2}MT${p3}000${counter}`;
 
+            // 取得標籤設定
+            const tagValue = document.getElementById('tag-select').value;
+
             // 組合輸出結果
             let outputText = `[[${id}\n`;
             outputText += `${qText}\n`;
@@ -143,7 +161,7 @@
             if (explanation) {
                 outputText += `${explanation}\n`;
             }
-            outputText += `@@\n{{}}\nd:2;\nt:mc;nil:1\n]]\n\n \n`;
+            outputText += `@@\n{{}}\nd:2;\nt:mc;${tagValue}:1\n]]\n\n \n`;
 
             document.getElementById('output').value = outputText.trim();
         }
@@ -156,19 +174,25 @@
             }
 
             navigator.clipboard.writeText(outputText).then(() => {
+                // 更新計數器
                 const counterInput = document.getElementById('id-counter');
                 let currentVal = parseInt(counterInput.value, 10) || 1;
                 counterInput.value = currentVal + 1;
                 
                 updatePreview();
                 
+                // 清空輸入框與輸出框
                 document.getElementById('questions').value = '';
                 document.getElementById('answers').value = '';
                 document.getElementById('output').value = '';
 
+                // 重置標籤選擇回預設值 nil
+                document.getElementById('tag-select').value = 'nil';
+
+                // 按鈕狀態提示
                 const btn = document.querySelector('button[onclick="copyToClipboard()"]');
                 const originalText = btn.innerHTML;
-                btn.innerHTML = '✅ 已複製並更新 ID！';
+                btn.innerHTML = '✅ 已複製並準備下一題！';
                 btn.classList.replace('bg-green-600', 'bg-teal-600');
                 
                 setTimeout(() => {
