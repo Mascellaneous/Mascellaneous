@@ -65,7 +65,7 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">貼上單一答案 (Answer):</label>
-                <textarea id="answers" class="w-full h-64 p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500" placeholder="答案：D&#10;(1)是正確的..."></textarea>
+                <textarea id="answers" class="w-full h-64 p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500" placeholder="Answer: D&#10;(1)是正確的..."></textarea>
             </div>
         </div>
         
@@ -131,8 +131,9 @@
             let letter = '';
             let explanation = '';
             
-            // 支援各種冒號 (半形 :、全形 ：、特殊 ︰) 以及忽略開頭的空白或換行
-            const ansMatch = aText.match(/^\s*(?:[0-9]+\.\s*)?(?:答案\s*[:：︰]?\s*)?([A-D])/i);
+            // 支援各種冒號 (半形 :、全形 ：、特殊 ︰) 以及明確匹配中英文的「答案」、「Answer」或「Ans」
+            // 避免在 "Answer: B" 時錯誤匹配到 "Answer" 裡面的 "A"
+            const ansMatch = aText.match(/^\s*(?:[0-9]+\.\s*)?(?:(?:答案|Answer|Ans)\s*[:：︰]?\s*)?([A-D])/i);
             
             if (ansMatch) {
                 letter = ansMatch[1].toUpperCase();
