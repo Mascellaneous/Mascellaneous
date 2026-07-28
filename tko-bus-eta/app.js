@@ -254,11 +254,18 @@ async function init() {
   // 更新按鈕
   document.getElementById("btn-refresh").addEventListener("click", refreshCurrentTab);
 
-  // GPS 偵測 → 決定預設 Tab
-  setGpsStatus("loading");
-  const { tab, gpsState } = await detectTab();
-  setGpsStatus(gpsState);
-  switchTab(tab);
+  // GPS 偵測 → 決定預設 Tab（受 GPS_ENABLED 控制）
+  const gpsDot = document.getElementById("gps-status");
+  if (GPS_ENABLED) {
+    setGpsStatus("loading");
+    const { tab, gpsState } = await detectTab();
+    setGpsStatus(gpsState);
+    switchTab(tab);
+  } else {
+    // GPS 停用：隱藏狀態圓點，預設顯示「出街」Tab
+    if (gpsDot) gpsDot.hidden = true;
+    switchTab("out");
+  }
 
   // 首次載入 ETA
   await refreshCurrentTab();
