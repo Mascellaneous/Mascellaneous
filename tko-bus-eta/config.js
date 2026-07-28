@@ -91,6 +91,6 @@ const HOME_ROUTES = [
   stopId: "20A7DAD5A8294964",
   stopName: "九龍城轉車站-富豪東方酒店",
   dest: "往寶林",
-  color: "#1a6b5a",
+  color: "#d4ac0d",
  }, 
 ];
