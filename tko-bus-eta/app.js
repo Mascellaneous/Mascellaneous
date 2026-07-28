@@ -1,41 +1,116 @@
 /**
  * app.js — 將軍澳巴士到站時間
  *
- * 從九巴 ETA API 取得資料並動態渲染卡片。
- * 路線設定請修改 config.js。
+ * 雙 Tab 設計：「出街」與「返家」
+ * - 開啟時自動偵測 GPS，決定預設 Tab
+ * - 用家可手動點擊 Tab 切換
+ * - 路線設定請修改 config.js
  */
 
 const KMB_ETA_BASE = "https://data.etabus.gov.hk/v1/transport/kmb/eta";
 
-/* ── 工具函式 ── */
+/* ════════════════════════════════════════════════════════
+   工具函式
+   ════════════════════════════════════════════════════════ */
 
-/**
- * 計算距離現在的分鐘數（四捨五入）
- * @param {string} isoTime  ISO 8601 時間字串
- * @returns {number}
- */
 function minutesFromNow(isoTime) {
-  const diff = (new Date(isoTime) - Date.now()) / 60000;
-  return Math.round(diff);
+  return Math.round((new Date(isoTime) - Date.now()) / 60000);
 }
 
-/**
- * 格式化時間為 HH:MM
- */
 function formatTime(isoTime) {
   const d = new Date(isoTime);
-  const hh = String(d.getHours()).padStart(2, "0");
-  const mm = String(d.getMinutes()).padStart(2, "0");
-  return `${hh}:${mm}`;
+  return `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
 }
 
-/* ── 卡片 DOM 建立 ── */
+/** Haversine 距離（米） */
+function haversineMeters(lat1, lng1, lat2, lng2) {
+  const R = 6371000;
+  const r = (d) => (d * Math.PI) / 180;
+  const dLat = r(lat2 - lat1);
+  const dLng = r(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(r(lat1)) * Math.cos(r(lat2)) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+/* ════════════════════════════════════════════════════════
+   GPS 位置偵測
+   ════════════════════════════════════════════════════════ */
+
+function getCurrentPosition() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) { reject(new Error("not supported")); return; }
+    navigator.geolocation.getCurrentPosition(
+      (p) => resolve({ lat: p.coords.latitude, lng: p.coords.longitude }),
+      (e) => reject(e),
+      { timeout: 10000, maximumAge: 60000 }
+    );
+  });
+}
 
 /**
- * 建立一張巴士卡片的 DOM 元素
- * @param {object} cfg  BUS_CONFIG 中的單一路線設定
- * @returns {HTMLElement}
+ * 偵測目前位置，返回建議 Tab
+ * @returns {Promise<{tab: "out"|"home", gpsState: "ok"|"far"|"error"}>}
  */
+async function detectTab() {
+  try {
+    const pos = await getCurrentPosition();
+    const dist = haversineMeters(pos.lat, pos.lng, HOME_LOCATION.lat, HOME_LOCATION.lng);
+    if (dist <= HOME_RADIUS_M) {
+      return { tab: "out", gpsState: "ok" };
+    } else {
+      return { tab: "home", gpsState: "far" };
+    }
+  } catch {
+    return { tab: "out", gpsState: "error" };   // 無法取得位置時預設出街
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   GPS 狀態圓點
+   ════════════════════════════════════════════════════════ */
+
+const GPS_TITLES = {
+  loading: "正在取得位置…",
+  ok:      "在家附近（自動切換至出街）",
+  far:     "在外面（自動切換至返家）",
+  error:   "無法取得位置，顯示預設 Tab",
+};
+
+function setGpsStatus(state) {
+  const dot = document.getElementById("gps-status");
+  if (!dot) return;
+  dot.className = `tab-gps-status gps-${state}`;
+  dot.title = GPS_TITLES[state] || "";
+}
+
+/* ════════════════════════════════════════════════════════
+   Tab 切換
+   ════════════════════════════════════════════════════════ */
+
+let activeTab = "out";
+
+function switchTab(tab) {
+  activeTab = tab;
+
+  // 更新按鈕狀態
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    const isActive = btn.dataset.tab === tab;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+
+  // 顯示對應面板
+  document.querySelectorAll(".tab-panel").forEach((panel) => {
+    panel.classList.toggle("active", panel.id === `panel-${tab}`);
+  });
+}
+
+/* ════════════════════════════════════════════════════════
+   卡片 DOM 建立
+   ════════════════════════════════════════════════════════ */
+
 function createCard(cfg) {
   const card = document.createElement("div");
   card.className = "bus-card";
@@ -67,33 +142,29 @@ function createCard(cfg) {
   return card;
 }
 
-/* ── ETA 資料獲取與渲染 ── */
+/* ════════════════════════════════════════════════════════
+   ETA 獲取與渲染
+   ════════════════════════════════════════════════════════ */
 
-/**
- * 從 API 取得 ETA 並更新卡片顯示
- * @param {HTMLElement} card
- */
 async function fetchAndRenderEta(card) {
   const { stopId, route, serviceType } = card.dataset;
   const etaArea = card.querySelector(".card-eta-area");
 
-  // 顯示載入中
   etaArea.innerHTML = `
-    <div class="card-loading">
-      <div class="spinner"></div>
-      正在查看
-    </div>
+    <div class="card-loading"><div class="spinner"></div>正在查看</div>
   `;
 
   try {
-    const url = `${KMB_ETA_BASE}/${stopId}/${route}/${serviceType}`;
-    const resp = await fetch(url);
+    const resp = await fetch(`${KMB_ETA_BASE}/${stopId}/${route}/${serviceType}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const json = await resp.json();
 
-    // 只取 outbound (dir=O) 且有 eta 時間的班次，按時間排序
+    // Accept any direction — OUT_ROUTES stops return dir="O", HOME_ROUTES
+    // (inbound/return-journey) stops return dir="I". The API already scopes
+    // results to the correct direction for the given stop+route combination,
+    // so filtering by dir would incorrectly discard HOME_ROUTES data.
     const etas = (json.data || [])
-      .filter((e) => e.dir === "O" && e.eta)
+      .filter((e) => e.eta)
       .sort((a, b) => new Date(a.eta) - new Date(b.eta));
 
     if (etas.length === 0) {
@@ -101,36 +172,23 @@ async function fetchAndRenderEta(card) {
       return;
     }
 
-    const first = etas[0];
-    const mins = minutesFromNow(first.eta);
-    const timeStr = formatTime(first.eta);
+    const mins = minutesFromNow(etas[0].eta);
+    const primaryHtml = mins <= 0
+      ? `<div class="card-eta-primary">
+           <span class="card-eta-prefix">仲有</span>
+           <span class="card-eta-arriving">到站</span>
+         </div>`
+      : `<div class="card-eta-primary">
+           <span class="card-eta-prefix">仲有</span>
+           <span class="card-eta-minutes">${mins}</span>
+           <span class="card-eta-unit">分</span>
+         </div>`;
 
-    let primaryHtml;
-    if (mins <= 0) {
-      primaryHtml = `
-        <div class="card-eta-primary">
-          <span class="card-eta-prefix">仲有</span>
-          <span class="card-eta-arriving">到站</span>
-        </div>
-      `;
-    } else {
-      primaryHtml = `
-        <div class="card-eta-primary">
-          <span class="card-eta-prefix">仲有</span>
-          <span class="card-eta-minutes">${mins}</span>
-          <span class="card-eta-unit">分</span>
-        </div>
-      `;
-    }
-
-    // 第二班
     let nextHtml = "";
     if (etas.length >= 2) {
-      const second = etas[1];
-      const mins2 = minutesFromNow(second.eta);
-      const time2 = formatTime(second.eta);
+      const mins2 = minutesFromNow(etas[1].eta);
       if (mins2 > 0) {
-        nextHtml = `<div class="card-eta-next">之後 ${mins2} 分 &nbsp;(${time2})</div>`;
+        nextHtml = `<div class="card-eta-next">之後 ${mins2} 分 &nbsp;(${formatTime(etas[1].eta)})</div>`;
       }
     }
 
@@ -141,17 +199,19 @@ async function fetchAndRenderEta(card) {
   }
 }
 
-/* ── 全部更新 ── */
+/* ════════════════════════════════════════════════════════
+   更新目前 Tab 的所有卡片
+   ════════════════════════════════════════════════════════ */
 
-async function refreshAll() {
+async function refreshCurrentTab() {
   const btn = document.getElementById("btn-refresh");
   btn.classList.add("loading");
   btn.disabled = true;
 
-  const cards = document.querySelectorAll(".bus-card");
-  await Promise.all([...cards].map(fetchAndRenderEta));
+  const grid = document.getElementById(`grid-${activeTab}`);
+  const cards = grid ? [...grid.querySelectorAll(".bus-card")] : [];
+  await Promise.all(cards.map(fetchAndRenderEta));
 
-  // 更新時間戳
   const now = new Date();
   const ts = `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}:${String(now.getSeconds()).padStart(2,"0")}`;
   const el = document.getElementById("update-time");
@@ -161,25 +221,50 @@ async function refreshAll() {
   btn.disabled = false;
 }
 
-/* ── 初始化 ── */
+/* ════════════════════════════════════════════════════════
+   初始化
+   ════════════════════════════════════════════════════════ */
 
-function init() {
-  const grid = document.getElementById("cards-grid");
+function buildGrid(routes, gridId, emptyId) {
+  const grid = document.getElementById(gridId);
+  const emptyMsg = document.getElementById(emptyId);
+  if (!grid) return;
 
-  // 依設定建立卡片
-  BUS_CONFIG.forEach((cfg) => {
-    const card = createCard(cfg);
-    grid.appendChild(card);
+  if (!routes || routes.length === 0) {
+    if (emptyMsg) emptyMsg.hidden = false;
+    return;
+  }
+
+  routes.forEach((cfg) => grid.appendChild(createCard(cfg)));
+}
+
+async function init() {
+  // 建立兩個 Tab 的卡片
+  buildGrid(OUT_ROUTES,  "grid-out",  "empty-out");
+  buildGrid(HOME_ROUTES, "grid-home", "empty-home");
+
+  // Tab 按鈕點擊事件
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      switchTab(btn.dataset.tab);
+      refreshCurrentTab();
+    });
   });
 
-  // 首次載入
-  refreshAll();
+  // 更新按鈕
+  document.getElementById("btn-refresh").addEventListener("click", refreshCurrentTab);
+
+  // GPS 偵測 → 決定預設 Tab
+  setGpsStatus("loading");
+  const { tab, gpsState } = await detectTab();
+  setGpsStatus(gpsState);
+  switchTab(tab);
+
+  // 首次載入 ETA
+  await refreshCurrentTab();
 
   // 每 60 秒自動更新
-  setInterval(refreshAll, 60000);
-
-  // 更新按鈕
-  document.getElementById("btn-refresh").addEventListener("click", refreshAll);
+  setInterval(refreshCurrentTab, 60000);
 }
 
 document.addEventListener("DOMContentLoaded", init);

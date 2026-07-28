@@ -6,13 +6,9 @@
   <meta name="description" content="將軍澳富寧花園及將軍澳醫院巴士到站時間，實時查詢九巴班次。" />
   <title>將軍澳巴士到站時間</title>
 
-  <!-- Google Fonts: Noto Sans TC -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -20,17 +16,11 @@
 
   <!-- 頂部導航列 -->
   <header class="topbar">
-    <a class="topbar-logo" href="#cards-grid" aria-label="直接前往巴士班次">
+    <div class="topbar-logo">
       <div class="topbar-logo-icon">巴</div>
       <span class="topbar-title">將軍澳巴士到站時間</span>
-    </a>
-    <button
-      id="btn-refresh"
-      class="btn-refresh"
-      title="更新所有到站時間"
-      aria-label="更新所有到站時間"
-    >
-      <!-- 更新圖示 (SVG) -->
+    </div>
+    <button id="btn-refresh" class="btn-refresh" title="更新所有到站時間" aria-label="更新所有到站時間">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="23 4 23 10 17 10"></polyline>
@@ -41,17 +31,36 @@
     </button>
   </header>
 
+  <!-- Tab 切換列 -->
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" id="tab-out" role="tab" aria-selected="true"  aria-controls="panel-out"  data-tab="out">
+      <span class="tab-icon">🏠</span> 出街
+    </button>
+    <button class="tab-btn"        id="tab-home" role="tab" aria-selected="false" aria-controls="panel-home" data-tab="home">
+      <span class="tab-icon">🔙</span> 返家
+    </button>
+    <span class="tab-gps-status" id="gps-status" title="GPS 狀態"></span>
+  </nav>
+
   <!-- 主體 -->
   <main>
-    <h1 class="section-title" id="cards-grid-label">巴士到站時間</h1>
-    <div class="cards-grid" id="cards-grid" role="list" aria-labelledby="cards-grid-label"></div>
+
+    <!-- 出街 Tab 面板 -->
+    <section id="panel-out" class="tab-panel active" role="tabpanel" aria-labelledby="tab-out">
+      <div class="cards-grid" id="grid-out" role="list"></div>
+      <p class="empty-msg" id="empty-out" hidden>未有設定出街路線，請在 config.js 的 OUT_ROUTES 加入路線。</p>
+    </section>
+
+    <!-- 返家 Tab 面板 -->
+    <section id="panel-home" class="tab-panel" role="tabpanel" aria-labelledby="tab-home">
+      <div class="cards-grid" id="grid-home" role="list"></div>
+      <p class="empty-msg" id="empty-home" hidden>未有設定返家路線，請在 config.js 的 HOME_ROUTES 加入路線。</p>
+    </section>
+
     <p class="update-time" id="update-time"></p>
   </main>
 
-  <!-- 設定檔（路線資料）— 先載入，供 app.js 使用 -->
   <script src="config.js"></script>
-  <!-- 主邏輯 -->
   <script src="app.js"></script>
-
 </body>
 </html>
