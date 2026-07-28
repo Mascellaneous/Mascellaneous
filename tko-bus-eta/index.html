@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="將軍澳富寧花園及將軍澳醫院巴士到站時間，實時查詢九巴班次。" />
-  <title>將軍澳巴士到站時間</title>
+  <meta name="description" content="巴士到站時間，實時查詢九巴班次。" />
+  <title>巴士到站時間</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,8 +17,8 @@
   <!-- 頂部導航列 -->
   <header class="topbar">
     <div class="topbar-logo">
-      <div class="topbar-logo-icon">巴</div>
-      <span class="topbar-title">將軍澳巴士到站時間</span>
+      <div class="topbar-logo-icon">🚌</div>
+      <span class="topbar-title">巴士到站時間</span>
     </div>
     <button id="btn-refresh" class="btn-refresh" title="更新所有到站時間" aria-label="更新所有到站時間">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -37,7 +37,7 @@
       <span class="tab-icon">🏠</span> 出街
     </button>
     <button class="tab-btn"        id="tab-home" role="tab" aria-selected="false" aria-controls="panel-home" data-tab="home">
-      <span class="tab-icon">🔙</span> 返家
+      <span class="tab-icon">🔙</span> 回家
     </button>
     <span class="tab-gps-status" id="gps-status" title="GPS 狀態"></span>
   </nav>
@@ -51,10 +51,10 @@
       <p class="empty-msg" id="empty-out" hidden>未有設定出街路線，請在 config.js 的 OUT_ROUTES 加入路線。</p>
     </section>
 
-    <!-- 返家 Tab 面板 -->
+    <!-- 回家 Tab 面板 -->
     <section id="panel-home" class="tab-panel" role="tabpanel" aria-labelledby="tab-home">
       <div class="cards-grid" id="grid-home" role="list"></div>
-      <p class="empty-msg" id="empty-home" hidden>未有設定返家路線，請在 config.js 的 HOME_ROUTES 加入路線。</p>
+      <p class="empty-msg" id="empty-home" hidden>未有設定回家路線，請在 config.js 的 HOME_ROUTES 加入路線。</p>
     </section>
 
     <p class="update-time" id="update-time"></p>
