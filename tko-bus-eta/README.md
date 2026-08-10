@@ -1,81 +1,25 @@
-# 將軍澳巴士到站時間
 
-實時顯示將軍澳富寧花園及將軍澳醫院出發的九巴班次，資料來自[九巴 ETA Open API](https://data.etabus.gov.hk/)。
+# KMB ETA Web Application
 
-## 功能
+A lightweight, single-page web application to track the Estimated Time of Arrival (ETA) for Kowloon Motor Bus (KMB) routes. By default, it is configured for routes **98A** and **98C**.
 
-- **雙 Tab 設計**：「出街」（由屋企出發）與「返家」（返回屋企）
-- **GPS 自動切換**：開啟時自動偵測位置，在家附近預設顯示「出街」，在外則顯示「返家」
-- **手動切換**：可隨時點擊 Tab 手動切換
-- 顯示下一班及第二班到站時間（分鐘數 + 實際時間）
-- 每 60 秒自動更新，亦可手動按「更新」
-- 純靜態 HTML/CSS/JS，無需後端
+## 🚀 Features
+* **Zero Dependencies:** Built entirely with plain HTML, CSS, and Vanilla JavaScript. No React, Node.js, or backend servers required.
+* **Real-Time Data:** Connects directly to the official Hong Kong Government `Data.gov.hk` KMB Open API.
+* **Responsive Design:** Mobile-friendly UI layout for checking bus times on the go.
+* **Dynamic Loading:** Automatically fetches bus stops and bounds based on the selected route.
 
-## 目前路線
+## 🛠️ How the Code Works
 
-### 出街（OUT_ROUTES）
+1. **Initialization (`init`):** 
+   When the page loads, the app makes an API call to `/v1/transport/kmb/stop`. This downloads a master list of all bus stops in Hong Kong so we can translate random API `stop_id`s (e.g., `15406C62C0EB6317`) into human-readable Chinese names (e.g., "坑口站").
+2. **Dynamic Stop Listing (`updateStops`):**
+   When you select a Route and Direction, the app queries `/v1/transport/kmb/route-stop/...` to get the sequence of stops for that specific journey. It populates the dropdown menu dynamically.
+3. **Fetching ETA (`getETA`):**
+   Upon clicking the search button, the app queries the endpoint `/v1/transport/kmb/eta/{stop_id}/{route}/1`. It filters out the wrong directions and formats the ISO timestamps into a localized, user-friendly 12/24-hour format.
 
-| 路線 | 起始站 | 目的地 |
-|------|--------|--------|
-| 91M  | 富寧花園 | 往鑽石山 |
-| 98A  | 坑口站 | 往將軍澳醫院 |
-| 98C  | 將軍澳醫院 | 往美孚 |
-| 98D  | 將軍澳醫院 | 往尖沙咀東 |
-| 290  | 將軍澳醫院 | 往荃灣西站 |
+## 💻 How to Run
+1. Save the code in a file named `index.html`.
+2. Double-click the file to open it in any modern web browser.
+3. (Optional) Host it on free platforms like GitHub Pages, Vercel, or Netlify to access it from anywhere.
 
-### 返家（HOME_ROUTES）
-
-尚未設定，請在 `config.js` 的 `HOME_ROUTES` 加入路線。
-
-## 如何新增或修改路線
-
-只需編輯 **`config.js`**：
-
-- **出街路線**：在 `OUT_ROUTES` 陣列加入或修改
-- **返家路線**：在 `HOME_ROUTES` 陣列加入或修改
-- **家的座標**：修改 `HOME_LOCATION`（緯度、經度）
-- **判定半徑**：修改 `HOME_RADIUS_M`（米，預設 400）
-
-每條路線的欄位：
-
-```js
-{
-  route: "路線號碼",        // 例如 "98E"
-  serviceType: "1",         // 通常為 "1"
-  stopId: "車站代碼",       // 從九巴 API 查詢（見下方）
-  stopName: "起始站顯示名",
-  dest: "目的地顯示名",
-  color: "#顏色代碼",
-}
-```
-
-### 查詢車站代碼
-
-1. 搜尋所有車站：
-   ```
-   https://data.etabus.gov.hk/v1/transport/kmb/stop/
-   ```
-2. 搜尋路線資料：
-   ```
-   https://data.etabus.gov.hk/v1/transport/kmb/route/
-   ```
-3. 搜尋特定路線的所有停靠站：
-   ```
-   https://data.etabus.gov.hk/v1/transport/kmb/route-stop/{route}/{bound}/{service_type}
-   ```
-   - `bound`：`O` = 去程，`I` = 回程
-4. 查詢特定車站的 ETA（驗證用）：
-   ```
-   https://data.etabus.gov.hk/v1/transport/kmb/eta/{stop_id}/{route}/{service_type}
-   ```
-
-## 檔案結構
-
-```
-tko-bus-eta/
-├── index.html   # 主頁面（HTML 結構）
-├── style.css    # 樣式
-├── app.js       # 主邏輯（API 呼叫、GPS 偵測、Tab 切換）
-├── config.js    # 路線設定及家的座標（新增/修改路線於此）
-└── README.md    # 本說明文件
-```

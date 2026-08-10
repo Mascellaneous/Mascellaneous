@@ -1,66 +1,280 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-HK">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="巴士到站時間，實時查詢九巴班次。" />
-  <title>巴士到站時間</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMB ETA - 98A & 98C</title>
+    <style>
+        :root {
+            --kmb-red: #E3002B;
+            --kmb-bg: #f4f4f9;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--kmb-bg); 
+            padding: 20px; 
+            margin: 0;
+        }
+        .container { 
+            max-width: 500px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        }
+        h1 { 
+            text-align: center; 
+            color: var(--kmb-red); 
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group { 
+            margin-bottom: 15px; 
+        }
+        label { 
+            display: block; 
+            font-weight: bold; 
+            margin-bottom: 8px; 
+            color: #333;
+        }
+        select, button { 
+            width: 100%; 
+            padding: 12px; 
+            font-size: 16px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            box-sizing: border-box;
+        }
+        select:focus {
+            outline: none;
+            border-color: var(--kmb-red);
+        }
+        button { 
+            background-color: var(--kmb-red); 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        button:hover { 
+            background-color: #c20025; 
+        }
+        .eta-result { 
+            margin-top: 25px; 
+        }
+        .eta-item { 
+            background: #f9f9f9; 
+            padding: 15px; 
+            border-left: 5px solid var(--kmb-red); 
+            margin-bottom: 12px; 
+            border-radius: 6px; 
+            font-size: 16px;
+        }
+        .eta-time {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--kmb-red);
+        }
+        .loading { 
+            text-align: center; 
+            color: #666; 
+            font-style: italic; 
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>九巴到站時間 (KMB ETA)</h1>
+        
+        <div id="loading" class="loading">正在載入全港巴士站資料，請稍候...</div>
+        
+        <div id="app" style="display:none;">
+            <div class="form-group">
+                <label for="route">路線 (Route):</label>
+                <select id="route">
+                    <!-- Options populated by JS -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="direction">方向 (Direction):</label>
+                <select id="direction">
+                    <option value="outbound">去程 (Outbound)</option>
+                    <option value="inbound">回程 (Inbound)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="stop">車站 (Stop):</label>
+                <select id="stop">
+                    <option value="">載入中...</option>
+                </select>
+            </div>
+            
+            <button onclick="getETA()">查詢到站時間</button>
 
-  <!-- 頂部導航列 -->
-  <header class="topbar">
-    <div class="topbar-logo">
-      <div class="topbar-logo-icon">🚌</div>
-      <span class="topbar-title">巴士到站時間</span>
+            <div class="eta-result" id="eta-result"></div>
+        </div>
     </div>
-    <button id="btn-refresh" class="btn-refresh" title="更新所有到站時間" aria-label="更新所有到站時間">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="23 4 23 10 17 10"></polyline>
-        <polyline points="1 20 1 14 7 14"></polyline>
-        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-      </svg>
-      更新
-    </button>
-  </header>
 
-  <!-- Tab 切換列 -->
-  <nav class="tab-bar" role="tablist">
-    <button class="tab-btn active" id="tab-out" role="tab" aria-selected="true"  aria-controls="panel-out"  data-tab="out">
-      <span class="tab-icon">🏠</span> 出街
-    </button>
-    <button class="tab-btn"        id="tab-home" role="tab" aria-selected="false" aria-controls="panel-home" data-tab="home">
-      <span class="tab-icon">🔙</span> 回家
-    </button>
-    <span class="tab-gps-status" id="gps-status" title="GPS 狀態"></span>
-  </nav>
+    <script>
+        // ==========================================
+        // 1. CONFIGURATION: Define your routes here
+        // ==========================================
+        const CONFIG_ROUTES = ['98A', '98C'];
+        
+        // Dictionary to hold mapping of Stop ID to Stop Name
+        let stopDict = {};
 
-  <!-- 主體 -->
-  <main>
+        // ==========================================
+        // 2. INITIALIZATION
+        // ==========================================
+        async function init() {
+            try {
+                // Fetch the master list of all KMB stops to get human-readable names
+                const response = await fetch('https://data.etabus.gov.hk/v1/transport/kmb/stop');
+                const json = await response.json();
+                
+                // Build a dictionary: stop_id -> name in Traditional Chinese
+                json.data.forEach(stop => {
+                    stopDict[stop.stop] = stop.name_tc;
+                });
 
-    <!-- 出街 Tab 面板 -->
-    <section id="panel-out" class="tab-panel active" role="tabpanel" aria-labelledby="tab-out">
-      <div class="cards-grid" id="grid-out" role="list"></div>
-      <p class="empty-msg" id="empty-out" hidden>未有設定出街路線，請在 config.js 的 OUT_ROUTES 加入路線。</p>
-    </section>
+                // Populate the Route Dropdown based on our CONFIG_ROUTES array
+                const routeSelect = document.getElementById('route');
+                CONFIG_ROUTES.forEach(route => {
+                    let opt = document.createElement('option');
+                    opt.value = route;
+                    opt.textContent = route;
+                    routeSelect.appendChild(opt);
+                });
 
-    <!-- 回家 Tab 面板 -->
-    <section id="panel-home" class="tab-panel" role="tabpanel" aria-labelledby="tab-home">
-      <div class="cards-grid" id="grid-home" role="list"></div>
-      <p class="empty-msg" id="empty-home" hidden>未有設定回家路線，請在 config.js 的 HOME_ROUTES 加入路線。</p>
-    </section>
+                // Hide loading text, show main app
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
 
-    <p class="update-time" id="update-time"></p>
-  </main>
+                // Listen for changes in route or direction to update the stop list
+                routeSelect.addEventListener('change', updateStops);
+                document.getElementById('direction').addEventListener('change', updateStops);
 
-  <script src="config.js"></script>
-  <script src="app.js"></script>
+                // Fetch stops for the default selected route immediately
+                updateStops();
+
+            } catch (error) {
+                document.getElementById('loading').innerText = '載入系統資料失敗，請檢查網絡或重整頁面。';
+                console.error('Initialization Error:', error);
+            }
+        }
+
+        // ==========================================
+        // 3. FETCH STOPS FOR SELECTED ROUTE
+        // ==========================================
+        async function updateStops() {
+            const route = document.getElementById('route').value;
+            const dir = document.getElementById('direction').value;
+            const stopSelect = document.getElementById('stop');
+            const resultDiv = document.getElementById('eta-result');
+
+            // Reset UI
+            stopSelect.innerHTML = '<option value="">正在尋找車站...</option>';
+            resultDiv.innerHTML = ''; 
+
+            try {
+                // Fetch sequence of stops for the specific route and direction (service_type = 1 for normal route)
+                const response = await fetch(`https://data.etabus.gov.hk/v1/transport/kmb/route-stop/${route}/${dir}/1`);
+                const json = await response.json();
+
+                stopSelect.innerHTML = ''; // Clear dropdown
+
+                if (!json.data || json.data.length === 0) {
+                    stopSelect.innerHTML = '<option value="">沒有此方向的車站資料</option>';
+                    return;
+                }
+
+                // Populate the Stop dropdown
+                json.data.forEach(routeStop => {
+                    let stopId = routeStop.stop;
+                    let stopName = stopDict[stopId] || '未知車站 (' + stopId + ')';
+                    let opt = document.createElement('option');
+                    opt.value = stopId;
+                    opt.textContent = `${routeStop.seq}. ${stopName}`;
+                    stopSelect.appendChild(opt);
+                });
+            } catch (error) {
+                stopSelect.innerHTML = '<option value="">載入車站失敗</option>';
+                console.error('Fetch Stops Error:', error);
+            }
+        }
+
+        // ==========================================
+        // 4. FETCH ESTIMATED TIME OF ARRIVAL (ETA)
+        // ==========================================
+        async function getETA() {
+            const route = document.getElementById('route').value;
+            const stopId = document.getElementById('stop').value;
+            const dir = document.getElementById('direction').value;
+            
+            // KMB API ETA data uses 'O' for Outbound and 'I' for Inbound
+            const dirCode = dir === 'outbound' ? 'O' : 'I'; 
+            const resultDiv = document.getElementById('eta-result');
+
+            if (!stopId) {
+                resultDiv.innerHTML = '<div style="color:red;">請先選擇有效車站。</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="loading">正在查詢實時到站數據...</div>';
+
+            try {
+                // Fetch ETA for the specific stop and route
+                const response = await fetch(`https://data.etabus.gov.hk/v1/transport/kmb/eta/${stopId}/${route}/1`);
+                const json = await response.json();
+
+                // Filter the results to only show the chosen direction
+                const etas = json.data.filter(item => item.dir === dirCode);
+
+                if (etas.length === 0) {
+                    resultDiv.innerHTML = '<div>暫時沒有巴士的到站時間資料。</div>';
+                    return;
+                }
+
+                let html = `<h3>巴士路線 ${route}</h3>`;
+                
+                etas.forEach(eta => {
+                    if (eta.eta) {
+                        // Convert ISO string to readable localized time
+                        let etaDate = new Date(eta.eta);
+                        let timeString = etaDate.toLocaleTimeString('zh-HK', { hour: '2-digit', minute: '2-digit' });
+                        let remark = eta.rmk_tc ? `<br><small style="color:#666;">備註: ${eta.rmk_tc}</small>` : '';
+                        
+                        html += `
+                        <div class="eta-item">
+                            <span class="eta-time">${timeString}</span> 
+                            <span>往 ${eta.dest_tc}</span>
+                            ${remark}
+                        </div>`;
+                    } else {
+                        html += `
+                        <div class="eta-item" style="color: #666;">
+                            <strong>沒有預計時間</strong> (巴士可能已到達或離開)
+                        </div>`;
+                    }
+                });
+                
+                resultDiv.innerHTML = html;
+
+            } catch (error) {
+                resultDiv.innerHTML = '<div style="color:red;">查詢失敗，請稍後再試。</div>';
+                console.error('Fetch ETA Error:', error);
+            }
+        }
+
+        // Start the app when window loads
+        window.onload = init;
+    </script>
 </body>
 </html>
