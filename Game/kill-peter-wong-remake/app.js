@@ -26,10 +26,18 @@
   const announcement = document.querySelector("#announcement");
   const mainAction = document.querySelector("#main-action");
   const endReset = document.querySelector("#end-reset");
+  const timelineReplay = document.querySelector("#timeline-replay");
+  const sourceAudio = document.querySelector(".asset-dossier audio");
 
   let started = false;
   let life = maxLife;
   let currentPosition = positions[0];
+  let replayTimer = null;
+
+  const stopTimelineReplay = () => {
+    if (replayTimer) window.clearInterval(replayTimer);
+    replayTimer = null;
+  };
 
   const setPosition = (position) => {
     currentPosition = position;
@@ -57,6 +65,7 @@
   };
 
   const begin = () => {
+    stopTimelineReplay();
     started = true;
     life = maxLife;
     stage.classList.remove("game-stage--briefing");
@@ -74,6 +83,7 @@
   };
 
   const reset = () => {
+    stopTimelineReplay();
     started = false;
     life = maxLife;
     stage.classList.remove("game-stage--playing", "game-stage--hit");
@@ -85,6 +95,34 @@
     crosshair.hidden = true;
     announcement.textContent = "Returned to the original briefing.";
     mainAction.textContent = "Begin original game";
+  };
+
+  const replayOriginalTimeline = () => {
+    stopTimelineReplay();
+    started = false;
+    life = maxLife;
+    stage.classList.remove("game-stage--playing", "game-stage--hit");
+    stage.classList.add("game-stage--briefing");
+    beginHitbox.hidden = true;
+    overlay.hidden = true;
+    crosshair.hidden = true;
+    let frame = 1;
+    stageArt.src = `assets/swf-export/frames/${frame}.png`;
+    announcement.textContent = "Replaying all 280 exported source frames at the original 12 fps.";
+    mainAction.textContent = "Stop replay / return to briefing";
+    if (sourceAudio) {
+      sourceAudio.currentTime = 0;
+      sourceAudio.play().catch(() => {});
+    }
+    replayTimer = window.setInterval(() => {
+      frame += 1;
+      if (frame > 280) {
+        reset();
+        announcement.textContent = "Original 280-frame timeline replay complete.";
+        return;
+      }
+      stageArt.src = `assets/swf-export/frames/${frame}.png`;
+    }, 1000 / 12);
   };
 
   const hit = (event) => {
@@ -106,8 +144,9 @@
   };
 
   beginHitbox.addEventListener("click", begin);
-  mainAction.addEventListener("click", () => (started ? reset() : begin()));
+  mainAction.addEventListener("click", () => (started || replayTimer ? reset() : begin()));
   endReset.addEventListener("click", reset);
+  timelineReplay.addEventListener("click", replayOriginalTimeline);
   target.addEventListener("click", hit);
   stage.addEventListener("click", (event) => {
     if (!started || life <= 0 || event.target === target || target.contains(event.target)) return;
