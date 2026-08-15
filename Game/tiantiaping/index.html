@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天下太平</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="game-container">
+
+  <!-- ══════════════════════════════════════
+       開場畫面
+  ══════════════════════════════════════ -->
+  <div id="scene-title">
+    <div class="cloud cloud-left"></div>
+    <div class="cloud cloud-right"></div>
+    <div class="cloud cloud-bottom"></div>
+    <div id="title-text">天下太平</div>
+    <button id="btn-start">START</button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       猜拳選擇畫面
+  ══════════════════════════════════════ -->
+  <div id="scene-janken">
+    <div id="janken-bg"></div>
+    <div id="janken-round-label">第 1 回合</div>
+    <div id="janken-prompt">請出拳！</div>
+    <div id="janken-choices">
+      <button class="janken-btn" data-choice="paper"   title="布">
+        <canvas></canvas>
+      </button>
+      <button class="janken-btn" data-choice="scissors" title="剪刀">
+        <canvas></canvas>
+      </button>
+      <button class="janken-btn" data-choice="rock"    title="石頭">
+        <canvas></canvas>
+      </button>
+    </div>
+
+    <!-- 猜拳結果浮層（覆蓋在猜拳畫面上） -->
+    <div id="result-overlay">
+      <div id="result-box">
+        <div id="result-title">你贏了！</div>
+        <div id="result-detail"></div>
+      </div>
+    </div>
+
+    <!-- 電腦出拳顯示 -->
+    <div id="cpu-choice-display">
+      <span class="cpu-label">電腦出</span>
+      <canvas id="cpu-choice-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       對戰主畫面
+  ══════════════════════════════════════ -->
+  <div id="scene-battle">
+    <div id="battle-bg"></div>
+
+    <!-- 計分板 -->
+    <div id="scoreboard">
+      <div>
+        <span class="label">敵方建設：</span>
+        <span class="val-build" id="your-build-val">0</span>
+        <span class="label"> ／ HP：</span>
+        <span class="val-hp"    id="your-hp-val">10</span>
+      </div>
+      <div>
+        <span class="label">我方建設：</span>
+        <span class="val-build" id="my-build-val">0</span>
+        <span class="label"> ／ HP：</span>
+        <span class="val-hp"    id="my-hp-val">10</span>
+      </div>
+    </div>
+
+    <!-- 電腦（紅方）建設格 -->
+    <div id="red-territory"></div>
+
+    <!-- HP 條 -->
+    <div id="hp-display">
+      <div class="hp-bar-wrap">
+        <span class="hp-bar-label red-label">敵</span>
+        <div class="hp-bar-track">
+          <div class="hp-bar-fill red-fill" id="your-hp-fill" style="width:100%"></div>
+        </div>
+        <span class="hp-bar-num" id="your-hp-num">10</span>
+      </div>
+      <div class="hp-bar-wrap">
+        <span class="hp-bar-label blue-label">我</span>
+        <div class="hp-bar-track">
+          <div class="hp-bar-fill blue-fill" id="my-hp-fill" style="width:100%"></div>
+        </div>
+        <span class="hp-bar-num" id="my-hp-num">10</span>
+      </div>
+    </div>
+
+    <!-- 玩家（藍方）建設格 -->
+    <div id="blue-territory"></div>
+
+    <!-- 建設 / 攻擊按鈕 -->
+    <div id="action-panel">
+      <button class="action-btn build-btn"  id="btn-build"  disabled>建設</button>
+      <button class="action-btn attack-btn" id="btn-attack" disabled>攻擊</button>
+    </div>
+
+    <!-- 不能攻擊提示 -->
+    <div id="cant-attack-msg">建設不足，無法攻擊！<br>（需要 7 格建設）</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       結局畫面
+  ══════════════════════════════════════ -->
+  <div id="scene-end">
+    <div id="end-bg"></div>
+    <div id="end-message" class="victory">天下太平！</div>
+    <div id="end-sub"></div>
+    <button id="btn-retry">再玩一次</button>
+  </div>
+
+</div><!-- #game-container -->
+
+<script src="js/assets.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

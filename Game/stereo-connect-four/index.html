@@ -85,34 +85,62 @@
     .legend-item { min-height: 52px; border-left: 1px solid rgba(211,238,239,.18); padding: 4px 8px; color: var(--muted); font-size: 11px; line-height: 1.55; }
     .legend-item b { display: block; color: var(--ink); font-weight: 600; }
     .board-panel { min-height: min(750px, calc(100vh - 125px)); display: flex; flex-direction: column; padding: 16px; border: 1px solid rgba(176, 220, 226, .27); background: linear-gradient(135deg, rgba(17, 33, 42, .89), rgba(8, 17, 23, .96)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.025), 0 30px 70px rgba(0,0,0,.2); }
-    .board-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 33px; }
+    .board-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 33px; }
     .board-info { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .1em; }
     .board-info strong { color: var(--ink); font-weight: 500; }
     .coord-readout { color: var(--cyan); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: .08em; }
-    .board-stage { position: relative; display: grid; flex: 1; min-height: 555px; place-items: center; isolation: isolate; }
+    .view-toggles { display: inline-flex; align-items: center; gap: 3px; padding: 3px; border: 1px solid rgba(188,225,230,.14); background: rgba(4,12,17,.28); }
+    .view-toggles span { margin: 0 3px 0 2px; color: var(--muted); font: 9px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; }
+.view-toggle { min-height: 24px; border: 0; padding: 0 7px; color: var(--muted); background: transparent; cursor: pointer; font-size: 10px; transition: color 160ms ease, background 160ms ease; }
+.view-toggle:hover, .view-toggle.active { color: var(--cyan); background: rgba(var(--cyan-rgb), .12); }
+.view-reset { width: 24px; min-height: 24px; border: 0; padding: 0; color: var(--muted); background: rgba(255,255,255,.035); cursor: pointer; font-size: 14px; transition: color 160ms ease, background 160ms ease; }
+.view-reset:hover:not(:disabled) { color: var(--cyan); background: rgba(var(--cyan-rgb), .12); } .view-reset:disabled { opacity: .28; cursor: not-allowed; }
+.board-stage { position: relative; display: grid; flex: 1; min-height: 555px; place-items: center; isolation: isolate; perspective: 980px; }
     .board-stage::before { content: ""; position: absolute; width: 72%; aspect-ratio: 1; border: 1px solid rgba(var(--cyan-rgb), .09); transform: rotate(45deg); background: radial-gradient(circle, rgba(var(--cyan-rgb), .075), transparent 66%); }
     .axis { position: absolute; z-index: 15; color: var(--muted); font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; pointer-events: none; }
     .axis-x { bottom: 61px; left: 17%; } .axis-y { top: 52px; right: 12%; writing-mode: vertical-rl; } .axis-z { bottom: 121px; right: 14%; color: var(--cyan); }
-    .board { position: relative; z-index: 2; width: calc(var(--board-w) + 108px); height: 505px; margin-left: 32px; }
-    .layer { --lx: 0px; --ly: 0px; position: absolute; left: 0; top: 0; width: var(--board-w); height: var(--board-w); padding: 12px; transform: translate(var(--lx), var(--ly)) skewY(-16deg) scaleY(.78); transform-origin: top left; border: 1px solid rgba(188,225,230,.36); background: linear-gradient(125deg, rgba(81, 119, 127, .14), rgba(15, 32, 40, .13)); box-shadow: 15px 18px 26px rgba(0,0,0,.19), inset 0 0 22px rgba(var(--cyan-rgb), .025); transition: opacity 300ms var(--ease-out), filter 300ms var(--ease-out), transform 320ms var(--ease-out); }
-    .layer::before { content: attr(data-label); position: absolute; left: -9px; top: -19px; padding: 3px 5px; color: var(--muted); background: var(--canvas); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .13em; transform: skewY(16deg) scaleY(1.28); }
+.board-orbit { width: calc(var(--board-w) + 108px); height: 505px; display: grid; place-items: center; transform: rotateX(var(--orbit-x, 0deg)) rotateY(var(--orbit-y, 0deg)); transform-style: preserve-3d; transition: transform 180ms var(--ease-out); cursor: grab; touch-action: none; user-select: none; }
+.board-orbit.dragging { cursor: grabbing; transition: none; }
+.board-orbit:not(.is-rotatable) { cursor: default; touch-action: auto; }
+.board { position: relative; z-index: 2; width: calc(var(--board-w) + 108px); height: 505px; margin-left: 32px; }
+    .layer { --lx: 0px; --ly: 0px; --layer-accent: var(--cyan); position: absolute; left: 0; top: 0; width: var(--board-w); height: var(--board-w); padding: 12px; transform: translate(var(--lx), var(--ly)) skewY(-16deg) scaleY(.78); transform-origin: top left; border: 1px solid color-mix(in srgb, var(--layer-accent) 46%, transparent); background: linear-gradient(125deg, color-mix(in srgb, var(--layer-accent) 9%, transparent), rgba(15, 32, 40, .13)); box-shadow: 15px 18px 26px rgba(0,0,0,.19), inset 0 0 22px color-mix(in srgb, var(--layer-accent) 7%, transparent); transition: opacity 300ms var(--ease-out), filter 300ms var(--ease-out), transform 320ms var(--ease-out), left 320ms var(--ease-out), top 320ms var(--ease-out); }
+    .layer::before { content: attr(data-label); position: absolute; left: -9px; top: -19px; padding: 3px 5px 3px 7px; border-left: 2px solid var(--layer-accent); color: color-mix(in srgb, var(--layer-accent) 72%, white); background: var(--canvas); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .13em; transform: skewY(16deg) scaleY(1.28); }
     .layer::after { content: ""; position: absolute; right: -8px; bottom: -11px; width: 27px; height: 27px; border-right: 1px solid rgba(var(--cyan-rgb), .48); border-bottom: 1px solid rgba(var(--cyan-rgb), .48); }
-    .layer:nth-child(1) { --lx: 0px; --ly: 215px; z-index: 5; } .layer:nth-child(2) { --lx: 27px; --ly: 143px; z-index: 4; } .layer:nth-child(3) { --lx: 54px; --ly: 71px; z-index: 3; } .layer:nth-child(4) { --lx: 81px; --ly: 0px; z-index: 2; }
+    .layer:nth-child(1) { --lx: 0px; --ly: 215px; --layer-accent: #4effe3; z-index: 5; } .layer:nth-child(2) { --lx: 27px; --ly: 143px; --layer-accent: #89d8ff; z-index: 4; } .layer:nth-child(3) { --lx: 54px; --ly: 71px; --layer-accent: #abc2d0; z-index: 3; } .layer:nth-child(4) { --lx: 81px; --ly: 0px; --layer-accent: #d2e1e5; z-index: 2; }
+    .board[data-view="reverse"] .layer:nth-child(1) { transform: translate(81px, 215px) skewY(16deg) scaleY(.78); }
+    .board[data-view="reverse"] .layer:nth-child(2) { transform: translate(54px, 143px) skewY(16deg) scaleY(.78); }
+    .board[data-view="reverse"] .layer:nth-child(3) { transform: translate(27px, 71px) skewY(16deg) scaleY(.78); }
+    .board[data-view="reverse"] .layer:nth-child(4) { transform: translate(0, 0) skewY(16deg) scaleY(.78); }
+    .board[data-view="reverse"] .layer::before { transform: skewY(-16deg) scaleY(1.28); }
+    .board[data-view="reverse"] .cell::before, .board[data-view="reverse"] .piece { transform: skewY(-16deg) scaleY(1.28); }
+    .board[data-view="sheets"] { width: calc(var(--board-w) * 1.16); height: calc(var(--board-w) * 1.16); margin-left: 0; }
+    .board[data-view="sheets"] .layer { transform: scale(.5); transform-origin: top left; box-shadow: 10px 12px 20px rgba(0,0,0,.22), inset 0 0 24px color-mix(in srgb, var(--layer-accent) 13%, transparent); }
+    .board[data-view="sheets"] .layer:nth-child(1) { left: 0; top: 0; z-index: 5; } .board[data-view="sheets"] .layer:nth-child(2) { left: calc(var(--board-w) * .58); top: 0; z-index: 4; } .board[data-view="sheets"] .layer:nth-child(3) { left: 0; top: calc(var(--board-w) * .58); z-index: 3; } .board[data-view="sheets"] .layer:nth-child(4) { left: calc(var(--board-w) * .58); top: calc(var(--board-w) * .58); z-index: 2; }
+    .board[data-view="sheets"] .layer::before { transform: none; top: -23px; }
+    .board[data-view="sheets"] .cell::before, .board[data-view="sheets"] .piece { transform: none; }
+    .board[data-view="sheets"] .piece { animation-name: land-flat; }
     .board.focused .layer { opacity: .22; filter: blur(.5px); }
     .board.focused .layer.is-focus { opacity: 1; filter: none; }
     .cell-grid { display: grid; width: 100%; height: 100%; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: var(--gap); }
     .cell { position: relative; min-width: 0; padding: 0; overflow: visible; border: 1px solid var(--grid); border-radius: 2px; background: rgba(178, 218, 224, .035); cursor: pointer; transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
     .cell::before { content: ""; position: absolute; inset: 17%; border-radius: 50%; border: 1px dashed rgba(198,230,235,.16); transform: skewY(16deg) scaleY(1.28); transition: border-color 160ms ease, background 160ms ease; }
-    .cell:hover:not([disabled]) { border-color: rgba(var(--cyan-rgb), .75); background: rgba(var(--cyan-rgb), .075); box-shadow: inset 0 0 15px rgba(var(--cyan-rgb), .12); }
-    .cell:hover:not([disabled])::before { border-color: rgba(var(--cyan-rgb), .65); background: rgba(var(--cyan-rgb), .11); }
-    .cell:disabled { cursor: not-allowed; }
+.cell:hover:not([disabled]) { border-color: rgba(var(--cyan-rgb), .75); background: rgba(var(--cyan-rgb), .075); box-shadow: inset 0 0 15px rgba(var(--cyan-rgb), .12); }
+.cell:hover:not([disabled])::before { border-color: rgba(var(--cyan-rgb), .65); background: rgba(var(--cyan-rgb), .11); }
+.cell[data-occupied="true"] { cursor: crosshair; }
+.cell.threat-cell { border-color: color-mix(in srgb, var(--threat-color, var(--cyan)) 70%, white); background: color-mix(in srgb, var(--threat-color, var(--cyan)) 12%, transparent); box-shadow: inset 0 0 16px color-mix(in srgb, var(--threat-color, var(--cyan)) 18%, transparent); }
+.cell.threat-cell::before { border-color: color-mix(in srgb, var(--threat-color, var(--cyan)) 70%, transparent); background: color-mix(in srgb, var(--threat-color, var(--cyan)) 8%, transparent); }
+.cell.threat-origin .piece { box-shadow: inset -8px -8px 12px rgba(0,0,0,.24), inset 5px 5px 10px rgba(255,255,255,.26), 0 0 0 4px color-mix(in srgb, var(--threat-color, var(--cyan)) 60%, transparent), 0 0 28px var(--threat-color, var(--cyan)); }
+.cell:disabled { cursor: not-allowed; }
     .piece { position: absolute; inset: 13%; border: 1px solid rgba(255,255,255,.64); border-radius: 50%; transform: skewY(16deg) scaleY(1.28); box-shadow: inset -8px -8px 12px rgba(0,0,0,.24), inset 5px 5px 10px rgba(255,255,255,.26), 0 0 19px currentColor; animation: land 270ms var(--ease-out) both; }
     .piece.p1 { color: var(--cyan); background: radial-gradient(circle at 34% 28%, #dffff8 0 7%, var(--cyan) 24%, #1b9f94 68%, #0c504f 100%); }
     .piece.p2 { color: var(--coral); background: radial-gradient(circle at 34% 28%, #fff0e9 0 7%, var(--coral) 24%, #bd4a37 68%, #54271f 100%); }
     .piece.last { box-shadow: inset -8px -8px 12px rgba(0,0,0,.24), inset 5px 5px 10px rgba(255,255,255,.26), 0 0 0 4px rgba(255,209,92,.65), 0 0 26px currentColor; }
     .cell.winner .piece { animation: winner 970ms ease-in-out infinite alternate; }
-    .line-overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 22; overflow: visible; pointer-events: none; }
-    .win-line { stroke: var(--gold); stroke-width: 3.5; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(255,209,92,.92)); stroke-dasharray: 360; stroke-dashoffset: 360; animation: draw 620ms var(--ease-out) forwards; }
+.line-overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 22; overflow: visible; pointer-events: none; }
+.win-line { stroke: var(--gold); stroke-width: 3.5; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(255,209,92,.92)); stroke-dasharray: 360; stroke-dashoffset: 360; animation: draw 620ms var(--ease-out) forwards; }
+.hint-line { stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 5 7; opacity: .72; filter: drop-shadow(0 0 4px currentColor); }
+.hint-line.p1 { stroke: var(--cyan); color: var(--cyan); } .hint-line.p2 { stroke: var(--coral); color: var(--coral); }
+.hint-line.near { stroke-width: 3.2; opacity: .95; }
     .layer-toggles { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-top: 11px; border-top: 1px solid rgba(188,225,230,.12); }
     .layer-toggles span { margin-right: 4px; color: var(--muted); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; }
     .layer-toggle { width: 31px; height: 27px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); background: rgba(16,31,40,.7); cursor: pointer; font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; transition: all 160ms var(--ease-out); }
@@ -161,13 +189,14 @@
     .game-over strong { display: block; margin: 9px 0 6px; color: var(--ink); font-size: 24px; }
     .game-over p { margin: 0 0 15px; color: var(--muted); font-size: 13px; }
     @keyframes land { from { opacity: .15; transform: skewY(16deg) scale(.48, .65); } to { opacity: 1; transform: skewY(16deg) scaleY(1.28); } }
+    @keyframes land-flat { from { opacity: .15; transform: scale(.48); } to { opacity: 1; transform: none; } }
     @keyframes winner { from { filter: brightness(1); } to { filter: brightness(1.35); } }
     @keyframes draw { to { stroke-dashoffset: 0; } }
     @keyframes dialog-in { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: none; } }
     .reduced-motion *, .reduced-motion *::before, .reduced-motion *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
     @media (max-width: 1120px) { .content-grid { grid-template-columns: minmax(195px, .72fr) minmax(500px, 2fr); } .right-column { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); align-items: start; } .right-column .panel { min-height: 100%; } }
-    @media (max-width: 800px) { .app-shell { padding: 17px 14px 25px; } .content-grid { grid-template-columns: 1fr; gap: 14px; padding-top: 14px; } .left-column { display: grid; grid-template-columns: 1fr 1fr; } .left-column .legend-panel { grid-column: 1 / -1; } .right-column { grid-column: auto; grid-template-columns: 1fr; } .board-panel { min-height: 630px; } .board-stage { min-height: 530px; } .board { transform: scale(.88); transform-origin: center; } .axis-x { left: 5%; } .axis-y { right: 3%; } .axis-z { right: 5%; } }
-    @media (max-width: 480px) { :root { --tile: 47px; --gap: 4px; } .topbar { padding-bottom: 14px; } .brand-name strong { font-size: 19px; } .brand-name span { font-size: 8px; } .top-actions { gap: 5px; } .icon-button { width: 34px; height: 34px; } .left-column { display: block; } .left-column .panel + .panel { margin-top: 14px; } .board-panel { min-height: 535px; padding: 10px; } .board-stage { min-height: 455px; } .board { margin-left: 2px; transform: scale(.72); } .axis { display: none; } .layer-toggles { margin-top: -5px; } }
+    @media (max-width: 800px) { .app-shell { padding: 17px 14px 25px; } .content-grid { grid-template-columns: 1fr; gap: 14px; padding-top: 14px; } .left-column { display: grid; grid-template-columns: 1fr 1fr; } .left-column .legend-panel { grid-column: 1 / -1; } .right-column { grid-column: auto; grid-template-columns: 1fr; } .board-panel { min-height: 630px; } .board-stage { min-height: 530px; } .board { transform: scale(.88); transform-origin: center; } .board[data-view="sheets"] { transform: scale(.88); } .axis-x { left: 5%; } .axis-y { right: 3%; } .axis-z { right: 5%; } }
+    @media (max-width: 480px) { :root { --tile: 47px; --gap: 4px; } .topbar { padding-bottom: 14px; } .brand-name strong { font-size: 19px; } .brand-name span { font-size: 8px; } .top-actions { gap: 5px; } .icon-button { width: 34px; height: 34px; } .left-column { display: block; } .left-column .panel + .panel { margin-top: 14px; } .board-panel { min-height: 535px; padding: 10px; } .board-head { flex-wrap: wrap; } .view-toggles { order: 3; width: 100%; justify-content: space-between; } .view-toggle { flex: 1; } .board-stage { min-height: 455px; } .board { margin-left: 2px; transform: scale(.72); } .board[data-view="sheets"] { transform: scale(.72); } .axis { display: none; } .layer-toggles { margin-top: -5px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
   </style>
 </head>
@@ -195,10 +224,10 @@
       </aside>
 
       <section class="board-panel" aria-label="4乘4乘4立體棋盤">
-        <div class="board-head"><div class="board-info">BOARD DIMENSION <strong>04 × 04 × 04</strong></div><div class="coord-readout" id="coordReadout">READY // A1 · L1</div></div>
+        <div class="board-head"><div class="board-info">BOARD DIMENSION <strong>04 × 04 × 04</strong></div><div class="view-toggles" id="viewToggles" aria-label="切換棋盤視角"><span>VIEW · DRAG</span><button type="button" class="view-toggle active" data-view="iso" aria-label="立體視角">立體</button><button type="button" class="view-toggle" data-view="reverse" aria-label="反向立體視角">反向</button><button type="button" class="view-toggle" data-view="sheets" aria-label="分層視角">分層</button><button type="button" class="view-reset" id="rotationReset" aria-label="重設拖曳旋轉">↺</button></div><div class="coord-readout" id="coordReadout">READY // A1 · L1</div></div>
         <div class="board-stage">
           <span class="axis axis-x">X → A · B · C · D</span><span class="axis axis-y">Y → 1 · 2 · 3 · 4</span><span class="axis axis-z">Z ↑ L1–L4</span>
-          <div class="board" id="board" aria-label="棋盤，使用方向鍵或 Tab 選擇格子，Enter 落子"><svg class="line-overlay" id="lineOverlay" aria-hidden="true"></svg></div>
+          <div class="board-orbit is-rotatable" id="boardOrbit" aria-label="立體棋盤，可拖曳旋轉"><div class="board" id="board" aria-label="棋盤，使用方向鍵或 Tab 選擇格子，Enter 落子"><svg class="line-overlay" id="lineOverlay" aria-hidden="true"></svg></div></div>
           <div class="game-over" id="gameOver" role="status"><div class="eyebrow" id="gameOverEyebrow">CONNECTION FOUND</div><strong id="gameOverTitle">訊號已連線</strong><p id="gameOverText">把這條路徑記下來，下一局再從別的維度突破。</p><button class="thin-button primary" id="gameOverRestart" type="button">開始下一局 →</button></div>
         </div>
         <div class="layer-toggles" id="layerToggles"><span>聚焦樓層</span><button type="button" class="layer-toggle active" data-layer="all">ALL</button><button type="button" class="layer-toggle" data-layer="0">L1</button><button type="button" class="layer-toggle" data-layer="1">L2</button><button type="button" class="layer-toggle" data-layer="2">L3</button><button type="button" class="layer-toggle" data-layer="3">L4</button></div>
@@ -239,10 +268,11 @@
       const linesByKey = new Map();
       winningLines.forEach(line => line.forEach(key => linesByKey.set(key, [...(linesByKey.get(key) || []), line])));
 
-      const state = { board: new Map(), current: 1, mode: 'ai', difficulty: 'tactical', starter: 1, history: [], locked: false, over: false, winning: [], last: null, scores: { 1: 0, 2: 0, draw: 0 }, focus: 'all', thinkingTimer: null, sound: true, reducedMotion: false };
+      const state = { board: new Map(), current: 1, mode: 'ai', difficulty: 'tactical', starter: 1, history: [], locked: false, over: false, winning: [], last: null, scores: { 1: 0, 2: 0, draw: 0 }, focus: 'all', view: 'iso', rotation: { x: 0, y: 0 }, hoverKey: null, thinkingTimer: null, sound: true, reducedMotion: false };
       const names = () => ({ 1: '玩家一', 2: state.mode === 'ai' ? '電腦' : '玩家二' });
       const $ = selector => document.querySelector(selector);
-      const boardEl = $('#board'), lineOverlay = $('#lineOverlay'), toastEl = $('#toast');
+      const boardEl = $('#board'), boardOrbit = $('#boardOrbit'), lineOverlay = $('#lineOverlay'), toastEl = $('#toast');
+      const drag = { active: false, moved: false, suppressClick: false, pointerId: null, startX: 0, startY: 0, startRotation: { x: 0, y: 0 } };
       const els = { turnPanel: $('#turnPanel'), turnPlayer: $('#turnPlayer'), turnDetail: $('#turnDetail'), turnCode: $('#turnCode'), turnDot: $('#turnDot'), coord: $('#coordReadout'), scoreOne: $('#scoreOne'), scoreTwo: $('#scoreTwo'), scoreDraw: $('#scoreDraw'), scoreOneName: $('#scoreOneName'), scoreTwoName: $('#scoreTwoName'), gameOver: $('#gameOver'), gameOverEyebrow: $('#gameOverEyebrow'), gameOverTitle: $('#gameOverTitle'), gameOverText: $('#gameOverText'), difficultyGroup: $('#difficultyGroup') };
       let audioCtx;
       function chime(kind = 'move') {
@@ -270,14 +300,15 @@
         return empties.map(key => ({ key, score: cellScore(key, 2) + Math.random() * .24 })).sort((a,b) => b.score-a.score)[0].key;
       }
       function renderBoard() {
+        state.hoverKey = null;
         boardEl.innerHTML = '';
         for (let z=0; z<SIZE; z++) {
           const layer = document.createElement('section'); layer.className = `layer${String(state.focus) === String(z) ? ' is-focus' : ''}`; layer.dataset.label = `L${z+1} // Z${z+1}`; layer.setAttribute('aria-label', `第 ${z+1} 層`);
           const grid = document.createElement('div'); grid.className = 'cell-grid';
           for (let y=0; y<SIZE; y++) for (let x=0; x<SIZE; x++) {
             const key = keyOf(x,y,z), player = state.board.get(key), btn = document.createElement('button');
-            btn.type = 'button'; btn.className = `cell${state.winning.includes(key) ? ' winner' : ''}`; btn.dataset.key = key; btn.setAttribute('aria-label', `${coordName(key)}，${player ? `${names()[player]} 已落子` : '空格'}`); btn.disabled = Boolean(player) || state.locked || state.over;
-            btn.addEventListener('pointerenter', () => els.coord.textContent = `HOVER // ${coordName(key)}`); btn.addEventListener('focus', () => els.coord.textContent = `FOCUS // ${coordName(key)}`); btn.addEventListener('click', () => makeMove(key));
+            btn.type = 'button'; btn.className = `cell${state.winning.includes(key) ? ' winner' : ''}`; btn.dataset.key = key; if (player) btn.dataset.occupied = 'true'; btn.setAttribute('aria-label', `${coordName(key)}，${player ? `${names()[player]} 已落子；懸停可檢查可連線方向` : '空格'}`); btn.disabled = state.locked || state.over;
+            btn.addEventListener('pointerenter', () => { els.coord.textContent = `HOVER // ${coordName(key)}`; if (player) showThreats(key); else clearThreats(); }); btn.addEventListener('pointerleave', clearThreats); btn.addEventListener('focus', () => { els.coord.textContent = `FOCUS // ${coordName(key)}`; if (player) showThreats(key); }); btn.addEventListener('blur', clearThreats); btn.addEventListener('click', () => { if (!drag.suppressClick) makeMove(key); });
             if (player) { const piece = document.createElement('i'); piece.className = `piece p${player}${state.last === key ? ' last' : ''}`; piece.setAttribute('aria-hidden', 'true'); btn.append(piece); }
             grid.append(btn);
           }
@@ -286,11 +317,14 @@
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.classList.add('line-overlay'); svg.id = 'lineOverlay'; svg.setAttribute('aria-hidden', 'true'); boardEl.append(svg);
         if (state.winning.length) requestAnimationFrame(drawWinningLine);
       }
-      function drawWinningLine() {
-        const svg = $('#lineOverlay'); if (!svg || !state.winning.length) return; const host = boardEl.getBoundingClientRect();
-        const centers = state.winning.map(key => { const r = boardEl.querySelector(`[data-key="${key}"]`).getBoundingClientRect(); return { x: r.left - host.left + r.width/2, y: r.top - host.top + r.height/2 }; });
-        const a = centers[0], b = centers[centers.length-1], line = document.createElementNS('http://www.w3.org/2000/svg','line'); line.setAttribute('x1', a.x); line.setAttribute('y1', a.y); line.setAttribute('x2', b.x); line.setAttribute('y2', b.y); line.setAttribute('class','win-line'); svg.append(line);
-      }
+      function lineCenters(line) { const host = boardEl.getBoundingClientRect(); return line.map(key => { const r = boardEl.querySelector(`[data-key="${key}"]`).getBoundingClientRect(); return { x: r.left - host.left + r.width/2, y: r.top - host.top + r.height/2 }; }); }
+      function appendLine(svg, line, className) { const centers = lineCenters(line), a = centers[0], b = centers[centers.length-1], segment = document.createElementNS('http://www.w3.org/2000/svg','line'); segment.setAttribute('x1', a.x); segment.setAttribute('y1', a.y); segment.setAttribute('x2', b.x); segment.setAttribute('y2', b.y); segment.setAttribute('class', className); svg.append(segment); }
+      function drawWinningLine() { const svg = $('#lineOverlay'); if (!svg) return; svg.querySelectorAll('.win-line').forEach(line => line.remove()); if (state.winning.length) appendLine(svg, state.winning, 'win-line'); }
+      function potentialLines(key) { const player = state.board.get(key); if (!player) return []; const opponent = player === 1 ? 2 : 1; return (linesByKey.get(key) || []).filter(line => !line.some(cell => state.board.get(cell) === opponent)); }
+      function clearThreats() { state.hoverKey = null; boardEl.querySelectorAll('.threat-cell, .threat-origin').forEach(cell => { cell.classList.remove('threat-cell', 'threat-origin'); cell.style.removeProperty('--threat-color'); }); const svg = $('#lineOverlay'); svg?.querySelectorAll('.hint-line').forEach(line => line.remove()); els.coord.textContent = state.last ? `LAST // ${coordName(state.last)}` : 'READY // A1 · L1'; }
+      function showThreats(key) { const player = state.board.get(key); if (!player || state.hoverKey === key) return; clearThreats(); state.hoverKey = key; const lines = potentialLines(key), color = player === 1 ? 'var(--cyan)' : 'var(--coral)', cells = new Set(lines.flat()); cells.forEach(cellKey => { const cell = boardEl.querySelector(`[data-key="${cellKey}"]`); if (cell) { cell.classList.add('threat-cell'); cell.style.setProperty('--threat-color', color); } }); const origin = boardEl.querySelector(`[data-key="${key}"]`); origin?.classList.add('threat-origin'); const svg = $('#lineOverlay'); lines.forEach(line => { const ownCount = line.filter(cell => state.board.get(cell) === player).length; appendLine(svg, line, `hint-line p${player}${ownCount >= 3 ? ' near' : ''}`); }); els.coord.textContent = `TRACE // ${coordName(key)} · ${lines.length} PATHS`; }
+      function updateOrbit() { boardOrbit.style.setProperty('--orbit-x', `${state.rotation.x}deg`); boardOrbit.style.setProperty('--orbit-y', `${state.rotation.y}deg`); requestAnimationFrame(() => { drawWinningLine(); if (state.hoverKey) { const key = state.hoverKey; state.hoverKey = null; showThreats(key); } }); }
+      function resetOrbit() { state.rotation = { x: 0, y: 0 }; updateOrbit(); showToast('觀察角度已重設。'); }
       function renderUI() {
         const n = names(), player = state.current, playerName = n[player];
         els.scoreOne.textContent = state.scores[1]; els.scoreTwo.textContent = state.scores[2]; els.scoreDraw.textContent = state.scores.draw; els.scoreOneName.textContent = n[1]; els.scoreTwoName.textContent = n[2];
@@ -305,7 +339,8 @@
         els.difficultyGroup.style.display = state.mode === 'ai' ? '' : 'none';
         $('#starterSelect').value = String(state.starter);
         document.querySelectorAll('.layer-toggle').forEach(btn => btn.classList.toggle('active', btn.dataset.layer === String(state.focus)));
-        boardEl.classList.toggle('focused', state.focus !== 'all');
+        boardEl.classList.toggle('focused', state.focus !== 'all'); boardEl.dataset.view = state.view; boardOrbit.classList.toggle('is-rotatable', state.view !== 'sheets'); boardOrbit.setAttribute('aria-label', state.view === 'sheets' ? '分層棋盤，拖曳旋轉已暫停' : '立體棋盤，可拖曳旋轉'); $('#rotationReset').disabled = state.view === 'sheets'; updateOrbit();
+        document.querySelectorAll('.view-toggle').forEach(btn => btn.classList.toggle('active', btn.dataset.view === state.view));
       }
       function render() { renderBoard(); renderUI(); }
       function endGame(winner, line) {
@@ -342,6 +377,7 @@
       function openModal(id) { $(`#${id}`).classList.add('open'); const close = $(`#${id} [data-close-modal]`); setTimeout(() => close?.focus(), 0); }
       function closeModal(id) { $(`#${id}`).classList.remove('open'); }
       function setFocus(layer) { state.focus = layer; render(); }
+      function setView(view) { state.view = view; if (view === 'sheets') state.rotation = { x: 0, y: 0 }; render(); const labels = { iso: '立體視角：可直接拖曳棋盤旋轉。', reverse: '反向視角：可直接拖曳檢查另一側。', sheets: '分層視角：四層拆開顯示，便於判讀每一格。' }; showToast(labels[view]); }
       function startDemo() { state.mode = 'local'; state.starter = 1; newGame(false); const moves = ['0,0,0','0,1,0','1,0,0','0,1,1','2,0,0','0,1,2','3,0,0']; moves.forEach((key, i) => setTimeout(() => makeMove(key, true), 420 + i * 420)); }
       $('#helpButton').addEventListener('click', () => openModal('helpModal')); $('#settingsButton').addEventListener('click', () => openModal('settingsModal'));
       document.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.closeModal)));
@@ -350,13 +386,23 @@
       document.querySelectorAll('.choice-button').forEach(btn => btn.addEventListener('click', () => { state.difficulty = btn.dataset.difficulty; renderUI(); showToast(`電腦強度：${btn.textContent}`); }));
       $('#starterSelect').addEventListener('change', e => { state.starter = Number(e.target.value); newGame(); }); $('#restartButton').addEventListener('click', () => newGame()); $('#gameOverRestart').addEventListener('click', () => newGame()); $('#undoButton').addEventListener('click', undo);
       $('#layerToggles').addEventListener('click', e => { const button = e.target.closest('.layer-toggle'); if (button) setFocus(button.dataset.layer); });
+      $('#viewToggles').addEventListener('click', e => { const button = e.target.closest('.view-toggle'); if (button) setView(button.dataset.view); });
+      $('#rotationReset').addEventListener('click', resetOrbit);
+      boardOrbit.addEventListener('pointerdown', e => { if (state.view === 'sheets' || e.button !== 0) return; drag.active = true; drag.moved = false; drag.pointerId = e.pointerId; drag.startX = e.clientX; drag.startY = e.clientY; drag.startRotation = { ...state.rotation }; boardOrbit.setPointerCapture(e.pointerId); });
+      boardOrbit.addEventListener('pointermove', e => { if (!drag.active || e.pointerId !== drag.pointerId) return; const dx = e.clientX - drag.startX, dy = e.clientY - drag.startY; if (Math.abs(dx) + Math.abs(dy) > 5) { drag.moved = true; boardOrbit.classList.add('dragging'); state.rotation.y = Math.max(-32, Math.min(32, drag.startRotation.y + dx * .16)); state.rotation.x = Math.max(-24, Math.min(24, drag.startRotation.x - dy * .12)); updateOrbit(); e.preventDefault(); } });
+      const endOrbit = e => { if (!drag.active || (e.pointerId && e.pointerId !== drag.pointerId)) return; if (drag.moved) { drag.suppressClick = true; setTimeout(() => { drag.suppressClick = false; }, 240); } drag.active = false; drag.pointerId = null; boardOrbit.classList.remove('dragging'); };
+      boardOrbit.addEventListener('pointerup', endOrbit); boardOrbit.addEventListener('pointercancel', endOrbit); boardOrbit.addEventListener('lostpointercapture', endOrbit);
       $('#soundSwitch').addEventListener('change', e => { state.sound = e.target.checked; showToast(state.sound ? '訊號提示音已開啟。' : '訊號提示音已關閉。'); });
       $('#motionSwitch').addEventListener('change', e => { state.reducedMotion = e.target.checked; document.documentElement.classList.toggle('reduced-motion', state.reducedMotion); });
       $('#resetScoreButton').addEventListener('click', () => { state.scores = {1:0,2:0,draw:0}; renderUI(); showToast('本次分數已重設。'); });
       window.addEventListener('resize', () => { if (state.winning.length) requestAnimationFrame(drawWinningLine); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(modal => closeModal(modal.id)); if ((e.key === 'r' || e.key === 'R') && !e.metaKey && !e.ctrlKey && !document.querySelector('.modal.open')) newGame(); });
+      const query = new URLSearchParams(location.search); const requestedView = query.get('view');
+      if (['iso', 'reverse', 'sheets'].includes(requestedView)) state.view = requestedView;
+      if (query.get('fixture') === 'threat') { state.mode = 'local'; [['0,0,0', 1], ['1,0,0', 1], ['2,0,0', 1], ['0,2,2', 2], ['3,3,3', 2]].forEach(([key, player]) => state.board.set(key, player)); state.last = '2,0,0'; state.current = 2; }
       render();
-      if (new URLSearchParams(location.search).has('demo')) startDemo();
+      if (query.get('fixture') === 'threat') setTimeout(() => showThreats('1,0,0'), 120);
+      else if (query.has('demo')) startDemo();
       console.info(`Spatial Connect initialized with ${winningLines.length} winning lines.`);
     })();
   </script>
