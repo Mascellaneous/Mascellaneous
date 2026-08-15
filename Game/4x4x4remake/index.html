@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- Design reminder: original SWF visuals take priority; the shell is a restrained graphite-and-restore-blue preservation frame. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="以原生 HTML、CSS 與 JavaScript 重製的 4×4×4 Flash 立體連珠遊戲。" />
+    <title>SWF 遊戲現代化重製版｜4×4×4 立體連珠</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="preservation-shell" aria-labelledby="page-title">
+      <header class="project-bar">
+        <div class="brand-lockup">
+          <img class="original-logo" src="assets/original-logo.jpg" alt="原始 SWF 匯出的遊戲標誌" />
+          <div>
+            <p class="eyebrow">FLASH PRESERVATION · BUILD 01</p>
+            <h1 id="page-title">4×4×4 立體連珠</h1>
+          </div>
+        </div>
+        <button id="resetButton" class="utility-button" type="button">重新開局 <kbd>R</kbd></button>
+      </header>
+
+      <section class="game-layout" aria-label="遊戲區">
+        <div class="game-frame">
+          <div class="frame-led" aria-hidden="true"></div>
+          <canvas
+            id="gameCanvas"
+            width="550"
+            height="350"
+            tabindex="0"
+            aria-describedby="gameHelp"
+            aria-label="4×4×4 立體連珠棋盤。先在下方選擇一個 i、j 或 k 軸的平面與層數，再點選棋盤中的空格。"
+          ></canvas>
+          <p id="gameHelp" class="sr-only">紅方先行。鍵盤按 I、J、K 可選擇軸；按 1 到 4 可換層；按 R 可重新開局；Esc 或空白鍵可暫停。</p>
+          <p id="announcer" class="sr-only" aria-live="polite"></p>
+        </div>
+
+        <aside class="control-deck" aria-label="遊戲控制與狀態">
+          <section class="status-module" aria-labelledby="status-heading">
+            <p class="module-label" id="status-heading">目前狀態</p>
+            <p id="turnStatus" class="turn-status" data-player="red">紅方回合</p>
+            <p id="planeStatus" class="plane-status">選擇平面：i 軸，第 1 層</p>
+          </section>
+
+          <section class="control-module" aria-labelledby="axis-heading">
+            <p class="module-label" id="axis-heading">01／選擇平面方向</p>
+            <div class="segmented-control" role="group" aria-label="選擇平面方向">
+              <button class="axis-button is-active" type="button" data-axis="i" aria-pressed="true">i 軸</button>
+              <button class="axis-button" type="button" data-axis="j" aria-pressed="false">j 軸</button>
+              <button class="axis-button" type="button" data-axis="k" aria-pressed="false">k 軸</button>
+            </div>
+          </section>
+
+          <section class="control-module" aria-labelledby="layer-heading">
+            <p class="module-label" id="layer-heading">02／選擇第幾層</p>
+            <div id="layerControls" class="layer-controls" role="group" aria-label="選擇平面層數"></div>
+          </section>
+
+          <div class="action-row">
+            <button id="pauseButton" class="secondary-button" type="button">暫停 <kbd>Esc</kbd></button>
+            <button id="resetButtonMobile" class="secondary-button" type="button">重玩</button>
+          </div>
+
+          <section class="rule-module" aria-labelledby="rule-heading">
+            <p class="module-label" id="rule-heading">規則</p>
+            <p>紅、藍雙方輪流佔領一格。沿任一軸、平面對角線或空間對角線連成四格，即獲勝。</p>
+          </section>
+        </aside>
+      </section>
+
+      <footer class="project-footer">
+        <p>原始素材：SWF 匯出的標誌、棋盤與立方體向量檔。互動層以 Canvas 重建，無框架、無外部程式庫、無網路請求。</p>
+        <p><span class="status-dot" aria-hidden="true"></span> 原始檔未含可擷取的獨立音效標籤</p>
+      </footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
