@@ -95,6 +95,8 @@
 .view-toggle:hover, .view-toggle.active { color: var(--cyan); background: rgba(var(--cyan-rgb), .12); }
 .view-reset { width: 24px; min-height: 24px; border: 0; padding: 0; color: var(--muted); background: rgba(255,255,255,.035); cursor: pointer; font-size: 14px; transition: color 160ms ease, background 160ms ease; }
 .view-reset:hover:not(:disabled) { color: var(--cyan); background: rgba(var(--cyan-rgb), .12); } .view-reset:disabled { opacity: .28; cursor: not-allowed; }
+.view-best { min-height: 24px; border: 0; padding: 0 7px; color: var(--gold); background: rgba(255,209,92,.07); cursor: pointer; font-size: 10px; transition: color 160ms ease, background 160ms ease; }
+.view-best:hover:not(:disabled) { background: rgba(255,209,92,.18); } .view-best:disabled { opacity: .28; cursor: not-allowed; }
 .board-stage { position: relative; display: grid; flex: 1; min-height: 555px; place-items: center; isolation: isolate; perspective: 980px; }
     .board-stage::before { content: ""; position: absolute; width: 72%; aspect-ratio: 1; border: 1px solid rgba(var(--cyan-rgb), .09); transform: rotate(45deg); background: radial-gradient(circle, rgba(var(--cyan-rgb), .075), transparent 66%); }
     .axis { position: absolute; z-index: 15; color: var(--muted); font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; pointer-events: none; }
@@ -130,6 +132,8 @@
 .cell.threat-cell { border-color: color-mix(in srgb, var(--threat-color, var(--cyan)) 70%, white); background: color-mix(in srgb, var(--threat-color, var(--cyan)) 12%, transparent); box-shadow: inset 0 0 16px color-mix(in srgb, var(--threat-color, var(--cyan)) 18%, transparent); }
 .cell.threat-cell::before { border-color: color-mix(in srgb, var(--threat-color, var(--cyan)) 70%, transparent); background: color-mix(in srgb, var(--threat-color, var(--cyan)) 8%, transparent); }
 .cell.threat-origin .piece { box-shadow: inset -8px -8px 12px rgba(0,0,0,.24), inset 5px 5px 10px rgba(255,255,255,.26), 0 0 0 4px color-mix(in srgb, var(--threat-color, var(--cyan)) 60%, transparent), 0 0 28px var(--threat-color, var(--cyan)); }
+.cell.block-cell { border-color: rgba(255,209,92,.9); background: rgba(255,209,92,.09); box-shadow: inset 0 0 0 1px rgba(255,209,92,.36), inset 0 0 18px rgba(255,209,92,.13); }
+.cell.block-cell::before { border-color: rgba(255,209,92,.92); background: rgba(255,209,92,.08); }
 .cell:disabled { cursor: not-allowed; }
     .piece { position: absolute; inset: 13%; border: 1px solid rgba(255,255,255,.64); border-radius: 50%; transform: skewY(16deg) scaleY(1.28); box-shadow: inset -8px -8px 12px rgba(0,0,0,.24), inset 5px 5px 10px rgba(255,255,255,.26), 0 0 19px currentColor; animation: land 270ms var(--ease-out) both; }
     .piece.p1 { color: var(--cyan); background: radial-gradient(circle at 34% 28%, #dffff8 0 7%, var(--cyan) 24%, #1b9f94 68%, #0c504f 100%); }
@@ -139,8 +143,9 @@
 .line-overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 22; overflow: visible; pointer-events: none; }
 .win-line { stroke: var(--gold); stroke-width: 3.5; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(255,209,92,.92)); stroke-dasharray: 360; stroke-dashoffset: 360; animation: draw 620ms var(--ease-out) forwards; }
 .hint-line { stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 5 7; opacity: .72; filter: drop-shadow(0 0 4px currentColor); }
-.hint-line.p1 { stroke: var(--cyan); color: var(--cyan); } .hint-line.p2 { stroke: var(--coral); color: var(--coral); }
-.hint-line.near { stroke-width: 3.2; opacity: .95; }
+.hint-line.attack-p1 { stroke: var(--cyan); color: var(--cyan); } .hint-line.attack-p2 { stroke: var(--coral); color: var(--coral); }
+.hint-line.attack-near { stroke-width: 3.2; opacity: .95; }
+.hint-line.defense { stroke: var(--gold); color: var(--gold); stroke-width: 3; stroke-dasharray: 2 6; opacity: .96; filter: drop-shadow(0 0 5px rgba(255,209,92,.86)); }
     .layer-toggles { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-top: 11px; border-top: 1px solid rgba(188,225,230,.12); }
     .layer-toggles span { margin-right: 4px; color: var(--muted); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; }
     .layer-toggle { width: 31px; height: 27px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); background: rgba(16,31,40,.7); cursor: pointer; font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; transition: all 160ms var(--ease-out); }
@@ -224,7 +229,7 @@
       </aside>
 
       <section class="board-panel" aria-label="4乘4乘4立體棋盤">
-        <div class="board-head"><div class="board-info">BOARD DIMENSION <strong>04 × 04 × 04</strong></div><div class="view-toggles" id="viewToggles" aria-label="切換棋盤視角"><span>VIEW · DRAG</span><button type="button" class="view-toggle active" data-view="iso" aria-label="立體視角">立體</button><button type="button" class="view-toggle" data-view="reverse" aria-label="反向立體視角">反向</button><button type="button" class="view-toggle" data-view="sheets" aria-label="分層視角">分層</button><button type="button" class="view-reset" id="rotationReset" aria-label="重設拖曳旋轉">↺</button></div><div class="coord-readout" id="coordReadout">READY // A1 · L1</div></div>
+        <div class="board-head"><div class="board-info">BOARD DIMENSION <strong>04 × 04 × 04</strong></div><div class="view-toggles" id="viewToggles" aria-label="切換棋盤視角"><span>VIEW · DRAG</span><button type="button" class="view-toggle active" data-view="iso" aria-label="立體視角">立體</button><button type="button" class="view-toggle" data-view="reverse" aria-label="反向立體視角">反向</button><button type="button" class="view-toggle" data-view="sheets" aria-label="分層視角">分層</button><button type="button" class="view-best" id="bestAngle" aria-label="回到最佳閱讀角度">最佳</button><button type="button" class="view-reset" id="rotationReset" aria-label="重設拖曳旋轉">↺</button></div><div class="coord-readout" id="coordReadout">READY // A1 · L1</div></div>
         <div class="board-stage">
           <span class="axis axis-x">X → A · B · C · D</span><span class="axis axis-y">Y → 1 · 2 · 3 · 4</span><span class="axis axis-z">Z ↑ L1–L4</span>
           <div class="board-orbit is-rotatable" id="boardOrbit" aria-label="立體棋盤，可拖曳旋轉"><div class="board" id="board" aria-label="棋盤，使用方向鍵或 Tab 選擇格子，Enter 落子"><svg class="line-overlay" id="lineOverlay" aria-hidden="true"></svg></div></div>
@@ -268,11 +273,11 @@
       const linesByKey = new Map();
       winningLines.forEach(line => line.forEach(key => linesByKey.set(key, [...(linesByKey.get(key) || []), line])));
 
-      const state = { board: new Map(), current: 1, mode: 'ai', difficulty: 'tactical', starter: 1, history: [], locked: false, over: false, winning: [], last: null, scores: { 1: 0, 2: 0, draw: 0 }, focus: 'all', view: 'iso', rotation: { x: 0, y: 0 }, hoverKey: null, thinkingTimer: null, sound: true, reducedMotion: false };
+      const state = { board: new Map(), current: 1, mode: 'ai', difficulty: 'tactical', starter: 1, history: [], locked: false, over: false, winning: [], last: null, scores: { 1: 0, 2: 0, draw: 0 }, focus: 'all', view: 'iso', rotation: { x: 0, y: 0 }, hoverKey: null, inertiaFrame: null, thinkingTimer: null, sound: true, reducedMotion: false };
       const names = () => ({ 1: '玩家一', 2: state.mode === 'ai' ? '電腦' : '玩家二' });
       const $ = selector => document.querySelector(selector);
       const boardEl = $('#board'), boardOrbit = $('#boardOrbit'), lineOverlay = $('#lineOverlay'), toastEl = $('#toast');
-      const drag = { active: false, moved: false, suppressClick: false, pointerId: null, startX: 0, startY: 0, startRotation: { x: 0, y: 0 } };
+      const drag = { active: false, moved: false, suppressClick: false, pointerId: null, startX: 0, startY: 0, lastX: 0, lastY: 0, lastTime: 0, velocity: { x: 0, y: 0 }, startRotation: { x: 0, y: 0 } };
       const els = { turnPanel: $('#turnPanel'), turnPlayer: $('#turnPlayer'), turnDetail: $('#turnDetail'), turnCode: $('#turnCode'), turnDot: $('#turnDot'), coord: $('#coordReadout'), scoreOne: $('#scoreOne'), scoreTwo: $('#scoreTwo'), scoreDraw: $('#scoreDraw'), scoreOneName: $('#scoreOneName'), scoreTwoName: $('#scoreTwoName'), gameOver: $('#gameOver'), gameOverEyebrow: $('#gameOverEyebrow'), gameOverTitle: $('#gameOverTitle'), gameOverText: $('#gameOverText'), difficultyGroup: $('#difficultyGroup') };
       let audioCtx;
       function chime(kind = 'move') {
@@ -317,14 +322,18 @@
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.classList.add('line-overlay'); svg.id = 'lineOverlay'; svg.setAttribute('aria-hidden', 'true'); boardEl.append(svg);
         if (state.winning.length) requestAnimationFrame(drawWinningLine);
       }
-      function lineCenters(line) { const host = boardEl.getBoundingClientRect(); return line.map(key => { const r = boardEl.querySelector(`[data-key="${key}"]`).getBoundingClientRect(); return { x: r.left - host.left + r.width/2, y: r.top - host.top + r.height/2 }; }); }
+      function lineCenters(line) { const previous = boardOrbit.style.transform; boardOrbit.style.transform = 'none'; const host = boardEl.getBoundingClientRect(); const centers = line.map(key => { const r = boardEl.querySelector(`[data-key="${key}"]`).getBoundingClientRect(); return { x: r.left - host.left + r.width/2, y: r.top - host.top + r.height/2 }; }); if (previous) boardOrbit.style.transform = previous; else boardOrbit.style.removeProperty('transform'); return centers; }
       function appendLine(svg, line, className) { const centers = lineCenters(line), a = centers[0], b = centers[centers.length-1], segment = document.createElementNS('http://www.w3.org/2000/svg','line'); segment.setAttribute('x1', a.x); segment.setAttribute('y1', a.y); segment.setAttribute('x2', b.x); segment.setAttribute('y2', b.y); segment.setAttribute('class', className); svg.append(segment); }
       function drawWinningLine() { const svg = $('#lineOverlay'); if (!svg) return; svg.querySelectorAll('.win-line').forEach(line => line.remove()); if (state.winning.length) appendLine(svg, state.winning, 'win-line'); }
       function potentialLines(key) { const player = state.board.get(key); if (!player) return []; const opponent = player === 1 ? 2 : 1; return (linesByKey.get(key) || []).filter(line => !line.some(cell => state.board.get(cell) === opponent)); }
-      function clearThreats() { state.hoverKey = null; boardEl.querySelectorAll('.threat-cell, .threat-origin').forEach(cell => { cell.classList.remove('threat-cell', 'threat-origin'); cell.style.removeProperty('--threat-color'); }); const svg = $('#lineOverlay'); svg?.querySelectorAll('.hint-line').forEach(line => line.remove()); els.coord.textContent = state.last ? `LAST // ${coordName(state.last)}` : 'READY // A1 · L1'; }
-      function showThreats(key) { const player = state.board.get(key); if (!player || state.hoverKey === key) return; clearThreats(); state.hoverKey = key; const lines = potentialLines(key), color = player === 1 ? 'var(--cyan)' : 'var(--coral)', cells = new Set(lines.flat()); cells.forEach(cellKey => { const cell = boardEl.querySelector(`[data-key="${cellKey}"]`); if (cell) { cell.classList.add('threat-cell'); cell.style.setProperty('--threat-color', color); } }); const origin = boardEl.querySelector(`[data-key="${key}"]`); origin?.classList.add('threat-origin'); const svg = $('#lineOverlay'); lines.forEach(line => { const ownCount = line.filter(cell => state.board.get(cell) === player).length; appendLine(svg, line, `hint-line p${player}${ownCount >= 3 ? ' near' : ''}`); }); els.coord.textContent = `TRACE // ${coordName(key)} · ${lines.length} PATHS`; }
+      function imminentThreats(player) { return winningLines.filter(line => { const values = line.map(cell => state.board.get(cell) || 0); return values.filter(value => value === player).length === 3 && values.filter(value => value === 0).length === 1; }); }
+      function clearThreats() { state.hoverKey = null; boardEl.querySelectorAll('.threat-cell, .threat-origin, .block-cell').forEach(cell => { cell.classList.remove('threat-cell', 'threat-origin', 'block-cell'); cell.style.removeProperty('--threat-color'); }); const svg = $('#lineOverlay'); svg?.querySelectorAll('.hint-line').forEach(line => line.remove()); els.coord.textContent = state.last ? `LAST // ${coordName(state.last)}` : 'READY // A1 · L1'; }
+      function showThreats(key) { const player = state.board.get(key); if (!player || state.hoverKey === key) return; clearThreats(); state.hoverKey = key; const attacks = potentialLines(key), opponent = player === 1 ? 2 : 1, defenses = imminentThreats(opponent), color = player === 1 ? 'var(--cyan)' : 'var(--coral)', cells = new Set(attacks.flat()); cells.forEach(cellKey => { const cell = boardEl.querySelector(`[data-key="${cellKey}"]`); if (cell) { cell.classList.add('threat-cell'); cell.style.setProperty('--threat-color', color); } }); const origin = boardEl.querySelector(`[data-key="${key}"]`); origin?.classList.add('threat-origin'); const svg = $('#lineOverlay'); attacks.forEach(line => { const ownCount = line.filter(cell => state.board.get(cell) === player).length; appendLine(svg, line, `hint-line attack-p${player}${ownCount >= 3 ? ' attack-near' : ''}`); }); defenses.forEach(line => { appendLine(svg, line, 'hint-line defense'); const block = line.find(cell => !state.board.get(cell)); boardEl.querySelector(`[data-key="${block}"]`)?.classList.add('block-cell'); }); els.coord.textContent = `ATTACK ${attacks.length} · BLOCK ${defenses.length}`; }
       function updateOrbit() { boardOrbit.style.setProperty('--orbit-x', `${state.rotation.x}deg`); boardOrbit.style.setProperty('--orbit-y', `${state.rotation.y}deg`); requestAnimationFrame(() => { drawWinningLine(); if (state.hoverKey) { const key = state.hoverKey; state.hoverKey = null; showThreats(key); } }); }
-      function resetOrbit() { state.rotation = { x: 0, y: 0 }; updateOrbit(); showToast('觀察角度已重設。'); }
+      function stopInertia() { if (state.inertiaFrame) cancelAnimationFrame(state.inertiaFrame); state.inertiaFrame = null; }
+      function startInertia(velocity) { stopInertia(); if (state.reducedMotion || Math.abs(velocity.x) + Math.abs(velocity.y) < .008) return; let vx = velocity.x, vy = velocity.y, lastTime = performance.now(); const tick = now => { const elapsed = Math.min(32, now - lastTime || 16); lastTime = now; vx *= .91; vy *= .91; state.rotation.x = Math.max(-24, Math.min(24, state.rotation.x + vx * elapsed)); state.rotation.y = Math.max(-32, Math.min(32, state.rotation.y + vy * elapsed)); updateOrbit(); if (Math.abs(vx) + Math.abs(vy) > .006 && Math.abs(state.rotation.x) < 24 && Math.abs(state.rotation.y) < 32) state.inertiaFrame = requestAnimationFrame(tick); else stopInertia(); }; state.inertiaFrame = requestAnimationFrame(tick); }
+      function resetOrbit() { stopInertia(); state.rotation = { x: 0, y: 0 }; updateOrbit(); showToast('觀察角度已重設。'); }
+      function bestAngle() { stopInertia(); state.rotation = { x: -8, y: 18 }; updateOrbit(); showToast('已回到最佳閱讀角度。'); }
       function renderUI() {
         const n = names(), player = state.current, playerName = n[player];
         els.scoreOne.textContent = state.scores[1]; els.scoreTwo.textContent = state.scores[2]; els.scoreDraw.textContent = state.scores.draw; els.scoreOneName.textContent = n[1]; els.scoreTwoName.textContent = n[2];
@@ -339,7 +348,7 @@
         els.difficultyGroup.style.display = state.mode === 'ai' ? '' : 'none';
         $('#starterSelect').value = String(state.starter);
         document.querySelectorAll('.layer-toggle').forEach(btn => btn.classList.toggle('active', btn.dataset.layer === String(state.focus)));
-        boardEl.classList.toggle('focused', state.focus !== 'all'); boardEl.dataset.view = state.view; boardOrbit.classList.toggle('is-rotatable', state.view !== 'sheets'); boardOrbit.setAttribute('aria-label', state.view === 'sheets' ? '分層棋盤，拖曳旋轉已暫停' : '立體棋盤，可拖曳旋轉'); $('#rotationReset').disabled = state.view === 'sheets'; updateOrbit();
+        boardEl.classList.toggle('focused', state.focus !== 'all'); boardEl.dataset.view = state.view; boardOrbit.classList.toggle('is-rotatable', state.view !== 'sheets'); boardOrbit.setAttribute('aria-label', state.view === 'sheets' ? '分層棋盤，拖曳旋轉已暫停' : '立體棋盤，可拖曳旋轉'); $('#rotationReset').disabled = state.view === 'sheets'; $('#bestAngle').disabled = state.view === 'sheets'; updateOrbit();
         document.querySelectorAll('.view-toggle').forEach(btn => btn.classList.toggle('active', btn.dataset.view === state.view));
       }
       function render() { renderBoard(); renderUI(); }
@@ -377,7 +386,7 @@
       function openModal(id) { $(`#${id}`).classList.add('open'); const close = $(`#${id} [data-close-modal]`); setTimeout(() => close?.focus(), 0); }
       function closeModal(id) { $(`#${id}`).classList.remove('open'); }
       function setFocus(layer) { state.focus = layer; render(); }
-      function setView(view) { state.view = view; if (view === 'sheets') state.rotation = { x: 0, y: 0 }; render(); const labels = { iso: '立體視角：可直接拖曳棋盤旋轉。', reverse: '反向視角：可直接拖曳檢查另一側。', sheets: '分層視角：四層拆開顯示，便於判讀每一格。' }; showToast(labels[view]); }
+      function setView(view) { stopInertia(); state.view = view; if (view === 'sheets') state.rotation = { x: 0, y: 0 }; render(); const labels = { iso: '立體視角：可直接拖曳棋盤旋轉。', reverse: '反向視角：可直接拖曳檢查另一側。', sheets: '分層視角：四層拆開顯示，便於判讀每一格。' }; showToast(labels[view]); }
       function startDemo() { state.mode = 'local'; state.starter = 1; newGame(false); const moves = ['0,0,0','0,1,0','1,0,0','0,1,1','2,0,0','0,1,2','3,0,0']; moves.forEach((key, i) => setTimeout(() => makeMove(key, true), 420 + i * 420)); }
       $('#helpButton').addEventListener('click', () => openModal('helpModal')); $('#settingsButton').addEventListener('click', () => openModal('settingsModal'));
       document.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.closeModal)));
@@ -387,10 +396,10 @@
       $('#starterSelect').addEventListener('change', e => { state.starter = Number(e.target.value); newGame(); }); $('#restartButton').addEventListener('click', () => newGame()); $('#gameOverRestart').addEventListener('click', () => newGame()); $('#undoButton').addEventListener('click', undo);
       $('#layerToggles').addEventListener('click', e => { const button = e.target.closest('.layer-toggle'); if (button) setFocus(button.dataset.layer); });
       $('#viewToggles').addEventListener('click', e => { const button = e.target.closest('.view-toggle'); if (button) setView(button.dataset.view); });
-      $('#rotationReset').addEventListener('click', resetOrbit);
-      boardOrbit.addEventListener('pointerdown', e => { if (state.view === 'sheets' || e.button !== 0) return; drag.active = true; drag.moved = false; drag.pointerId = e.pointerId; drag.startX = e.clientX; drag.startY = e.clientY; drag.startRotation = { ...state.rotation }; boardOrbit.setPointerCapture(e.pointerId); });
-      boardOrbit.addEventListener('pointermove', e => { if (!drag.active || e.pointerId !== drag.pointerId) return; const dx = e.clientX - drag.startX, dy = e.clientY - drag.startY; if (Math.abs(dx) + Math.abs(dy) > 5) { drag.moved = true; boardOrbit.classList.add('dragging'); state.rotation.y = Math.max(-32, Math.min(32, drag.startRotation.y + dx * .16)); state.rotation.x = Math.max(-24, Math.min(24, drag.startRotation.x - dy * .12)); updateOrbit(); e.preventDefault(); } });
-      const endOrbit = e => { if (!drag.active || (e.pointerId && e.pointerId !== drag.pointerId)) return; if (drag.moved) { drag.suppressClick = true; setTimeout(() => { drag.suppressClick = false; }, 240); } drag.active = false; drag.pointerId = null; boardOrbit.classList.remove('dragging'); };
+      $('#rotationReset').addEventListener('click', resetOrbit); $('#bestAngle').addEventListener('click', bestAngle);
+      boardOrbit.addEventListener('pointerdown', e => { if (state.view === 'sheets' || e.button !== 0) return; stopInertia(); drag.active = true; drag.moved = false; drag.pointerId = e.pointerId; drag.startX = drag.lastX = e.clientX; drag.startY = drag.lastY = e.clientY; drag.lastTime = performance.now(); drag.velocity = { x: 0, y: 0 }; drag.startRotation = { ...state.rotation }; });
+      boardOrbit.addEventListener('pointermove', e => { if (!drag.active || e.pointerId !== drag.pointerId) return; const dx = e.clientX - drag.startX, dy = e.clientY - drag.startY; if (Math.abs(dx) + Math.abs(dy) > 5) { if (!drag.moved) boardOrbit.setPointerCapture(e.pointerId); drag.moved = true; boardOrbit.classList.add('dragging'); const previous = { ...state.rotation }; state.rotation.y = Math.max(-32, Math.min(32, drag.startRotation.y + dx * .16)); state.rotation.x = Math.max(-24, Math.min(24, drag.startRotation.x - dy * .12)); const now = performance.now(), elapsed = Math.max(8, now - drag.lastTime); drag.velocity = { x: (state.rotation.x - previous.x) / elapsed, y: (state.rotation.y - previous.y) / elapsed }; drag.lastX = e.clientX; drag.lastY = e.clientY; drag.lastTime = now; updateOrbit(); e.preventDefault(); } });
+      const endOrbit = e => { if (!drag.active || (e.pointerId && e.pointerId !== drag.pointerId)) return; if (drag.moved) { drag.suppressClick = true; setTimeout(() => { drag.suppressClick = false; }, 240); startInertia(drag.velocity); } drag.active = false; drag.pointerId = null; boardOrbit.classList.remove('dragging'); };
       boardOrbit.addEventListener('pointerup', endOrbit); boardOrbit.addEventListener('pointercancel', endOrbit); boardOrbit.addEventListener('lostpointercapture', endOrbit);
       $('#soundSwitch').addEventListener('change', e => { state.sound = e.target.checked; showToast(state.sound ? '訊號提示音已開啟。' : '訊號提示音已關閉。'); });
       $('#motionSwitch').addEventListener('change', e => { state.reducedMotion = e.target.checked; document.documentElement.classList.toggle('reduced-motion', state.reducedMotion); });
@@ -399,7 +408,7 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(modal => closeModal(modal.id)); if ((e.key === 'r' || e.key === 'R') && !e.metaKey && !e.ctrlKey && !document.querySelector('.modal.open')) newGame(); });
       const query = new URLSearchParams(location.search); const requestedView = query.get('view');
       if (['iso', 'reverse', 'sheets'].includes(requestedView)) state.view = requestedView;
-      if (query.get('fixture') === 'threat') { state.mode = 'local'; [['0,0,0', 1], ['1,0,0', 1], ['2,0,0', 1], ['0,2,2', 2], ['3,3,3', 2]].forEach(([key, player]) => state.board.set(key, player)); state.last = '2,0,0'; state.current = 2; }
+      if (query.get('fixture') === 'threat') { state.mode = 'local'; [['0,0,0', 1], ['1,0,0', 1], ['2,0,0', 1], ['0,3,3', 2], ['1,3,3', 2], ['2,3,3', 2]].forEach(([key, player]) => state.board.set(key, player)); state.last = '2,0,0'; state.current = 2; }
       render();
       if (query.get('fixture') === 'threat') setTimeout(() => showThreats('1,0,0'), 120);
       else if (query.has('demo')) startDemo();
