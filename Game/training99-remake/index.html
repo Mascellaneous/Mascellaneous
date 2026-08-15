@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#12253a" />
+    <title>特訓99｜網頁重製版</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="archive-shell" aria-label="特訓99 網頁重製版">
+      <header class="masthead">
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true"><i></i><b></b></span>
+          <div>
+            <p class="eyebrow">TRAINING ARCHIVE · 1999 / WEB REMAKE</p>
+            <h1>特訓<span>99</span></h1>
+          </div>
+        </div>
+        <div class="masthead-readout" aria-label="目前版本">
+          <span class="signal-light is-ready" aria-hidden="true"></span>
+          <span>檔案狀態：可執行</span>
+          <strong>v1.0</strong>
+        </div>
+      </header>
+
+      <section class="game-layout" aria-label="訓練場">
+        <div class="play-area">
+          <div class="stage-frame">
+            <div class="stage-corner corner-tl" aria-hidden="true"></div>
+            <div class="stage-corner corner-tr" aria-hidden="true"></div>
+            <canvas id="gameCanvas" width="960" height="640" aria-label="特訓99 遊戲戰場"></canvas>
+
+            <div class="hud hud-top-left" aria-live="polite">
+              <span class="hud-label">LIFE</span>
+              <span id="livesReadout" class="life-dots" aria-label="剩餘生命"></span>
+            </div>
+            <div class="hud hud-top-right">
+              <span class="hud-label">SURVIVAL</span>
+              <output id="timerReadout" class="timer-readout">00.000</output>
+            </div>
+            <div class="hud hud-bottom-left">
+              <span class="hud-label">THREATS</span>
+              <output id="threatReadout">000</output>
+            </div>
+            <div class="hud hud-bottom-right">
+              <span class="hud-label">CLOSE CALL</span>
+              <output id="closeCallReadout">0%</output>
+            </div>
+
+            <div id="startOverlay" class="stage-overlay is-visible">
+              <div class="overlay-index">TRAINING SEQUENCE / 99</div>
+              <h2>閃開下一發。</h2>
+              <p>以方向鍵或 WASD 操控飛機。生存時間就是紀錄。</p>
+              <button id="startButton" class="primary-control" type="button">
+                <span>開始特訓</span>
+                <kbd>ENTER</kbd>
+              </button>
+            </div>
+
+            <div id="resultOverlay" class="stage-overlay result-overlay" aria-live="assertive" hidden>
+              <div class="overlay-index">RUN COMPLETE</div>
+              <h2>訓練中斷</h2>
+              <div class="result-grid">
+                <div><span>生存時間</span><strong id="resultTime">00.000</strong><em>秒</em></div>
+                <div><span>活動時間</span><strong id="resultActive">00.000</strong><em>秒</em></div>
+                <div><span>彈數</span><strong id="resultThreats">0</strong><em>發</em></div>
+                <div><span>絕妙度</span><strong id="resultClose">0</strong><em>%</em></div>
+              </div>
+              <p id="recordNote" class="record-note"></p>
+              <button id="retryButton" class="primary-control" type="button">
+                <span>再來一次</span>
+                <kbd>ENTER</kbd>
+              </button>
+            </div>
+          </div>
+
+          <div class="mobile-controls" aria-label="觸控方向控制">
+            <button data-action="up" type="button" aria-label="向上移動">↑</button>
+            <button data-action="left" type="button" aria-label="向左移動">←</button>
+            <button data-action="down" type="button" aria-label="向下移動">↓</button>
+            <button data-action="right" type="button" aria-label="向右移動">→</button>
+          </div>
+        </div>
+
+        <aside class="control-deck" aria-label="訓練控制檯">
+          <section class="deck-section status-section">
+            <div class="section-heading"><span>01</span><h2>本機紀錄</h2></div>
+            <div class="record-card">
+              <p>BEST SURVIVAL</p>
+              <strong id="bestReadout">00.000</strong><span>秒</span>
+              <small id="bestDetail">尚未建立紀錄</small>
+            </div>
+          </section>
+
+          <section class="deck-section settings-section">
+            <div class="section-heading"><span>02</span><h2>訓練參數</h2></div>
+            <label for="difficultySelect">威脅密度</label>
+            <select id="difficultySelect">
+              <option value="easy">校準｜寬鬆彈幕</option>
+              <option value="normal" selected>標準｜均衡節奏</option>
+              <option value="hard">高壓｜快速攔截</option>
+              <option value="extreme">極限｜只為紀錄</option>
+            </select>
+            <label for="livesSelect">容錯生命</label>
+            <select id="livesSelect">
+              <option value="1" selected>1 格｜原版式一擊</option>
+              <option value="3">3 格｜練習模式</option>
+              <option value="5">5 格｜熟悉路線</option>
+            </select>
+            <label for="controlSelect">飛行手感</label>
+            <select id="controlSelect">
+              <option value="direct" selected>直接反應｜精準轉向</option>
+              <option value="glide">慣性滑行｜原型手感</option>
+            </select>
+            <label class="switch-row" for="soundToggle">
+              <input id="soundToggle" type="checkbox" checked />
+              <span class="switch" aria-hidden="true"></span>
+              <span>回饋音效</span>
+            </label>
+          </section>
+
+          <figure class="deck-art" aria-label="反應按鍵示意圖">
+            <div class="response-keys" aria-hidden="true"><i></i><i></i><i></i></div>
+            <figcaption>參數變更會在下一回合套用。</figcaption>
+          </figure>
+
+          <section class="deck-section guide-section">
+            <div class="section-heading"><span>03</span><h2>操作提示</h2></div>
+            <p>方向鍵或 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 移動；<kbd>Enter</kbd> / <kbd>Space</kbd> 開始或重試。</p>
+            <p class="quiet-note">貼近火球但不碰撞可累積「絕妙度」。每顆彈只計算一次，別為了數字停留太久。</p>
+          </section>
+
+          <section class="source-strip" aria-label="原作靜態資源標記">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABqklEQVR4nLVWbbLDIAhc3vReenQ8Ge+HISFIjCTtzjg18qEFVgQgEg1mFmYWD7/2Vg9Xm0eOvJNv6P3BQcSvHCilXAsf6n1WNx9ABLtNSTvo2CPA3HKWImjM4zyPd8UlwKsipO7jBYgehV6xp6C1cwpaa8PaSY+oDz9P+kOWNjtX7beTpWm4TJtae7FdhXw7Qql1zV8pGO6BS2RynTjE2gEeFFpjHuoixBJtDrUcDZ3dMxre/fuX8pGGW9huaZhc2/35tEThPoVqEsaBhhfpm/kba+DqgfDNYRCyYOe65s6YW9nQjCK9yJ/B+j3wI3yGFREUHEU0uyP1Bm2tTW/TUsrhz0VhrRvOqPRUtuG2GxIRCOi/0TCyY99RFg0Aa90QgMB1Of22Mm9zMA/7t7dPd0OFZk4DXI2s1gq+eaKJSLIbdqu+kbvN9DAa2llZVdclRxZMYPJ2fhUTQQCQOczU3iCMgNLG0+vk3FwsjRnqOtpEEaVliYbqNFTdqt2mwevO7B8/StWp/7/+IJHtSX5HQ2wUWhlZ/SUaMjNEZB/22881And6Os/T8Af4B8PZr1bCn9xCAAAAAElFTkSuQmCC"
+              alt="從原始執行檔靜態擷取並重建的程式圖示" />
+            <div><strong>原作資源標記</strong><span>此圖示由提供的 EXE 靜態資源重建。</span></div>
+          </section>
+        </aside>
+      </section>
+
+      <footer>
+        <span>純 HTML · CSS · JavaScript · Canvas 2D</span>
+        <span>本機設定與紀錄儲存於瀏覽器</span>
+      </footer>
+    </main>
+    <script defer src="js/game.js"></script>
+  </body>
+</html>
