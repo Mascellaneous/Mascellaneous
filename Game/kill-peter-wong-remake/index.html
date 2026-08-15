@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#060706" />
+    <meta name="description" content="Browser-native reconstruction of Kill Peter Wong, rebuilt from supplied SWF artwork." />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>皮蛋大逃殺 — Browser Remake</title>
+  </head>
+  <body>
+    <div class="archive-page">
+      <header class="archive-header">
+        <a class="archive-brand" href="#archive-title" aria-label="Kill Peter Wong archive home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>KPW / ARCHIVE</span>
+        </a>
+        <p>Browser-native reconstruction — no Flash runtime</p>
+      </header>
+
+      <main>
+        <div class="archive-intro">
+          <div>
+            <p class="eyebrow">ORIGINAL SWF STUDY / VERSION 1.2</p>
+            <h1 id="archive-title">皮蛋大逃殺</h1>
+          </div>
+          <p class="archive-note">The original stage art and 20-HP click rule have been rebuilt for current browsers.</p>
+        </div>
+
+        <section class="game-exhibit" aria-labelledby="archive-title">
+          <div class="stage-shell">
+            <div id="game-stage" class="game-stage game-stage--briefing" role="application" tabindex="0" aria-label="Kill Peter Wong rules screen. Click the egg to begin.">
+              <img id="stage-art" class="stage-art" src="assets/intro-stage.png" alt="" draggable="false" />
+              <button id="begin-hitbox" class="briefing-egg-hitbox" type="button" aria-label="Click the egg to begin"></button>
+              <div id="game-overlay" hidden>
+                <div id="life-counter" class="life-counter" aria-label="皮蛋除命 1000"><span>皮蛋除命</span><strong id="life-value">1000</strong></div>
+                <div class="life-meter" aria-hidden="true"><i id="life-meter"></i></div>
+                <button id="egg-target" class="egg-target" type="button" aria-label="Egg target. 1000 HP remaining. Click to remove 20 HP."><img src="assets/egg-target.png" alt="" draggable="false" /></button>
+                <span id="crosshair" class="game-crosshair" aria-hidden="true" hidden><i></i><b></b></span>
+                <div id="end-card" class="end-card" role="status" hidden>
+                  <span>1000 → 0</span>
+                  <strong>皮蛋歸零</strong>
+                  <button id="end-reset" type="button">Return to briefing</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-readout" aria-live="polite">
+            <p class="eyebrow">SWF RECONSTRUCTION / 900 × 500 / 12 FPS SOURCE</p>
+            <p id="announcement">The original briefing is ready.</p>
+            <div class="readout-actions">
+              <button id="main-action" type="button" class="ink-button">Begin original game</button>
+              <kbd>R</kbd><span>return to briefing</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="archive-footer">
+        <span>Original composition preserved at 900 × 500.</span>
+        <span>Keyboard: <kbd>Enter</kbd> to begin, <kbd>R</kbd> to reset.</span>
+      </footer>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
