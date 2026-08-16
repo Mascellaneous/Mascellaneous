@@ -85,7 +85,7 @@
     .legend-item { min-height: 52px; border-left: 1px solid rgba(211,238,239,.18); padding: 4px 8px; color: var(--muted); font-size: 11px; line-height: 1.55; }
     .legend-item b { display: block; color: var(--ink); font-weight: 600; }
     .board-panel { min-height: min(750px, calc(100vh - 125px)); display: flex; flex-direction: column; padding: 16px; border: 1px solid rgba(176, 220, 226, .27); background: linear-gradient(135deg, rgba(17, 33, 42, .89), rgba(8, 17, 23, .96)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.025), 0 30px 70px rgba(0,0,0,.2); }
-    .board-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 33px; }
+    .board-head { position: relative; z-index: 60; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 33px; }
     .board-info { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .1em; }
     .board-info strong { color: var(--ink); font-weight: 500; }
     .coord-readout { color: var(--cyan); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: .08em; }
@@ -97,7 +97,7 @@
 .view-reset:hover:not(:disabled) { color: var(--cyan); background: rgba(var(--cyan-rgb), .12); } .view-reset:disabled { opacity: .28; cursor: not-allowed; }
 .view-best { min-height: 24px; border: 0; padding: 0 7px; color: var(--gold); background: rgba(255,209,92,.07); cursor: pointer; font-size: 10px; transition: color 160ms ease, background 160ms ease; }
 .view-best:hover:not(:disabled) { background: rgba(255,209,92,.18); } .view-best:disabled { opacity: .28; cursor: not-allowed; }
-.board-stage { position: relative; display: grid; flex: 1; min-height: 555px; place-items: center; isolation: isolate; perspective: 980px; }
+    .board-stage { position: relative; z-index: 0; display: grid; flex: 1; min-height: 555px; place-items: center; isolation: isolate; perspective: 980px; }
     .board-stage::before { content: ""; position: absolute; width: 72%; aspect-ratio: 1; border: 1px solid rgba(var(--cyan-rgb), .09); transform: rotate(45deg); background: radial-gradient(circle, rgba(var(--cyan-rgb), .075), transparent 66%); }
     .axis { position: absolute; z-index: 15; color: var(--muted); font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; pointer-events: none; }
     .axis-x { bottom: 61px; left: 17%; } .axis-y { top: 52px; right: 12%; writing-mode: vertical-rl; } .axis-z { bottom: 121px; right: 14%; color: var(--cyan); }
