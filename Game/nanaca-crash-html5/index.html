@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#172a46" />
+    <title>Nanaca Crash — HTML5 重製版</title>
+    <style>
+      /* Design reminder: 漫畫印刷品的側向飛行；奶油紙白、墨藍與擊球珊瑚紅，讓主舞台與動勢優先。 */
+      :root { --ink:#172a46; --paper:#fffdf4; --coral:#f25543; --sky:#bfe8ee; --sun:#f6c85f; --line:#24405d; }
+      * { box-sizing:border-box; }
+      html { background:#0f1d32; }
+      body { margin:0; min-width:320px; color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif; background:#f5f0df; }
+      button { font:inherit; }
+      .page {
+        min-height:100vh; isolation:isolate; overflow:hidden; position:relative;
+        background-color:#f5f0df; background-position:center top; background-size:cover; background-attachment:fixed;
+      }
+      .page::before { content:""; position:fixed; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(255,253,244,.91) 0%,rgba(245,240,223,.98) 70%); }
+      .page::after { content:""; position:fixed; inset:0; z-index:-1; opacity:.22; pointer-events:none; background-image:radial-gradient(rgba(23,42,70,.35) .65px,transparent .65px); background-size:4px 4px; mix-blend-mode:multiply; }
+      .layout { width:min(1180px,calc(100% - 32px)); margin:0 auto; padding:24px 0 38px; }
+      .masthead { display:flex; align-items:center; justify-content:space-between; gap:22px; margin-bottom:16px; }
+      .brand { display:flex; align-items:center; gap:13px; min-width:0; }
+      .brand-mark { width:54px; height:54px; object-fit:contain; flex:0 0 auto; filter:drop-shadow(2px 3px 0 rgba(23,42,70,.18)); }
+      .eyebrow { display:block; font-size:.69rem; font-weight:800; letter-spacing:.15em; color:#4b6782; }
+      h1 { margin:1px 0 0; color:var(--ink); font-family:Impact,"Arial Black",sans-serif; font-size:clamp(1.8rem,4vw,3rem); letter-spacing:.035em; line-height:.9; text-transform:uppercase; transform:scaleY(1.06); transform-origin:left; }
+      .mast-actions { display:flex; align-items:center; gap:8px; }
+      .button { min-height:42px; border:2px solid var(--ink); border-radius:3px; padding:0 15px; background:var(--paper); color:var(--ink); font-size:.84rem; font-weight:900; letter-spacing:.055em; box-shadow:3px 3px 0 var(--ink); transition:transform 150ms cubic-bezier(.23,1,.32,1),box-shadow 150ms cubic-bezier(.23,1,.32,1),background 150ms; cursor:pointer; }
+      .button:hover { transform:translate(-1px,-1px); box-shadow:5px 5px 0 var(--ink); background:#fff; }
+      .button:active { transform:translate(2px,2px) scale(.97); box-shadow:1px 1px 0 var(--ink); }
+      .button:focus-visible { outline:3px solid var(--sun); outline-offset:3px; }
+      .button.primary { color:#fffdf4; background:var(--coral); }
+      .button.icon { width:42px; padding:0; font-size:1.05rem; }
+      .playdeck { border:4px solid var(--ink); background:var(--ink); box-shadow:9px 10px 0 rgba(23,42,70,.27); position:relative; }
+      .playdeck::before { content:""; position:absolute; top:-12px; right:-4px; width:clamp(100px,16vw,184px); height:18px; background:repeating-linear-gradient(135deg,var(--coral) 0 8px,#ffe47b 8px 16px); border:3px solid var(--ink); transform:skewX(-22deg); transform-origin:right; }
+      canvas { display:block; width:100%; height:auto; aspect-ratio:16/9; outline:none; background:#bfe8ee; touch-action:manipulation; cursor:crosshair; }
+      .under-stage { display:grid; grid-template-columns:1.42fr .86fr; gap:0; border:3px solid var(--ink); border-top:0; background:var(--paper); }
+      .guide, .status { padding:16px 20px; }
+      .guide { border-right:3px solid var(--ink); }
+      .section-label { margin:0 0 5px; font-size:.67rem; font-weight:900; letter-spacing:.14em; color:#52718c; }
+      .guide p, .status p { margin:0; font-size:.88rem; line-height:1.55; }
+      kbd { border:1px solid var(--ink); border-bottom-width:3px; background:#fff; padding:1px 6px; font-weight:900; border-radius:2px; font-size:.78em; }
+      .status { background:#eaf6f2; }
+      #statusText { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.88rem; font-weight:800; }
+      .mechanics { display:grid; grid-template-columns:1fr 1.15fr; gap:18px; align-items:start; padding-top:28px; }
+      .mechanics h2 { margin:0 0 8px; font-size:1.12rem; line-height:1.2; letter-spacing:.02em; }
+      .mechanics p { margin:0; max-width:52rem; color:#3c556d; font-size:.93rem; line-height:1.7; }
+      .chips { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+      .chip { display:flex; align-items:center; gap:7px; min-height:38px; padding:7px 10px; border:2px solid var(--ink); background:rgba(255,253,244,.93); font-size:.75rem; font-weight:800; box-shadow:3px 3px 0 rgba(23,42,70,.18); }
+      .chip i { display:block; width:9px; height:9px; border-radius:50%; background:var(--coral); border:1px solid var(--ink); }
+      .chip:nth-child(2) i { background:#5ec6c8; }
+      .chip:nth-child(3) i { background:var(--sun); }
+      footer { margin-top:27px; padding-top:14px; border-top:2px solid rgba(23,42,70,.35); color:#5c7186; font-size:.74rem; line-height:1.55; }
+      footer strong { color:var(--ink); }
+      @media (max-width:720px) { .layout { width:min(100% - 20px,1180px); padding-top:14px; } .masthead { align-items:flex-start; } .mast-actions { gap:5px; } .button { min-height:38px; padding:0 10px; font-size:.72rem; } .button.icon { width:38px; } .brand-mark { width:45px; height:45px; } .under-stage,.mechanics { grid-template-columns:1fr; } .guide { border-right:0; border-bottom:3px solid var(--ink); } .chips { justify-content:flex-start; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior:auto !important; transition-duration:1ms !important; animation-duration:1ms !important; } }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="page">
+      <main class="layout">
+        <header class="masthead">
+          <div class="brand">
+            <img class="brand-mark" id="brandMark" alt="速度弧與球拍圖示" />
+            <div><span class="eyebrow">FLASH ERA REBUILT IN VANILLA HTML5</span><h1>Nanaca Crash</h1></div>
+          </div>
+          <div class="mast-actions">
+            <button class="button primary" id="startButton" type="button">開始飛行</button>
+            <button class="button icon" id="soundButton" type="button" aria-label="切換背景音樂">♪</button>
+          </div>
+        </header>
+
+        <section class="playdeck" aria-label="Nanaca Crash 遊戲舞台">
+          <canvas id="game" width="960" height="540" tabindex="0" aria-label="Nanaca Crash 遊戲畫面；空白鍵發射或使用特技，P 暫停，R 重開。"></canvas>
+        </section>
+        <section class="under-stage" aria-label="操作說明與目前遊戲狀態">
+          <div class="guide"><p class="section-label">CONTROLS ／ 操作</p><p><kbd>Space</kbd> 鎖定力量並發射　<kbd>S</kbd> 空中推進　<kbd>P</kbd> 暫停　<kbd>R</kbd> 重新開局。撞到路上的角色會隨機觸發不同方向的加速。</p></div>
+          <div class="status"><p class="section-label">RUN STATUS ／ 狀態</p><p id="statusText" aria-live="polite">準備就緒：按下開始飛行。</p></div>
+        </section>
+
+        <section class="mechanics" aria-label="遊戲機制說明">
+          <div><p class="section-label">REMAKE NOTES ／ 重製機制</p><h2>抓準拍點，把距離推過地平線。</h2><p>飛行採固定重力、反彈衰減與自適應時間步長；這些規則直接依照原 SWF 的核心控制器重寫。原始場景、Nanaka、Taichi、遭遇角色與音訊會在瀏覽器中載入，遊戲邏輯本身不依賴任何框架或函式庫。</p></div>
+          <div class="chips" aria-label="重製特色"><span class="chip"><i></i>原始角色精靈</span><span class="chip"><i></i>Canvas 物理循環</span><span class="chip"><i></i>單檔原生 HTML</span></div>
+        </section>
+        <footer><strong>非官方致敬重製。</strong>原始視覺與音效資產僅取自本專案隨附的使用者提供 SWF，權利仍屬其原權利人；本檔案不含任何第三方 JavaScript 或 CSS 相依項目。</footer>
+      </main>
+    </div>
+
+    <script>
+      (() => {
+        "use strict";
+        /* Design reminder: 漫畫印刷品的側向飛行；以 Canvas 動勢、墨藍資訊與珊瑚紅衝擊訊號支持原始資產。 */
+        const ASSETS = {
+          menu:"assets/nanaca-menu-skyline.jpg", speed:"assets/nanaca-speed-burst.png", mark:"assets/nanaca-coral-mark.png", paper:"assets/nanaca-halftone-paper.jpg",
+          background:"assets/background.png", nanaka:"assets/nanaka.png", taichi:"assets/taichi.png", misato:"assets/misato.png", miki:"assets/miki.png", youko:"assets/youko.png", onair:"assets/onair.mp3"
+        };
+        const page = document.getElementById("page");
+        const brandMark = document.getElementById("brandMark");
+        page.style.backgroundImage = `url("${ASSETS.menu}")`;
+        brandMark.src = ASSETS.mark;
+
+        const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d", { alpha:false });
+        const W = canvas.width, H = canvas.height, GROUND = 423, GRAVITY = -9.8, REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const startButton = document.getElementById("startButton");
+        const soundButton = document.getElementById("soundButton");
+        const statusText = document.getElementById("statusText");
+        const images = {};
+        Object.keys(ASSETS).filter(key => key !== "onair").forEach(key => { const image = new Image(); image.src = ASSETS[key]; images[key] = image; });
+
+        const ambient = new Audio(ASSETS.onair);
+        ambient.loop = true; ambient.volume = 0.14;
+        let muted = true, audioContext, lastTime = performance.now();
+        function unlockSound() { if (!muted) { ambient.play().catch(() => {}); } }
+        function tone(kind) {
+          if (muted || REDUCED) return;
+          audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = audioContext.createOscillator(), gain = audioContext.createGain();
+          oscillator.type = kind === "hit" ? "square" : "triangle";
+          oscillator.frequency.setValueAtTime(kind === "launch" ? 188 : 312, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(kind === "hit" ? 620 : 90, audioContext.currentTime + .12);
+          gain.gain.setValueAtTime(.075, audioContext.currentTime); gain.gain.exponentialRampToValueAtTime(.001, audioContext.currentTime + .15);
+          oscillator.connect(gain).connect(audioContext.destination); oscillator.start(); oscillator.stop(audioContext.currentTime + .16);
+        }
+
+        let state = "ready", px = 0, py = 0, vx = 0, vy = 0, angle = 51, aimClock = 0, elapsed = 0, hits = 0, specialCharges = 2;
+        let best = Number(localStorage.getItem("nanaca-html5-best") || 0), maximum = 0, flightRotation = 0, flash = 0, banner = null, particles = [], encounters = [], lastDistance = 0;
+        const roster = [
+          { key:"misato", name:"Misato", call:"UPWARD KICK", power:16, angle:58, color:"#f25543", height:78 },
+          { key:"miki", name:"Miki", call:"COMBO DRIVE", power:19, angle:36, color:"#efb94e", height:74 },
+          { key:"youko", name:"Youko", call:"GUARD BREAK", power:13, angle:69, color:"#41b9b5", height:82 },
+          { key:"misato", name:"Misato", call:"SKY LIFT", power:15, angle:52, color:"#f06b5a", height:77 },
+          { key:"miki", name:"Miki", call:"SPEED UP", power:14, angle:29, color:"#f6c85f", height:72 }
+        ];
+        function reset() {
+          state = "ready"; px = 0; py = 0; vx = 0; vy = 0; aimClock = 0; elapsed = 0; hits = 0; specialCharges = 2; maximum = 0; flightRotation = 0; flash = 0; particles = []; banner = null; lastDistance = 0;
+          encounters = Array.from({ length:86 }, (_, index) => { const template = roster[index % roster.length]; return { ...template, x:35 + index * (13 + Math.random() * 6), active:true, wobble:Math.random() * 6.28 }; });
+          updateStatus();
+        }
+        function startAim() { if (state === "ready" || state === "over") { reset(); state = "aim"; startButton.textContent = "鎖定力量"; canvas.focus({ preventScroll:true }); unlockSound(); updateStatus(); } }
+        function launch() {
+          if (state !== "aim") return;
+          const power = 104 + Math.sin(aimClock * 3.1) * 30;
+          vx = .3 * power * Math.cos(angle * Math.PI / 180); vy = .3 * power * Math.sin(angle * Math.PI / 180);
+          state = "flight"; banner = { title:"CRASH!", detail:`${Math.round(power)}% POWER`, color:"#f25543", time:1.05 }; flash = .6; tone("launch"); startButton.textContent = "重新開局"; updateStatus();
+        }
+        function useSpecial() {
+          if (state !== "flight" || specialCharges < 1) return;
+          specialCharges--; vx += 10; vy = Math.max(Math.abs(vy) + 10, 15); banner = { title:"AERIAL BOOST", detail:"S × SPECIAL", color:"#41b9b5", time:1 }; flash = .35; burst(300, 300, "#41b9b5", 24); tone("hit"); updateStatus();
+        }
+        function pause() { if (state === "flight" || state === "aim") { state = "paused"; updateStatus(); } else if (state === "paused") { state = py > 0 || vx > 0 ? "flight" : "aim"; updateStatus(); } }
+        function finish() { state = "over"; best = Math.max(best, maximum); localStorage.setItem("nanaca-html5-best", best.toFixed(1)); banner = { title:"RUN COMPLETE", detail:`${maximum.toFixed(1)} m`, color:"#f25543", time:2.4 }; startButton.textContent = "再飛一次"; updateStatus(); }
+        function encounter(character) {
+          character.active = false; hits++; const radians = character.angle * Math.PI / 180;
+          vx += character.power * Math.cos(radians); vy = Math.abs(vy) + character.power * Math.sin(radians); specialCharges = Math.min(3, specialCharges + 1);
+          banner = { title:character.call, detail:`${character.name.toUpperCase()} +${character.power}`, color:character.color, time:1.25 }; flash = .28; burst(worldX(character.x), GROUND - 65, character.color, 19); tone("hit");
+        }
+        function burst(x, y, color, amount) {
+          if (REDUCED) return;
+          for (let i = 0; i < amount; i++) particles.push({ x, y, vx:(Math.random()-.5)*230, vy:-Math.random()*210, life:.36+Math.random()*.36, color, size:2+Math.random()*4 });
+        }
+        function update(dt) {
+          if (state === "aim") aimClock += dt;
+          if (state === "flight") {
+            const step = Math.min(dt, .021, .85 / Math.max(vx, Math.abs(vy) + 1));
+            px += vx * step; py += (GRAVITY * step / 2 + vy) * step; vy += GRAVITY * step; elapsed += step; maximum = Math.max(maximum, px); flightRotation += vx * step * 1.35;
+            if (py <= 0) { py = 0; vy = Math.abs(vy) * .8; vx *= .8; burst(worldX(px), GROUND - 8, "#24405d", 12); if (vx < 3.3 && vy < 2.7) finish(); }
+            for (const character of encounters) if (character.active && Math.abs(character.x - px) < 1.15 && py < 1.6) encounter(character);
+            if (elapsed > 75) finish();
+          }
+          if (banner) { banner.time -= dt; if (banner.time <= 0) banner = null; }
+          flash = Math.max(0, flash - dt * 2.9);
+          particles = particles.filter(particle => { particle.life -= dt; particle.x += particle.vx * dt; particle.y += particle.vy * dt; particle.vy += 500 * dt; return particle.life > 0; });
+          if (state === "flight" && Math.floor(maximum) !== Math.floor(lastDistance)) { lastDistance = maximum; updateStatus(); }
+        }
+        function worldX(x) { const camera = Math.max(0, px - 12); return 222 + (x - camera) * 28; }
+        function drawImageFit(image, x, y, height, flip = false) { if (!image?.complete || !image.naturalWidth) return; const width = image.naturalWidth / image.naturalHeight * height; ctx.save(); if (flip) { ctx.translate(x + width / 2, 0); ctx.scale(-1, 1); ctx.translate(-(x + width / 2), 0); } ctx.drawImage(image, x, y, width, height); ctx.restore(); }
+        function drawSky() {
+          const gradient = ctx.createLinearGradient(0, 0, 0, H); gradient.addColorStop(0, "#eaf9fa"); gradient.addColorStop(.65, "#a6dfe5"); gradient.addColorStop(.651, "#dbeab2"); gradient.addColorStop(1, "#c9dda0"); ctx.fillStyle = gradient; ctx.fillRect(0, 0, W, H);
+          ctx.save(); ctx.globalAlpha = .36; ctx.fillStyle = "#ffffff";
+          for (let index = 0; index < 8; index++) { const x = ((index * 177 - px * 4) % (W + 180)) - 80, y = 72 + (index % 3) * 43; ctx.beginPath(); ctx.ellipse(x, y, 54, 16, 0, 0, Math.PI * 2); ctx.ellipse(x + 44, y - 7, 46, 20, 0, 0, Math.PI * 2); ctx.ellipse(x + 82, y + 2, 50, 15, 0, 0, Math.PI * 2); ctx.fill(); }
+          ctx.restore();
+          const background = images.background;
+          if (background?.complete && background.naturalWidth) { const h = 245, w = background.naturalWidth / background.naturalHeight * h, offset = -((px * 17) % w); ctx.globalAlpha = .92; for (let x = offset - w; x < W + w; x += w) ctx.drawImage(background, x, 200, w, h); ctx.globalAlpha = 1; }
+          ctx.fillStyle = "rgba(23,42,70,.20)"; ctx.fillRect(0, GROUND, W, 5); ctx.fillStyle = "rgba(255,255,255,.48)"; for (let x = -((px * 20) % 82); x < W; x += 82) ctx.fillRect(x, GROUND + 25, 36, 3);
+        }
+        function drawDistanceMarkers() { for (let mark = Math.floor(Math.max(0, px - 10) / 50) * 50; mark < px + 28; mark += 50) { if (mark === 0) continue; const x = worldX(mark); if (x < -30 || x > W + 30) continue; ctx.strokeStyle = "rgba(23,42,70,.35)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, GROUND - 8); ctx.lineTo(x, GROUND - 41); ctx.stroke(); ctx.fillStyle = "#fffdf4"; ctx.fillRect(x - 20, GROUND - 59, 40, 17); ctx.strokeStyle = "#172a46"; ctx.strokeRect(x - 20, GROUND - 59, 40, 17); ctx.fillStyle = "#172a46"; ctx.font = "800 10px ui-monospace,monospace"; ctx.textAlign = "center"; ctx.fillText(`${mark}m`, x, GROUND - 47); } }
+        function drawEncounters() { for (const person of encounters) { const x = worldX(person.x); if (!person.active || x < -120 || x > W + 120) continue; const bob = Math.sin(elapsed * 5 + person.wobble) * 2; drawImageFit(images[person.key], x - 28, GROUND - person.height + bob, person.height); ctx.fillStyle = "rgba(23,42,70,.84)"; ctx.font = "800 10px ui-sans-serif"; ctx.textAlign = "center"; ctx.fillText(person.name.toUpperCase(), x, GROUND + 20); } }
+        function drawLaunchActors() {
+          if (state === "ready" || state === "aim") { drawImageFit(images.nanaka, 58, GROUND - 138, 138); drawImageFit(images.taichi, 238, GROUND - 119, 119); ctx.fillStyle = "#172a46"; ctx.font = "800 12px ui-monospace,monospace"; ctx.textAlign = "center"; ctx.fillText("READY", 290, GROUND + 19); }
+          else { const x = worldX(px), y = GROUND - py * 77; ctx.save(); ctx.translate(x, y); ctx.rotate(-flightRotation); if (vx > 19 && images.speed?.complete) { ctx.globalAlpha = .22; ctx.drawImage(images.speed, -400, -170, 590, 332); ctx.globalAlpha = 1; } drawImageFit(images.taichi, -48, -60, 115); ctx.restore(); }
+        }
+        function drawParticles() { for (const particle of particles) { ctx.globalAlpha = Math.max(0, particle.life * 1.8); ctx.fillStyle = particle.color; ctx.fillRect(particle.x, particle.y, particle.size, particle.size); } ctx.globalAlpha = 1; }
+        function drawHud() {
+          ctx.save(); ctx.fillStyle = "rgba(255,253,244,.92)"; ctx.strokeStyle = "#172a46"; ctx.lineWidth = 3; ctx.fillRect(20, 18, 270, 65); ctx.strokeRect(20, 18, 270, 65); ctx.fillStyle = "#52718c"; ctx.font = "800 10px ui-monospace,monospace"; ctx.textAlign = "left"; ctx.fillText("DISTANCE / BEST", 34, 38); ctx.fillStyle = "#172a46"; ctx.font = "900 27px Impact,Arial Black,sans-serif"; ctx.fillText(`${maximum.toFixed(1)} m`, 33, 68); ctx.font = "800 12px ui-monospace,monospace"; ctx.fillText(`BEST ${best.toFixed(1)} m`, 190, 67);
+          ctx.fillStyle = "rgba(255,253,244,.92)"; ctx.fillRect(W - 217, 18, 197, 65); ctx.strokeRect(W - 217, 18, 197, 65); ctx.fillStyle = "#52718c"; ctx.font = "800 10px ui-monospace,monospace"; ctx.fillText("SPEED / SPECIAL", W - 202, 38); ctx.fillStyle = "#172a46"; ctx.font = "900 22px Impact,Arial Black,sans-serif"; ctx.fillText(`${Math.round(Math.hypot(vx,vy) * 3.6)} km/h`, W - 202, 67); for (let i = 0; i < 3; i++) { ctx.fillStyle = i < specialCharges ? "#f25543" : "#d8e1df"; ctx.beginPath(); ctx.arc(W - 50 + i * 11, 60, 4, 0, Math.PI * 2); ctx.fill(); } ctx.restore();
+        }
+        function drawOverlay() {
+          if (state === "aim") { const power = 104 + Math.sin(aimClock * 3.1) * 30; ctx.fillStyle = "rgba(255,253,244,.94)"; ctx.strokeStyle = "#172a46"; ctx.lineWidth = 3; ctx.fillRect(305, 35, 350, 62); ctx.strokeRect(305, 35, 350, 62); ctx.fillStyle = "#172a46"; ctx.textAlign = "center"; ctx.font = "900 13px ui-monospace,monospace"; ctx.fillText("SPACE ／ CLICK TO LAUNCH", 480, 57); ctx.fillStyle = "#d8e8e4"; ctx.fillRect(330, 69, 300, 11); ctx.fillStyle = "#f25543"; ctx.fillRect(330, 69, (power - 74) / 60 * 300, 11); }
+          if (state === "ready") { ctx.fillStyle = "rgba(255,253,244,.88)"; ctx.strokeStyle = "#172a46"; ctx.lineWidth = 3; ctx.fillRect(331, 102, 298, 66); ctx.strokeRect(331, 102, 298, 66); ctx.fillStyle = "#172a46"; ctx.textAlign = "center"; ctx.font = "900 23px Impact,Arial Black,sans-serif"; ctx.fillText("PRESS START TO CRASH", 480, 132); ctx.font = "800 11px ui-monospace,monospace"; ctx.fillText("SPACE / CLICK", 480, 151); }
+          if (state === "paused") { ctx.fillStyle = "rgba(23,42,70,.72)"; ctx.fillRect(0, 0, W, H); ctx.fillStyle = "#fffdf4"; ctx.textAlign = "center"; ctx.font = "900 42px Impact,Arial Black,sans-serif"; ctx.fillText("PAUSED", W / 2, H / 2 - 8); ctx.font = "800 14px ui-monospace,monospace"; ctx.fillText("P TO RESUME", W / 2, H / 2 + 22); }
+          if (state === "over") { ctx.fillStyle = "rgba(23,42,70,.55)"; ctx.fillRect(0, 0, W, H); ctx.fillStyle = "#fffdf4"; ctx.strokeStyle = "#172a46"; ctx.lineWidth = 4; ctx.fillRect(304, 165, 352, 180); ctx.strokeRect(304, 165, 352, 180); ctx.fillStyle = "#f25543"; ctx.font = "900 16px ui-monospace,monospace"; ctx.textAlign = "center"; ctx.fillText("FINAL DISTANCE", 480, 207); ctx.fillStyle = "#172a46"; ctx.font = "900 52px Impact,Arial Black,sans-serif"; ctx.fillText(`${maximum.toFixed(1)} m`, 480, 263); ctx.font = "800 13px ui-monospace,monospace"; ctx.fillText(`${hits} IMPACTS ・ R OR CLICK TO RESTART`, 480, 303); }
+          if (banner && state !== "over") { const alpha = Math.min(1, banner.time * 2); ctx.globalAlpha = alpha; ctx.fillStyle = banner.color; ctx.strokeStyle = "#172a46"; ctx.lineWidth = 3; ctx.save(); ctx.translate(480, 132); ctx.transform(1,0,-.18,1,0,0); ctx.fillRect(-142, -22, 284, 44); ctx.strokeRect(-142, -22, 284, 44); ctx.restore(); ctx.fillStyle = "#fffdf4"; ctx.textAlign = "center"; ctx.font = "900 26px Impact,Arial Black,sans-serif"; ctx.fillText(banner.title, 480, 133); ctx.font = "800 10px ui-monospace,monospace"; ctx.fillText(banner.detail, 480, 149); ctx.globalAlpha = 1; }
+          if (flash > 0) { ctx.fillStyle = `rgba(255,255,255,${flash * .42})`; ctx.fillRect(0,0,W,H); }
+        }
+        function draw() { drawSky(); drawDistanceMarkers(); drawEncounters(); drawLaunchActors(); drawParticles(); drawHud(); drawOverlay(); }
+        function updateStatus() { const messages = { ready:"準備就緒：按下開始飛行。", aim:"力量量表運作中：再按一次 Space 或點擊舞台發射。", flight:`飛行中：${maximum.toFixed(1)} m，撞擊 ${hits} 次，特技 ${specialCharges}/3。`, paused:"暫停中：按 P 繼續。", over:`本局 ${maximum.toFixed(1)} m，歷史最佳 ${best.toFixed(1)} m。` }; statusText.textContent = messages[state]; }
+        function loop(now) { const dt = Math.min(.045, (now - lastTime) / 1000); lastTime = now; if (state !== "paused") update(dt); draw(); requestAnimationFrame(loop); }
+
+        function clickStage() { if (state === "ready" || state === "over") startAim(); else if (state === "aim") launch(); else if (state === "paused") pause(); }
+        canvas.addEventListener("pointerdown", clickStage);
+        canvas.addEventListener("keydown", event => { const key = event.key.toLowerCase(); if ([" ","enter","s","p","r"].includes(key)) event.preventDefault(); if (key === " " || key === "enter") clickStage(); else if (key === "s") useSpecial(); else if (key === "p") pause(); else if (key === "r") startAim(); });
+        startButton.addEventListener("click", () => { if (state === "flight" || state === "aim" || state === "paused") startAim(); else startAim(); });
+        soundButton.addEventListener("click", () => { muted = !muted; soundButton.textContent = muted ? "♪" : "♫"; soundButton.setAttribute("aria-label", muted ? "開啟背景音樂" : "關閉背景音樂"); if (muted) ambient.pause(); else { audioContext?.resume(); ambient.play().catch(() => {}); } });
+        reset(); requestAnimationFrame(loop);
+      })();
+    </script>
+  </body>
+</html>

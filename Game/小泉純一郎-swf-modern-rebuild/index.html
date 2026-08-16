@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="以原始素材與現代 Canvas 物理重製的 Flash 布偶下墜玩具。"
+    />
+    <title>KR — 現代布偶物理重製</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">FLASH 7 REBUILD · ZERO DEPENDENCIES</p>
+          <h1>KR<span>／</span>布偶下墜</h1>
+        </div>
+        <p class="source-note">依原始 SWF 靜態逆向重寫 · 保留原始可用美術</p>
+      </header>
+
+      <section class="game-panel" aria-label="布偶物理遊戲">
+        <div class="canvas-wrap">
+          <canvas
+            id="gameCanvas"
+            aria-label="可拖曳角色關節、讓布偶在圓形障礙物間下墜的物理畫面"
+          ></canvas>
+          <div class="canvas-vignette" aria-hidden="true"></div>
+          <p id="loadingMessage" class="loading-message" aria-live="polite">正在載入原始美術素材…</p>
+        </div>
+
+        <div class="hud" aria-label="遊戲資訊與控制">
+          <div class="status-card">
+            <span class="status-label">模擬狀態</span>
+            <strong id="statusText">準備中</strong>
+          </div>
+          <div class="status-card">
+            <span class="status-label">速度</span>
+            <strong id="speedText">1.00×</strong>
+          </div>
+          <div class="status-card status-card--wide">
+            <span class="status-label">操作</span>
+            <strong>拖曳角色 · ←／→ 變速 · Space 暫停</strong>
+          </div>
+        </div>
+
+        <div class="controls" aria-label="控制列">
+          <button id="pauseButton" class="button button--primary" type="button" aria-pressed="false">暫停</button>
+          <button id="resetButton" class="button" type="button">重置姿勢</button>
+          <fieldset class="speed-control">
+            <legend>速度</legend>
+            <button type="button" data-speed="0.5">0.5×</button>
+            <button type="button" data-speed="1" class="is-active" aria-pressed="true">1×</button>
+            <button type="button" data-speed="2">2×</button>
+          </fieldset>
+          <label class="skeleton-control" for="skeletonToggle">
+            <input id="skeletonToggle" type="checkbox" />
+            <span>顯示骨架</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="guide-grid" aria-label="遊戲說明">
+        <article>
+          <p class="section-kicker">遊玩方式</p>
+          <h2>抓住、甩動、放手</h2>
+          <p>按住角色任一部位即可拖曳附近關節；放開後，慣性會穿過骨架與關節限制，讓角色繼續翻滾下墜。</p>
+        </article>
+        <article>
+          <p class="section-kicker">重製核心</p>
+          <h2>從 Flash 到 Canvas</h2>
+          <p>重寫為固定子步進的 Verlet 位置式物理，使用 Pointer Events 支援滑鼠、觸控與觸控筆，且不依賴任何第三方函式庫。</p>
+        </article>
+        <article>
+          <p class="section-kicker">原始美術</p>
+          <h2>可用素材已保留</h2>
+          <p>頭部、服裝、手腳與圓形障礙物皆取自原始 SWF 的 JPEG3 與 Alpha 通道；原檔沒有內嵌音效。</p>
+        </article>
+      </section>
+
+      <footer>
+        <p>此作品為相容性重製與技術研究。詳見 <a href="README.md">繁體中文 README</a>、<a href="docs/reverse-engineering-notes.md">逆向工程紀錄</a> 與 <a href="docs/as2-physics-analysis.md">AS2 物理深度解析</a>。</p>
+      </footer>
+    </main>
+
+    <script src="js/physics.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/game.js"></script>
+  </body>
+</html>

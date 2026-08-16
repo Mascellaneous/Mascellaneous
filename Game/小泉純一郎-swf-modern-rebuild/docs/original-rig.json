@@ -1,0 +1,512 @@
+{
+  "particle_count": 12,
+  "constraint_count": 20,
+  "particles": [
+    {
+      "depth": 1,
+      "name": "knee1",
+      "x": 35.4,
+      "y": 54.75,
+      "mass": 0.9
+    },
+    {
+      "depth": 3,
+      "name": "foot1",
+      "x": 21.4,
+      "y": 109.95,
+      "mass": 0.8
+    },
+    {
+      "depth": 5,
+      "name": "knee2",
+      "x": 85.4,
+      "y": 53.5,
+      "mass": 0.9
+    },
+    {
+      "depth": 7,
+      "name": "foot2",
+      "x": 108.45,
+      "y": 106.95,
+      "mass": 0.8
+    },
+    {
+      "depth": 9,
+      "name": "pants",
+      "x": 58.4,
+      "y": -2.05,
+      "mass": 1.1
+    },
+    {
+      "depth": 11,
+      "name": "stomach",
+      "x": 60.9,
+      "y": -42.0,
+      "mass": 1.0
+    },
+    {
+      "depth": 13,
+      "name": "head",
+      "x": 60.25,
+      "y": -129.9,
+      "mass": 1.0
+    },
+    {
+      "depth": 15,
+      "name": "arm2",
+      "x": 113.45,
+      "y": -94.5,
+      "mass": 0.5
+    },
+    {
+      "depth": 17,
+      "name": "hand2",
+      "x": 176.4,
+      "y": -96.5,
+      "mass": 0.5
+    },
+    {
+      "depth": 19,
+      "name": "arm1",
+      "x": 16.0,
+      "y": -94.5,
+      "mass": 0.5
+    },
+    {
+      "depth": 21,
+      "name": "hand1",
+      "x": -46.3,
+      "y": -93.75,
+      "mass": 0.5
+    },
+    {
+      "depth": 23,
+      "name": "neck",
+      "x": 59.4,
+      "y": -90.75,
+      "mass": 0.5
+    }
+  ],
+  "constraints": [
+    {
+      "depth": 25,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 57.15,
+        "y": -53.3
+      },
+      "p2_template": {
+        "x": 57.15,
+        "y": -104.844189453125
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": -90.0,
+      "p3": "head",
+      "min_angle_radians": -0.5,
+      "max_angle_radians": 1.0,
+      "inversed": false,
+      "p1_particle": "stomach",
+      "p2_particle": "neck",
+      "initial_particle_distance": 48.77307146366733
+    },
+    {
+      "depth": 27,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 59.25,
+        "y": -134.3
+      },
+      "p2_template": {
+        "x": 59.25,
+        "y": -103.46961669921876
+      },
+      "rest_length": 30.83038330078125,
+      "rotation_degrees": 90.0,
+      "p3": "stomach",
+      "min_angle_radians": -1.0,
+      "max_angle_radians": 0.5,
+      "inversed": false,
+      "p1_particle": "head",
+      "p2_particle": "neck",
+      "initial_particle_distance": 39.15922624363255
+    },
+    {
+      "depth": 29,
+      "type": "angledConstraint",
+      "p1": {
+        "x": -49.05,
+        "y": -93.75
+      },
+      "p2_template": {
+        "x": 2.494189453125003,
+        "y": -93.75
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": 0.0,
+      "p3": "neck",
+      "min_angle_radians": -0.1,
+      "max_angle_radians": 2.6,
+      "inversed": false,
+      "p1_particle": "hand1",
+      "p2_particle": "arm1",
+      "initial_particle_distance": 62.304514282674575
+    },
+    {
+      "depth": 31,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 56.25,
+        "y": -95.5
+      },
+      "p2_template": {
+        "x": 4.705810546875,
+        "y": -95.5
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": 180.0,
+      "p3": "hand1",
+      "min_angle_radians": -2.6,
+      "max_angle_radians": 0.1,
+      "inversed": false,
+      "p1_particle": "neck",
+      "p2_particle": "arm1",
+      "initial_particle_distance": 43.561709103293914
+    },
+    {
+      "depth": 33,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 68.9,
+        "y": -102.0
+      },
+      "p2_template": {
+        "x": 120.444189453125,
+        "y": -102.0
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": 0.0,
+      "p3": "hand2",
+      "min_angle_radians": -2.6,
+      "max_angle_radians": 0.1,
+      "inversed": false,
+      "p1_particle": "neck",
+      "p2_particle": "arm2",
+      "initial_particle_distance": 54.17993170907472
+    },
+    {
+      "depth": 35,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 177.9,
+        "y": -98.4
+      },
+      "p2_template": {
+        "x": 125.37467041015626,
+        "y": -98.4
+      },
+      "rest_length": 52.52532958984375,
+      "rotation_degrees": 180.0,
+      "p3": "neck",
+      "min_angle_radians": -0.1,
+      "max_angle_radians": 2.6,
+      "inversed": false,
+      "p1_particle": "hand2",
+      "p2_particle": "arm2",
+      "initial_particle_distance": 62.981763233494824
+    },
+    {
+      "depth": 37,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 63.1,
+        "y": -103.1
+      },
+      "p2_template": {
+        "x": 63.1,
+        "y": -51.555810546874994
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": 90.0,
+      "p3": "pants",
+      "min_angle_radians": -0.4,
+      "max_angle_radians": 0.4,
+      "inversed": false,
+      "p1_particle": "neck",
+      "p2_particle": "stomach",
+      "initial_particle_distance": 48.77307146366733
+    },
+    {
+      "depth": 39,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 64.3,
+        "y": -10.55
+      },
+      "p2_template": {
+        "x": 64.3,
+        "y": -62.094189453125
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": -90.0,
+      "p3": "neck",
+      "min_angle_radians": -0.4,
+      "max_angle_radians": 0.4,
+      "inversed": false,
+      "p1_particle": "pants",
+      "p2_particle": "stomach",
+      "initial_particle_distance": 40.02814634728918
+    },
+    {
+      "depth": 41,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 54.7,
+        "y": 9.1
+      },
+      "p2_template": {
+        "x": 41.35924072265625,
+        "y": 58.88790283203125
+      },
+      "rest_length": 51.54426375948946,
+      "rotation_degrees": 105.00014057052334,
+      "p3": "foot1",
+      "min_angle_radians": -0.1,
+      "max_angle_radians": 2.3,
+      "inversed": false,
+      "p1_particle": "pants",
+      "p2_particle": "knee1",
+      "initial_particle_distance": 61.28001305482889
+    },
+    {
+      "depth": 43,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 22.7,
+        "y": 113.25
+      },
+      "p2_template": {
+        "x": 36.04075927734374,
+        "y": 63.46209716796875
+      },
+      "rest_length": 51.54426375948946,
+      "rotation_degrees": -74.99985942947667,
+      "p3": "pants",
+      "min_angle_radians": -2.3,
+      "max_angle_radians": 0.1,
+      "inversed": false,
+      "p1_particle": "foot1",
+      "p2_particle": "knee1",
+      "initial_particle_distance": 56.947695300161186
+    },
+    {
+      "depth": 45,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 62.4,
+        "y": 11.25
+      },
+      "p2_template": {
+        "x": 80.25430908203124,
+        "y": 59.58679199218749
+      },
+      "rest_length": 51.528844474650356,
+      "rotation_degrees": 69.7271279889624,
+      "p3": "foot2",
+      "min_angle_radians": -0.1,
+      "max_angle_radians": 2.3,
+      "inversed": false,
+      "p1_particle": "pants",
+      "p2_particle": "knee2",
+      "initial_particle_distance": 61.76408746189002
+    },
+    {
+      "depth": 47,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 107.55,
+        "y": 107.35
+      },
+      "p2_template": {
+        "x": 89.6941650390625,
+        "y": 59.013208007812494
+      },
+      "rest_length": 51.529373198674165,
+      "rotation_degrees": -110.27446354262422,
+      "p3": "pants",
+      "min_angle_radians": -2.3,
+      "max_angle_radians": 0.1,
+      "inversed": false,
+      "p1_particle": "foot2",
+      "p2_particle": "knee2",
+      "initial_particle_distance": 58.2082897876239
+    },
+    {
+      "depth": 49,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 92.2,
+        "y": 52.65
+      },
+      "p2_template": {
+        "x": 74.3441650390625,
+        "y": 4.313208007812499
+      },
+      "rest_length": 51.529373198674165,
+      "rotation_degrees": -110.27446354262422,
+      "p3": "stomach",
+      "min_angle_radians": -0.3,
+      "max_angle_radians": 2.1,
+      "inversed": false,
+      "p1_particle": "knee2",
+      "p2_particle": "pants",
+      "initial_particle_distance": 61.76408746189002
+    },
+    {
+      "depth": 51,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 74.15,
+        "y": -61.85
+      },
+      "p2_template": {
+        "x": 72.77670898437499,
+        "y": -10.397363281250009
+      },
+      "rest_length": 51.47096029340483,
+      "rotation_degrees": 91.52888380588061,
+      "p3": "knee2",
+      "min_angle_radians": -2.1,
+      "max_angle_radians": 0.3,
+      "inversed": false,
+      "p1_particle": "stomach",
+      "p2_particle": "pants",
+      "initial_particle_distance": 40.02814634728918
+    },
+    {
+      "depth": 53,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 29.85,
+        "y": 51.05
+      },
+      "p2_template": {
+        "x": 46.69265136718751,
+        "y": 2.438549804687497
+      },
+      "rest_length": 51.44655474536629,
+      "rotation_degrees": -70.89007865985744,
+      "p3": "stomach",
+      "min_angle_radians": -0.3,
+      "max_angle_radians": 2.1,
+      "inversed": false,
+      "p1_particle": "knee1",
+      "p2_particle": "pants",
+      "initial_particle_distance": 61.28001305482889
+    },
+    {
+      "depth": 55,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 46.0,
+        "y": -64.4
+      },
+      "p2_template": {
+        "x": 44.626708984374986,
+        "y": -12.947363281250013
+      },
+      "rest_length": 51.47096029340483,
+      "rotation_degrees": 91.52888380588061,
+      "p3": "knee1",
+      "min_angle_radians": -2.1,
+      "max_angle_radians": 0.3,
+      "inversed": false,
+      "p1_particle": "stomach",
+      "p2_particle": "pants",
+      "initial_particle_distance": 40.02814634728918
+    },
+    {
+      "depth": 57,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 126.85,
+        "y": -91.8
+      },
+      "p2_template": {
+        "x": 75.305810546875,
+        "y": -91.8
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": 180.0,
+      "p3": "stomach",
+      "min_angle_radians": 0.0,
+      "max_angle_radians": 1.570796,
+      "inversed": true,
+      "p1_particle": "arm2",
+      "p2_particle": "neck",
+      "initial_particle_distance": 54.17993170907472
+    },
+    {
+      "depth": 59,
+      "type": "angledConstraint",
+      "p1": {
+        "x": -2.25,
+        "y": -86.75
+      },
+      "p2_template": {
+        "x": 49.294189453125,
+        "y": -86.75
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": 0.0,
+      "p3": "stomach",
+      "min_angle_radians": 0.0,
+      "max_angle_radians": 1.570796,
+      "inversed": true,
+      "p1_particle": "arm1",
+      "p2_particle": "neck",
+      "initial_particle_distance": 43.561709103293914
+    },
+    {
+      "depth": 61,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 71.75,
+        "y": -50.7
+      },
+      "p2_template": {
+        "x": 71.75,
+        "y": -102.244189453125
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": -90.0,
+      "p3": "arm2",
+      "min_angle_radians": -1.570796,
+      "max_angle_radians": 0.0,
+      "inversed": true,
+      "p1_particle": "stomach",
+      "p2_particle": "neck",
+      "initial_particle_distance": 48.77307146366733
+    },
+    {
+      "depth": 63,
+      "type": "angledConstraint",
+      "p1": {
+        "x": 49.8,
+        "y": -48.2
+      },
+      "p2_template": {
+        "x": 49.8,
+        "y": -99.744189453125
+      },
+      "rest_length": 51.544189453125,
+      "rotation_degrees": -90.0,
+      "p3": "arm1",
+      "min_angle_radians": -1.570796,
+      "max_angle_radians": 0.0,
+      "inversed": true,
+      "p1_particle": "stomach",
+      "p2_particle": "neck",
+      "initial_particle_distance": 48.77307146366733
+    }
+  ]
+}
