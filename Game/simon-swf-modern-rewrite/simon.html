@@ -1,0 +1,135 @@
+<!doctype html>
+<!--
+  Design reminder — 玩具儀表板復刻：四色訊號、深色機殼、同心機台構圖與短促聲光回饋。
+  本檔只依賴同資料夾 assets/ 下從使用者原始 SWF 擷取的四段 MP3；不使用任何第三方套件或網路資源。
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="以原生 HTML、CSS 與 JavaScript 製作的 Simon 記憶遊戲重製版。" />
+  <title>SIMON — 訊號記憶</title>
+  <style>
+    /* Design reminder — 玩具儀表板復刻：訊號色是資料通道，環形機台是畫面主體。 */
+    :root { color-scheme: light; --ink:#1a2026; --case:#273039; --deep:#151c22; --paper:#e6e5de; --panel:#d5d4cc; --muted:#515b62; --yellow:#f4d23c; --green:#3ad35c; --red:#f0443e; --blue:#2786ef; --ease:cubic-bezier(.23,1,.32,1); }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; display:grid; place-items:center; overflow-x:hidden; background:linear-gradient(90deg,#e0dfd7 0 4%,var(--paper) 4% 96%,#e0dfd7 96% 100%); color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.55; background-image:radial-gradient(rgba(18,25,31,.17) .7px,transparent .7px),linear-gradient(90deg,transparent 0 8%,rgba(26,32,38,.035) 8% 8.2%,transparent 8.2% 91.8%,rgba(26,32,38,.035) 91.8% 92%,transparent 92%); background-size:5px 5px,100% 100%; mask-image:linear-gradient(135deg,rgba(0,0,0,.85),transparent 85%); }
+    .cabinet { width:min(92vw,650px); padding:clamp(28px,6vw,58px) 0 40px; text-align:center; position:relative; }
+    .cabinet::before { content:""; position:absolute; z-index:-1; left:4%; right:4%; top:93px; bottom:16px; border:1px solid rgba(26,32,38,.1); border-radius:22px; background:linear-gradient(90deg,rgba(255,255,255,.25),transparent 10% 90%,rgba(0,0,0,.04)); box-shadow:inset 0 1px rgba(255,255,255,.45),0 8px 18px rgba(26,32,38,.05); }
+    .masthead { width:max-content; max-width:90%; display:flex; align-items:center; justify-content:center; gap:10px; margin:0 auto clamp(22px,4vw,34px); padding:8px 15px 8px 10px; border:2px solid var(--deep); border-radius:4px; background:var(--case); color:#f7f4df; box-shadow:3px 3px 0 rgba(26,32,38,.28),inset 0 1px rgba(255,255,255,.13); letter-spacing:.2em; font-weight:950; font-size:clamp(.72rem,2.5vw,.9rem); text-shadow:1px 1px #000; }
+    .brand-mark { width:28px; height:28px; border-radius:50%; background:conic-gradient(from -45deg,var(--green) 0 25%,var(--red) 0 50%,var(--blue) 0 75%,var(--yellow) 0); position:relative; box-shadow:0 1px 1px rgba(0,0,0,.25); }
+    .brand-mark::after { content:""; position:absolute; inset:9px; background:var(--deep); border-radius:50%; box-shadow:inset 0 1px 1px rgba(255,255,255,.14); }
+    .legend { margin:0 auto clamp(15px,3vw,22px); display:flex; justify-content:space-between; width:min(84vw,470px); padding:7px 11px; border:1px solid rgba(26,32,38,.25); border-radius:4px; background:var(--panel); box-shadow:inset 0 1px rgba(255,255,255,.63),inset 0 -1px rgba(26,32,38,.1); font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:clamp(.64rem,2vw,.75rem); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+    .legend span { position:relative; padding-left:13px; }
+    .legend span::before { content:""; position:absolute; left:0; top:50%; width:6px; height:6px; border-radius:50%; transform:translateY(-50%); background:var(--yellow); box-shadow:inset 0 1px rgba(255,255,255,.6),0 0 0 1px rgba(0,0,0,.15); }
+    .legend b { color:var(--ink); font-weight:900; }
+    .game-shell { aspect-ratio:1; width:min(88vw,530px); margin:auto; border-radius:50%; position:relative; padding:clamp(14px,2.8vw,22px); background:repeating-conic-gradient(from 0deg,#37444d 0deg 2deg,#13191e 2deg 6deg); box-shadow:0 26px 45px rgba(22,28,32,.27),inset 2px 3px 3px rgba(255,255,255,.26),inset -4px -6px 7px rgba(0,0,0,.43); }
+    .game-shell.is-error { animation:shake .24s var(--ease); }
+    .ring { position:relative; width:100%; height:100%; border-radius:50%; overflow:hidden; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:clamp(8px,1.8vw,13px); transform:rotate(-45deg); background:#11161a; border:clamp(6px,1.4vw,10px) solid #11171c; box-shadow:inset 0 0 0 2px rgba(255,255,255,.11); }
+    .pad { border:0; margin:0; min-width:0; min-height:0; position:relative; cursor:pointer; touch-action:manipulation; opacity:.84; filter:saturate(1.12) brightness(.92); transition:filter 150ms var(--ease),transform 150ms var(--ease),box-shadow 150ms var(--ease); outline-offset:-8px; }
+    .pad::after { content:""; position:absolute; inset:0; opacity:.2; background:linear-gradient(145deg,rgba(255,255,255,.55),transparent 40%); pointer-events:none; }
+    .pad:focus-visible { outline:4px solid white; z-index:2; }
+    .pad:not(:disabled):hover { filter:saturate(.95) brightness(.97); }
+    .pad:not(:disabled):active { transform:scale(.972); }
+    .pad.is-lit { opacity:1; filter:saturate(1.1) brightness(1.38); z-index:1; box-shadow:inset 0 0 0 3px rgba(255,255,255,.48),0 0 32px currentColor; }
+    .pad:disabled { cursor:not-allowed; }
+    .green { background:var(--green); color:var(--green); border-radius:100% 10px 10px 10px; }
+    .red { background:var(--red); color:var(--red); border-radius:10px 100% 10px 10px; }
+    .yellow { background:var(--yellow); color:var(--yellow); border-radius:10px 10px 10px 100%; }
+    .blue { background:var(--blue); color:var(--blue); border-radius:10px 10px 100% 10px; }
+    .hub { width:43%; aspect-ratio:1; position:absolute; z-index:4; top:50%; left:50%; transform:translate(-50%,-50%); display:grid; place-items:center; border-radius:50%; background:linear-gradient(145deg,#37434c,#11181e 62%); border:clamp(7px,1.4vw,11px) solid #1a2228; color:#fff; box-shadow:0 4px 12px rgba(0,0,0,.56),inset 2px 2px 2px rgba(255,255,255,.17),inset -4px -5px 6px rgba(0,0,0,.4); }
+    .hub::before { content:""; position:absolute; inset:9%; border:1px dashed rgba(244,210,60,.46); border-radius:50%; pointer-events:none; }
+    .start { width:71%; aspect-ratio:1; border:2px solid rgba(255,255,255,.17); border-radius:50%; background:var(--yellow); color:#20252a; padding:0; cursor:pointer; display:grid; place-content:center; gap:2px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.1em; font-weight:900; font-size:clamp(.55rem,1.6vw,.72rem); line-height:1; box-shadow:inset 0 2px 1px rgba(255,255,255,.44),0 3px 0 #a48110; transition:transform 150ms var(--ease),filter 150ms var(--ease); }
+    .start span { font-size:clamp(1.15rem,4.4vw,1.75rem); line-height:.9; letter-spacing:0; }
+    .start:focus-visible { outline:3px solid white; outline-offset:3px; }
+    .start:hover { filter:brightness(1.05); }
+    .start:active { transform:translateY(2px) scale(.97); box-shadow:inset 0 2px 1px rgba(255,255,255,.44),0 1px 0 #a48110; }
+    .readout { width:min(84vw,485px); margin:clamp(20px,4vw,28px) auto 0; padding:6px; display:grid; grid-template-columns:1fr 32px 1fr; gap:6px; align-items:stretch; border:2px solid #3d464b; border-radius:5px; background:linear-gradient(145deg,#f0efe8,#b8b8b0); box-shadow:3px 4px 0 rgba(26,32,38,.18),inset 0 1px rgba(255,255,255,.9),inset 0 -1px rgba(0,0,0,.16); font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    .meter { min-width:0; padding:7px 8px 8px; text-align:left; border:1px solid rgba(26,32,38,.38); border-radius:2px; background:var(--panel); box-shadow:inset 0 1px rgba(255,255,255,.74),inset 0 -2px rgba(26,32,38,.09); }
+    .meter:last-child { text-align:right; }
+    .meter-label { display:block; color:#344047; font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; font-weight:800; }
+    .meter strong { display:inline-block; min-width:2.05em; margin-top:5px; padding:3px 6px 2px; border:2px solid #11171c; border-radius:2px; background:#20272a; color:var(--yellow); font-size:clamp(1.35rem,5vw,2rem); letter-spacing:-.1em; line-height:1; text-shadow:0 0 7px rgba(244,210,60,.58); box-shadow:inset 0 1px rgba(255,255,255,.15); }
+    .status-light { align-self:center; justify-self:center; width:15px; height:15px; border-radius:50%; background:#768087; border:2px solid #303a3f; box-shadow:inset 0 1px 2px rgba(0,0,0,.35); transition:background 160ms var(--ease),box-shadow 160ms var(--ease); }
+    .status-light.is-on { background:var(--yellow); box-shadow:0 0 14px rgba(244,210,60,.8),inset 0 1px 2px rgba(255,255,255,.5); }
+    .status { min-height:1.4em; width:min(82vw,470px); margin:15px auto 0; padding:8px 12px; border-top:2px solid #394348; border-bottom:2px solid #394348; background:linear-gradient(90deg,transparent,rgba(244,210,60,.22),transparent); font-size:clamp(.83rem,2.5vw,.98rem); font-weight:850; letter-spacing:.04em; }
+    .controls { width:min(86vw,520px); margin:22px auto 0; padding:12px 13px; border:2px solid rgba(26,32,38,.32); border-radius:4px; background:var(--panel); box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -2px rgba(26,32,38,.1); display:flex; justify-content:space-between; gap:12px; color:#3c474d; font-size:clamp(.67rem,2vw,.76rem); line-height:1.55; text-align:left; }
+    .controls span:last-child { text-align:right; }
+    kbd { display:inline-block; min-width:1.4em; padding:.08em .33em; border:1px solid rgba(26,32,38,.25); border-radius:4px; background:rgba(255,255,255,.45); color:var(--ink); font:inherit; text-align:center; }
+    @keyframes shake { 25% { transform:translateX(-5px); } 75% { transform:translateX(5px); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; } }
+    @media (max-width:390px) { .controls { display:block; } .controls span:last-child { display:block; margin-top:8px; text-align:left; } }
+  </style>
+</head>
+<body>
+  <main class="cabinet" aria-labelledby="game-title">
+    <header class="masthead" id="game-title"><span class="brand-mark" aria-hidden="true"></span><span>SIMON / 訊號記憶</span></header>
+    <div class="legend" aria-live="polite"><span>模式 <b id="phase-label">待命</b></span><span id="tempo-label">節奏：標準</span></div>
+    <section class="game-shell" id="game-shell" aria-label="Simon 四色記憶遊戲">
+      <div class="ring">
+        <button class="pad green" type="button" data-pad="0" aria-label="綠色，按鍵 1 或向上鍵" disabled>綠色</button>
+        <button class="pad red" type="button" data-pad="1" aria-label="紅色，按鍵 2 或向右鍵" disabled>紅色</button>
+        <button class="pad yellow" type="button" data-pad="3" aria-label="黃色，按鍵 4 或向左鍵" disabled>黃色</button>
+        <button class="pad blue" type="button" data-pad="2" aria-label="藍色，按鍵 3 或向下鍵" disabled>藍色</button>
+      </div>
+      <div class="hub"><button class="start" id="start" type="button" aria-label="開始或重新開始遊戲"><span id="start-icon">▶</span><span id="start-word">開始</span></button></div>
+    </section>
+    <section class="readout" aria-label="遊戲計分板"><div class="meter"><span class="meter-label">本局</span><strong id="score">00</strong></div><span class="status-light" id="status-light" aria-hidden="true"></span><div class="meter"><span class="meter-label">最佳</span><strong id="high-score">00</strong></div></section>
+    <p class="status" id="status" role="status">按下中心按鈕，觀察第一個訊號。</p>
+    <footer class="controls"><span><kbd>1</kbd> / <kbd>↑</kbd> 綠　<kbd>2</kbd> / <kbd>→</kbd> 紅<br><kbd>3</kbd> / <kbd>↓</kbd> 藍　<kbd>4</kbd> / <kbd>←</kbd> 黃</span><span>重現順序<br>每 5 回合加速</span></footer>
+  </main>
+  <script>
+    /* Design reminder — 玩具儀表板復刻：讓遊戲狀態、燈光與原始音效同步，避免隱藏的時間軸副作用。 */
+    (() => {
+      "use strict";
+      const tones = ["assets/sound-54.mp3","assets/sound-55.mp3","assets/sound-56.mp3","assets/sound-57.mp3"];
+      const pads = [...document.querySelectorAll(".pad")];
+      const $ = (selector) => document.querySelector(selector);
+      const start = $("#start"), shell = $("#game-shell"), scoreNode = $("#score"), highScoreNode = $("#high-score"), statusNode = $("#status"), phaseLabel = $("#phase-label"), tempoLabel = $("#tempo-label"), light = $("#status-light"), startWord = $("#start-word"), startIcon = $("#start-icon");
+      const names = ["綠色","紅色","藍色","黃色"];
+      let gameId = 0, phase = "idle", sequence = [], expected = [], score = 0;
+      let highScore = Number.parseInt(localStorage.getItem("simon-modern-high-score") || "0",10) || 0;
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve,ms));
+      const setStatus = (message) => { statusNode.textContent = message; };
+      function setPhase(next) {
+        phase = next;
+        phaseLabel.textContent = {idle:"待命",computer:"機器播放",player:"你的回合",feedback:"核對中",lost:"失誤"}[next];
+        light.classList.toggle("is-on",next === "computer" || next === "player");
+        pads.forEach((pad) => { pad.disabled = next !== "player"; });
+        const ready = next === "idle" || next === "lost";
+        startWord.textContent = ready ? "開始" : "重來";
+        startIcon.textContent = ready ? "▶" : "↻";
+      }
+      function updateScore() {
+        scoreNode.textContent = String(score).padStart(2,"0");
+        highScoreNode.textContent = String(highScore).padStart(2,"0");
+        const level = Math.min(4,Math.floor(score / 5));
+        tempoLabel.textContent = level ? `節奏：+${level}` : "節奏：標準";
+      }
+      function playTone(index) { const audio = new Audio(tones[index]); audio.volume = .56; audio.play().catch(() => {}); }
+      async function signal(index,duration = 330) {
+        const pad = pads.find((item) => Number(item.dataset.pad) === index);
+        if (!pad) return;
+        pad.classList.add("is-lit"); playTone(index); await wait(duration); pad.classList.remove("is-lit");
+      }
+      const tempo = () => Math.max(190,330 - Math.floor(score / 5) * 32);
+      async function playRound(id) {
+        setPhase("computer"); setStatus(`第 ${sequence.length} 組訊號，請專心觀察。`); await wait(620);
+        for (const index of sequence) { if (id !== gameId) return; await signal(index,tempo()); await wait(Math.max(105,tempo() * .58)); }
+        if (id !== gameId) return;
+        expected = [...sequence]; setPhase("player"); setStatus("你的回合：重現剛才的節奏。");
+      }
+      async function nextRound(id) { sequence.push(Math.floor(Math.random() * pads.length)); await playRound(id); }
+      async function startGame() { const id = ++gameId; sequence = []; expected = []; score = 0; updateScore(); setPhase("computer"); setStatus("正在啟動記憶機台……"); await wait(240); if (id === gameId) nextRound(id); }
+      async function winStep(id) { setPhase("feedback"); score = sequence.length; if (score > highScore) { highScore = score; localStorage.setItem("simon-modern-high-score",String(highScore)); } updateScore(); setStatus(`正確。第 ${score + 1} 組訊號準備中。`); await wait(420); if (id === gameId) nextRound(id); }
+      function loseStep() { ++gameId; shell.classList.add("is-error"); pads.forEach((pad) => pad.classList.add("is-lit")); setTimeout(() => { shell.classList.remove("is-error"); pads.forEach((pad) => pad.classList.remove("is-lit")); },240); setPhase("lost"); setStatus(`順序不對。本局完成 ${score} 組；按「開始」再試一次。`); }
+      function handleInput(index) { if (phase !== "player") return; const id = gameId; signal(index,200); if (expected[0] !== index) { loseStep(); return; } expected.shift(); if (!expected.length) winStep(id); }
+      start.addEventListener("click",startGame);
+      pads.forEach((pad) => pad.addEventListener("click",() => handleInput(Number(pad.dataset.pad))));
+      document.addEventListener("keydown",(event) => { if (event.repeat) return; const map = {"1":0,ArrowUp:0,"2":1,ArrowRight:1,"3":2,ArrowDown:2,"4":3,ArrowLeft:3}; if (Object.hasOwn(map,event.key)) { event.preventDefault(); handleInput(map[event.key]); } });
+      updateScore(); setPhase("idle");
+      window.__simonDebug = { startGame, handleInput, getState: () => ({phase,sequence:[...sequence],expected:[...expected],score,highScore,names}) };
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#3e9a52" />
+    <meta name="description" content="A dependency-free browser restoration of Mini Putt Classic." />
+    <title>Mini Putt Modern</title>
+    <!-- Cabinet Greenhouse design: the course is the focus; the score rail acts as tactile arcade chrome. -->
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="cabinet" aria-label="Mini Putt Modern browser game">
+      <header class="masthead">
+        <div class="brand-lockup">
+          <img class="brand-mark" src="./assets/miniputt-mark_21d9375a.png" alt="Mini Putt Modern mark" />
+          <div>
+            <p class="eyebrow">Clean-room browser restoration</p>
+            <h1>MINI PUTT <span>MODERN</span></h1>
+          </div>
+        </div>
+        <div class="archive-pill"><span></span> 2005 logic, current browser</div>
+      </header>
+
+      <section class="game-layout" aria-label="Game area">
+        <aside class="score-rail" aria-label="Score card and game controls">
+          <div class="hole-readout">
+            <p class="eyebrow">Playing now</p>
+            <div class="hole-count"><span id="holeNumber">01</span><small>HOLE</small></div>
+            <p id="courseName">First Line</p>
+            <div class="par-line">PAR <strong id="parValue">2</strong></div>
+          </div>
+
+          <div class="stroke-card" aria-live="polite">
+            <span>STROKES</span>
+            <strong id="strokeValue">0</strong>
+            <small>MAX 10</small>
+          </div>
+
+          <section class="power-panel" aria-label="Shot power">
+            <div class="power-copy"><span>POWER</span><strong id="powerValue">READY</strong></div>
+            <div class="power-meter" aria-hidden="true"><i id="powerFill"></i></div>
+          </section>
+
+          <section class="score-section" aria-labelledby="cardTitle">
+            <div class="score-title-row">
+              <h2 id="cardTitle">Scorecard</h2>
+              <img src="./assets/miniputt-flag-sticker_b132133a.png" alt="" />
+            </div>
+            <ol id="scoreList" class="score-list" aria-label="Hole scores"></ol>
+            <div class="score-total"><span>TOTAL</span><strong id="totalScore">—</strong></div>
+          </section>
+
+          <div class="asset-note">
+            <span class="felt-swatch" aria-hidden="true"></span>
+            <p>Original felt texture and three recovered sound effects are active in this restoration.</p>
+          </div>
+        </aside>
+
+        <section class="course-panel" aria-label="Mini-golf course">
+          <div class="course-topline">
+            <p id="shotHint">Pull back from the ball, then release.</p>
+            <button id="soundButton" type="button" class="quiet-button" aria-pressed="true">Sound: on</button>
+          </div>
+          <div class="canvas-shell">
+            <canvas id="courseCanvas" width="960" height="600" tabindex="0" aria-label="Mini-golf course. Pull away from the ball and release to take a shot."></canvas>
+            <div class="canvas-label"><b>CLASSIC COURSE</b><span id="canvasHole">01 / 18</span></div>
+          </div>
+          <div class="course-actions">
+            <button id="spotButton" type="button" class="secondary-button">Re-spot ball <span>+1</span></button>
+            <button id="nextButton" type="button" class="primary-button" hidden>Next hole <span>→</span></button>
+            <p id="statusMessage" class="status-message" role="status" aria-live="polite">Choose a player name to begin.</p>
+          </div>
+          <div class="controls-strip">
+            <span><kbd>Drag</kbd> aim &amp; shoot</span>
+            <span><kbd>R</kbd> re-spot</span>
+            <span><kbd>M</kbd> sound</span>
+            <span>Low-speed cup capture preserves the original rule.</span>
+          </div>
+        </section>
+      </section>
+
+      <footer class="cabinet-footer">
+        <div class="footer-art" aria-hidden="true"></div>
+        <p><strong>Mini Putt Modern</strong> is a clean-room, single-player reconstruction. The included texture and sound samples were recovered from the supplied SWF and are documented in the repository.</p>
+        <img src="./assets/miniputt-course-card_2d18907f.png" alt="Stylized miniature golf course illustration" />
+      </footer>
+    </main>
+
+    <dialog id="startDialog" class="start-dialog" aria-labelledby="welcomeTitle">
+      <div class="dialog-art" aria-hidden="true"></div>
+      <form id="startForm" method="dialog">
+        <p class="eyebrow">Classic course · 18 holes</p>
+        <h2 id="welcomeTitle">Pull back.<br /><em>Find the line.</em></h2>
+        <p class="dialog-copy">This modern course preserves the Flash original’s pull-back shot, capped power, rolling friction, low-speed cups, and ten-stroke limit.</p>
+        <label for="playerName">Player name</label>
+        <input id="playerName" name="playerName" maxlength="18" autocomplete="nickname" value="Player One" />
+        <fieldset>
+          <legend>Ball colour</legend>
+          <div class="ball-options">
+            <label><input type="radio" name="ballColor" value="#fff8e3" checked /><i style="--ball:#fff8e3"></i><span>Ivory</span></label>
+            <label><input type="radio" name="ballColor" value="#d94a3a" /><i style="--ball:#d94a3a"></i><span>Red</span></label>
+            <label><input type="radio" name="ballColor" value="#2350b8" /><i style="--ball:#2350b8"></i><span>Blue</span></label>
+          </div>
+        </fieldset>
+        <button id="beginButton" class="primary-button" type="submit">Tee off <span>→</span></button>
+      </form>
+    </dialog>
+
+    <dialog id="finishDialog" class="finish-dialog" aria-labelledby="finishTitle">
+      <p class="eyebrow">Round complete</p>
+      <h2 id="finishTitle">Scorecard closed.</h2>
+      <p id="finishSummary"></p>
+      <button id="restartButton" class="primary-button" type="button">Play the course again <span>↻</span></button>
+    </dialog>
+
+    <script src="./game.js" defer></script>
+  </body>
+</html>

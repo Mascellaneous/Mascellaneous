@@ -1,0 +1,6 @@
+sound-42.mp3: 0.993s, dominant 124.0 Hz
+sound-54.mp3: 0.418s, dominant 220.0 Hz
+sound-55.mp3: 0.418s, dominant 196.0 Hz
+sound-56.mp3: 0.522s, dominant 148.0 Hz
+sound-57.mp3: 0.522s, dominant 112.0 Hz
+sound-58.mp3: 1.306s, dominant 80.0 Hz

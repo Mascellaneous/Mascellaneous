@@ -1,0 +1,3437 @@
+{
+  "source": "analysis/original-simon.swf",
+  "signature": "CWS",
+  "version": 6,
+  "declared_length": 24007,
+  "decompressed_length": 24007,
+  "rect_nbits": 15,
+  "frame_rate": 21,
+  "frame_count": 64,
+  "tag_counts": {
+    "SetBackgroundColor": 1,
+    "Unknown_24": 1,
+    "SoundStreamHead2": 1,
+    "DoAction": 10,
+    "DefineFont2": 4,
+    "DefineText": 9,
+    "PlaceObject2": 160,
+    "DefineEditText": 4,
+    "ShowFrame": 64,
+    "RemoveObject2": 10,
+    "DefineSprite": 8,
+    "DefineShape": 11,
+    "DefineButton2": 7,
+    "DefineShape3": 10,
+    "DefineSound": 6,
+    "StartSound": 1,
+    "FrameLabel": 2,
+    "End": 1
+  },
+  "tags": [
+    {
+      "index": 1,
+      "code": 9,
+      "name": "SetBackgroundColor",
+      "bytes": 3
+    },
+    {
+      "index": 2,
+      "code": 24,
+      "name": "Unknown_24",
+      "bytes": 0
+    },
+    {
+      "index": 3,
+      "code": 45,
+      "name": "SoundStreamHead2",
+      "bytes": 4
+    },
+    {
+      "index": 4,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 254
+    },
+    {
+      "index": 5,
+      "code": 48,
+      "name": "DefineFont2",
+      "bytes": 2409
+    },
+    {
+      "index": 6,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 44
+    },
+    {
+      "index": 7,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 15
+    },
+    {
+      "index": 8,
+      "code": 37,
+      "name": "DefineEditText",
+      "bytes": 30
+    },
+    {
+      "index": 9,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 17
+    },
+    {
+      "index": 10,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 11,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 12,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 13,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 266
+    },
+    {
+      "index": 14,
+      "code": 48,
+      "name": "DefineFont2",
+      "bytes": 476
+    },
+    {
+      "index": 15,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 35
+    },
+    {
+      "index": 16,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 416
+    },
+    {
+      "index": 17,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 20
+    },
+    {
+      "index": 18,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 10
+    },
+    {
+      "index": 19,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 45
+    },
+    {
+      "index": 20,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 31
+    },
+    {
+      "index": 21,
+      "code": 34,
+      "name": "DefineButton2",
+      "bytes": 34
+    },
+    {
+      "index": 22,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 21
+    },
+    {
+      "index": 23,
+      "code": 48,
+      "name": "DefineFont2",
+      "bytes": 25
+    },
+    {
+      "index": 24,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 12
+    },
+    {
+      "index": 25,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 10
+    },
+    {
+      "index": 26,
+      "code": 48,
+      "name": "DefineFont2",
+      "bytes": 17
+    },
+    {
+      "index": 27,
+      "code": 37,
+      "name": "DefineEditText",
+      "bytes": 140
+    },
+    {
+      "index": 28,
+      "code": 34,
+      "name": "DefineButton2",
+      "bytes": 29
+    },
+    {
+      "index": 29,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 22
+    },
+    {
+      "index": 30,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 178
+    },
+    {
+      "index": 31,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 10
+    },
+    {
+      "index": 32,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 70
+    },
+    {
+      "index": 33,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 10
+    },
+    {
+      "index": 34,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 35,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 36,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 37,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 38,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 39,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 40,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 41,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 42,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 356
+    },
+    {
+      "index": 43,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 16
+    },
+    {
+      "index": 44,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 174
+    },
+    {
+      "index": 45,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 27
+    },
+    {
+      "index": 46,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 65
+    },
+    {
+      "index": 47,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 49
+    },
+    {
+      "index": 48,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 88
+    },
+    {
+      "index": 49,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 106
+    },
+    {
+      "index": 50,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 50
+    },
+    {
+      "index": 51,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 296
+    },
+    {
+      "index": 52,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 20
+    },
+    {
+      "index": 53,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 71
+    },
+    {
+      "index": 54,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 49
+    },
+    {
+      "index": 55,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 85
+    },
+    {
+      "index": 56,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 96
+    },
+    {
+      "index": 57,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 50
+    },
+    {
+      "index": 58,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 62
+    },
+    {
+      "index": 59,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 304
+    },
+    {
+      "index": 60,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 25
+    },
+    {
+      "index": 61,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 49
+    },
+    {
+      "index": 62,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 90
+    },
+    {
+      "index": 63,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 50
+    },
+    {
+      "index": 64,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 62
+    },
+    {
+      "index": 65,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 323
+    },
+    {
+      "index": 66,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 25
+    },
+    {
+      "index": 67,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 49
+    },
+    {
+      "index": 68,
+      "code": 32,
+      "name": "DefineShape3",
+      "bytes": 96
+    },
+    {
+      "index": 69,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 50
+    },
+    {
+      "index": 70,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 300
+    },
+    {
+      "index": 71,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 25
+    },
+    {
+      "index": 72,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 73,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 74,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 75,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 76,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 77,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 78,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 79,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 80,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 81,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 82,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 83,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 84,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 85,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 86,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 87,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 88,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 89,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 90,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 91,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 92,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 93,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 94,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 95,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 96,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 97,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 98,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 99,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 100,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 101,
+      "code": 2,
+      "name": "DefineShape",
+      "bytes": 89
+    },
+    {
+      "index": 102,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 15
+    },
+    {
+      "index": 103,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 104,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 105,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 106,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 107,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 108,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 109,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 110,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 13
+    },
+    {
+      "index": 111,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 4
+    },
+    {
+      "index": 112,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 4
+    },
+    {
+      "index": 113,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 4
+    },
+    {
+      "index": 114,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 4
+    },
+    {
+      "index": 115,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 4
+    },
+    {
+      "index": 116,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 4
+    },
+    {
+      "index": 117,
+      "code": 14,
+      "name": "DefineSound",
+      "bytes": 1985
+    },
+    {
+      "index": 118,
+      "code": 15,
+      "name": "StartSound",
+      "bytes": 3
+    },
+    {
+      "index": 119,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 120,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 13
+    },
+    {
+      "index": 121,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 122,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 13
+    },
+    {
+      "index": 123,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 124,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 13
+    },
+    {
+      "index": 125,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 126,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 13
+    },
+    {
+      "index": 127,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 128,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 13
+    },
+    {
+      "index": 129,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 130,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 13
+    },
+    {
+      "index": 131,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 132,
+      "code": 28,
+      "name": "RemoveObject2",
+      "bytes": 2
+    },
+    {
+      "index": 133,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 372
+    },
+    {
+      "index": 134,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 21
+    },
+    {
+      "index": 135,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 136,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 32
+    },
+    {
+      "index": 137,
+      "code": 34,
+      "name": "DefineButton2",
+      "bytes": 33
+    },
+    {
+      "index": 138,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 21
+    },
+    {
+      "index": 139,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 36
+    },
+    {
+      "index": 140,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 10
+    },
+    {
+      "index": 141,
+      "code": 37,
+      "name": "DefineEditText",
+      "bytes": 34
+    },
+    {
+      "index": 142,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 17
+    },
+    {
+      "index": 143,
+      "code": 11,
+      "name": "DefineText",
+      "bytes": 42
+    },
+    {
+      "index": 144,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 10
+    },
+    {
+      "index": 145,
+      "code": 37,
+      "name": "DefineEditText",
+      "bytes": 38
+    },
+    {
+      "index": 146,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 17
+    },
+    {
+      "index": 147,
+      "code": 34,
+      "name": "DefineButton2",
+      "bytes": 18
+    },
+    {
+      "index": 148,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 20
+    },
+    {
+      "index": 149,
+      "code": 34,
+      "name": "DefineButton2",
+      "bytes": 18
+    },
+    {
+      "index": 150,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 22
+    },
+    {
+      "index": 151,
+      "code": 34,
+      "name": "DefineButton2",
+      "bytes": 19
+    },
+    {
+      "index": 152,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 26
+    },
+    {
+      "index": 153,
+      "code": 34,
+      "name": "DefineButton2",
+      "bytes": 13
+    },
+    {
+      "index": 154,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 28
+    },
+    {
+      "index": 155,
+      "code": 14,
+      "name": "DefineSound",
+      "bytes": 1673
+    },
+    {
+      "index": 156,
+      "code": 14,
+      "name": "DefineSound",
+      "bytes": 1257
+    },
+    {
+      "index": 157,
+      "code": 14,
+      "name": "DefineSound",
+      "bytes": 1309
+    },
+    {
+      "index": 158,
+      "code": 14,
+      "name": "DefineSound",
+      "bytes": 1049
+    },
+    {
+      "index": 159,
+      "code": 14,
+      "name": "DefineSound",
+      "bytes": 2609
+    },
+    {
+      "index": 160,
+      "code": 39,
+      "name": "DefineSprite",
+      "bytes": 117
+    },
+    {
+      "index": 161,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 17
+    },
+    {
+      "index": 162,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 163,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 1697
+    },
+    {
+      "index": 164,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 165,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 166,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 167,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 168,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 169,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 170,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 171,
+      "code": 43,
+      "name": "FrameLabel",
+      "bytes": 5
+    },
+    {
+      "index": 172,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 173,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 174,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 175,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 176,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 177,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 178,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 179,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 180,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 181,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 182,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 183,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 184,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 185,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 186,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 187,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 188,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 189,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 190,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 191,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 192,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 193,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 194,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 195,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 196,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 197,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 198,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 199,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 200,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 201,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 202,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 203,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 204,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 205,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 206,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 207,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 208,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 209,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 210,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 211,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 212,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 213,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 214,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 215,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 216,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 217,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 218,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 219,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 220,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 221,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 222,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 223,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 224,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 225,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 226,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 227,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 228,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 229,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 230,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 231,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 232,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 233,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 234,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 235,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 236,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 237,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 238,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 239,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 240,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 241,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 242,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 243,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 244,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 245,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 246,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 247,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 248,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 249,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 250,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 251,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 252,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 253,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 254,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 255,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 256,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 257,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 258,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 259,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 260,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 261,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 262,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 263,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 128
+    },
+    {
+      "index": 264,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 265,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 266,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 267,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 268,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 269,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 270,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 271,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 272,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 273,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 274,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 275,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 276,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 277,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 278,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 279,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 280,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 281,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 282,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 283,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 19
+    },
+    {
+      "index": 284,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 285,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 479
+    },
+    {
+      "index": 286,
+      "code": 43,
+      "name": "FrameLabel",
+      "bytes": 5
+    },
+    {
+      "index": 287,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 288,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 289,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 9
+    },
+    {
+      "index": 290,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 291,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 292,
+      "code": 26,
+      "name": "PlaceObject2",
+      "bytes": 14
+    },
+    {
+      "index": 293,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 294,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 295,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 296,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 297,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 36
+    },
+    {
+      "index": 298,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 299,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 36
+    },
+    {
+      "index": 300,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 301,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 302,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 36
+    },
+    {
+      "index": 303,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 304,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 305,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 36
+    },
+    {
+      "index": 306,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 307,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 308,
+      "code": 12,
+      "name": "DoAction",
+      "bytes": 10
+    },
+    {
+      "index": 309,
+      "code": 1,
+      "name": "ShowFrame",
+      "bytes": 0
+    },
+    {
+      "index": 310,
+      "code": 0,
+      "name": "End",
+      "bytes": 0
+    }
+  ],
+  "printable_strings": [
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "Stage"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "showMenu"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "this"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "onEnterFrame"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "sofar"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "getBytesLoaded"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "total"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "getBytesTotal"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "pc_txt"
+    },
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "text": "text"
+    },
+    {
+      "tag": 5,
+      "name": "DefineFont2",
+      "text": "$o"
+    },
+    {
+      "tag": 5,
+      "name": "DefineFont2",
+      "text": "&vg7+3C"
+    },
+    {
+      "tag": 5,
+      "name": "DefineFont2",
+      "text": "5\"MX"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "game_so"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "neaveSimon"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "SharedObject"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "getLocal"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "highScore"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "data"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "score"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "play_btn"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "onRelease"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "neave_btn"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "http://www.80smusiclyrics.com/games.html"
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "text": "_blank"
+    },
+    {
+      "tag": 16,
+      "name": "DefineSprite",
+      "text": "3&C0"
+    },
+    {
+      "tag": 16,
+      "name": "DefineSprite",
+      "text": "M&C0"
+    },
+    {
+      "tag": 16,
+      "name": "DefineSprite",
+      "text": "f&C0"
+    },
+    {
+      "tag": 16,
+      "name": "DefineSprite",
+      "text": "3&C0"
+    },
+    {
+      "tag": 17,
+      "name": "PlaceObject2",
+      "text": "logo_mc"
+    },
+    {
+      "tag": 22,
+      "name": "PlaceObject2",
+      "text": "play_btn"
+    },
+    {
+      "tag": 27,
+      "name": "DefineEditText",
+      "text": "<p align=\"center\"><font face=\"Verdana\" size=\"14\" color=\"#ffffff\">www.80smusiclyrics.com/games.html</font></p>"
+    },
+    {
+      "tag": 29,
+      "name": "PlaceObject2",
+      "text": "neave_btn"
+    },
+    {
+      "tag": 42,
+      "name": "DefineShape",
+      "text": ")B@"
+    },
+    {
+      "tag": 42,
+      "name": "DefineShape",
+      "text": ")B@"
+    },
+    {
+      "tag": 45,
+      "name": "PlaceObject2",
+      "text": "simon_mc"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "green_btn"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "enabled"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 51,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "yellow_btn"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "enabled"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 59,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "blue_btn"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "enabled"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 65,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "red_btn"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "enabled"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "_root"
+    },
+    {
+      "tag": 70,
+      "name": "DefineSprite",
+      "text": "score"
+    },
+    {
+      "tag": 117,
+      "name": "DefineSound",
+      "text": "zLl"
+    },
+    {
+      "tag": 134,
+      "name": "PlaceObject2",
+      "text": "light_mc"
+    },
+    {
+      "tag": 138,
+      "name": "PlaceObject2",
+      "text": "6 "
+    },
+    {
+      "tag": 138,
+      "name": "PlaceObject2",
+      "text": "quit_btn"
+    },
+    {
+      "tag": 141,
+      "name": "DefineEditText",
+      "text": "score"
+    },
+    {
+      "tag": 145,
+      "name": "DefineEditText",
+      "text": "highScore"
+    },
+    {
+      "tag": 148,
+      "name": "PlaceObject2",
+      "text": "6&"
+    },
+    {
+      "tag": 148,
+      "name": "PlaceObject2",
+      "text": "red_btn"
+    },
+    {
+      "tag": 150,
+      "name": "PlaceObject2",
+      "text": "6("
+    },
+    {
+      "tag": 150,
+      "name": "PlaceObject2",
+      "text": "green_btn"
+    },
+    {
+      "tag": 152,
+      "name": "PlaceObject2",
+      "text": "6*"
+    },
+    {
+      "tag": 152,
+      "name": "PlaceObject2",
+      "text": "blue_btn"
+    },
+    {
+      "tag": 154,
+      "name": "PlaceObject2",
+      "text": "6,"
+    },
+    {
+      "tag": 154,
+      "name": "PlaceObject2",
+      "text": "yellow_btn"
+    },
+    {
+      "tag": 157,
+      "name": "DefineSound",
+      "text": "h% "
+    },
+    {
+      "tag": 159,
+      "name": "DefineSound",
+      "text": "&N."
+    },
+    {
+      "tag": 161,
+      "name": "PlaceObject2",
+      "text": "6."
+    },
+    {
+      "tag": 161,
+      "name": "PlaceObject2",
+      "text": "sound_mc"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "init"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "green_btn"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "enabled"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "yellow_btn"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "blue_btn"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "red_btn"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "seq_array"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "Array"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "tempSeq_array"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "compTurn"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "onPress"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "this"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "checkLight"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "quit_btn"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "onRelease"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "keyListener"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "Key"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "removeListener"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "num"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "_root"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "thisNum"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "shift"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "light_mc"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "gotoAndPlay"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "nextFrame"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "sound_mc"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "length"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "simon_mc"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "score"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "highScore"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "game_so"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "data"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "_currentframe"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "play"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "Object"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "onKeyDown"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "getCode"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "String"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "fromCharCode"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "addListener"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "num"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "lose"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "loop"
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "text": "loop"
+    },
+    {
+      "tag": 171,
+      "name": "FrameLabel",
+      "text": "lose"
+    },
+    {
+      "tag": 263,
+      "name": "DoAction",
+      "text": "score"
+    },
+    {
+      "tag": 263,
+      "name": "DoAction",
+      "text": "_root"
+    },
+    {
+      "tag": 263,
+      "name": "DoAction",
+      "text": "gotoAndStop"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "compTurn"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "tempSeq_array"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "length"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "thisNum"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "shift"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "sound_mc"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "gotoAndPlay"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "_root"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "play"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "seq_array"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "slice"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "green_btn"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "enabled"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "yellow_btn"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "blue_btn"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "red_btn"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "Math"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "random"
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "text": "push"
+    },
+    {
+      "tag": 286,
+      "name": "FrameLabel",
+      "text": "loop"
+    },
+    {
+      "tag": 297,
+      "name": "DoAction",
+      "text": "score"
+    },
+    {
+      "tag": 297,
+      "name": "DoAction",
+      "text": "loop"
+    },
+    {
+      "tag": 299,
+      "name": "DoAction",
+      "text": "score"
+    },
+    {
+      "tag": 299,
+      "name": "DoAction",
+      "text": "loop"
+    },
+    {
+      "tag": 302,
+      "name": "DoAction",
+      "text": "score"
+    },
+    {
+      "tag": 302,
+      "name": "DoAction",
+      "text": "loop"
+    },
+    {
+      "tag": 305,
+      "name": "DoAction",
+      "text": "score"
+    },
+    {
+      "tag": 305,
+      "name": "DoAction",
+      "text": "loop"
+    },
+    {
+      "tag": 308,
+      "name": "DoAction",
+      "text": "loop"
+    }
+  ],
+  "action_blocks": [
+    {
+      "tag": 4,
+      "name": "DoAction",
+      "actions": [
+        "ConstantPool(Stage, showMenu, this, onEnterFrame, sofar, getBytesLoaded, total, getBytesTotal, pc_txt, text)",
+        "Stop",
+        "Push(const[0])",
+        "GetVariable",
+        "Push(const[1], false)",
+        "SetMember",
+        "Push(const[2])",
+        "GetVariable",
+        "Push(const[3])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(r1, const[2])",
+        "GetVariable",
+        "StoreRegister[1]",
+        "Pop",
+        "Push(const[4], 0.0, r1, const[5])",
+        "CallMethod",
+        "SetVariable",
+        "Push(const[6], 0.0, r1, const[7])",
+        "CallMethod",
+        "SetVariable",
+        "Push(const[8])",
+        "GetVariable",
+        "Push(const[9], const[4])",
+        "GetVariable",
+        "Push(const[6])",
+        "GetVariable",
+        "Divide",
+        "Push(100)",
+        "Multiply",
+        "ToInteger",
+        "Push(const[10])",
+        "Add2",
+        "SetMember",
+        "Push(const[4])",
+        "GetVariable",
+        "Push(const[6])",
+        "GetVariable",
+        "Equals2",
+        "Not",
+        "If(+10)",
+        "Push(r1, const[3])",
+        "Delete",
+        "Pop",
+        "NextFrame",
+        "StoreRegister[1]",
+        "Pop",
+        "SetMember",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 13,
+      "name": "DoAction",
+      "actions": [
+        "ConstantPool(game_so, neaveSimon, SharedObject, getLocal, highScore, data, score, play_btn, onRelease, neave_btn)",
+        "Stop",
+        "Push(const[0], const[1], 1, const[2])",
+        "GetVariable",
+        "Push(const[3])",
+        "CallMethod",
+        "SetVariable",
+        "Push(const[4])",
+        "GetVariable",
+        "Push(undefined)",
+        "Equals2",
+        "Not",
+        "If(+22)",
+        "Push(const[4], const[0])",
+        "GetVariable",
+        "Push(const[5])",
+        "GetMember",
+        "Push(const[4])",
+        "GetMember",
+        "ToNumber",
+        "SetVariable",
+        "Push(const[6], 0.0)",
+        "SetVariable",
+        "Push(const[7])",
+        "GetVariable",
+        "Push(const[8])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Play",
+        "SetMember",
+        "Push(const[9])",
+        "GetVariable",
+        "Push(const[8])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "GetURL[48]",
+        "SetMember",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 163,
+      "name": "DoAction",
+      "actions": [
+        "ConstantPool(init, green_btn, enabled, yellow_btn, blue_btn, red_btn, seq_array, Array, tempSeq_array, compTurn, onPress, this, checkLight, quit_btn, onRelease, keyListener, Key, removeListener, num, _root, thisNum, shift, light_mc, gotoAndPlay, nextFrame, sound_mc, length, simon_mc, score, highScore, game_so, data, _currentframe, play, Object, onKeyDown, getCode, String, fromCharCode, addListener)",
+        "Push(const[0])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(const[1])",
+        "GetVariable",
+        "Push(const[2], const[3])",
+        "GetVariable",
+        "Push(const[2], const[4])",
+        "GetVariable",
+        "Push(const[2], const[5])",
+        "GetVariable",
+        "Push(const[2], false)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "SetMember",
+        "Push(const[6], 0.0, const[7])",
+        "NewObject",
+        "SetVariable",
+        "Push(const[8], 0.0, const[7])",
+        "NewObject",
+        "SetVariable",
+        "Push(const[9], false)",
+        "SetVariable",
+        "SetVariable",
+        "Push(const[1])",
+        "GetVariable",
+        "Push(const[10])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(const[11])",
+        "GetVariable",
+        "Push(const[2], false)",
+        "SetMember",
+        "Push(0.0, 1, const[12])",
+        "CallFunction",
+        "Pop",
+        "SetMember",
+        "Push(const[3])",
+        "GetVariable",
+        "Push(const[10])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(const[11])",
+        "GetVariable",
+        "Push(const[2], false)",
+        "SetMember",
+        "Push(1, 1, const[12])",
+        "CallFunction",
+        "Pop",
+        "SetMember",
+        "Push(const[4])",
+        "GetVariable",
+        "Push(const[10])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(const[11])",
+        "GetVariable",
+        "Push(const[2], false)",
+        "SetMember",
+        "Push(2, 1, const[12])",
+        "CallFunction",
+        "Pop",
+        "SetMember",
+        "Push(const[5])",
+        "GetVariable",
+        "Push(const[10])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(const[11])",
+        "GetVariable",
+        "Push(const[2], false)",
+        "SetMember",
+        "Push(3, 1, const[12])",
+        "CallFunction",
+        "Pop",
+        "SetMember",
+        "Push(const[13])",
+        "GetVariable",
+        "Push(const[14])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(const[15])",
+        "GetVariable",
+        "Push(1, const[16])",
+        "GetVariable",
+        "Push(const[17])",
+        "CallMethod",
+        "Pop",
+        "GotoFrame[2]",
+        "SetMember",
+        "Push(const[12])",
+        "DefineFunction(; params=['num']) {",
+        "}",
+        "Push(r1, r2, const[18])",
+        "GetVariable",
+        "StoreRegister[1]",
+        "Pop",
+        "Push(const[19])",
+        "GetVariable",
+        "StoreRegister[1]",
+        "Pop",
+        "Push(const[9])",
+        "GetVariable",
+        "Not",
+        "If(+5)",
+        "Jump(+457)",
+        "Push(const[20], 0.0, const[8])",
+        "GetVariable",
+        "Push(const[21])",
+        "CallMethod",
+        "ToNumber",
+        "SetVariable",
+        "Push(const[20])",
+        "GetVariable",
+        "Push(r1)",
+        "Equals2",
+        "Not",
+        "Not",
+        "If(+106)",
+        "Push(0.0, const[0])",
+        "CallFunction",
+        "Pop",
+        "Push(10, 1, const[22])",
+        "GetVariable",
+        "Push(const[23])",
+        "CallMethod",
+        "Pop",
+        "Push(0.0, r2, const[20])",
+        "GetVariable",
+        "GetMember",
+        "Push(const[24])",
+        "CallMethod",
+        "Pop",
+        "GoToLabel[5]",
+        "Play",
+        "Push(10, 1, const[25])",
+        "GetVariable",
+        "Push(const[23])",
+        "CallMethod",
+        "Pop",
+        "Jump(+312)",
+        "Jump(+216)",
+        "Push(const[8])",
+        "GetVariable",
+        "Push(const[26])",
+        "GetMember",
+        "Push(0.0)",
+        "Equals2",
+        "Not",
+        "If(+185)",
+        "Push(const[1])",
+        "GetVariable",
+        "Push(const[2], const[3])",
+        "GetVariable",
+        "Push(const[2], const[4])",
+        "GetVariable",
+        "Push(const[2], const[5])",
+        "GetVariable",
+        "Push(const[2], false)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "SetMember",
+        "Push(1, 1, const[22])",
+        "GetVariable",
+        "Push(const[23])",
+        "CallMethod",
+        "Pop",
+        "Push(2, 1, const[27])",
+        "GetVariable",
+        "Push(const[23])",
+        "CallMethod",
+        "Pop",
+        "Push(const[28], const[28])",
+        "GetVariable",
+        "Increment",
+        "SetVariable",
+        "Push(const[28])",
+        "GetVariable",
+        "Push(const[29])",
+        "GetVariable",
+        "Greater",
+        "Not",
+        "If(+33)",
+        "Push(const[30])",
+        "GetVariable",
+        "Push(const[31])",
+        "GetMember",
+        "Push(const[29], const[29], const[28])",
+        "GetVariable",
+        "StoreRegister[1]",
+        "SetVariable",
+        "Push(r0)",
+        "SetMember",
+        "GoToLabel[5]",
+        "Play",
+        "Push(r2, r1)",
+        "GetMember",
+        "Push(const[32])",
+        "GetMember",
+        "Push(1)",
+        "Equals2",
+        "Not",
+        "If(+62)",
+        "Push(r1, 2)",
+        "Multiply",
+        "Push(2)",
+        "Add2",
+        "Push(1, const[25])",
+        "GetVariable",
+        "Push(const[23])",
+        "CallMethod",
+        "Pop",
+        "Push(0.0, r2, r1)",
+        "GetMember",
+        "Push(const[33])",
+        "CallMethod",
+        "Pop",
+        "StoreRegister[1]",
+        "Pop",
+        "StoreRegister[1]",
+        "Pop",
+        "SetVariable",
+        "Push(const[15], 0.0, const[34])",
+        "NewObject",
+        "SetVariable",
+        "Push(const[15])",
+        "GetVariable",
+        "Push(const[35])",
+        "DefineFunction(; params=[]) {",
+        "}",
+        "Push(0.0, const[16])",
+        "GetVariable",
+        "Push(const[36])",
+        "CallMethod",
+        "Push(1, const[37])",
+        "GetVariable",
+        "Push(const[38])",
+        "CallMethod",
+        "StoreRegister[1]",
+        "Push(const[39])",
+        "StrictEquals",
+        "If(+57)",
+        "Push(r0, const[40])",
+        "StrictEquals",
+        "If(+89)",
+        "Push(r0, const[41])",
+        "StrictEquals",
+        "If(+121)",
+        "Push(r0, const[42])",
+        "StrictEquals",
+        "If(+153)",
+        "Push(r0, const[43])",
+        "StrictEquals",
+        "If(+185)",
+        "Jump(+209)",
+        "Push(const[1])",
+        "GetVariable",
+        "Push(const[2])",
+        "GetMember",
+        "Not",
+        "If(+22)",
+        "Push(0.0, const[1])",
+        "GetVariable",
+        "Push(const[10])",
+        "CallMethod",
+        "Pop",
+        "Jump(+164)",
+        "Push(const[3])",
+        "GetVariable",
+        "Push(const[2])",
+        "GetMember",
+        "Not",
+        "If(+22)",
+        "Push(0.0, const[3])",
+        "GetVariable",
+        "Push(const[10])",
+        "CallMethod",
+        "Pop",
+        "Jump(+119)",
+        "Push(const[4])",
+        "GetVariable",
+        "Push(const[2])",
+        "GetMember",
+        "Not",
+        "If(+22)",
+        "Push(0.0, const[4])",
+        "GetVariable",
+        "Push(const[10])",
+        "CallMethod",
+        "Pop",
+        "Jump(+74)",
+        "Push(const[5])",
+        "GetVariable",
+        "Push(const[2])",
+        "GetMember",
+        "Not",
+        "If(+22)",
+        "Push(0.0, const[5])",
+        "GetVariable",
+        "Push(const[10])",
+        "CallMethod",
+        "Pop",
+        "Jump(+29)",
+        "Push(const[15])",
+        "GetVariable",
+        "Push(1, const[16])",
+        "GetVariable",
+        "Push(const[17])",
+        "CallMethod",
+        "Pop",
+        "GotoFrame[2]",
+        "SetMember",
+        "Push(const[15])",
+        "GetVariable",
+        "Push(1, const[16])",
+        "GetVariable",
+        "Push(const[44])",
+        "CallMethod",
+        "Pop",
+        "Push(const[28], 0.0)",
+        "SetVariable",
+        "Push(0.0, const[0])",
+        "CallFunction",
+        "Pop",
+        "GoToLabel[5]",
+        "Play",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 263,
+      "name": "DoAction",
+      "actions": [
+        "ConstantPool(score, _root, gotoAndStop)",
+        "Push(const[0], 0.0)",
+        "SetVariable",
+        "Push(const[1], 0.0)",
+        "DefineLocal",
+        "Push(const[1])",
+        "GetVariable",
+        "Push(4)",
+        "Less2",
+        "Not",
+        "If(+45)",
+        "Push(1, 1, const[2])",
+        "GetVariable",
+        "Push(const[1])",
+        "GetVariable",
+        "GetMember",
+        "Push(const[3])",
+        "CallMethod",
+        "Pop",
+        "Push(const[1], const[1])",
+        "GetVariable",
+        "Increment",
+        "SetVariable",
+        "Jump(-66)",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 285,
+      "name": "DoAction",
+      "actions": [
+        "ConstantPool(compTurn, tempSeq_array, length, thisNum, shift, sound_mc, gotoAndPlay, _root, play, seq_array, slice, green_btn, enabled, yellow_btn, blue_btn, red_btn, Math, random, push)",
+        "Push(const[0])",
+        "GetVariable",
+        "Not",
+        "If(+225)",
+        "Push(const[1])",
+        "GetVariable",
+        "Push(const[2])",
+        "GetMember",
+        "Not",
+        "If(+101)",
+        "Push(const[3], 0.0, const[1])",
+        "GetVariable",
+        "Push(const[4])",
+        "CallMethod",
+        "ToNumber",
+        "SetVariable",
+        "Push(const[3])",
+        "GetVariable",
+        "Push(2)",
+        "Multiply",
+        "Push(2)",
+        "Add2",
+        "Push(1, const[5])",
+        "GetVariable",
+        "Push(const[6])",
+        "CallMethod",
+        "Pop",
+        "Push(0.0, const[7])",
+        "GetVariable",
+        "Push(const[3])",
+        "GetVariable",
+        "GetMember",
+        "Push(const[8])",
+        "CallMethod",
+        "Pop",
+        "Jump(+101)",
+        "Stop",
+        "Push(const[0], false)",
+        "SetVariable",
+        "Push(const[1], 0.0, const[9])",
+        "GetVariable",
+        "Push(const[10])",
+        "CallMethod",
+        "SetVariable",
+        "Push(const[11])",
+        "GetVariable",
+        "Push(const[12], const[13])",
+        "GetVariable",
+        "Push(const[12], const[14])",
+        "GetVariable",
+        "Push(const[12], const[15])",
+        "GetVariable",
+        "Push(const[12], true)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "StoreRegister[1]",
+        "SetMember",
+        "Push(r0)",
+        "SetMember",
+        "Jump(+81)",
+        "Push(0.0, const[16])",
+        "GetVariable",
+        "Push(const[17])",
+        "CallMethod",
+        "Push(4)",
+        "Multiply",
+        "ToInteger",
+        "Push(1, const[9])",
+        "GetVariable",
+        "Push(const[18])",
+        "CallMethod",
+        "Pop",
+        "Push(const[1], 0.0, const[9])",
+        "GetVariable",
+        "Push(const[10])",
+        "CallMethod",
+        "SetVariable",
+        "Push(const[0], true)",
+        "SetVariable",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 297,
+      "name": "DoAction",
+      "actions": [
+        "Push('score')",
+        "GetVariable",
+        "Push(19)",
+        "Greater",
+        "Not",
+        "If(+9)",
+        "GoToLabel[5]",
+        "Play",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 299,
+      "name": "DoAction",
+      "actions": [
+        "Push('score')",
+        "GetVariable",
+        "Push(14)",
+        "Greater",
+        "Not",
+        "If(+9)",
+        "GoToLabel[5]",
+        "Play",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 302,
+      "name": "DoAction",
+      "actions": [
+        "Push('score')",
+        "GetVariable",
+        "Push(9)",
+        "Greater",
+        "Not",
+        "If(+9)",
+        "GoToLabel[5]",
+        "Play",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 305,
+      "name": "DoAction",
+      "actions": [
+        "Push('score')",
+        "GetVariable",
+        "Push(4)",
+        "Greater",
+        "Not",
+        "If(+9)",
+        "GoToLabel[5]",
+        "Play",
+        "EndAction"
+      ]
+    },
+    {
+      "tag": 308,
+      "name": "DoAction",
+      "actions": [
+        "GoToLabel[5]",
+        "Play",
+        "EndAction"
+      ]
+    }
+  ],
+  "extracted": [
+    {
+      "type": "sound",
+      "id": 42,
+      "format_code": 2,
+      "rate_code": 1,
+      "sample_size_bits": 16,
+      "channels": 1,
+      "sample_count": 8340,
+      "path": "extracted/sound-42.mp3",
+      "bytes": 1976
+    },
+    {
+      "type": "sound",
+      "id": 54,
+      "format_code": 2,
+      "rate_code": 2,
+      "sample_size_bits": 16,
+      "channels": 1,
+      "sample_count": 6616,
+      "path": "extracted/sound-54.mp3",
+      "bytes": 1664
+    },
+    {
+      "type": "sound",
+      "id": 55,
+      "format_code": 2,
+      "rate_code": 2,
+      "sample_size_bits": 16,
+      "channels": 1,
+      "sample_count": 6616,
+      "path": "extracted/sound-55.mp3",
+      "bytes": 1248
+    },
+    {
+      "type": "sound",
+      "id": 56,
+      "format_code": 2,
+      "rate_code": 1,
+      "sample_size_bits": 16,
+      "channels": 1,
+      "sample_count": 3308,
+      "path": "extracted/sound-56.mp3",
+      "bytes": 1300
+    },
+    {
+      "type": "sound",
+      "id": 57,
+      "format_code": 2,
+      "rate_code": 1,
+      "sample_size_bits": 16,
+      "channels": 1,
+      "sample_count": 3308,
+      "path": "extracted/sound-57.mp3",
+      "bytes": 1040
+    },
+    {
+      "type": "sound",
+      "id": 58,
+      "format_code": 2,
+      "rate_code": 1,
+      "sample_size_bits": 16,
+      "channels": 1,
+      "sample_count": 11854,
+      "path": "extracted/sound-58.mp3",
+      "bytes": 2600
+    }
+  ]
+}
